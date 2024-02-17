@@ -1,8 +1,12 @@
-interface User {
-  id: number; // Assuming id is a serial primary key in your PostgreSQL table
-  studentName: string;
-  parentName: string;
+interface IUser {
+  id: number;
+  studentFirstName: string;
+  studentLasttName: string;
+  parentFirstName: string;
+  parentLastName: string;
   phoneNumber: string;
+  subscriptionPrice: number;
+  numberOfLessonsInSubscription: number;
 }
 
-export default User;
+export default IUser;

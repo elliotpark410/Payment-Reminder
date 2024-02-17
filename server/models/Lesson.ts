@@ -1,15 +1,10 @@
-import User from "./User"
-
-// Define the structure of a Lesson entity
-interface Lesson {
-  id: number; // Assuming id is a serial primary key in your PostgreSQL table
+interface ILesson {
+  id: number;
   totalNumberOfLessons: number;
+  userId: number; // Foreign key referencing the id column in the User table
   studentName: string;
   lessonDate: Date;
   reminderSentDate: Date;
-  numberOfLessonsInSubscription: number;
-  subscriptionPrice: number;
-  user: User;
 }
 
-export default Lesson;
+export default ILesson;
