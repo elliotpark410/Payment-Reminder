@@ -22,17 +22,40 @@ function createDatabase() {
 
 // Function to create tables
 function createTables() {
-  const sql = `
+  const sqlQueries = [
+    `
     CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      username VARCHAR(50) NOT NULL,
-      email VARCHAR(100) NOT NULL
-    )
-  `;
+      id SERIAL PRIMARY KEY,
+      student_name VARCHAR(255) NOT NULL,
+      parent_name VARCHAR(255) NOT NULL,
+      phone_number VARCHAR(20) NOT NULL,
+      subscription_price DECIMAL(10, 2) NOT NULL,
+      number_of_lessons_in_subscription INT NOT NULL
+    )`,
 
-  connection.query(sql, (err) => {
-    if (err) throw err;
-    console.log('Table created or already exists');
+    `CREATE TABLE IF NOT EXISTS lessons (
+      id SERIAL PRIMARY KEY,
+      total_number_of_lessons INT NOT NULL,
+      user_id INT REFERENCES users(id),
+      student_name VARCHAR(255) NOT NULL,
+      lesson_date DATE NOT NULL,
+      reminder_sent_date DATE NOT NULL
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS texts (
+      id SERIAL PRIMARY KEY,
+      user_id INT REFERENCES users(id),
+      student_name VARCHAR(255) NOT NULL,
+      date DATE NOT NULL,
+      recent_message TEXT NOT NULL
+    )`,
+  ];
+
+  sqlQueries.forEach((sql) => {
+    connection.query(sql, (err) => {
+      if (err) throw err;
+      console.log('Table created or already exists');
+    });
   });
 }
 
