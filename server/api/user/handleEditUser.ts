@@ -28,6 +28,12 @@ export async function handleEditUser(
           return next(updateError);
         }
 
+        // Check if the update query affected any rows
+        const updateResultsJson: any = updateResults;
+        if (updateResultsJson.affectedRows === 0) {
+          return response.status(404).json({ message: 'User not found' });
+        }
+
         // Fetch the updated user record from the database
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         connection.query(selectQuery, [user_id], (selectError, selectResults: RowDataPacket[]) => {
