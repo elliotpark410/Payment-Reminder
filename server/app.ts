@@ -1,7 +1,4 @@
 import express from "express";
-import userRouter from "./api/user/userRouter"
-import lessonRouter from "./api/lesson/lessonRouter"
-import textRouter from "./api/text/textRouter"
 import rootRouter from "./rootRouter"
 
 // import db from "./config/connection.ts"

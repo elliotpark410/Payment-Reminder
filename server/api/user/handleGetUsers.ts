@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import connection from "../../db/connection";
 
 export async function handleGetUsers(
   request: Request,
@@ -6,7 +7,18 @@ export async function handleGetUsers(
   next: NextFunction
 ) {
   try {
-    console.log("handleGettUsers")
+    const query = "SELECT * FROM users";
+
+    // Execute the query
+    connection.query(query, (error, results) => {
+      if (error) {
+        // If there's an error, pass it to the error handling middleware
+        return next(error);
+      }
+
+      // If successful, send the users data in the response
+      response.send(results);
+    });
   } catch (err) {
     console.log(err)
     next(err);

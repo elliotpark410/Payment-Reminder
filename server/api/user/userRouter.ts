@@ -6,6 +6,7 @@ import { handleAddUser } from "./handleAddUser";
 import { handleDeleteUser } from "./handleDeleteUser";
 import { handleGetUser } from "./handleGetUser";
 import { handleGetUsers } from "./handleGetUsers";
+import { handleEditUser } from "./handleEditUser";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -22,9 +23,17 @@ router.post(
   }
 );
 
+// Route to edit a user by ID
+router.put(
+  "/:user_id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleEditUser(request, response, next);
+  }
+);
+
 // Route to delete a user by ID
 router.delete(
-  "/:userId",
+  "/:user_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleDeleteUser(request, response, next);
   }
@@ -32,7 +41,7 @@ router.delete(
 
 // Route to get a user by ID
 router.get(
-  "/:userId",
+  "/:user_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleGetUser(request, response, next);
   }
