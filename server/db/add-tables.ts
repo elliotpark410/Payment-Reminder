@@ -1,33 +1,15 @@
-import mysql from 'mysql2';
 import dotenv from 'dotenv';
+import connection from './connection';
 dotenv.config();
 
-// Configuration for your MySQL connection
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'payment_reminder',
-  port: 3306,
-});
-
-// Function to create database if it doesn't exist
-function createDatabase() {
-  connection.query(`CREATE DATABASE IF NOT EXISTS payment_reminder`, (err) => {
-    if (err) throw err;
-    console.log('Database created or already exists');
-    createTables();
-  });
-}
-
 // Function to create tables
-function createTables() {
+export function createTables() {
   const sqlQueries = [
     `
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
       student_name VARCHAR(255) UNIQUE NOT NULL,
-      parent_name VARCHAR(255) NOT NULL,
+      parent_name VARCHAR(255),
       phone_number VARCHAR(20)
     )`,
 
@@ -58,11 +40,4 @@ function createTables() {
   });
 }
 
-// Connect to MySQL and initialize the database
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to MySQL');
-  createDatabase();
-});
-
-export default connection;
+createTables();

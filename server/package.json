@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-db": "cd docker && docker-compose up -d && cd .. && cd config && npx tsx database.ts",
-    "stop-db": "cd docker && docker-compose down",
-    "add-data": "cd seed && ts-node index.ts"
+    "start-docker-db": "cd docker && docker-compose up -d",
+    "stop-docker-db": "cd docker && docker-compose down",
+    "drop-db": "docker exec -it mysql mysql -u root -ppassword -e 'DROP DATABASE IF EXISTS payment_reminder'",
+    "create-db": "ts-node db/create-db.ts",
+    "add-tables": "ts-node db/add-tables.ts",
+    "add-data": "ts-node db/seed/index.ts"
   },
   "repository": {
     "type": "git",
