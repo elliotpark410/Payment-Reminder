@@ -1,6 +1,6 @@
 import connection from '../connection';
 
-export async function seedLessons() {
+export function seedLessons() {
   const lessonsData = [
     {
       student_name: 'Edbert Feng',
@@ -12,6 +12,6 @@ export async function seedLessons() {
   ];
 
   for (const lesson of lessonsData) {
-    await connection.query('INSERT IGNORE INTO lessons SET ?', lesson);
+    connection.query('INSERT IGNORE INTO lessons SET ?', lesson);
   }
 }

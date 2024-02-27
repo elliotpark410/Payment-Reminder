@@ -4,9 +4,9 @@ import { seedTexts } from './textData';
 import connection from '../connection';
 
 async function seedDatabase() {
-  await seedUsers();
-  await seedLessons();
-  await seedTexts();
+  seedUsers();
+  seedLessons();
+  seedTexts();
   console.log('Seed data added successfully');
   connection.end();
 }

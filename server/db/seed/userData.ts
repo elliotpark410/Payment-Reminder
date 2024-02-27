@@ -1,6 +1,6 @@
 import connection from '../connection';
 
-export async function seedUsers() {
+export function seedUsers() {
   const usersData = [
     {
       student_name: 'Soo Borson',

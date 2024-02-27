@@ -1,6 +1,6 @@
 import connection from '../connection';
 
-export async function seedTexts() {
+export function seedTexts() {
   const textsData = [
     // Insert text data here
     {
@@ -11,6 +11,6 @@ export async function seedTexts() {
   ];
 
   for (const text of textsData) {
-    await connection.query('INSERT IGNORE INTO texts SET ?', text);
+    connection.query('INSERT IGNORE INTO texts SET ?', text);
   }
 }
