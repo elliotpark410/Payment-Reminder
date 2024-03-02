@@ -78,9 +78,87 @@ export function seedUsers() {
       student_name: 'Edbert Feng',
       phone_number: '213-700-8938',
     },
+    {
+      student_name: 'Pieta Myka Baca',
+      parent_name: 'Kimberly Baca',
+      phone_number: '949-735-5883',
+      email: 'kimberlymacool@gmail.com',
+    },
+    {
+      student_name: 'Sandra Mah',
+      phone_number: '415-203-7950',
+    },
+    {
+      student_name: 'Paige Choi',
+      parent_name: 'Marie Anny Choi',
+      phone_number: '310-857-8615',
+      email: 'annychoe@yahoo.com',
+    },
+    {
+      student_name: 'Sarah Huang',
+      phone_number: '949-372-9399',
+      email: 'hr899076@gmail.com',
+    },
+    {
+      student_name: 'Serene Tan',
+      phone_number: '619-213-9734',
+      email: 'jmtserene@gmail.com',
+    },
+    {
+      student_name: 'Yui Tan',
+      phone_number: '425-233-7668',
+      email: 'yuiw@hey.com',
+    },
+    {
+      student_name: 'Jasmin Carrasco',
+      phone_number: '562-712-6551',
+      email: 'jasmincarrasco@gmail.com',
+    },
+    {
+      student_name: 'Ash Zhang',
+      parent_name: 'Liz Qu',
+      phone_number: '626-693-9619',
+      email: 'lizadult789@gmail.com',
+    },
+    {
+      student_name: 'daniel Beck',
+      phone_number: '949-299-6392',
+    },
+    {
+      student_name: 'Bowei Deng',
+      phone_number: '949-562-9492',
+      email: 'boweideng0720@gmail.com',
+    },
+    {
+      student_name: 'Kris Mendez',
+      phone_number: '484-862-1089',
+    },
+    {
+      student_name: 'Alex Cadena',
+      phone_number: '310-906-7589',
+      email: 'alexcadenajj@gmail.com',
+    },
+    {
+      student_name: 'Leslie Wei',
+      parent_name: 'Lu Kong',
+      phone_number: '949-592-8457',
+      email: 'Luk20091103@gmail.com',
+    },
+    {
+      student_name: 'Christine Jiang',
+      parent_name: 'Jade Hui',
+      phone_number: '310-227-6942',
+      email: 'jadehaiweihui@gmail.com',
+    },
+    {
+      student_name: 'Jacqueline Caldarella',
+      parent_name: 'Cassandra Caldarella',
+      phone_number: '949-233-0606',
+      email: 'caldarella13127@yahoo.com',
+    },
   ];
 
   for (const user of usersData) {
-   connection.query('INSERT IGNORE INTO users SET ?', user);
+    connection.query('INSERT IGNORE INTO users SET ?', user);
   }
 }

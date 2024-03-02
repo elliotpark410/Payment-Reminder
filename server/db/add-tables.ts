@@ -10,7 +10,8 @@ export function createTables() {
       id SERIAL PRIMARY KEY,
       student_name VARCHAR(255) UNIQUE NOT NULL,
       parent_name VARCHAR(255),
-      phone_number VARCHAR(20)
+      phone_number VARCHAR(20),
+      email VARCHAR(255)
     )`,
 
     `CREATE TABLE IF NOT EXISTS lessons (
