@@ -25,7 +25,7 @@ router.post(
 
 // Route to delete a lesson by ID
 router.delete(
-  "/:lessonId",
+  "/:lesson_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleDeleteLesson(request, response, next);
   }
@@ -33,7 +33,7 @@ router.delete(
 
 // Route to edit a lesson by ID
 router.put(
-  "/:lessonId",
+  "/:lesson_id",
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
     await handleEditLesson(request, response, next);
@@ -42,7 +42,7 @@ router.put(
 
 // Route to get a lesson by ID
 router.get(
-  "/:lessonId",
+  "/:lesson_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleGetLesson(request, response, next);
   }
