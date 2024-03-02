@@ -14,19 +14,6 @@ export async function handleEditLesson(
     // Extract updated user data from request body
     const { student_name, subscription_price, number_of_lessons_in_subscription, total_number_of_lessons, lesson_date } = request.body;
 
-    console.log("lesson_id")
-    console.log(lesson_id)
-    console.log("student_name")
-    console.log(student_name)
-    console.log("subscription_price")
-    console.log(subscription_price)
-    console.log("number_of_lessons_in_subscription")
-    console.log(number_of_lessons_in_subscription)
-    console.log("total_number_of_lessons")
-    console.log(total_number_of_lessons)
-    console.log("lesson_date")
-    console.log(lesson_date)
-
     // Query to update user data in the database
     const updateQuery =
       'UPDATE lessons SET subscription_price = ?, number_of_lessons_in_subscription = ?, total_number_of_lessons = ?, lesson_date = ? WHERE id = ?';
