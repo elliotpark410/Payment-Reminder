@@ -16,7 +16,7 @@ export async function handleEditUser(
 
     // Query to update user data in the database
     const updateQuery =
-      'UPDATE users SET student_name = ?, parent_name = ?, phone_number = ? WHERE id = ?';
+      'UPDATE users SET student_name = ?, parent_name = ?, phone_number = ?, email = ? WHERE id = ?';
 
     // Execute the query with user data and user ID as parameters
     connection.query(
