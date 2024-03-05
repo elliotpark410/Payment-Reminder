@@ -1,9 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { Twilio } from "twilio";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const accountSid = "your_account_sid";
-const authToken = "your_auth_token";
-const twilioNumber = "your_twilio_phone_number";
+// Your AccountSID and Auth Token from console.twilio.com
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilio_phone_number = process.env.TWILIO_PHONE_NUMBER;
+
 // Create a Twilio client instance
 const twilioClient = new Twilio(accountSid, authToken);
 
@@ -23,7 +27,7 @@ export async function handleSendText(
     // Send text message using Twilio
     await twilioClient.messages.create({
       body: message,
-      from: twilioNumber,
+      from: twilio_phone_number,
       to: phoneNumber,
     });
 
