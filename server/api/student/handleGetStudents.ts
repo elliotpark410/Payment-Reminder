@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import connection from "../../db/connection";
 
-export async function handleGetUsers(
+export async function handleGetStudents(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   try {
-    const query = "SELECT * FROM users";
+    const query = "SELECT * FROM students";
 
     // Execute the query
     connection.query(query, (error, results) => {
@@ -16,7 +16,7 @@ export async function handleGetUsers(
         return next(error);
       }
 
-      // If successful, send the users data in the response
+      // If successful, send the students data in the response
       response.send(results);
     });
   } catch (err) {

@@ -2,11 +2,11 @@ import express, { NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
 
 // Handler imports
-import { handleAddUser } from "./handleAddUser";
-import { handleDeleteUser } from "./handleDeleteUser";
-import { handleGetUser } from "./handleGetUser";
-import { handleGetUsers } from "./handleGetUsers";
-import { handleEditUser } from "./handleEditUser";
+import { handleAddStudent } from "./handleAddStudent";
+import { handleDeleteStudent } from "./handleDeleteStudent";
+import { handleGetStudent } from "./handleGetStudent";
+import { handleGetStudents } from "./handleGetStudents";
+import { handleEditStudent } from "./handleEditStudent";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -14,44 +14,44 @@ const jsonParser = bodyParser.json();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-// Route to add a new user
+// Route to add a new student
 router.post(
   "/add",
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleAddUser(request, response, next);
+    await handleAddStudent(request, response, next);
   }
 );
 
-// Route to edit a user by ID
+// Route to edit a student by ID
 router.put(
-  "/:user_id",
+  "/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleEditUser(request, response, next);
+    await handleEditStudent(request, response, next);
   }
 );
 
-// Route to delete a user by ID
+// Route to delete a student by ID
 router.delete(
-  "/:user_id",
+  "/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleDeleteUser(request, response, next);
+    await handleDeleteStudent(request, response, next);
   }
 );
 
-// Route to get a user by ID
+// Route to get a student by ID
 router.get(
-  "/:user_id",
+  "/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleGetUser(request, response, next);
+    await handleGetStudent(request, response, next);
   }
 );
 
-// Route to get all users
+// Route to get all students
 router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleGetUsers(request, response, next);
+    await handleGetStudents(request, response, next);
   }
 );
 

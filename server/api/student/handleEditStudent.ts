@@ -2,26 +2,26 @@ import { NextFunction, Request, Response } from 'express';
 import connection from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditUser(
+export async function handleEditStudent(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   try {
-    // Extract user ID from request parameters
-    const user_id: string = request.params.user_id;
+    // Extract student ID from request parameters
+    const student_id: string = request.params.student_id;
 
-    // Extract updated user data from request body
+    // Extract updated student data from request body
     const { student_name, parent_name, phone_number } = request.body;
 
-    // Query to update user data in the database
+    // Query to update student data in the database
     const updateQuery =
-      'UPDATE users SET student_name = ?, parent_name = ?, phone_number = ?, email = ? WHERE id = ?';
+      'UPDATE students SET student_name = ?, parent_name = ?, phone_number = ?, email = ? WHERE id = ?';
 
-    // Execute the query with user data and user ID as parameters
+    // Execute the query with student data and student ID as parameters
     connection.query(
       updateQuery,
-      [student_name, parent_name, phone_number, user_id],
+      [student_name, parent_name, phone_number, student_id],
       (updateError, updateResults) => {
         if (updateError) {
           // If there's an error, pass it to the error handling middleware
@@ -31,12 +31,12 @@ export async function handleEditUser(
         // Check if the update query affected any rows
         const updateResultsJson: any = updateResults;
         if (updateResultsJson.affectedRows === 0) {
-          return response.status(404).json({ message: 'User not found' });
+          return response.status(404).json({ message: 'Student not found' });
         }
 
-        // Fetch the updated user record from the database
-        const selectQuery = 'SELECT * FROM users WHERE id = ?';
-        connection.query(selectQuery, [user_id], (selectError, selectResults: RowDataPacket[]) => {
+        // Fetch the updated student record from the database
+        const selectQuery = 'SELECT * FROM students WHERE id = ?';
+        connection.query(selectQuery, [student_id], (selectError, selectResults: RowDataPacket[]) => {
           if (selectError) {
             // Handle error
             return next(selectError);
@@ -46,8 +46,8 @@ export async function handleEditUser(
           if (selectResults.length > 0) {
             response.send(selectResults[0]);
           } else {
-            // If no user is found with the provided ID, return a 404 response
-            response.status(404).json({ message: 'User not found' });
+            // If no student is found with the provided ID, return a 404 response
+            response.status(404).json({ message: 'Student not found' });
           }
         });
       }

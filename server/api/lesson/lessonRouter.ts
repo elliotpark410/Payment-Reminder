@@ -48,9 +48,9 @@ router.get(
   }
 );
 
-// Route to get all lessons
+// Route to get lessons for a student
 router.get(
-  "/",
+  "/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleGetLessons(request, response, next);
   }

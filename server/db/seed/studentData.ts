@@ -1,7 +1,7 @@
 import connection from '../connection';
 
-export function seedUsers() {
-  const usersData = [
+export function seedStudents() {
+  const studentsData = [
     {
       student_name: 'Soo Borson',
       phone_number: '206-406-7645',
@@ -164,7 +164,7 @@ export function seedUsers() {
     },
   ];
 
-  for (const user of usersData) {
-    connection.query('INSERT IGNORE INTO users SET ?', user);
+  for (const student of studentsData) {
+    connection.query('INSERT IGNORE INTO students SET ?', student);
   }
 }

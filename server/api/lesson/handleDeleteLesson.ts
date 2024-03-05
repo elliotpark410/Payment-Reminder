@@ -10,7 +10,7 @@ export async function handleDeleteLesson(
     // Extract lesson ID from request parameters
     const lesson_id: string = request.params.lesson_id;
 
-    // Query to delete user from the database
+    // Query to delete lesson from the database
     const query = "DELETE FROM lessons WHERE id = ?";
 
     // Execute the delete query with lesson ID as parameter

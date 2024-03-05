@@ -6,7 +6,7 @@ dotenv.config();
 export function createTables() {
   const sqlQueries = [
     `
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS students (
       id SERIAL PRIMARY KEY,
       student_name VARCHAR(255) UNIQUE NOT NULL,
       parent_name VARCHAR(255),
@@ -21,7 +21,7 @@ export function createTables() {
       number_of_lessons_in_subscription INT,
       total_number_of_lessons INT UNSIGNED,
       lesson_date DATE,
-      FOREIGN KEY (student_name) REFERENCES users(student_name)
+      FOREIGN KEY (student_name) REFERENCES students(student_name)
     )`,
 
     `CREATE TABLE IF NOT EXISTS texts (
@@ -29,7 +29,7 @@ export function createTables() {
       student_name VARCHAR(255) NOT NULL,
       date DATE,
       message TEXT,
-      FOREIGN KEY (student_name) REFERENCES users(student_name)
+      FOREIGN KEY (student_name) REFERENCES students(student_name)
     )`,
   ];
 
