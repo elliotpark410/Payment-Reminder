@@ -7,6 +7,7 @@ import { handleDeleteLesson } from "./handleDeleteLesson";
 import { handleEditLesson } from "./handleEditLesson";
 import { handleGetLesson } from "./handleGetLesson";
 import { handleGetLessons } from "./handleGetLessons";
+import { handleGetStudentLessons } from "./handleGetStudentLessons";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -48,11 +49,19 @@ router.get(
   }
 );
 
+// Route to get all students
+router.get(
+  "/",
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleGetLessons(request, response, next);
+  }
+);
+
 // Route to get lessons for a student
 router.get(
   "/student/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleGetLessons(request, response, next);
+    await handleGetStudentLessons(request, response, next);
   }
 );
 
