@@ -156,6 +156,12 @@ export function seedUsers() {
       phone_number: '949-233-0606',
       email: 'caldarella13127@yahoo.com',
     },
+    {
+      student_name: 'Jeffrey Eng',
+      parent_name: 'Charlene Srivastava',
+      phone_number: '650-283-5909',
+      email: 'chargeng@gmail.com',
+    },
   ];
 
   for (const user of usersData) {
