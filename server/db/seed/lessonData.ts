@@ -3,7 +3,7 @@ import connection from '../connection';
 export function seedLessons() {
   const lessonsData = [
     {
-      student_name: 'Edbert Feng',
+      student_id: 1,
       subscription_price: 100,
       number_of_lessons_in_subscription: 13,
       total_number_of_lessons: 26,

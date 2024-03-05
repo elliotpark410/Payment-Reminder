@@ -4,7 +4,7 @@ export function seedTexts() {
   const textsData = [
     // Insert text data here
     {
-      student_name: 'Leah Feigenbaum',
+      student_id: 2,
       date: '2024-02-23',
       message: 'Hello',
     },

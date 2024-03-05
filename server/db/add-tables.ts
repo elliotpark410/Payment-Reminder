@@ -16,20 +16,22 @@ export function createTables() {
 
     `CREATE TABLE IF NOT EXISTS lessons (
       id SERIAL PRIMARY KEY,
-      student_name VARCHAR(255) NOT NULL,
+      student_id BIGINT UNSIGNED NOT NULL,
       subscription_price INT UNSIGNED,
       number_of_lessons_in_subscription INT,
       total_number_of_lessons INT UNSIGNED,
       lesson_date DATE,
-      FOREIGN KEY (student_name) REFERENCES students(student_name)
+      FOREIGN KEY (student_id) REFERENCES students(id)
+      ON DELETE CASCADE
     )`,
 
     `CREATE TABLE IF NOT EXISTS texts (
       id SERIAL PRIMARY KEY,
-      student_name VARCHAR(255) NOT NULL,
+      student_id BIGINT UNSIGNED NOT NULL,
       date DATE,
       message TEXT,
-      FOREIGN KEY (student_name) REFERENCES students(student_name)
+      FOREIGN KEY (student_id) REFERENCES students(id)
+      ON DELETE CASCADE
     )`,
   ];
 
