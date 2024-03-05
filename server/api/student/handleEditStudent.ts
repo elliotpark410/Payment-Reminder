@@ -12,7 +12,7 @@ export async function handleEditStudent(
     const student_id: string = request.params.student_id;
 
     // Extract updated student data from request body
-    const { student_name, parent_name, phone_number } = request.body;
+    const { student_name, parent_name, phone_number, email } = request.body;
 
     // Query to update student data in the database
     const updateQuery =
@@ -21,7 +21,7 @@ export async function handleEditStudent(
     // Execute the query with student data and student ID as parameters
     connection.query(
       updateQuery,
-      [student_name, parent_name, phone_number, student_id],
+      [student_name, parent_name, phone_number, email, student_id],
       (updateError, updateResults) => {
         if (updateError) {
           // If there's an error, pass it to the error handling middleware
