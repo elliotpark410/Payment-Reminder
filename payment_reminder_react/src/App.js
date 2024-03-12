@@ -10,10 +10,20 @@ function App() {
     <div className="app">
       <Header />
       <div className="content">
-        <StudentInfo />
-        <LessonNumber />
-        <LessonHistory />
-        <Reminder />
+        <div className="grid-container">
+          <div className="grid-item">
+            <StudentInfo />
+          </div>
+          <div className="grid-item">
+            <LessonNumber />
+          </div>
+          <div className="grid-item">
+            <LessonHistory />
+          </div>
+          <div className="grid-item">
+            <Reminder />
+          </div>
+        </div>
       </div>
     </div>
   );
