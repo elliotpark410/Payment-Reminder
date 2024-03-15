@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-function Reminder() {
-  const sendTextReminder = () => {
-    // Logic to send text reminder
-  };
+function StudentInfo() {
+  const [studentData, setStudentData] = useState(null);
+
+  useEffect(() => {
+    // Fetch student data from the server
+    fetch('/api/student')
+      .then(response => response.json())
+      .then(data => setStudentData(data))
+      .catch(error => console.error('Error fetching student data:', error));
+  }, []);
 
   return (
-    <div className="reminder">
-      <h2>Reminder</h2>
-      <button onClick={sendTextReminder}>Send Text</button>
+    <div className="student-info">
+      {studentData ? (
+        <>
+          <p>Student Name: {studentData.studentName}</p>
+          <p>Parent Name: {studentData.parentName}</p>
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+      <button>Edit</button>
     </div>
   );
 }
 
-export default Reminder;
+export default StudentInfo;

@@ -7,7 +7,6 @@ function LessonHistory() {
 
   return (
     <div className="lesson-history">
-      <h2>Lesson History</h2>
       <button onClick={showHistory}>History</button>
     </div>
   );

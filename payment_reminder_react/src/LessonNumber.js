@@ -15,7 +15,6 @@ function LessonNumber() {
 
   return (
     <div className="lesson-number">
-      <h2>Lesson Number</h2>
       <button onClick={decrementLesson}>-</button>
       <span>{lessonCount}</span>
       <button onClick={incrementLesson}>+</button>
