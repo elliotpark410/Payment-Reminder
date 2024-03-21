@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { host } from './lib/constants';
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -12,12 +12,9 @@ function App() {
 
   const fetchData = async () => {
     try {
-      // Simulated data for demonstration
-      const mockData = [
-        { id: 1, name: 'John Doe', parentName: 'Jane Doe', lessonNumber: 5, lessonHistory: 'History...', reminder: 'Reminder...' },
-        { id: 2, name: 'Jane Smith', parentName: 'John Smith', lessonNumber: 3, lessonHistory: 'History...', reminder: 'Reminder...' }
-      ];
-      setStudents(mockData);
+      const response = await fetch(`${host}/student/`);
+      const data = await response.json();
+      setStudents(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -31,6 +28,11 @@ function App() {
   const handleMinusClick = (index) => {
     // Implement logic for decreasing lesson number
     console.log('Minus clicked for student', index);
+  };
+
+  const handleLessonNumberChange = (index) => {
+    // Implement logic for decreasing lesson number
+    console.log('Lesson number change clicked for student', index);
   };
 
   const handleHistoryClick = (student) => {
@@ -52,7 +54,6 @@ function App() {
     // Implement logic for viewing all lessons
   };
 
-
   return (
     <Container>
       <Row className="mt-5">
@@ -63,38 +64,74 @@ function App() {
           <Button variant="primary">Add Student</Button>
         </Col>
         <Col className="text-left">
-          <Button variant="secondary" onClick={handleAllLessons}>All Lessons</Button>
+          <Button variant="secondary" onClick={handleAllLessons}>
+            All Lessons
+          </Button>
         </Col>
       </Row>
       {students.map((student, index) => (
         <Row className="mt-3" key={student.id}>
           <Col>
             <div>
-              <Button variant="outline-info" onClick={() => handleEditClick(student)}>Edit</Button>
+              <Button
+                variant="outline-info"
+                onClick={() => handleEditClick(student)}
+              >
+                Edit
+              </Button>
             </div>
           </Col>
           <Col>
             <div>
-              <p>Student: {student.name}</p>
-              <p className="ml-3">Parent: {student.parentName}</p>
+              <p>Student: {student.student_name}</p>
+              <p className="ml-3">Parent: {student.parent_name}</p>
             </div>
           </Col>
           <Col>
-            <div>
-              <Button variant="outline-secondary" onClick={() => handleMinusClick(index)}>-</Button>
-              <span className="ml-2 mr-2">{student.lessonNumber}</span>
-              <Button variant="outline-secondary" onClick={() => handlePlusClick(index)}>+</Button>
+            <div className="d-flex align-items-center">
+              <Button
+                variant="outline-secondary"
+                onClick={() => handleMinusClick(index)}
+              >
+                -
+              </Button>
+
+              <input
+                type="text"
+                className="form-control"
+                style={{ width: '40px', margin: '0 10px' }}
+                value={student.lessonNumber}
+                onChange={(e) =>
+                  handleLessonNumberChange(e.target.value, index)
+                }
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={() => handlePlusClick(index)}
+              >
+                +
+              </Button>
             </div>
           </Col>
 
           <Col>
             <div>
-              <Button variant="outline-primary" onClick={() => handleHistoryClick(student)}>View History</Button>
+              <Button
+                variant="outline-primary"
+                onClick={() => handleHistoryClick(student)}
+              >
+                View History
+              </Button>
             </div>
           </Col>
           <Col>
             <div>
-              <Button variant="outline-danger" onClick={() => handleReminderClick(student)}>Send Reminder</Button>
+              <Button
+                variant="outline-danger"
+                onClick={() => handleReminderClick(student)}
+              >
+                Send Reminder
+              </Button>
             </div>
           </Col>
         </Row>
