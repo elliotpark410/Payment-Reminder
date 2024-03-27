@@ -137,7 +137,7 @@ function App() {
           <Col>
             <div>
               <Button
-                variant="outline-danger"
+                variant="outline-success"
                 onClick={() => handleReminderClick(student)}
               >
                 Send Reminder
