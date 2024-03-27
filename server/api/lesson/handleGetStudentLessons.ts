@@ -10,7 +10,12 @@ export async function handleGetStudentLessons(
     // Extract student ID from request parameters
     const student_id: string = request.params.student_id;
 
-    const selectQuery = "SELECT * FROM lessons WHERE student_id = ?";
+    const selectQuery = `
+    SELECT lessons.*, students.student_name
+    FROM lessons
+    INNER JOIN students ON lessons.student_id = students.id
+    WHERE lessons.student_id = ?
+  `;
 
     // Execute the query
     connection.query(selectQuery, [student_id], (error, results) => {

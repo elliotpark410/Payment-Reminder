@@ -2,13 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from './lib/constants';
 import EditStudent from './EditStudent';
 import AddStudent from './AddStudent';
 import DeleteStudent from './DeleteStudent';
 import GetStudentLessons from './GetStudentLessons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import GetAllLessons from './GetAllLessons';
+
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -17,6 +19,7 @@ function App() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [studentId, setStudentId] = useState(null);
+  const [showAllLessons, setShowAllLessons] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -76,7 +79,7 @@ function App() {
   };
 
   const handleAllLessons = async () => {
-    // Implement logic for viewing all lessons
+    setShowAllLessons(true);
   };
 
   return (
@@ -195,6 +198,13 @@ function App() {
         <GetStudentLessons
           studentId={studentId}
           onClose={handleCloseHistory}
+        />
+      )}
+
+      {/* Conditional rendering of GetAllLessons component */}
+      {showAllLessons && (
+        <GetAllLessons
+          onClose={() => setShowAllLessons(false)}
         />
       )}
     </Container>

@@ -1,16 +1,16 @@
-// GetStudentLessons.js
+// GetAllLessons.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { host } from './lib/constants';
 import { Modal, Button } from 'react-bootstrap';
+import { host } from './lib/constants';
 
-function GetStudentLessons({ studentId, onClose }) {
+function GetAllLessons({ onClose }) {
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const response = await axios.get(`${host}/lesson/student/${studentId}`);
+        const response = await axios.get(`${host}/lesson/`);
         const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
         const formattedLessons = sortedLessons.map((lesson, index) => ({
           ...lesson,
@@ -28,7 +28,7 @@ function GetStudentLessons({ studentId, onClose }) {
     };
 
     fetchLessons();
-  }, [studentId, onClose]);
+  }, []);
 
   return (
     <Modal
@@ -40,7 +40,7 @@ function GetStudentLessons({ studentId, onClose }) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Lessons
+          All Lessons
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -72,4 +72,4 @@ function GetStudentLessons({ studentId, onClose }) {
   );
 }
 
-export default GetStudentLessons;
+export default GetAllLessons;

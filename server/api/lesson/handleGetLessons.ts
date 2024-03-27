@@ -7,7 +7,11 @@ export async function handleGetLessons(
   next: NextFunction
 ) {
   try {
-    const query = "SELECT * FROM lessons";
+    const query = `
+    SELECT lessons.*, students.student_name
+    FROM lessons
+    INNER JOIN students ON lessons.student_id = students.id
+    `;
 
     // Execute the query
     connection.query(query, (error, results) => {
