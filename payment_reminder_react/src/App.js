@@ -6,6 +6,7 @@ import { host } from './lib/constants';
 import EditStudent from './EditStudent';
 import AddStudent from './AddStudent';
 import DeleteStudent from './DeleteStudent';
+import GetStudentLessons from './GetStudentLessons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,7 +16,7 @@ function App() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [deleteStudent, setDeleteStudent] = useState(null);
-
+  const [studentId, setStudentId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -63,7 +64,11 @@ function App() {
   };
 
   const handleHistoryClick = (student) => {
-    console.log('Viewing history for student', student);
+    setStudentId(student.id); // Set selected student ID for history
+  };
+
+  const handleCloseHistory = () => {
+    setStudentId(null); // Clear selected student ID for history
   };
 
   const handleReminderClick = (student) => {
@@ -182,6 +187,14 @@ function App() {
             setStudents(updatedStudents);
             setDeleteStudent(null); // Close the modal after deleting
           }}
+        />
+      )}
+
+      {/* Conditional rendering of GetStudentLessons component */}
+      {studentId && (
+        <GetStudentLessons
+          studentId={studentId}
+          onClose={handleCloseHistory}
         />
       )}
     </Container>
