@@ -12,16 +12,16 @@ export async function handleEditStudent(
     const student_id: string = request.params.student_id;
 
     // Extract updated student data from request body
-    const { student_name, parent_name, phone_number, email } = request.body;
+    const { student_name, parent_name, phone_number, email, subscription_price, number_of_lessons_in_subscription } = request.body;
 
     // Query to update student data in the database
     const updateQuery =
-      'UPDATE students SET student_name = ?, parent_name = ?, phone_number = ?, email = ? WHERE id = ?';
+      'UPDATE students SET student_name = ?, parent_name = ?, phone_number = ?, email = ?, subscription_price = ?, number_of_lessons_in_subscription = ? WHERE id = ?';
 
     // Execute the query with student data and student ID as parameters
     connection.query(
       updateQuery,
-      [student_name, parent_name, phone_number, email, student_id],
+      [student_name, parent_name, phone_number, email, subscription_price, number_of_lessons_in_subscription, student_id],
       (updateError, updateResults) => {
         if (updateError) {
           // If there's an error, pass it to the error handling middleware
