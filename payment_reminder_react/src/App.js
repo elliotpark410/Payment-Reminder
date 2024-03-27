@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { host } from './lib/constants';
+import EditStudent from './EditStudent';
 
 function App() {
   const [students, setStudents] = useState([]);
+  const [editStudent, setEditStudent] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -14,10 +17,21 @@ function App() {
     try {
       const response = await fetch(`${host}/student/`);
       const data = await response.json();
-      setStudents(data);
+      // Sort the students array alphabetically by student name
+      const sortedStudents = data.sort((a, b) =>
+      a.student_name.localeCompare(b.student_name)
+    );
+      setStudents(sortedStudents);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  };
+
+  const handleEditClick = (student) => {
+    // Implement logic for editing student info
+    setEditStudent(student);
+    setShowEditForm(true);
+    console.log('Editing student info for student', student);
   };
 
   const handlePlusClick = (index) => {
@@ -45,11 +59,6 @@ function App() {
     console.log('Sending reminder for student', student);
   };
 
-  const handleEditClick = (student) => {
-    // Implement logic for editing student info
-    console.log('Editing student info for student', student);
-  };
-
   const handleAllLessons = async () => {
     // Implement logic for viewing all lessons
   };
@@ -70,19 +79,9 @@ function App() {
         </Col>
       </Row>
       {students.map((student, index) => (
-        <Row className="mt-3" key={student.id}>
+        <Row className="mt-3" key={student.id} style={{ borderBottom: index !== students.length - 1 ? '1px solid #ccc' : 'none' }}>
           <Col>
-            <div>
-              <Button
-                variant="outline-info"
-                onClick={() => handleEditClick(student)}
-              >
-                Edit
-              </Button>
-            </div>
-          </Col>
-          <Col>
-            <div>
+            <div onClick={()=> handleEditClick(student)} style={{ padding: '10px', cursor: 'pointer' }}>
               <p>Student: {student.student_name}</p>
               <p className="ml-3">Parent: {student.parent_name}</p>
             </div>
@@ -136,6 +135,13 @@ function App() {
           </Col>
         </Row>
       ))}
+
+      {showEditForm && (
+        <EditStudent
+          student={editStudent}
+          onClose={() => setShowEditForm(false)}
+        />
+      )}
     </Container>
   );
 }

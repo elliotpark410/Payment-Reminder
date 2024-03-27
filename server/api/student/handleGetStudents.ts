@@ -7,7 +7,12 @@ export async function handleGetStudents(
   next: NextFunction
 ) {
   try {
-    const query = "SELECT * FROM students";
+    const query = `
+    SELECT id, student_name, parent_name, phone_number, email,
+    subscription_price, number_of_lessons_in_subscription
+    FROM students`;
+
+
 
     // Execute the query
     connection.query(query, (error, results) => {

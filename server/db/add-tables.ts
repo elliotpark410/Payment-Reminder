@@ -11,15 +11,14 @@ export function createTables() {
       student_name VARCHAR(255) UNIQUE NOT NULL,
       parent_name VARCHAR(255),
       phone_number VARCHAR(20),
-      email VARCHAR(255)
+      email VARCHAR(255),
+      subscription_price INT UNSIGNED,
+      number_of_lessons_in_subscription INT
     )`,
 
     `CREATE TABLE IF NOT EXISTS lessons (
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,
-      subscription_price INT UNSIGNED,
-      number_of_lessons_in_subscription INT,
-      total_number_of_lessons INT UNSIGNED,
       lesson_date DATE,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE

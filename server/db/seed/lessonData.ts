@@ -4,10 +4,11 @@ export function seedLessons() {
   const lessonsData = [
     {
       student_id: 1,
-      subscription_price: 100,
-      number_of_lessons_in_subscription: 13,
-      total_number_of_lessons: 26,
       lesson_date: '2024-02-20',
+    },
+    {
+      student_id: 17,
+      lesson_date: '2024-03-25',
     },
   ];
 
