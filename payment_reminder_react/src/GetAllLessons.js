@@ -63,7 +63,7 @@ function GetAllLessons({ onClose }) {
               <th>Number</th>
               <th>Name</th>
               <th>Date</th>
-              <th></th>
+              <th>{/* Delete */}</th>
             </tr>
           </thead>
           <tbody>

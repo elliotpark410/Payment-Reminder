@@ -66,7 +66,7 @@ function App() {
     console.log('Lesson number change clicked for student', index);
   };
 
-  const handleHistoryClick = (student) => {
+  const handleStudentLessonsClick = (student) => {
     setStudentId(student.id); // Set selected student ID for history
   };
 
@@ -136,9 +136,9 @@ function App() {
             <div>
               <Button
                 variant="outline-primary"
-                onClick={() => handleHistoryClick(student)}
+                onClick={() => handleStudentLessonsClick(student)}
               >
-                View History
+                View Lessons
               </Button>
             </div>
           </Col>
