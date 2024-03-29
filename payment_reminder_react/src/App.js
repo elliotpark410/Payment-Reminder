@@ -94,14 +94,16 @@ function App() {
     return lessons.filter((lesson) => lesson.student_id === studentId).length;
   };
 
-  const handleAddLesson = () => {
+  const handleAddLesson = (student) => {
     setShowAddLessonModal(true);
-    setStudentId(studentId); 
+    setStudentId(student.id);
   };
 
   // Function to handle closing the Add Lesson modal
   const handleCloseAddLessonModal = () => {
+    console.log("Closing Add Lesson modal");
     setShowAddLessonModal(false);
+    setStudentId(null);
   };
 
   return (
@@ -144,7 +146,7 @@ function App() {
             <div>
               <Button
                 variant="outline-success"
-                onClick={handleAddLesson}
+                onClick={() => handleAddLesson(student)}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </Button>

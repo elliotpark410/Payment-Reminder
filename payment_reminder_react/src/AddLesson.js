@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import MyCalendar from './Calendar'; // Import your calendar component
 import axios from 'axios'; // Import Axios
+import { host } from './lib/constants';
 
 function AddLesson({ onClose, studentId }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false); // State to manage loading state
-
-  console.log("selectedDate")
-  console.log(selectedDate)
-  console.log("studentId")
-  console.log(studentId)
 
   // Function to handle saving the selected date
   const handleSave = async () => {
@@ -24,19 +20,17 @@ function AddLesson({ onClose, studentId }) {
       });
 
       // Make API call to add lesson using Axios
-      const response = await axios.post('/lesson/add', {
+      const response = await axios.post(`${host}/lesson/add`, {
         student_id: studentId,
         lesson_date: formattedDate
       });
 
-      // Check if request was successful
-      if (response.status === 200) {
-        console.log('Lesson added successfully');
-        onClose(); // Close the modal after saving
-        window.location.reload();
-      } else {
-        console.error('Failed to add lesson:', response.statusText);
-      }
+      console.log('Added lesson:', response.data);
+
+
+      onClose();
+      // Refresh the page after saving
+      window.location.reload();
     } catch (error) {
       console.error('Error adding lesson:', error);
     } finally {
