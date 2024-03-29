@@ -12,33 +12,33 @@ function GetStudentLessons({ studentId, studentName, onClose }) {
   const [lessonDate, setLessonDate] = useState('');
 
   useEffect(() => {
-    const fetchLessons = async () => {
-      try {
-        const response = await axios.get(`${host}/lesson/student/${studentId}`);
-        const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
-        const formattedLessons = sortedLessons.map((lesson, index) => ({
-          ...lesson,
-          lessonNumber: index + 1,
-          formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric'
-          })
-        }));
-        setLessons(formattedLessons);
-      } catch (error) {
-        console.error('Error fetching lessons:', error);
-      }
-    };
-
-    fetchLessons(); // Call fetchLessons directly inside useEffect
+    fetchLessons(); // eslint-disable-line react-hooks/exhaustive-deps
   }, [studentId]); // Include studentId in the dependency array
+
+  const fetchLessons = async () => {
+    try {
+      const response = await axios.get(`${host}/lesson/student/${studentId}`);
+      const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+      const formattedLessons = sortedLessons.map((lesson, index) => ({
+        ...lesson,
+        lessonNumber: index + 1,
+        formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        })
+      }));
+      setLessons(formattedLessons);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
+    }
+  };
 
   const handleDeleteLesson = async (lessonId) => {
     try {
       await axios.delete(`${host}/lesson/${lessonId}`);
       console.log(`Lesson with ID ${lessonId} deleted successfully`);
-      setLessons(lessons.filter(lesson => lesson.id !== lessonId));
+      fetchLessons(); // Fetch lessons after deleting
     } catch (error) {
       console.error('Error deleting lesson:', error);
     }
@@ -57,6 +57,7 @@ function GetStudentLessons({ studentId, studentName, onClose }) {
       setShowEditModal(false);
       setEditLesson(null);
       setLessonDate('');
+      fetchLessons(); // Fetch lessons after saving edit
     } catch (error) {
       console.error('Error updating lesson:', error);
     }
