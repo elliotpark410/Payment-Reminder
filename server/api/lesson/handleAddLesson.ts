@@ -11,23 +11,17 @@ export async function handleAddLesson(
     // Extract lesson data from request body
     const {
       student_id,
-      subscription_price,
-      number_of_lessons_in_subscription,
-      total_number_of_lessons,
       lesson_date,
     } = request.body;
 
     // Query to insert a new lesson into the lessons table
-    const insertQuery = `INSERT INTO lessons (student_id, subscription_price, number_of_lessons_in_subscription, total_number_of_lessons, lesson_date) VALUES (?, ?, ?, ?, ?)`;
+    const insertQuery = `INSERT INTO lessons (student_id, lesson_date) VALUES (?, ?)`;
 
     // Execute the insert query
     connection.query(
       insertQuery,
       [
         student_id,
-        subscription_price,
-        number_of_lessons_in_subscription,
-        total_number_of_lessons,
         lesson_date,
       ],
       (insertError, insertResults) => {
