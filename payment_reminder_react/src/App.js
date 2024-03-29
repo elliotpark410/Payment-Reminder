@@ -23,6 +23,7 @@ function App() {
   const [studentName, setStudentName] = useState('');
   const [lessons, setLessons] = useState([]);
   const [showAddLessonModal, setShowAddLessonModal] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
 
   useEffect(() => {
     fetchStudentData();
@@ -61,16 +62,23 @@ function App() {
     setShowEditForm(true);
   };
 
+  const handleEditStudentClose = () => {
+    setShowEditForm(false); // Close the modal
+    fetchStudentData(); // Refresh student data
+  };
+
   const handleAddClick = () => {
     setShowAddForm(true);
   };
 
   const handleAddStudent = (newStudent) => {
     setStudents([...students, newStudent]);
+    fetchStudentData(); // Refresh student data
   };
 
   const handleDeleteClick = (student) => {
     setDeleteStudent(student);
+    fetchStudentData(); // Refresh student data
   };
 
   const handleStudentLessonsClick = (student) => {
@@ -78,8 +86,9 @@ function App() {
     setStudentName(student.student_name);
   };
 
-  const handleCloseHistory = () => {
+  const handleCloseLessonHistory = () => {
     setStudentId(null); // Clear selected student ID for history
+    fetchLessonData(); // Refresh lesson data
   };
 
   const handleReminderClick = (student) => {
@@ -95,15 +104,16 @@ function App() {
   };
 
   const handleAddLesson = (student) => {
+    setSelectedStudentId(student.id);
     setShowAddLessonModal(true);
-    setStudentId(student.id);
   };
 
   // Function to handle closing the Add Lesson modal
   const handleCloseAddLessonModal = () => {
-    console.log("Closing Add Lesson modal");
+    console.log('Closing Add Lesson modal');
     setShowAddLessonModal(false);
-    setStudentId(null);
+    setSelectedStudentId(null);
+    fetchLessonData(); // Refresh lesson data
   };
 
   return (
@@ -154,9 +164,9 @@ function App() {
           </Col>
 
           <Col>
-            <div className="d-flex align-items-center border rounded p-2">
+            <div className="d-flex align-items-center">
               <div>
-                {getLessonCountForStudent(student.id)} /{' '}
+                <strong>{getLessonCountForStudent(student.id)}</strong> /{' '}
                 {student.number_of_lessons_in_subscription}
               </div>
             </div>
@@ -198,7 +208,7 @@ function App() {
       {showEditForm && (
         <EditStudent
           student={editStudent}
-          onClose={() => setShowEditForm(false)}
+          onClose={handleEditStudentClose}
         />
       )}
 
@@ -229,7 +239,7 @@ function App() {
         <GetStudentLessons
           studentId={studentId}
           studentName={studentName}
-          onClose={handleCloseHistory}
+          onClose={handleCloseLessonHistory}
         />
       )}
 
@@ -240,7 +250,10 @@ function App() {
 
       {/* Conditional rendering of AddLesson modal */}
       {showAddLessonModal && (
-        <AddLesson studentId={studentId} onClose={handleCloseAddLessonModal} />
+        <AddLesson
+          studentId={selectedStudentId}
+          onClose={handleCloseAddLessonModal}
+        />
       )}
     </Container>
   );

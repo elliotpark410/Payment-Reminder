@@ -27,8 +27,6 @@ function EditStudent({ student, onClose }) {
       const response = await axios.put(`${host}/student/${student.id}`, formData);
       console.log('Updated student data:', response.data);
       onClose();
-      // Refresh the page after saving
-      window.location.reload();
     } catch (error) {
       console.error('Error saving student data:', error);
     }

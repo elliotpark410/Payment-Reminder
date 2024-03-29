@@ -10,8 +10,6 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
       await axios.delete(`${host}/student/${student.id}`);
       console.log(`Student deleted successfully`);
       onDelete(student.id); // Inform the parent component about the deletion
-      // Refresh the page after saving
-      window.location.reload();
     } catch (error) {
       console.error('Error deleting student:', error);
       // Handle error here, if necessary

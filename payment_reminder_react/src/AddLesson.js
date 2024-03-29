@@ -29,8 +29,6 @@ function AddLesson({ onClose, studentId }) {
 
 
       onClose();
-      // Refresh the page after saving
-      window.location.reload();
     } catch (error) {
       console.error('Error adding lesson:', error);
     } finally {

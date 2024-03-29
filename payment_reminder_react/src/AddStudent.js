@@ -28,8 +28,6 @@ function AddStudent({ onClose, onAdd }) {
       console.log('Added student:', response.data);
       onAdd(response.data); // Pass the added student data to the parent component
       onClose();
-      // Refresh the page after saving
-      window.location.reload();
     } catch (error) {
       console.error('Error adding student:', error);
     }
