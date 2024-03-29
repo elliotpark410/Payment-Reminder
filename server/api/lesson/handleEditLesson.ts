@@ -12,16 +12,16 @@ export async function handleEditLesson(
     const lesson_id: string = request.params.lesson_id;
 
     // Extract updated lesson data from request body
-    const { subscription_price, number_of_lessons_in_subscription, total_number_of_lessons, lesson_date } = request.body;
+    const { lesson_date } = request.body;
 
     // Query to update lesson data in the database
     const updateQuery =
-      'UPDATE lessons SET subscription_price = ?, number_of_lessons_in_subscription = ?, total_number_of_lessons = ?, lesson_date = ? WHERE id = ?';
+      'UPDATE lessons SET lesson_date = ? WHERE id = ?';
 
     // Execute the query with lesson data and lesson ID as parameters
     connection.query(
       updateQuery,
-      [subscription_price, number_of_lessons_in_subscription, total_number_of_lessons, lesson_date, lesson_id],
+      [lesson_date, lesson_id],
       (updateError, updateResults) => {
         if (updateError) {
           // If there's an error, pass it to the error handling middleware

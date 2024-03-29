@@ -1,13 +1,15 @@
-// GetStudentLessons.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { host } from './lib/constants';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function GetStudentLessons({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
+  const [editLesson, setEditLesson] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [lessonDate, setLessonDate] = useState('');
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -29,17 +31,34 @@ function GetStudentLessons({ studentId, studentName, onClose }) {
       }
     };
 
-    fetchLessons();
-  }, [studentId, onClose]);
+    fetchLessons(); // Call fetchLessons directly inside useEffect
+  }, [studentId]); // Include studentId in the dependency array
 
   const handleDeleteLesson = async (lessonId) => {
     try {
       await axios.delete(`${host}/lesson/${lessonId}`);
       console.log(`Lesson with ID ${lessonId} deleted successfully`);
-      setLessons(lessons.filter(lesson => lesson.id !== lessonId)); // Remove the deleted lesson from the state
+      setLessons(lessons.filter(lesson => lesson.id !== lessonId));
     } catch (error) {
       console.error('Error deleting lesson:', error);
-      // Handle error here, if necessary
+    }
+  };
+
+  const handleEditLesson = (lesson) => {
+    setEditLesson(lesson);
+    setLessonDate(new Date(lesson.lesson_date).toISOString().slice(0, 10));
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      const response = await axios.put(`${host}/lesson/${editLesson.id}`, { lesson_date: lessonDate });
+      console.log('Lesson updated successfully:', response.data);
+      setShowEditModal(false);
+      setEditLesson(null);
+      setLessonDate('');
+    } catch (error) {
+      console.error('Error updating lesson:', error);
     }
   };
 
@@ -53,7 +72,7 @@ function GetStudentLessons({ studentId, studentName, onClose }) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-         {studentName}'s Lessons
+          {studentName}'s Lessons
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -63,18 +82,19 @@ function GetStudentLessons({ studentId, studentName, onClose }) {
               <th>Number</th>
               <th>Date</th>
               <th>{/* Delete */}</th>
-
             </tr>
           </thead>
           <tbody>
             {lessons.map((lesson) => (
               <tr key={lesson.id}>
                 <td>{lesson.lessonNumber}</td>
-                <td>{lesson.formattedDate}</td>
+                <td onClick={() => handleEditLesson(lesson)}>
+                  {lesson.formattedDate}
+                </td>
                 <td>
                   <Button
                     variant="outline-danger"
-                    onClick={() => handleDeleteLesson(lesson.id)} // Pass the lesson ID to delete directly
+                    onClick={() => handleDeleteLesson(lesson.id)}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </Button>
@@ -89,6 +109,35 @@ function GetStudentLessons({ studentId, studentName, onClose }) {
           Close
         </Button>
       </Modal.Footer>
+
+      {/* Edit Lesson Modal */}
+      <Modal
+        show={showEditModal}
+        onHide={() => setShowEditModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Lesson</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="lessonDate">
+            <Form.Label>Lesson Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={lessonDate}
+              onChange={(e) => setLessonDate(e.target.value)}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleSaveEdit}>
+            Save
+          </Button>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Modal>
   );
 }
