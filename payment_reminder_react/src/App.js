@@ -22,7 +22,6 @@ function App() {
   const [showAllLessons, setShowAllLessons] = useState(false);
   const [studentName, setStudentName] = useState('');
   const [lessons, setLessons] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [showAddLessonModal, setShowAddLessonModal] = useState(false);
 
   useEffect(() => {
@@ -97,6 +96,7 @@ function App() {
 
   const handleAddLesson = () => {
     setShowAddLessonModal(true);
+    setStudentId(studentId); 
   };
 
   // Function to handle closing the Add Lesson modal
@@ -238,7 +238,7 @@ function App() {
 
       {/* Conditional rendering of AddLesson modal */}
       {showAddLessonModal && (
-        <AddLesson onClose={handleCloseAddLessonModal} />
+        <AddLesson studentId={studentId} onClose={handleCloseAddLessonModal} />
       )}
     </Container>
   );

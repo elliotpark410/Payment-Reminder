@@ -21,7 +21,7 @@
 }
 
 .react-calendar__tile--now {
-  background-color: #c6d9f5; /* Set background color for today's date */
+  background-color: #d1def0; /* Set background color for today's date */
 }
 
 .react-calendar__tile--now:active,
