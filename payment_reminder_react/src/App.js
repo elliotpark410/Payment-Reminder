@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { host } from './lib/constants';
 import EditStudent from './EditStudent';
 import AddStudent from './AddStudent';
 import DeleteStudent from './DeleteStudent';
 import GetStudentLessons from './GetStudentLessons';
 import GetAllLessons from './GetAllLessons';
-
+import AddLesson from './AddLesson';
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -20,20 +20,40 @@ function App() {
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [studentId, setStudentId] = useState(null);
   const [showAllLessons, setShowAllLessons] = useState(false);
+  const [studentName, setStudentName] = useState('');
+  const [lessons, setLessons] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showAddLessonModal, setShowAddLessonModal] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    fetchStudentData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchStudentData = async () => {
     try {
       const response = await fetch(`${host}/student/`);
       const data = await response.json();
       // Sort the students array alphabetically by student name
-      const sortedStudents = data.sort((a, b) => a.student_name.localeCompare(b.student_name));
+      const sortedStudents = data.sort((a, b) =>
+        a.student_name.localeCompare(b.student_name)
+      );
       setStudents(sortedStudents);
     } catch (error) {
       console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLessonData();
+  }, []);
+
+  const fetchLessonData = async () => {
+    try {
+      const response = await fetch(`${host}/lesson/`);
+      const lessonsData = await response.json();
+      setLessons(lessonsData);
+    } catch (error) {
+      console.error('Error fetching lessons:', error);
     }
   };
 
@@ -54,20 +74,9 @@ function App() {
     setDeleteStudent(student);
   };
 
-  const handlePlusClick = (index) => {
-    console.log('Plus clicked for student', index);
-  };
-
-  const handleMinusClick = (index) => {
-    console.log('Minus clicked for student', index);
-  };
-
-  const handleLessonNumberChange = (index) => {
-    console.log('Lesson number change clicked for student', index);
-  };
-
   const handleStudentLessonsClick = (student) => {
     setStudentId(student.id); // Set selected student ID for history
+    setStudentName(student.student_name);
   };
 
   const handleCloseHistory = () => {
@@ -82,6 +91,19 @@ function App() {
     setShowAllLessons(true);
   };
 
+  const getLessonCountForStudent = (studentId) => {
+    return lessons.filter((lesson) => lesson.student_id === studentId).length;
+  };
+
+  const handleAddLesson = () => {
+    setShowAddLessonModal(true);
+  };
+
+  // Function to handle closing the Add Lesson modal
+  const handleCloseAddLessonModal = () => {
+    setShowAddLessonModal(false);
+  };
+
   return (
     <Container>
       <Row className="mt-5">
@@ -89,7 +111,9 @@ function App() {
           <h1>Payment Reminder</h1>
         </Col>
         <Col className="text-left">
-          <Button variant="primary" onClick={handleAddClick}>Add Student</Button>
+          <Button variant="primary" onClick={handleAddClick}>
+            Add Student
+          </Button>
         </Col>
         <Col className="text-left">
           <Button variant="secondary" onClick={handleAllLessons}>
@@ -98,44 +122,48 @@ function App() {
         </Col>
       </Row>
       {students.map((student, index) => (
-        <Row className="mt-3" key={student.id} style={{ borderBottom: index !== students.length - 1 ? '1px solid #ccc' : 'none' }}>
+        <Row
+          className="mt-3"
+          key={student.id}
+          style={{
+            borderBottom:
+              index !== students.length - 1 ? '1px solid #ccc' : 'none',
+          }}
+        >
           <Col>
-            <div onClick={()=> handleEditClick(student)} style={{ padding: '10px', cursor: 'pointer' }}>
+            <div
+              onClick={() => handleEditClick(student)}
+              style={{ padding: '10px', cursor: 'pointer' }}
+            >
               <p>Student: {student.student_name}</p>
               <p className="ml-3">Parent: {student.parent_name}</p>
-            </div>
-          </Col>
-          <Col>
-            <div className="d-flex align-items-center">
-              <Button
-                variant="outline-secondary"
-                onClick={() => handleMinusClick(index)}
-              >
-                -
-              </Button>
-
-              <input
-                type="text"
-                className="form-control"
-                style={{ width: '40px', margin: '0 10px' }}
-                value={student.lessonNumber}
-                onChange={(e) =>
-                  handleLessonNumberChange(e.target.value, index)
-                }
-              />
-              <Button
-                variant="outline-secondary"
-                onClick={() => handlePlusClick(index)}
-              >
-                +
-              </Button>
             </div>
           </Col>
 
           <Col>
             <div>
               <Button
-                variant="outline-primary"
+                variant="outline-success"
+                onClick={handleAddLesson}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </Button>
+            </div>
+          </Col>
+
+          <Col>
+            <div className="d-flex align-items-center border rounded p-2">
+              <div>
+                {getLessonCountForStudent(student.id)} /{' '}
+                {student.number_of_lessons_in_subscription}
+              </div>
+            </div>
+          </Col>
+
+          <Col>
+            <div>
+              <Button
+                variant="outline-secondary"
                 onClick={() => handleStudentLessonsClick(student)}
               >
                 View Lessons
@@ -145,7 +173,7 @@ function App() {
           <Col>
             <div>
               <Button
-                variant="outline-success"
+                variant="outline-primary"
                 onClick={() => handleReminderClick(student)}
               >
                 Send Reminder
@@ -158,11 +186,10 @@ function App() {
                 variant="outline-danger"
                 onClick={() => handleDeleteClick(student)}
               >
-                 <FontAwesomeIcon icon={faTrash} />
+                <FontAwesomeIcon icon={faTrash} />
               </Button>
             </div>
           </Col>
-
         </Row>
       ))}
 
@@ -186,7 +213,9 @@ function App() {
           onCancel={() => setDeleteStudent(null)}
           onDelete={(deletedStudentId) => {
             // Remove the deleted student from the state
-            const updatedStudents = students.filter(student => student.id !== deletedStudentId);
+            const updatedStudents = students.filter(
+              (student) => student.id !== deletedStudentId
+            );
             setStudents(updatedStudents);
             setDeleteStudent(null); // Close the modal after deleting
           }}
@@ -197,15 +226,19 @@ function App() {
       {studentId && (
         <GetStudentLessons
           studentId={studentId}
+          studentName={studentName}
           onClose={handleCloseHistory}
         />
       )}
 
       {/* Conditional rendering of GetAllLessons component */}
       {showAllLessons && (
-        <GetAllLessons
-          onClose={() => setShowAllLessons(false)}
-        />
+        <GetAllLessons onClose={() => setShowAllLessons(false)} />
+      )}
+
+      {/* Conditional rendering of AddLesson modal */}
+      {showAddLessonModal && (
+        <AddLesson onClose={handleCloseAddLessonModal} />
       )}
     </Container>
   );

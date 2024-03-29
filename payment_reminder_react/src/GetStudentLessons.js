@@ -6,7 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function GetStudentLessons({ studentId, onClose }) {
+function GetStudentLessons({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function GetStudentLessons({ studentId, onClose }) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Lessons
+         {studentName}'s Lessons
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -61,7 +61,6 @@ function GetStudentLessons({ studentId, onClose }) {
           <thead>
             <tr>
               <th>Number</th>
-              <th>Name</th>
               <th>Date</th>
               <th>{/* Delete */}</th>
 
@@ -71,7 +70,6 @@ function GetStudentLessons({ studentId, onClose }) {
             {lessons.map((lesson) => (
               <tr key={lesson.id}>
                 <td>{lesson.lessonNumber}</td>
-                <td>{lesson.student_name}</td>
                 <td>{lesson.formattedDate}</td>
                 <td>
                   <Button

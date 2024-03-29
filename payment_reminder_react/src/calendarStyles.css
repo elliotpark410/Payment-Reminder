@@ -1,0 +1,30 @@
+.react-calendar {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.react-calendar__tile {
+  font-size: 20px;
+  background: white;
+  line-height: 1.125em;
+  padding: 25px;
+  border: 0.1px solid lightgray !important;
+}
+
+.react-calendar__navigation button {
+  font-size: 24px;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: black; /* Set font color for weekends */
+}
+
+.react-calendar__tile--now {
+  background-color: #c6d9f5; /* Set background color for today's date */
+}
+
+.react-calendar__tile--now:active,
+.react-calendar__tile--now:hover {
+  background-color: #e6e6e6 !important; /* Set background color for today's date when hovered */
+}
