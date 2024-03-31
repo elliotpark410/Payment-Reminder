@@ -12,12 +12,12 @@ import AddLesson from './components/Lesson/AddLesson';
 
 function App() {
   const [students, setStudents] = useState([]);
-  const [lessons, setLessons] = useState([]); // Added lessons state variable
+  const [lessons, setLessons] = useState([]);
   const [editStudent, setEditStudent] = useState(null);
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [studentId, setStudentId] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
+  const [showAddStudentForm, setShowAddStudentForm] = useState(false);
+  const [showEditStudentForm, setShowEditStudentForm] = useState(false);
   const [showAllLessons, setShowAllLessons] = useState(false);
   const [showAddLessonModal, setShowAddLessonModal] = useState(false);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
@@ -50,12 +50,12 @@ function App() {
   };
 
   const handleAddClick = () => {
-    setShowAddForm(true);
+    setShowAddStudentForm(true);
   };
 
   const handleEditClick = (student) => {
     setEditStudent(student);
-    setShowEditForm(true);
+    setShowEditStudentForm(true);
   };
 
   const handleDeleteClick = (student) => {
@@ -119,22 +119,22 @@ function App() {
         getLessonCountForStudent={getLessonCountForStudent}
         handleAddLesson={handleAddLesson}
       />
-      {showEditForm && (
+      {showEditStudentForm && (
         <EditStudent
           student={editStudent}
-          onClose={() => setShowEditForm(false)}
+          onClose={() => setShowEditStudentForm(false)}
           onUpdate={() => {
             fetchStudentData();
-            setShowEditForm(false);
+            setShowEditStudentForm(false);
           }}
         />
       )}
-      {showAddForm && (
+      {showAddStudentForm && (
         <AddStudent
-          onClose={() => setShowAddForm(false)}
+          onClose={() => setShowAddStudentForm(false)}
           onAdd={() => {
             fetchStudentData();
-            setShowAddForm(false);
+            setShowAddStudentForm(false);
           }}
         />
       )}
