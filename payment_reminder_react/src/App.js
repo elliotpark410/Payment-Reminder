@@ -1,60 +1,56 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { host } from './lib/constants';
-import EditStudent from './EditStudent';
-import AddStudent from './AddStudent';
-import DeleteStudent from './DeleteStudent';
-import GetStudentLessons from './GetStudentLessons';
-import GetAllLessons from './GetAllLessons';
-import AddLesson from './AddLesson';
+import GetAllStudents from './components/Student/GetAllStudents';
+import EditStudent from './components/Student/EditStudent';
+import AddStudent from './components/Student/AddStudent';
+import DeleteStudent from './components/Student/DeleteStudent';
+import GetStudentLesson from './components/Lesson/GetStudentLesson';
+import GetAllLessons from './components/Lesson/GetAllLessons';
+import AddLesson from './components/Lesson/AddLesson';
 
 function App() {
   const [students, setStudents] = useState([]);
+  const [lessons, setLessons] = useState([]); // Added lessons state variable
   const [editStudent, setEditStudent] = useState(null);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false);
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [studentId, setStudentId] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [showAllLessons, setShowAllLessons] = useState(false);
-  const [studentName, setStudentName] = useState('');
-  const [lessons, setLessons] = useState([]);
   const [showAddLessonModal, setShowAddLessonModal] = useState(false);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
+  const [studentName, setStudentName] = useState('');
 
   useEffect(() => {
     fetchStudentData();
+    fetchLessonData();
   }, []);
 
   const fetchStudentData = async () => {
     try {
       const response = await fetch(`${host}/student/`);
       const data = await response.json();
-      // Sort the students array alphabetically by student name
-      const sortedStudents = data.sort((a, b) =>
-        a.student_name.localeCompare(b.student_name)
-      );
+      const sortedStudents = data.sort((a, b) => a.student_name.localeCompare(b.student_name));
       setStudents(sortedStudents);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching students:', error);
     }
   };
-
-  useEffect(() => {
-    fetchLessonData();
-  }, []);
 
   const fetchLessonData = async () => {
     try {
       const response = await fetch(`${host}/lesson/`);
       const lessonsData = await response.json();
-      setLessons(lessonsData);
+      setLessons(lessonsData); // Set lessons using the fetched data
     } catch (error) {
       console.error('Error fetching lessons:', error);
     }
+  };
+
+  const handleAddClick = () => {
+    setShowAddForm(true);
   };
 
   const handleEditClick = (student) => {
@@ -62,40 +58,24 @@ function App() {
     setShowEditForm(true);
   };
 
-  const handleEditStudentClose = () => {
-    setShowEditForm(false); // Close the modal
-    fetchStudentData(); // Refresh student data
-  };
-
-  const handleAddClick = () => {
-    setShowAddForm(true);
-  };
-
-  const handleAddStudent = (newStudent) => {
-    setStudents([...students, newStudent]);
-    fetchStudentData(); // Refresh student data
-  };
-
   const handleDeleteClick = (student) => {
     setDeleteStudent(student);
-    fetchStudentData(); // Refresh student data
   };
 
   const handleStudentLessonsClick = (student) => {
-    setStudentId(student.id); // Set selected student ID for history
+    setStudentId(student.id);
     setStudentName(student.student_name);
   };
 
   const handleCloseLessonHistory = () => {
-    setStudentId(null); // Clear selected student ID for history
-    fetchLessonData(); // Refresh lesson data
+    setStudentId(null);
   };
 
   const handleReminderClick = (student) => {
     console.log('Sending reminder for student', student);
   };
 
-  const handleAllLessons = async () => {
+  const handleAllLessons = () => {
     setShowAllLessons(true);
   };
 
@@ -108,12 +88,9 @@ function App() {
     setShowAddLessonModal(true);
   };
 
-  // Function to handle closing the Add Lesson modal
   const handleCloseAddLessonModal = () => {
-    console.log('Closing Add Lesson modal');
     setShowAddLessonModal(false);
     setSelectedStudentId(null);
-    fetchLessonData(); // Refresh lesson data
   };
 
   return (
@@ -133,126 +110,65 @@ function App() {
           </Button>
         </Col>
       </Row>
-      {students.map((student, index) => (
-        <Row
-          className="mt-3"
-          key={student.id}
-          style={{
-            borderBottom:
-              index !== students.length - 1 ? '1px solid #ccc' : 'none',
-          }}
-        >
-          <Col>
-            <div
-              onClick={() => handleEditClick(student)}
-              style={{ padding: '10px', cursor: 'pointer' }}
-            >
-              <p>Student: {student.student_name}</p>
-              <p className="ml-3">Parent: {student.parent_name}</p>
-            </div>
-          </Col>
-
-          <Col>
-            <div>
-              <Button
-                variant="outline-success"
-                onClick={() => handleAddLesson(student)}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </Button>
-            </div>
-          </Col>
-
-          <Col>
-            <div className="d-flex align-items-center">
-              <div>
-                <strong>{getLessonCountForStudent(student.id)}</strong> /{' '}
-                {student.number_of_lessons_in_subscription}
-              </div>
-            </div>
-          </Col>
-
-          <Col>
-            <div>
-              <Button
-                variant="outline-secondary"
-                onClick={() => handleStudentLessonsClick(student)}
-              >
-                View Lessons
-              </Button>
-            </div>
-          </Col>
-          <Col>
-            <div>
-              <Button
-                variant="outline-primary"
-                onClick={() => handleReminderClick(student)}
-              >
-                Send Reminder
-              </Button>
-            </div>
-          </Col>
-          <Col>
-            <div>
-              <Button
-                variant="outline-danger"
-                onClick={() => handleDeleteClick(student)}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      ))}
-
+      <GetAllStudents
+        students={students}
+        handleEditClick={handleEditClick}
+        handleDeleteClick={handleDeleteClick}
+        handleStudentLessonsClick={handleStudentLessonsClick}
+        handleReminderClick={handleReminderClick}
+        getLessonCountForStudent={getLessonCountForStudent}
+        handleAddLesson={handleAddLesson}
+      />
       {showEditForm && (
         <EditStudent
           student={editStudent}
-          onClose={handleEditStudentClose}
+          onClose={() => setShowEditForm(false)}
+          onUpdate={() => {
+            fetchStudentData();
+            setShowEditForm(false);
+          }}
         />
       )}
-
       {showAddForm && (
         <AddStudent
           onClose={() => setShowAddForm(false)}
-          onAdd={handleAddStudent}
+          onAdd={() => {
+            fetchStudentData();
+            setShowAddForm(false);
+          }}
         />
       )}
-
       {deleteStudent && (
         <DeleteStudent
           student={deleteStudent}
           onCancel={() => setDeleteStudent(null)}
           onDelete={(deletedStudentId) => {
-            // Remove the deleted student from the state
-            const updatedStudents = students.filter(
-              (student) => student.id !== deletedStudentId
-            );
-            setStudents(updatedStudents);
-            setDeleteStudent(null); // Close the modal after deleting
+            setStudents(students.filter((student) => student.id !== deletedStudentId));
+            setDeleteStudent(null);
           }}
         />
       )}
-
-      {/* Conditional rendering of GetStudentLessons component */}
       {studentId && (
-        <GetStudentLessons
+        <GetStudentLesson
           studentId={studentId}
           studentName={studentName}
+          lessons={lessons}
           onClose={handleCloseLessonHistory}
         />
       )}
-
-      {/* Conditional rendering of GetAllLessons component */}
       {showAllLessons && (
-        <GetAllLessons onClose={() => setShowAllLessons(false)} />
+        <GetAllLessons
+          onClose={() => setShowAllLessons(false)}
+        />
       )}
-
-      {/* Conditional rendering of AddLesson modal */}
       {showAddLessonModal && (
         <AddLesson
           studentId={selectedStudentId}
           onClose={handleCloseAddLessonModal}
+          onAdd={() => {
+            fetchLessonData();
+            handleCloseAddLessonModal();
+          }}
         />
       )}
     </Container>

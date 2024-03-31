@@ -1,8 +1,9 @@
+// AddLesson.js
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import LessonCalendar from './Calendar'; // Import your calendar component
+import LessonCalendar from './Calendar/Calendar'; // Import your calendar component
 import axios from 'axios'; // Import Axios
-import { host } from './lib/constants';
+import { host } from '../../lib/constants';
 
 function AddLesson({ onClose, studentId }) {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -26,7 +27,6 @@ function AddLesson({ onClose, studentId }) {
       });
 
       console.log('Added lesson:', response.data);
-
 
       onClose();
     } catch (error) {
