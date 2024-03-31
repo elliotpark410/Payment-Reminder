@@ -5,7 +5,7 @@ import LessonCalendar from './Calendar/Calendar'; // Import your calendar compon
 import axios from 'axios'; // Import Axios
 import { host } from '../../lib/constants';
 
-function AddLesson({ onClose, studentId }) {
+function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false); // State to manage loading state
 
@@ -27,6 +27,8 @@ function AddLesson({ onClose, studentId }) {
       });
 
       console.log('Added lesson:', response.data);
+
+      onAdd(); // Call onAdd function to fetch updated lesson data
 
       onClose();
     } catch (error) {
