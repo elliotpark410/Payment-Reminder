@@ -72,6 +72,7 @@ function App() {
 
   const handleCloseLessonHistory = () => {
     setFormData({ ...formData, studentId: null });
+    fetchData(); 
   };
 
   const handleReminderClick = (student) => {
