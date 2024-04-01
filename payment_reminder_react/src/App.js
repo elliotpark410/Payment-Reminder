@@ -11,6 +11,7 @@ import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
 
 function App() {
+  // State variables
   const [students, setStudents] = useState([]);
   const [lessons, setLessons] = useState([]);
   const [editStudent, setEditStudent] = useState(null);
@@ -25,10 +26,12 @@ function App() {
     showAddLessonModal: false
   });
 
+  // Fetch initial data
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Function to fetch students and lessons data
   const fetchData = async () => {
     try {
       const [studentsResponse, lessonsResponse] = await Promise.all([
@@ -44,6 +47,7 @@ function App() {
     }
   };
 
+  // Event handlers
   const handleAddStudentClick = () => {
     setFormData({ ...formData, showAddStudentForm: true });
   };
@@ -92,6 +96,7 @@ function App() {
 
   return (
     <Container>
+      {/* Header */}
       <Row className="mt-5">
         <Col className="text-center">
           <h1>Payment Reminder</h1>
@@ -107,6 +112,7 @@ function App() {
           </Button>
         </Col>
       </Row>
+      {/* Components */}
       <GetAllStudents
         students={students}
         handleEditStudentClick={handleEditStudentClick}
@@ -116,6 +122,7 @@ function App() {
         getLessonCountForStudent={getLessonCountForStudent}
         handleAddLesson={handleAddLesson}
       />
+      {/* Edit Student Modal */}
       {formData.showEditStudentForm && (
         <EditStudent
           student={editStudent}
@@ -126,6 +133,7 @@ function App() {
           }}
         />
       )}
+      {/* Add Student Modal */}
       {formData.showAddStudentForm && (
         <AddStudent
           onClose={() => setFormData({ ...formData, showAddStudentForm: false })}
@@ -135,6 +143,7 @@ function App() {
           }}
         />
       )}
+      {/* Delete Student Modal */}
       {deleteStudent && (
         <DeleteStudent
           student={deleteStudent}
@@ -145,6 +154,7 @@ function App() {
           }}
         />
       )}
+      {/* Student Lesson History */}
       {formData.studentId && (
         <GetStudentLesson
           studentId={formData.studentId}
@@ -153,11 +163,13 @@ function App() {
           onClose={handleCloseLessonHistory}
         />
       )}
+      {/* All Lessons Modal */}
       {formData.showAllLessons && (
         <GetAllLessons
           onClose={() => setFormData({ ...formData, showAllLessons: false })}
         />
       )}
+      {/* Add Lesson Modal */}
       {formData.showAddLessonModal && (
         <AddLesson
           studentId={formData.selectedStudentId}
