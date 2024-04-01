@@ -5,8 +5,8 @@ import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const GetAllStudents = ({
   students,
-  handleEditClick,
-  handleDeleteClick,
+  handleEditStudentClick,
+  handleDeleteStudentClick,
   handleStudentLessonsClick,
   handleReminderClick,
   getLessonCountForStudent,
@@ -24,7 +24,7 @@ const GetAllStudents = ({
         >
           <Col>
             <div
-              onClick={() => handleEditClick(student)}
+              onClick={() => handleEditStudentClick(student)}
               style={{ padding: '10px', cursor: 'pointer' }}
             >
               <p>Student: {student.student_name}</p>
@@ -76,7 +76,7 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant="outline-danger"
-                onClick={() => handleDeleteClick(student)}
+                onClick={() => handleDeleteStudentClick(student)}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </Button>

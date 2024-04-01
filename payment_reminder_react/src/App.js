@@ -15,60 +15,59 @@ function App() {
   const [lessons, setLessons] = useState([]);
   const [editStudent, setEditStudent] = useState(null);
   const [deleteStudent, setDeleteStudent] = useState(null);
-  const [studentId, setStudentId] = useState(null);
-  const [showAddStudentForm, setShowAddStudentForm] = useState(false);
-  const [showEditStudentForm, setShowEditStudentForm] = useState(false);
-  const [showAllLessons, setShowAllLessons] = useState(false);
-  const [showAddLessonModal, setShowAddLessonModal] = useState(false);
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [studentName, setStudentName] = useState('');
+  const [formData, setFormData] = useState({
+    studentId: null,
+    selectedStudentId: null,
+    studentName: '',
+    showAddStudentForm: false,
+    showEditStudentForm: false,
+    showAllLessons: false,
+    showAddLessonModal: false
+  });
 
   useEffect(() => {
-    fetchStudentData();
-    fetchLessonData();
+    fetchData();
   }, []);
 
-  const fetchStudentData = async () => {
+  const fetchData = async () => {
     try {
-      const response = await fetch(`${host}/student/`);
-      const data = await response.json();
-      const sortedStudents = data.sort((a, b) => a.student_name.localeCompare(b.student_name));
-      setStudents(sortedStudents);
+      const [studentsResponse, lessonsResponse] = await Promise.all([
+        fetch(`${host}/student/`),
+        fetch(`${host}/lesson/`),
+      ]);
+      const studentsData = await studentsResponse.json();
+      const lessonsData = await lessonsResponse.json();
+      setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
+      setLessons(lessonsData);
     } catch (error) {
-      console.error('Error fetching students:', error);
+      console.error('Error fetching data:', error);
     }
   };
 
-  const fetchLessonData = async () => {
-    try {
-      const response = await fetch(`${host}/lesson/`);
-      const lessonsData = await response.json();
-      setLessons(lessonsData); // Set lessons using the fetched data
-    } catch (error) {
-      console.error('Error fetching lessons:', error);
-    }
+  const handleAddStudentClick = () => {
+    setFormData({ ...formData, showAddStudentForm: true });
   };
 
-  const handleAddClick = () => {
-    setShowAddStudentForm(true);
-  };
-
-  const handleEditClick = (student) => {
+  const handleEditStudentClick = (student) => {
     setEditStudent(student);
-    setShowEditStudentForm(true);
+    setFormData({ ...formData, showEditStudentForm: true });
   };
 
-  const handleDeleteClick = (student) => {
+  const handleDeleteStudentClick = (student) => {
     setDeleteStudent(student);
   };
 
   const handleStudentLessonsClick = (student) => {
-    setStudentId(student.id);
-    setStudentName(student.student_name);
+    setFormData({
+      ...formData,
+      studentId: student.id,
+      selectedStudentId: student.id,
+      studentName: student.student_name
+    });
   };
 
   const handleCloseLessonHistory = () => {
-    setStudentId(null);
+    setFormData({ ...formData, studentId: null });
   };
 
   const handleReminderClick = (student) => {
@@ -76,7 +75,7 @@ function App() {
   };
 
   const handleAllLessons = () => {
-    setShowAllLessons(true);
+    setFormData({ ...formData, showAllLessons: true });
   };
 
   const getLessonCountForStudent = (studentId) => {
@@ -84,13 +83,11 @@ function App() {
   };
 
   const handleAddLesson = (student) => {
-    setSelectedStudentId(student.id);
-    setShowAddLessonModal(true);
+    setFormData({ ...formData, selectedStudentId: student.id, showAddLessonModal: true });
   };
 
   const handleCloseAddLessonModal = () => {
-    setShowAddLessonModal(false);
-    setSelectedStudentId(null);
+    setFormData({ ...formData, showAddLessonModal: false, selectedStudentId: null });
   };
 
   return (
@@ -100,7 +97,7 @@ function App() {
           <h1>Payment Reminder</h1>
         </Col>
         <Col className="text-left">
-          <Button variant="primary" onClick={handleAddClick}>
+          <Button variant="primary" onClick={handleAddStudentClick}>
             Add Student
           </Button>
         </Col>
@@ -112,29 +109,29 @@ function App() {
       </Row>
       <GetAllStudents
         students={students}
-        handleEditClick={handleEditClick}
-        handleDeleteClick={handleDeleteClick}
+        handleEditStudentClick={handleEditStudentClick}
+        handleDeleteStudentClick={handleDeleteStudentClick}
         handleStudentLessonsClick={handleStudentLessonsClick}
         handleReminderClick={handleReminderClick}
         getLessonCountForStudent={getLessonCountForStudent}
         handleAddLesson={handleAddLesson}
       />
-      {showEditStudentForm && (
+      {formData.showEditStudentForm && (
         <EditStudent
           student={editStudent}
-          onClose={() => setShowEditStudentForm(false)}
+          onClose={() => setFormData({ ...formData, showEditStudentForm: false })}
           onUpdate={() => {
-            fetchStudentData();
-            setShowEditStudentForm(false);
+            fetchData();
+            setFormData({ ...formData, showEditStudentForm: false });
           }}
         />
       )}
-      {showAddStudentForm && (
+      {formData.showAddStudentForm && (
         <AddStudent
-          onClose={() => setShowAddStudentForm(false)}
+          onClose={() => setFormData({ ...formData, showAddStudentForm: false })}
           onAdd={() => {
-            fetchStudentData();
-            setShowAddStudentForm(false);
+            fetchData();
+            setFormData({ ...formData, showAddStudentForm: false });
           }}
         />
       )}
@@ -148,25 +145,25 @@ function App() {
           }}
         />
       )}
-      {studentId && (
+      {formData.studentId && (
         <GetStudentLesson
-          studentId={studentId}
-          studentName={studentName}
+          studentId={formData.studentId}
+          studentName={formData.studentName}
           lessons={lessons}
           onClose={handleCloseLessonHistory}
         />
       )}
-      {showAllLessons && (
+      {formData.showAllLessons && (
         <GetAllLessons
-          onClose={() => setShowAllLessons(false)}
+          onClose={() => setFormData({ ...formData, showAllLessons: false })}
         />
       )}
-      {showAddLessonModal && (
+      {formData.showAddLessonModal && (
         <AddLesson
-          studentId={selectedStudentId}
+          studentId={formData.selectedStudentId}
           onClose={handleCloseAddLessonModal}
           onAdd={() => {
-            fetchLessonData();
+            fetchData();
             handleCloseAddLessonModal();
           }}
         />
