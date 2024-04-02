@@ -9,6 +9,8 @@ import DeleteStudent from './components/Student/DeleteStudent';
 import GetStudentLesson from './components/Lesson/GetStudentLesson';
 import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
+// import SendText from './components/SendText';
+
 
 function App() {
   // State variables
@@ -23,7 +25,8 @@ function App() {
     showAddStudentForm: false,
     showEditStudentForm: false,
     showAllLessons: false,
-    showAddLessonModal: false
+    showAddLessonModal: false,
+    sendTextDate: null,
   });
 
   // Fetch initial data
@@ -72,11 +75,7 @@ function App() {
 
   const handleCloseLessonHistory = () => {
     setFormData({ ...formData, studentId: null });
-    fetchData(); 
-  };
-
-  const handleReminderClick = (student) => {
-    console.log('Sending reminder for student', student);
+    fetchData();
   };
 
   const handleAllLessons = () => {
@@ -93,6 +92,16 @@ function App() {
 
   const handleCloseAddLessonModal = () => {
     setFormData({ ...formData, showAddLessonModal: false, selectedStudentId: null });
+  };
+
+  const handleSendTextClick = () => {
+    const today = new Date().toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    });
+    setFormData({ ...formData, sendTextDate: today }); // Save the send text date
+    console.log('Sending text for student');
   };
 
   return (
@@ -119,9 +128,9 @@ function App() {
         handleEditStudentClick={handleEditStudentClick}
         handleDeleteStudentClick={handleDeleteStudentClick}
         handleStudentLessonsClick={handleStudentLessonsClick}
-        handleReminderClick={handleReminderClick}
         getLessonCountForStudent={getLessonCountForStudent}
         handleAddLesson={handleAddLesson}
+        handleSendTextClick={handleSendTextClick}
       />
       {/* Edit Student Modal */}
       {formData.showEditStudentForm && (
@@ -162,6 +171,7 @@ function App() {
           studentName={formData.studentName}
           lessons={lessons}
           onClose={handleCloseLessonHistory}
+          sendTextDate={formData.sendTextDate}
         />
       )}
       {/* All Lessons Modal */}

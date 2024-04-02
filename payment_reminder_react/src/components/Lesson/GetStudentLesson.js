@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
-function GetStudentLesson({ studentId, studentName, onClose }) {
+function GetStudentLesson({ studentId, studentName, onClose, sendTextDate }) {
   const [lessons, setLessons] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
+  const [textsSent, setTextsSent] = useState({});
 
   useEffect(() => {
     fetchLessons(); // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,6 +64,17 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     }
   };
 
+  const handleSentText = () => {
+    const today = sendTextDate || new Date().toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    });
+    const newTextsSent = { ...textsSent };
+    newTextsSent[today] = true;
+    setTextsSent(newTextsSent);
+  };
+
   return (
     <Modal
       size="lg"
@@ -82,26 +94,38 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
             <tr>
               <th>Number</th>
               <th>Date</th>
-
             </tr>
           </thead>
           <tbody>
-            {lessons.map((lesson) => (
-              <tr key={lesson.id}>
-                <td>{lesson.lessonNumber}</td>
-                <td onClick={() => handleEditLesson(lesson)}>
-                  {lesson.formattedDate}
-                </td>
-                <td>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => handleDeleteLesson(lesson.id)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </Button>
-                </td>
-              </tr>
-            ))}
+            {lessons.map((lesson) => {
+              // Check if sendTextDate is defined and is before the lesson formattedDate
+              const showMessageSent = sendTextDate && (new Date(sendTextDate) < new Date(lesson.formattedDate));
+
+              return (
+                <>
+                  {showMessageSent && (
+                    // Render "Message Sent" row if sendTextDate is defined and before lesson.formattedDate
+                    <tr key={`${lesson.id}_messageSent`}>
+                       <td colSpan="3" className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 15px', margin: '10px 0', borderRadius: '4px' }}>Message Sent on {sendTextDate}</td>
+                    </tr>
+                  )}
+                  <tr key={lesson.id}>
+                    <td>{lesson.lessonNumber}</td>
+                    <td onClick={() => handleEditLesson(lesson)}>
+                      {lesson.formattedDate}
+                    </td>
+                    <td>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => handleDeleteLesson(lesson.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </Button>
+                    </td>
+                  </tr>
+                </>
+              );
+            })}
           </tbody>
         </table>
       </Modal.Body>

@@ -8,7 +8,7 @@ const GetAllStudents = ({
   handleEditStudentClick,
   handleDeleteStudentClick,
   handleStudentLessonsClick,
-  handleReminderClick,
+  handleSendTextClick,
   getLessonCountForStudent,
   handleAddLesson,
 }) => {
@@ -66,9 +66,9 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant="outline-primary"
-                onClick={() => handleReminderClick(student)}
+                onClick={() => handleSendTextClick(student)}
               >
-                Send Reminder
+                Send Text
               </Button>
             </div>
           </Col>
