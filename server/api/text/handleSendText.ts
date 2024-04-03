@@ -55,9 +55,8 @@ async function getPhoneNumber(studentId: number): Promise<string> {
       } else {
         if (results.length > 0) {
           let phoneNumber = results[0].phone_number;
-          // Remove dashes and whitespace
-          phoneNumber = phoneNumber.replace(/-|\s/g, '');
-          // Prepend +1 to the phone number
+          // Remove any characters besides numbers and trim whitespace at the end
+          phoneNumber = phoneNumber.replace(/[^\d]/g, '').trim();
           phoneNumber = '+1' + phoneNumber;
           resolve(phoneNumber);
         } else {
