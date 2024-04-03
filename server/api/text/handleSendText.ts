@@ -20,10 +20,7 @@ export async function handleSendText(
 ) {
   try {
     // Extract necessary data from request body
-    // const { student_id, message } = request.body;
-    const { student_id } = request.body;
-
-    const message = "testing sending message"
+    const { student_id, message } = request.body;
 
     const phoneNumber = await getPhoneNumber(student_id);
 
