@@ -5,15 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
-function GetStudentLesson({ studentId, studentName, onClose, sendTextDate }) {
+function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
+  const [texts, setTexts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
-  const [textsSent, setTextsSent] = useState({});
 
   useEffect(() => {
     fetchLessons(); // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchTexts(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studentId]); // Include studentId in the dependency array
 
   const fetchLessons = async () => {
@@ -34,6 +35,25 @@ function GetStudentLesson({ studentId, studentName, onClose, sendTextDate }) {
       console.error('Error fetching lessons:', error);
     }
   };
+
+const fetchTexts = async () => {
+  try {
+    const response = await axios.get(`${host}/text/${studentId}`);
+    const unsortedTexts = response.data;
+    const sortedTexts = unsortedTexts.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const formattedTexts = sortedTexts.map((text) => ({
+      ...text,
+      formattedDate: new Date(text.date).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+      }).replace(/\//g, '-')
+    }));
+    setTexts(formattedTexts);
+  } catch (error) {
+    console.error('Error fetching texts:', error);
+  }
+};
 
   const handleDeleteLesson = async (lessonId) => {
     try {
@@ -64,17 +84,6 @@ function GetStudentLesson({ studentId, studentName, onClose, sendTextDate }) {
     }
   };
 
-  const handleSentText = () => {
-    const today = sendTextDate || new Date().toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    });
-    const newTextsSent = { ...textsSent };
-    newTextsSent[today] = true;
-    setTextsSent(newTextsSent);
-  };
-
   return (
     <Modal
       size="lg"
@@ -98,17 +107,8 @@ function GetStudentLesson({ studentId, studentName, onClose, sendTextDate }) {
           </thead>
           <tbody>
             {lessons.map((lesson) => {
-              // Check if sendTextDate is defined and is before the lesson formattedDate
-              const showMessageSent = sendTextDate && (new Date(sendTextDate) < new Date(lesson.formattedDate));
-
               return (
                 <>
-                  {showMessageSent && (
-                    // Render "Message Sent" row if sendTextDate is defined and before lesson.formattedDate
-                    <tr key={`${lesson.id}_messageSent`}>
-                       <td colSpan="3" className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 15px', margin: '10px 0', borderRadius: '4px' }}>Message Sent on {sendTextDate}</td>
-                    </tr>
-                  )}
                   <tr key={lesson.id}>
                     <td>{lesson.lessonNumber}</td>
                     <td onClick={() => handleEditLesson(lesson)}>
@@ -126,6 +126,11 @@ function GetStudentLesson({ studentId, studentName, onClose, sendTextDate }) {
                 </>
               );
             })}
+            {texts.map((text) => (
+              <tr key={text.id}>
+                <td colSpan="3" className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 15px', margin: '10px 0', borderRadius: '4px' }}>Message Sent on {text.formattedDate}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </Modal.Body>
