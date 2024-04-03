@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 
 // Handler imports
 import { handleSendText } from "./handleSendText";
+import { handleGetStudentText } from "./handleGetStudentText";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -15,6 +16,14 @@ router.post(
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
     await handleSendText(request, response, next);
+  }
+);
+
+router.get(
+  "/:student_id",
+  jsonParser,
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleGetStudentText(request, response, next);
   }
 );
 
