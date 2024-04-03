@@ -54,7 +54,12 @@ async function getPhoneNumber(studentId: number): Promise<string> {
         reject(error);
       } else {
         if (results.length > 0) {
-          resolve(results[0].phone_number);
+          let phoneNumber = results[0].phone_number;
+          // Remove dashes and whitespace
+          phoneNumber = phoneNumber.replace(/-|\s/g, '');
+          // Prepend +1 to the phone number
+          phoneNumber = '+1' + phoneNumber;
+          resolve(phoneNumber);
         } else {
           reject(new Error("Student not found"));
         }
