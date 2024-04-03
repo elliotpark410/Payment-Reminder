@@ -13,9 +13,9 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessonDate, setLessonDate] = useState('');
 
   useEffect(() => {
-    fetchLessons(); // eslint-disable-next-line react-hooks/exhaustive-deps
-    fetchTexts(); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [studentId]); // Include studentId in the dependency array
+    fetchLessons();
+    fetchTexts();
+  }, [studentId]);
 
   const fetchLessons = async () => {
     try {
@@ -36,30 +36,29 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     }
   };
 
-const fetchTexts = async () => {
-  try {
-    const response = await axios.get(`${host}/text/${studentId}`);
-    const unsortedTexts = response.data;
-    const sortedTexts = unsortedTexts.sort((a, b) => new Date(a.date) - new Date(b.date));
-    const formattedTexts = sortedTexts.map((text) => ({
-      ...text,
-      formattedDate: new Date(text.date).toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric'
-      }).replace(/\//g, '-')
-    }));
-    setTexts(formattedTexts);
-  } catch (error) {
-    console.error('Error fetching texts:', error);
-  }
-};
+  const fetchTexts = async () => {
+    try {
+      const response = await axios.get(`${host}/text/${studentId}`);
+      const unsortedTexts = response.data;
+      const sortedTexts = unsortedTexts.map((text) => ({
+        ...text,
+        formattedDate: new Date(text.date).toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        }).replace(/\//g, '-')
+      }));
+      setTexts(sortedTexts);
+    } catch (error) {
+      console.error('Error fetching texts:', error);
+    }
+  };
 
   const handleDeleteLesson = async (lessonId) => {
     try {
       await axios.delete(`${host}/lesson/${lessonId}`);
       console.log(`Lesson with ID ${lessonId} deleted successfully`);
-      fetchLessons(); // Fetch lessons after deleting
+      fetchLessons();
     } catch (error) {
       console.error('Error deleting lesson:', error);
     }
@@ -78,11 +77,15 @@ const fetchTexts = async () => {
       setShowEditModal(false);
       setEditLesson(null);
       setLessonDate('');
-      fetchLessons(); // Fetch lessons after saving edit
+      fetchLessons();
+      fetchTexts();
     } catch (error) {
       console.error('Error updating lesson:', error);
     }
   };
+
+  // Merge lessons and texts, sort by date
+  const mergedRecords = [...lessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
   return (
     <Modal
@@ -103,32 +106,30 @@ const fetchTexts = async () => {
             <tr>
               <th>Number</th>
               <th>Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {lessons.map((lesson) => {
-              return (
-                <>
-                  <tr key={lesson.id}>
-                    <td>{lesson.lessonNumber}</td>
-                    <td onClick={() => handleEditLesson(lesson)}>
-                      {lesson.formattedDate}
+            {mergedRecords.map((record) => (
+              <tr key={record.id}>
+                {record.hasOwnProperty('lessonNumber') ? (
+                  <>
+                    <td>{record.lessonNumber}</td>
+                    <td onClick={() => handleEditLesson(record)}>
+                      {record.formattedDate}
                     </td>
                     <td>
                       <Button
                         variant="outline-danger"
-                        onClick={() => handleDeleteLesson(lesson.id)}
+                        onClick={() => handleDeleteLesson(record.id)}
                       >
                         <FontAwesomeIcon icon={faTrash} />
                       </Button>
                     </td>
-                  </tr>
-                </>
-              );
-            })}
-            {texts.map((text) => (
-              <tr key={text.id}>
-                <td colSpan="3" className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 15px', margin: '10px 0', borderRadius: '4px' }}>Message Sent on {text.formattedDate}</td>
+                  </>
+                ) : (
+                  <td colSpan="3" className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 15px', margin: '10px 0', borderRadius: '4px' }}>Message Sent on {record.formattedDate}</td>
+                )}
               </tr>
             ))}
           </tbody>
