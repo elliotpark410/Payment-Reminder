@@ -15,7 +15,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   useEffect(() => {
     fetchLessons();
     fetchTexts();
-  }, [studentId]);
+  }, [studentId]); // refactor code to fix this warning
 
   const fetchLessons = async () => {
     try {
