@@ -60,7 +60,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     try {
       await axios.delete(`${host}/lesson/${lessonId}`);
       console.log(`Lesson with ID ${lessonId} deleted successfully`);
-      fetchLessons();
+      setLessons(prevLessons => prevLessons.filter(lesson => lesson.id !== lessonId));
     } catch (error) {
       console.error('Error deleting lesson:', error);
     }

@@ -55,8 +55,19 @@ const GetAllStudents = ({
           <Col>
             <div className="d-flex align-items-center">
               <div>
-                <strong>{getLessonCountForStudent(student.id)}</strong> /{' '}
-                {student.number_of_lessons_in_subscription}
+                <strong>
+                  <span
+                    style={{
+                      color:
+                        getLessonCountForStudent(student.id) >= student.number_of_lessons_in_subscription - 1
+                          ? '#007bff' // Blue color when condition is met
+                          : 'inherit', // Inherit color otherwise
+                    }}
+                  >
+                    {getLessonCountForStudent(student.id)}
+                  </span>
+                </strong>{' '}
+                / {student.number_of_lessons_in_subscription}
               </div>
             </div>
           </Col>
