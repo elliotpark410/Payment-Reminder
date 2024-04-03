@@ -25,19 +25,22 @@ export async function handleSendText(
     const phoneNumber = await getPhoneNumber(student_id);
 
     // Send text message using Twilio
-    // await twilioClient.messages.create({
-    //   body: message,
-    //   from: twilio_phone_number,
-    //   to: phoneNumber,
-    // });
+    const sendMessage = await twilioClient.messages.create({
+      body: message,
+      to: phoneNumber,
+      from: twilio_phone_number,
+    });
 
     // Save the sent text message to the database
     await saveTextMessage(student_id, message);
 
+    console.log("MESSAGE: ", sendMessage)
+
     // Respond with success message
-    response.json({ message: "Text message sent successfully" });
-  } catch (err) {
+    response.json({ message: `Text message sent successfully. SID: ${sendMessage.sid}` });
+  } catch (err: any) {
     console.log(err)
+    console.error(`Error sending message: ${err.message}`);
     next(err);
   }
 }
