@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import SendText from '../Text/SendText';
 
 const GetAllStudents = ({
   students,
   handleEditStudentClick,
   handleDeleteStudentClick,
   handleStudentLessonsClick,
-  handleSendTextClick,
   getLessonCountForStudent,
   handleAddLesson,
 }) => {
+  const [showSendTextModal, setShowSendTextModal] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
+
+
+  const handleSendTextClick = (student) => {
+    setShowSendTextModal(true); // Show SendText modal
+    setSelectedStudentId(student.id);
+  };
+
   return (
     <>
       {students.map((student, index) => (
@@ -84,6 +93,11 @@ const GetAllStudents = ({
           </Col>
         </Row>
       ))}
+      {showSendTextModal && (
+        <SendText
+        studentId={selectedStudentId}
+        onClose={() => setShowSendTextModal(false)} />
+      )}
     </>
   );
 };

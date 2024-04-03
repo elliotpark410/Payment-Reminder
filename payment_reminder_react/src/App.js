@@ -94,14 +94,8 @@ function App() {
     setFormData({ ...formData, showAddLessonModal: false, selectedStudentId: null });
   };
 
-  const handleSendTextClick = () => {
-    const today = new Date().toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    });
-    setFormData({ ...formData, sendTextDate: today }); // Save the send text date
-    console.log('Sending text for student');
+  const handleSendTextClick = (student) => {
+    setFormData({ ...formData, selectedStudentId: student.id });
   };
 
   return (
