@@ -5,6 +5,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
+// Function to fetch lessons
+const fetchLessons = async (studentId, setLessons) => {
+  try {
+    const response = await axios.get(`${host}/lesson/student/${studentId}`);
+    const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+    const formattedLessons = sortedLessons.map((lesson, index) => ({
+      ...lesson,
+      lessonNumber: index + 1,
+      formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+      })
+    }));
+    setLessons(formattedLessons);
+  } catch (error) {
+    console.error('Error fetching lessons:', error);
+  }
+};
+
+// Function to fetch texts
+const fetchTexts = async (studentId, setTexts) => {
+  try {
+    const response = await axios.get(`${host}/text/${studentId}`);
+    const unsortedTexts = response.data;
+    const sortedTexts = unsortedTexts.map((text) => ({
+      ...text,
+      formattedDate: new Date(text.date).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+      }).replace(/\//g, '-')
+    }));
+    setTexts(sortedTexts);
+  } catch (error) {
+    console.error('Error fetching texts:', error);
+  }
+};
+
 function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
   const [texts, setTexts] = useState([]);
@@ -13,46 +52,9 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessonDate, setLessonDate] = useState('');
 
   useEffect(() => {
-    fetchLessons();
-    fetchTexts();
-  }, [studentId]); // refactor code to fix this warning
-
-  const fetchLessons = async () => {
-    try {
-      const response = await axios.get(`${host}/lesson/student/${studentId}`);
-      const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
-      const formattedLessons = sortedLessons.map((lesson, index) => ({
-        ...lesson,
-        lessonNumber: index + 1,
-        formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
-          month: '2-digit',
-          day: '2-digit',
-          year: 'numeric'
-        })
-      }));
-      setLessons(formattedLessons);
-    } catch (error) {
-      console.error('Error fetching lessons:', error);
-    }
-  };
-
-  const fetchTexts = async () => {
-    try {
-      const response = await axios.get(`${host}/text/${studentId}`);
-      const unsortedTexts = response.data;
-      const sortedTexts = unsortedTexts.map((text) => ({
-        ...text,
-        formattedDate: new Date(text.date).toLocaleDateString('en-US', {
-          month: '2-digit',
-          day: '2-digit',
-          year: 'numeric'
-        }).replace(/\//g, '-')
-      }));
-      setTexts(sortedTexts);
-    } catch (error) {
-      console.error('Error fetching texts:', error);
-    }
-  };
+    fetchLessons(studentId, setLessons);
+    fetchTexts(studentId, setTexts);
+  }, [studentId]);
 
   const handleDeleteLesson = async (lessonId) => {
     try {
