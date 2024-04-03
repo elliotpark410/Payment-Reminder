@@ -10,21 +10,25 @@ function EditStudent({ student, onClose, onUpdate }) {
     phone_number: student.phone_number,
     email: student.email,
     subscription_price: student.subscription_price,
-    number_of_lessons_in_subscription: student.number_of_lessons_in_subscription
+    number_of_lessons_in_subscription:
+      student.number_of_lessons_in_subscription,
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSave = async () => {
     try {
       console.log('Saving edit for student', student);
-      const response = await axios.put(`${host}/student/${student.id}`, formData);
+      const response = await axios.put(
+        `${host}/student/${student.id}`,
+        formData
+      );
       console.log('Updated student data:', response.data);
       onUpdate(); // Call onUpdate function to trigger data refresh in the parent component
       onClose();
@@ -49,12 +53,15 @@ function EditStudent({ student, onClose, onUpdate }) {
       <Modal.Body>
         <Form>
           <Form.Group controlId="studentName">
-            <Form.Label>Student Name</Form.Label>
+            <Form.Label>
+              Student Name <span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               name="student_name"
               value={formData.student_name}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
           <Form.Group controlId="parentName">
@@ -67,12 +74,15 @@ function EditStudent({ student, onClose, onUpdate }) {
             />
           </Form.Group>
           <Form.Group controlId="phoneNumber">
-            <Form.Label>Phone Number</Form.Label>
+            <Form.Label>
+              Phone Number <span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               name="phone_number"
               value={formData.phone_number}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
           <Form.Group controlId="email">

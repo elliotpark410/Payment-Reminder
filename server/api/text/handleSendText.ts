@@ -60,7 +60,7 @@ async function getPhoneNumber(studentId: number): Promise<string> {
           phoneNumber = '+1' + phoneNumber;
           resolve(phoneNumber);
         } else {
-          reject(new Error("Student not found"));
+          reject(new Error("Student phone number not found"));
         }
       }
     });

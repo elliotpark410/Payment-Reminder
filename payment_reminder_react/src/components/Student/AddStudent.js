@@ -49,12 +49,13 @@ function AddStudent({ onClose, onAdd }) {
       <Modal.Body>
         <Form>
           <Form.Group controlId="studentName">
-            <Form.Label>Student Name</Form.Label>
+          <Form.Label>Student Name <span style={{ color: 'red' }}>*</span></Form.Label>
             <Form.Control
               type="text"
               name="student_name"
               value={formData.student_name}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
           <Form.Group controlId="parentName">
@@ -67,12 +68,13 @@ function AddStudent({ onClose, onAdd }) {
             />
           </Form.Group>
           <Form.Group controlId="phoneNumber">
-            <Form.Label>Phone Number</Form.Label>
+            <Form.Label>Phone Number <span style={{ color: 'red' }}>*</span></Form.Label>
             <Form.Control
               type="text"
               name="phone_number"
               value={formData.phone_number}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
           <Form.Group controlId="email">
