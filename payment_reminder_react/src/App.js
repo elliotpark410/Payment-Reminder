@@ -111,7 +111,7 @@ function App() {
           </Button>
         </Col>
         <Col className="text-left">
-          <Button variant="secondary" onClick={handleAllLessons}>
+          <Button variant="success" onClick={handleAllLessons}>
             All Lessons
           </Button>
         </Col>

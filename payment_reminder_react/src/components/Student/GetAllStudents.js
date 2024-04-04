@@ -54,19 +54,23 @@ const GetAllStudents = ({
 
           <Col>
             <div className="d-flex align-items-center">
-              <div>
-                <strong>
-                  <span
-                    style={{
-                      color:
-                        getLessonCountForStudent(student.id) >= student.number_of_lessons_in_subscription - 1
-                          ? '#007bff' // Blue color when condition is met
-                          : 'inherit', // Inherit color otherwise
-                    }}
-                  >
+            <div>
+                {getLessonCountForStudent(student.id) >= student.number_of_lessons_in_subscription - 1 ? (
+                  <strong>
+                    <span
+                      style={{
+                        color: '#007bff', // Blue color when condition is met
+                      }}
+                    >
+                      {getLessonCountForStudent(student.id)}
+                    </span>
+                  </strong>
+                ) : (
+                  <span>
                     {getLessonCountForStudent(student.id)}
                   </span>
-                </strong>{' '}
+                )}
+                {' '}
                 / {student.number_of_lessons_in_subscription}
               </div>
             </div>
@@ -75,7 +79,7 @@ const GetAllStudents = ({
           <Col>
             <div>
               <Button
-                variant="outline-secondary"
+                variant="outline-success"
                 onClick={() => handleStudentLessonsClick(student)}
               >
                 View Lessons
@@ -85,8 +89,9 @@ const GetAllStudents = ({
           <Col>
             <div>
               <Button
-                variant="outline-primary"
+                variant={getLessonCountForStudent(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
                 onClick={() => handleSendTextClick(student)}
+                disabled={getLessonCountForStudent(student.id) < student.number_of_lessons_in_subscription - 1}
               >
                 Send Text
               </Button>
