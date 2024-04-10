@@ -4,8 +4,11 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 
-const SendText = ({ studentId, onClose }) => {
-  const [message, setMessage] = useState('');
+const SendText = ({ studentId, studentName, onClose }) => {
+  const fullName = studentName.split(' '); 
+  const firstName = fullName[0];
+  const defaultMessage = `Hi ${firstName}, this is a reminder to renew your subscription`;
+  const [message, setMessage] = useState(defaultMessage);
 
   const handleSendText = async () => {
     try {

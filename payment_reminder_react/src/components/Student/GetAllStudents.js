@@ -112,6 +112,7 @@ const GetAllStudents = ({
       {showSendTextModal && (
         <SendText
         studentId={selectedStudentId}
+        studentName={students.find(student => student.id === selectedStudentId)?.student_name}
         onClose={() => setShowSendTextModal(false)} />
       )}
     </>
