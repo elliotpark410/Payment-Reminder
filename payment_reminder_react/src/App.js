@@ -19,7 +19,7 @@ function App() {
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [formData, setFormData] = useState({
     studentId: null,
-    selectedStudentId: null,
+    selectedStudentId: null, // TODO: refactor to follow DRY principle
     studentName: '',
     showAddStudentForm: false,
     showEditStudentForm: false,
@@ -82,6 +82,7 @@ function App() {
     setFormData({ ...formData, showAllLessons: true });
   };
 
+  // TODO: update this function to get lesson count up to send text message / clear button
   const getLessonCountForStudent = (studentId) => {
     return lessons.filter((lesson) => lesson.student_id === studentId).length;
   };
@@ -105,6 +106,7 @@ function App() {
         <Col className="text-center">
           <h1>Payment Reminder</h1>
         </Col>
+        {/* TODO: refactor and create separate components for the buttons */}
         <Col className="text-left">
           <Button variant="primary" onClick={handleAddStudentClick}>
             Add Student
@@ -118,6 +120,7 @@ function App() {
       </Row>
       {/* Components */}
       <GetAllStudents
+        // props being passed to component
         students={students}
         handleEditStudentClick={handleEditStudentClick}
         handleDeleteStudentClick={handleDeleteStudentClick}
@@ -127,6 +130,7 @@ function App() {
         handleSendTextClick={handleSendTextClick}
       />
       {/* Edit Student Modal */}
+      {/* Edit Student component is conditionally rendered if showEditStudentForm is truthy */}
       {formData.showEditStudentForm && (
         <EditStudent
           student={editStudent}
@@ -138,6 +142,7 @@ function App() {
         />
       )}
       {/* Add Student Modal */}
+      {/* Add Student component is conditionally rendered if showAddStudentForm is truthy */}
       {formData.showAddStudentForm && (
         <AddStudent
           onClose={() => setFormData({ ...formData, showAddStudentForm: false })}
@@ -159,6 +164,7 @@ function App() {
         />
       )}
       {/* Student Lesson History */}
+      {/* Get Student Lesson component is conditionally rendered if studentId is truthy */}
       {formData.studentId && (
         <GetStudentLesson
           studentId={formData.studentId}
@@ -169,12 +175,14 @@ function App() {
         />
       )}
       {/* All Lessons Modal */}
+      {/* Get All Lesson component is conditionally rendered if showAllLessons is truthy */}
       {formData.showAllLessons && (
         <GetAllLessons
           onClose={() => setFormData({ ...formData, showAllLessons: false })}
         />
       )}
       {/* Add Lesson Modal */}
+      {/* Add Lesson component is conditionally rendered if showAddLessonModal is truthy */}
       {formData.showAddLessonModal && (
         <AddLesson
           studentId={formData.selectedStudentId}
