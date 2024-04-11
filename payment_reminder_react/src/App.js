@@ -9,7 +9,6 @@ import DeleteStudent from './components/Student/DeleteStudent';
 import GetStudentLesson from './components/Lesson/GetStudentLesson';
 import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
-// import SendText from './components/SendText';
 
 
 function App() {
@@ -29,12 +28,12 @@ function App() {
     sendTextDate: null,
   });
 
-  // Fetch initial data
+  // fetch initial data
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Function to fetch students and lessons data
+  // fetch students and lessons data
   const fetchData = async () => {
     try {
       const [studentsResponse, lessonsResponse] = await Promise.all([
@@ -43,6 +42,7 @@ function App() {
       ]);
       const studentsData = await studentsResponse.json();
       const lessonsData = await lessonsResponse.json();
+      // order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
     } catch (error) {
