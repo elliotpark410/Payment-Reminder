@@ -9,7 +9,8 @@ import DeleteStudent from './components/Student/DeleteStudent';
 import GetStudentLesson from './components/Lesson/GetStudentLesson';
 import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
-
+import Header from './components/Header';
+import SendText from './components/Text/SendText';
 
 function App() {
   // State variables
@@ -17,16 +18,20 @@ function App() {
   const [lessons, setLessons] = useState([]);
   const [editStudent, setEditStudent] = useState(null);
   const [deleteStudent, setDeleteStudent] = useState(null);
-  const [formData, setFormData] = useState({
+  const [data, setData] = useState({
     studentId: null,
-    selectedStudentId: null, // TODO: refactor to follow DRY principle
     studentName: '',
     showAddStudentForm: false,
     showEditStudentForm: false,
+    showDeleteStudentModal: false,
     showAllLessons: false,
     showAddLessonModal: false,
+    showStudentLessonModal: false,
+    showSendTextModal: false,
     sendTextDate: null,
   });
+  console.log("data")
+  console.log(data)
 
   // fetch initial data
   useEffect(() => {
@@ -52,34 +57,30 @@ function App() {
 
   // Event handlers
   const handleAddStudentClick = () => {
-    setFormData({ ...formData, showAddStudentForm: true });
+    setData({ ...data, showAddStudentForm: true });
   };
 
   const handleEditStudentClick = (student) => {
     setEditStudent(student);
-    setFormData({ ...formData, showEditStudentForm: true });
+    setData({ ...data, showEditStudentForm: true });
   };
 
   const handleDeleteStudentClick = (student) => {
     setDeleteStudent(student);
+    setData({ ...data, showDeleteStudentModal: true });
   };
 
   const handleStudentLessonsClick = (student) => {
-    setFormData({
-      ...formData,
+    setData({
+      ...data,
       studentId: student.id,
-      selectedStudentId: student.id,
-      studentName: student.student_name
+      studentName: student.student_name,
+      showStudentLessonModal: true
     });
   };
 
-  const handleCloseLessonHistory = () => {
-    setFormData({ ...formData, studentId: null });
-    fetchData();
-  };
-
   const handleAllLessons = () => {
-    setFormData({ ...formData, showAllLessons: true });
+    setData({ ...data, showAllLessons: true });
   };
 
   // TODO: update this function to get lesson count up to send text message / clear button
@@ -87,105 +88,81 @@ function App() {
     return lessons.filter((lesson) => lesson.student_id === studentId).length;
   };
 
-  const handleAddLesson = (student) => {
-    setFormData({ ...formData, selectedStudentId: student.id, showAddLessonModal: true });
+  const handleAddLessonClick = (student) => {
+    setData({ ...data, studentId: student.id, showAddLessonModal: true });
   };
 
   const handleCloseAddLessonModal = () => {
-    setFormData({ ...formData, showAddLessonModal: false, selectedStudentId: null });
+    setData({ ...data, showAddLessonModal: false, studentId: null });
+  };
+
+  const handleCloseStudentLessonsModal = () => {
+    setData({ ...data, showStudentLessonModal: false, studentId: null, studentName: null });
+  };
+
+
+  const handleUpdateData = (updatedData) => {
+    setData({ ...data, ...updatedData});
   };
 
   const handleSendTextClick = (student) => {
-    setFormData({ ...formData, selectedStudentId: student.id });
+    setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name });
+  };
+
+  const handleCloseSendTextModal = () => {
+    setData({ ...data, showSendTextModal: false, studentId: null, studentName: null });
   };
 
   return (
     <Container>
       {/* Header */}
       <Row className="mt-5">
-        <Col className="text-center">
-          <h1>Payment Reminder</h1>
-        </Col>
-        {/* TODO: refactor and create separate components for the buttons */}
-        <Col className="text-left">
-          <Button variant="primary" onClick={handleAddStudentClick}>
-            Add Student
-          </Button>
-        </Col>
-        <Col className="text-left">
-          <Button variant="success" onClick={handleAllLessons}>
-            All Lessons
-          </Button>
-        </Col>
+        <Header
+          handleAddStudentClick={handleAddStudentClick}
+          handleAllLessons={handleAllLessons}
+        />
       </Row>
       {/* Components */}
       <GetAllStudents
-        // props being passed to component
         students={students}
         handleEditStudentClick={handleEditStudentClick}
         handleDeleteStudentClick={handleDeleteStudentClick}
         handleStudentLessonsClick={handleStudentLessonsClick}
         getLessonCountForStudent={getLessonCountForStudent}
-        handleAddLesson={handleAddLesson}
+        handleAddLessonClick={handleAddLessonClick}
         handleSendTextClick={handleSendTextClick}
       />
-      {/* Edit Student Modal */}
-      {/* Edit Student component is conditionally rendered if showEditStudentForm is truthy */}
-      {formData.showEditStudentForm && (
+      {/* Add Student Modal is conditionally rendered if showAddStudentForm is truthy */}
+      {data.showAddStudentForm && (
+        <AddStudent
+        onClose={() => handleUpdateData({ showAddStudentForm: false })}
+        onAdd={() => {
+          fetchData();
+          handleUpdateData({ showAddStudentForm: false });
+        }}
+        />
+      )}
+      {/* Get All Lesson Modal is conditionally rendered if showAllLessons is truthy */}
+      {data.showAllLessons && (
+        <GetAllLessons
+          onClose={() => handleUpdateData({ showAllLessons: false })}
+        />
+      )}
+       {/* Edit Student Modal is conditionally rendered if showEditStudentForm is truthy */}
+       {data.showEditStudentForm && (
         <EditStudent
           student={editStudent}
-          onClose={() => setFormData({ ...formData, showEditStudentForm: false })}
-          onUpdate={() => {
+          onClose={() => handleUpdateData({showEditStudentForm: false })}
+          onEdit={() => {
             fetchData();
-            setFormData({ ...formData, showEditStudentForm: false });
+            handleUpdateData({ showEditStudentForm: false });
           }}
         />
       )}
-      {/* Add Student Modal */}
-      {/* Add Student component is conditionally rendered if showAddStudentForm is truthy */}
-      {formData.showAddStudentForm && (
-        <AddStudent
-          onClose={() => setFormData({ ...formData, showAddStudentForm: false })}
-          onAdd={() => {
-            fetchData();
-            setFormData({ ...formData, showAddStudentForm: false });
-          }}
-        />
-      )}
-      {/* Delete Student Modal */}
-      {deleteStudent && (
-        <DeleteStudent
-          student={deleteStudent}
-          onCancel={() => setDeleteStudent(null)}
-          onDelete={(deletedStudentId) => {
-            setStudents(students.filter((student) => student.id !== deletedStudentId));
-            setDeleteStudent(null);
-          }}
-        />
-      )}
-      {/* Student Lesson History */}
-      {/* Get Student Lesson component is conditionally rendered if studentId is truthy */}
-      {formData.studentId && (
-        <GetStudentLesson
-          studentId={formData.studentId}
-          studentName={formData.studentName}
-          lessons={lessons}
-          onClose={handleCloseLessonHistory}
-          sendTextDate={formData.sendTextDate}
-        />
-      )}
-      {/* All Lessons Modal */}
-      {/* Get All Lesson component is conditionally rendered if showAllLessons is truthy */}
-      {formData.showAllLessons && (
-        <GetAllLessons
-          onClose={() => setFormData({ ...formData, showAllLessons: false })}
-        />
-      )}
-      {/* Add Lesson Modal */}
-      {/* Add Lesson component is conditionally rendered if showAddLessonModal is truthy */}
-      {formData.showAddLessonModal && (
+      {/* Add Lesson Modal is conditionally rendered if showAddLessonModal is truthy */}
+      {data.showAddLessonModal && (
         <AddLesson
-          studentId={formData.selectedStudentId}
+          studentId={data.studentId}
           onClose={handleCloseAddLessonModal}
           onAdd={() => {
             fetchData();
@@ -193,6 +170,35 @@ function App() {
           }}
         />
       )}
+      {/* Get Student Lesson Modal is conditionally rendered if showStudentLessonModal is truthy */}
+      {data.showStudentLessonModal && (
+        <GetStudentLesson
+          studentId={data.studentId}
+          studentName={data.studentName}
+          lessons={lessons}
+          onClose={handleCloseStudentLessonsModal}
+          sendTextDate={data.sendTextDate}
+        />
+      )}
+      {/* Send Text Modal is conditionally rendered if showSendTextModal is truthy */}
+      {data.showSendTextModal && (
+        <SendText
+        studentId={data.studentId}
+        studentName={data.studentName}
+        onClose={handleCloseSendTextModal} />
+      )}
+      {/* Delete Student Modal is conditionally rendered if showDeleteStudentModal is truthy */}
+      {data.showDeleteStudentModal && (
+        <DeleteStudent
+          student={deleteStudent}
+          onCancel={() => setDeleteStudent(null)}
+          onDelete={() => {
+            fetchData();
+            handleUpdateData({ showDeleteStudentModal: false });
+          }}
+        />
+      )}
+
     </Container>
   );
 }
