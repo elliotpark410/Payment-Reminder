@@ -30,8 +30,6 @@ function App() {
     showSendTextModal: false,
     sendTextDate: null,
   });
-  console.log("data")
-  console.log(data)
 
   // fetch initial data
   useEffect(() => {
