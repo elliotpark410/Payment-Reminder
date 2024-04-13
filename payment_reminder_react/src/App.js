@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { host } from './lib/constants';
 import GetAllStudents from './components/Student/GetAllStudents';
 import EditStudent from './components/Student/EditStudent';
