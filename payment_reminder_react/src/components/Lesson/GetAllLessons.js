@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function GetAllLessons({ onClose }) {
   const [lessons, setLessons] = useState([]);
@@ -31,17 +29,6 @@ function GetAllLessons({ onClose }) {
     fetchLessons();
   }, []);
 
-  const handleDeleteLesson = async (lessonId) => {
-    try {
-      await axios.delete(`${host}/lesson/${lessonId}`);
-      console.log(`Lesson with ID ${lessonId} deleted successfully`);
-      setLessons(lessons.filter(lesson => lesson.id !== lessonId)); // Remove the deleted lesson from the state
-    } catch (error) {
-      console.error('Error deleting lesson:', error);
-      // Handle error here, if necessary
-    }
-  };
-
   return (
     <Modal
       size="lg"
@@ -62,7 +49,7 @@ function GetAllLessons({ onClose }) {
               <th>Number</th>
               <th>Name</th>
               <th>Date</th>
-              <th>{/* Delete */}</th>
+
             </tr>
           </thead>
           <tbody>
@@ -71,14 +58,6 @@ function GetAllLessons({ onClose }) {
                 <td>{lesson.lessonNumber}</td>
                 <td>{lesson.student_name}</td>
                 <td>{lesson.formattedDate}</td>
-                <td>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => handleDeleteLesson(lesson.id)} // Pass the lesson ID to delete directly
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </Button>
-                </td>
               </tr>
             ))}
           </tbody>
