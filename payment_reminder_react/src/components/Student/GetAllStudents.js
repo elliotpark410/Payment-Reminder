@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import SendText from '../Text/SendText';
 
 // TODO: refactor and create separate components
 const GetAllStudents = ({
@@ -11,16 +10,9 @@ const GetAllStudents = ({
   handleDeleteStudentClick,
   handleStudentLessonsClick,
   getLessonCountForStudent,
-  handleAddLesson,
+  handleAddLessonClick,
+  handleSendTextClick
 }) => {
-  const [showSendTextModal, setShowSendTextModal] = useState(false);
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
-
-
-  const handleSendTextClick = (student) => {
-    setShowSendTextModal(true); // Show SendText modal
-    setSelectedStudentId(student.id);
-  };
 
   return (
     <>
@@ -46,7 +38,7 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant="outline-success"
-                onClick={() => handleAddLesson(student)}
+                onClick={() => handleAddLessonClick(student)}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </Button>
@@ -110,12 +102,6 @@ const GetAllStudents = ({
           </Col>
         </Row>
       ))}
-      {showSendTextModal && (
-        <SendText
-        studentId={selectedStudentId}
-        studentName={students.find(student => student.id === selectedStudentId)?.student_name}
-        onClose={() => setShowSendTextModal(false)} />
-      )}
     </>
   );
 };

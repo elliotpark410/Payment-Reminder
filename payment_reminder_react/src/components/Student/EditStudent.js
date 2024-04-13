@@ -3,7 +3,7 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
 
-function EditStudent({ student, onClose, onUpdate }) {
+function EditStudent({ student, onClose, onEdit }) {
   const [formData, setFormData] = useState({
     student_name: student.student_name,
     parent_name: student.parent_name,
@@ -11,7 +11,7 @@ function EditStudent({ student, onClose, onUpdate }) {
     email: student.email,
     subscription_price: student.subscription_price,
     number_of_lessons_in_subscription:
-      student.number_of_lessons_in_subscription,
+    student.number_of_lessons_in_subscription,
   });
 
   const handleInputChange = (event) => {
@@ -30,7 +30,7 @@ function EditStudent({ student, onClose, onUpdate }) {
         formData
       );
       console.log('Updated student data:', response.data);
-      onUpdate(); // Call onUpdate function to trigger data refresh in the parent component
+      onEdit(response.data);
       onClose();
     } catch (error) {
       console.error('Error saving student data:', error);
