@@ -30,6 +30,7 @@ function AddStudent({ onClose, onAdd }) {
       onClose();
     } catch (error) {
       console.error('Error adding student:', error);
+      throw error
     }
   };
 

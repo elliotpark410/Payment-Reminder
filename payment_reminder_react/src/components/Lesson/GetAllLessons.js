@@ -23,6 +23,7 @@ function GetAllLessons({ onClose }) {
         setLessons(formattedLessons);
       } catch (error) {
         console.error('Error fetching lessons:', error);
+        throw error;
       }
     };
 

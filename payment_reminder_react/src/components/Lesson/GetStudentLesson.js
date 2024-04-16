@@ -22,6 +22,7 @@ const fetchLessons = async (studentId, setLessons) => {
     setLessons(formattedLessons);
   } catch (error) {
     console.error('Error fetching lessons:', error);
+    throw error;
   }
 };
 
@@ -41,6 +42,7 @@ const fetchTexts = async (studentId, setTexts) => {
     setTexts(sortedTexts);
   } catch (error) {
     console.error('Error fetching texts:', error);
+    throw error;
   }
 };
 
@@ -63,6 +65,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       setLessons(prevLessons => prevLessons.filter(lesson => lesson.id !== lessonId));
     } catch (error) {
       console.error('Error deleting lesson:', error);
+      throw error;
     }
   };
 
@@ -83,6 +86,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       fetchTexts();
     } catch (error) {
       console.error('Error updating lesson:', error);
+      throw error;
     }
   };
 

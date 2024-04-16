@@ -13,7 +13,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
       onDelete(student.id); // Inform the parent component about the deletion
     } catch (error) {
       console.error('Error deleting student:', error);
-      // Handle error here, if necessary
+      throw error;
     }
   };
 

@@ -13,6 +13,7 @@ function EditLesson({ lesson, onClose, onUpdate }) {
       onClose();
     } catch (error) {
       console.error('Error updating lesson:', error);
+      throw error;
     }
   };
 

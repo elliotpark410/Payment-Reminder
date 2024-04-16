@@ -5,7 +5,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 
 const SendText = ({ studentId, studentName, onClose }) => {
-  const fullName = studentName.split(' '); 
+  const fullName = studentName.split(' ');
   const firstName = fullName[0];
   const defaultMessage = `Hi ${firstName}, this is a reminder to renew your subscription`;
   const [message, setMessage] = useState(defaultMessage);
@@ -17,6 +17,7 @@ const SendText = ({ studentId, studentName, onClose }) => {
       onClose(); // Close the modal after sending the text message
     } catch (error) {
       console.error('Error sending text message:', error);
+      throw error;
     }
   };
 

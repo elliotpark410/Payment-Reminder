@@ -34,6 +34,7 @@ function EditStudent({ student, onClose, onEdit }) {
       onClose();
     } catch (error) {
       console.error('Error saving student data:', error);
+      throw error;
     }
   };
 
