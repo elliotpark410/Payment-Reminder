@@ -82,8 +82,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       setShowEditModal(false);
       setEditLesson(null);
       setLessonDate('');
-      fetchLessons();
-      fetchTexts();
+      fetchLessons(studentId, setLessons);
+      fetchTexts(studentId, setTexts);
     } catch (error) {
       console.error('Error updating lesson:', error);
       throw error;
