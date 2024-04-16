@@ -6,12 +6,12 @@ import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 // TODO: refactor and create separate components
 const GetAllStudents = ({
   students,
-  handleEditStudentClick,
-  handleDeleteStudentClick,
-  handleStudentLessonsClick,
+  onEditStudentClick,
+  onDeleteStudentClick,
+  onStudentLessonsClick,
   getLessonCountForStudent,
-  handleAddLessonClick,
-  handleSendTextClick
+  onAddLessonClick,
+  onSendTextClick
 }) => {
 
   return (
@@ -26,7 +26,7 @@ const GetAllStudents = ({
         >
           <Col>
             <div
-              onClick={() => handleEditStudentClick(student)}
+              onClick={() => onEditStudentClick(student)}
               style={{ padding: '10px', cursor: 'pointer' }}
             >
               <p>Student: {student.student_name}</p>
@@ -38,7 +38,7 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant="outline-success"
-                onClick={() => handleAddLessonClick(student)}
+                onClick={() => onAddLessonClick(student)}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </Button>
@@ -73,7 +73,7 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant="outline-success"
-                onClick={() => handleStudentLessonsClick(student)}
+                onClick={() => onStudentLessonsClick(student)}
               >
                 View Lessons
               </Button>
@@ -83,7 +83,7 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant={getLessonCountForStudent(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
-                onClick={() => handleSendTextClick(student)}
+                onClick={() => onSendTextClick(student)}
                 disabled={getLessonCountForStudent(student.id) < student.number_of_lessons_in_subscription - 1}
               >
                 Send Text
@@ -94,7 +94,7 @@ const GetAllStudents = ({
             <div>
               <Button
                 variant="outline-danger"
-                onClick={() => handleDeleteStudentClick(student)}
+                onClick={() => onDeleteStudentClick(student)}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </Button>

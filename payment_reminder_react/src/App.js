@@ -116,19 +116,19 @@ function App() {
       {/* Header */}
       <Row className="mt-5">
         <Header
-          handleAddStudentClick={handleAddStudentClick}
-          handleAllLessons={handleAllLessons}
+          onAddStudentClick={handleAddStudentClick}
+          onAllLessonsClick={handleAllLessons}
         />
       </Row>
       {/* Components */}
       <GetAllStudents
         students={students}
-        handleEditStudentClick={handleEditStudentClick}
-        handleDeleteStudentClick={handleDeleteStudentClick}
-        handleStudentLessonsClick={handleStudentLessonsClick}
+        onEditStudentClick={handleEditStudentClick}
+        onDeleteStudentClick={handleDeleteStudentClick}
+        onStudentLessonsClick={handleStudentLessonsClick}
         getLessonCountForStudent={getLessonCountForStudent}
-        handleAddLessonClick={handleAddLessonClick}
-        handleSendTextClick={handleSendTextClick}
+        onAddLessonClick={handleAddLessonClick}
+        onSendTextClick={handleSendTextClick}
       />
       {/* Add Student Modal is conditionally rendered if showAddStudentForm is truthy */}
       {data.showAddStudentForm && (
