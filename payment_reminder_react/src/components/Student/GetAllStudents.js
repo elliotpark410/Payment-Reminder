@@ -3,7 +3,6 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-// TODO: refactor and create separate components
 const GetAllStudents = ({
   students,
   onEditStudentClick,
