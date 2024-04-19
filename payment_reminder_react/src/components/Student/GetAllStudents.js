@@ -3,106 +3,87 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
+const StudentItem = ({
+  student,
+  onEdit,
+  onDelete,
+  onViewLessons,
+  onAddLesson,
+  onSendText,
+  getLessonCount,
+}) => (
+  <Row className="mt-3">
+    <Col>
+      <div onClick={() => onEdit(student)} style={{ padding: '10px', cursor: 'pointer' }}>
+        <p>Student: {student.student_name}</p>
+        <p className="ml-3">Parent: {student.parent_name}</p>
+      </div>
+    </Col>
+    <Col>
+      <Button variant="outline-success" onClick={() => onAddLesson(student)}>
+        <FontAwesomeIcon icon={faPlus} />
+      </Button>
+    </Col>
+    <Col>
+      <div className="d-flex align-items-center">
+        <div>
+          {getLessonCount(student.id) >= student.number_of_lessons_in_subscription - 1 ? (
+            <strong>
+              <span style={{ color: '#007bff' }}>{getLessonCount(student.id)}</span>
+            </strong>
+          ) : (
+            <span>{getLessonCount(student.id)}</span>
+          )}
+          {' '}
+          / {student.number_of_lessons_in_subscription}
+        </div>
+      </div>
+    </Col>
+    <Col>
+      <Button variant="outline-success" onClick={() => onViewLessons(student)}>
+        View Lessons
+      </Button>
+    </Col>
+    <Col>
+      <Button
+        variant={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
+        onClick={() => onSendText(student)}
+        disabled={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1}
+      >
+        Send Text
+      </Button>
+    </Col>
+    <Col>
+      <Button variant="outline-danger" onClick={() => onDelete(student)}>
+        <FontAwesomeIcon icon={faTrash} />
+      </Button>
+    </Col>
+  </Row>
+);
+
 const GetAllStudents = ({
   students,
   onEditStudentClick,
   onDeleteStudentClick,
-  onStudentLessonsClick,
+  onViewStudentLessonsClick,
   getLessonCountForStudent,
   onAddLessonClick,
-  onSendTextClick
-}) => {
-
-  return (
-    <>
-      {students.map((student, index) => (
-        <Row
-          className="mt-3"
-          key={student.id}
-          style={{
-            borderBottom: index !== students.length - 1 ? '1px solid #ccc' : 'none',
-          }}
-        >
-          <Col>
-            <div
-              onClick={() => onEditStudentClick(student)}
-              style={{ padding: '10px', cursor: 'pointer' }}
-            >
-              <p>Student: {student.student_name}</p>
-              <p className="ml-3">Parent: {student.parent_name}</p>
-            </div>
-          </Col>
-
-          <Col>
-            <div>
-              <Button
-                variant="outline-success"
-                onClick={() => onAddLessonClick(student)}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </Button>
-            </div>
-          </Col>
-
-          <Col>
-            <div className="d-flex align-items-center">
-            <div>
-                {getLessonCountForStudent(student.id) >= student.number_of_lessons_in_subscription - 1 ? (
-                  <strong>
-                    <span
-                      style={{
-                        color: '#007bff', // Blue color when condition is met
-                      }}
-                    >
-                      {getLessonCountForStudent(student.id)}
-                    </span>
-                  </strong>
-                ) : (
-                  <span>
-                    {getLessonCountForStudent(student.id)}
-                  </span>
-                )}
-                {' '}
-                / {student.number_of_lessons_in_subscription}
-              </div>
-            </div>
-          </Col>
-
-          <Col>
-            <div>
-              <Button
-                variant="outline-success"
-                onClick={() => onStudentLessonsClick(student)}
-              >
-                View Lessons
-              </Button>
-            </div>
-          </Col>
-          <Col>
-            <div>
-              <Button
-                variant={getLessonCountForStudent(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
-                onClick={() => onSendTextClick(student)}
-                disabled={getLessonCountForStudent(student.id) < student.number_of_lessons_in_subscription - 1}
-              >
-                Send Text
-              </Button>
-            </div>
-          </Col>
-          <Col>
-            <div>
-              <Button
-                variant="outline-danger"
-                onClick={() => onDeleteStudentClick(student)}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      ))}
-    </>
-  );
-};
+  onSendTextClick,
+}) => (
+  <>
+    {students.map((student) => (
+      <StudentItem
+        key={student.id}
+        student={student}
+        onEdit={onEditStudentClick}
+        onDelete={onDeleteStudentClick}
+        onViewLessons={onViewStudentLessonsClick}
+        onAddLesson={onAddLessonClick}
+        onSendText={onSendTextClick}
+        getLessonCount={getLessonCountForStudent}
+      />
+    ))}
+  </>
+);
 
 export default GetAllStudents;

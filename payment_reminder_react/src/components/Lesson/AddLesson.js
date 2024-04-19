@@ -27,9 +27,7 @@ function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
       });
 
       console.log('Added lesson:', response.data);
-
-      onAdd(); // Call onAdd function to fetch updated lesson data
-
+      onAdd();
       onClose();
     } catch (error) {
       console.error('Error adding lesson:', error);

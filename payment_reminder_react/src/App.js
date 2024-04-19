@@ -68,7 +68,7 @@ function App() {
     setData({ ...data, showDeleteStudentModal: true });
   };
 
-  const handleStudentLessonsClick = (student) => {
+  const handleViewStudentLessonsClick = (student) => {
     setData({
       ...data,
       studentId: student.id,
@@ -90,6 +90,10 @@ function App() {
     setData({ ...data, studentId: student.id, showAddLessonModal: true });
   };
 
+  const handleSendTextClick = (student) => {
+    setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name });
+  };
+
   const handleCloseAddLessonModal = () => {
     setData({ ...data, showAddLessonModal: false, studentId: null });
   };
@@ -98,17 +102,12 @@ function App() {
     setData({ ...data, showStudentLessonModal: false, studentId: null, studentName: null });
   };
 
+  const handleCloseSendTextModal = () => {
+    setData({ ...data, showSendTextModal: false, studentId: null, studentName: null });
+  };
 
   const handleUpdateData = (updatedData) => {
     setData({ ...data, ...updatedData});
-  };
-
-  const handleSendTextClick = (student) => {
-    setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name });
-  };
-
-  const handleCloseSendTextModal = () => {
-    setData({ ...data, showSendTextModal: false, studentId: null, studentName: null });
   };
 
   return (
@@ -125,7 +124,7 @@ function App() {
         students={students}
         onEditStudentClick={handleEditStudentClick}
         onDeleteStudentClick={handleDeleteStudentClick}
-        onStudentLessonsClick={handleStudentLessonsClick}
+        onViewStudentLessonsClick={handleViewStudentLessonsClick}
         getLessonCountForStudent={getLessonCountForStudent}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}

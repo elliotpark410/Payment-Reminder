@@ -6,7 +6,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
 // Function to fetch lessons
-const fetchLessons = async (studentId, setLessons) => {
+const fetchStudentLessons = async (studentId, setLessons) => {
   try {
     const response = await axios.get(`${host}/lesson/student/${studentId}`);
     const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
@@ -27,7 +27,7 @@ const fetchLessons = async (studentId, setLessons) => {
 };
 
 // Function to fetch texts
-const fetchTexts = async (studentId, setTexts) => {
+const fetchStudentTexts = async (studentId, setTexts) => {
   try {
     const response = await axios.get(`${host}/text/${studentId}`);
     const unsortedTexts = response.data;
@@ -54,8 +54,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessonDate, setLessonDate] = useState('');
 
   useEffect(() => {
-    fetchLessons(studentId, setLessons);
-    fetchTexts(studentId, setTexts);
+    fetchStudentLessons(studentId, setLessons);
+    fetchStudentTexts(studentId, setTexts);
   }, [studentId]);
 
   const handleDeleteLesson = async (lessonId) => {
@@ -82,8 +82,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       setShowEditModal(false);
       setEditLesson(null);
       setLessonDate('');
-      fetchLessons(studentId, setLessons);
-      fetchTexts(studentId, setTexts);
+      fetchStudentLessons(studentId, setLessons);
+      fetchStudentTexts(studentId, setTexts);
     } catch (error) {
       console.error('Error updating lesson:', error);
       throw error;
