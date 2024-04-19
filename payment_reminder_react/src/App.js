@@ -175,8 +175,11 @@ function App() {
           studentId={data.studentId}
           studentName={data.studentName}
           lessons={lessons}
-          onClose={handleCloseStudentLessonsModal}
           sendTextDate={data.sendTextDate}
+          onClose={() => {
+            fetchData();
+            handleCloseStudentLessonsModal();
+          }}
         />
       )}
       {/* Send Text Modal is conditionally rendered if showSendTextModal is truthy */}
