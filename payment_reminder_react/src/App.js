@@ -16,8 +16,7 @@ function App() {
   // State variables
   const [students, setStudents] = useState([]);
   const [lessons, setLessons] = useState([]);
-  const [editStudent, setEditStudent] = useState(null);
-  const [deleteStudent, setDeleteStudent] = useState(null);
+  const [studentSelected, setStudentSelected] = useState(null);
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
@@ -60,12 +59,12 @@ function App() {
   };
 
   const handleEditStudentClick = (student) => {
-    setEditStudent(student);
+    setStudentSelected(student);
     setData({ ...data, showEditStudentForm: true });
   };
 
   const handleDeleteStudentClick = (student) => {
-    setDeleteStudent(student);
+    setStudentSelected(student);
     setData({ ...data, showDeleteStudentModal: true });
   };
 
@@ -150,7 +149,7 @@ function App() {
        {/* Edit Student Modal is conditionally rendered if showEditStudentForm is truthy */}
        {data.showEditStudentForm && (
         <EditStudent
-          student={editStudent}
+          student={studentSelected}
           onClose={() => handleUpdateData({showEditStudentForm: false })}
           onEdit={() => {
             fetchData();
@@ -192,8 +191,8 @@ function App() {
       {/* Delete Student Modal is conditionally rendered if showDeleteStudentModal is truthy */}
       {data.showDeleteStudentModal && (
         <DeleteStudent
-          student={deleteStudent}
-          onCancel={() => setDeleteStudent(null)}
+          student={studentSelected}
+          onCancel={() => setStudentSelected(null)}
           onDelete={() => {
             fetchData();
             handleUpdateData({ showDeleteStudentModal: false });
