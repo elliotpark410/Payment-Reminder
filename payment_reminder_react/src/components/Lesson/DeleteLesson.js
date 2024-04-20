@@ -1,44 +1,30 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from 'react';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
-function DeleteLesson({ lessonId, onClose, onDelete }) {
-  const [loading, setLoading] = useState(false);
-
-  const handleDelete = async () => {
-    setLoading(true);
+const DeleteLesson = ({ lessonId, onDelete }) => {
+  const handleDeleteLesson = async () => {
     try {
       await axios.delete(`${host}/lesson/${lessonId}`);
-      onDelete(lessonId);
-      onClose();
+      console.log(`Lesson with ID ${lessonId} deleted successfully`);
+      onDelete();
     } catch (error) {
       console.error('Error deleting lesson:', error);
-    } finally {
-      setLoading(false);
+      throw error;
     }
   };
 
   return (
-    <Modal show={true} onHide={onClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete Lesson</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        Are you sure you want to delete this lesson?
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onClose} disabled={loading}>
-          <FontAwesomeIcon icon={faTimes} className="mr-1" /> Cancel
-        </Button>
-        <Button variant="danger" onClick={handleDelete} disabled={loading}>
-          {loading ? 'Deleting...' : 'Delete'}
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <Button
+      variant="outline-danger"
+      onClick={handleDeleteLesson}
+    >
+      <FontAwesomeIcon icon={faTrash} />
+    </Button>
   );
-}
+};
 
 export default DeleteLesson;

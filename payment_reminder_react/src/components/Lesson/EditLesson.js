@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React from 'react';
 import axios from 'axios';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 
-function EditLesson({ lesson, onClose, onUpdate }) {
-  const [lessonDate, setLessonDate] = useState(new Date(lesson.lesson_date).toISOString().slice(0, 10));
-
-  const handleSave = async () => {
+const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLesson, studentId, fetchStudentLessons, fetchStudentTexts, setLessons, setTexts }) => {
+  const handleSaveEdit = async () => {
     try {
-      await axios.put(`${host}/lesson/${lesson.id}`, { lesson_date: lessonDate });
-      onUpdate();
-      onClose();
+      const response = await axios.put(`${host}/lesson/${lesson.id}`, { lesson_date: lessonDate });
+      console.log('Lesson updated successfully:', response.data);
+      onHide();
+      setEditLesson(null);
+      setLessonDate('');
+      fetchStudentLessons(studentId, setLessons);
+      fetchStudentTexts(studentId, setTexts);
     } catch (error) {
       console.error('Error updating lesson:', error);
       throw error;
@@ -19,8 +21,8 @@ function EditLesson({ lesson, onClose, onUpdate }) {
 
   return (
     <Modal
-      show={true}
-      onHide={onClose}
+      show={show}
+      onHide={onHide}
       centered
     >
       <Modal.Header closeButton>
@@ -37,15 +39,15 @@ function EditLesson({ lesson, onClose, onUpdate }) {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={handleSave}>
+        <Button variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="secondary" onClick={onHide}>
           Cancel
         </Button>
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export default EditLesson;

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
+import DeleteLesson from './DeleteLesson';
+import EditLesson from './EditLesson';
 
-// Function to fetch lessons
 const fetchStudentLessons = async (studentId, setLessons) => {
   try {
     const response = await axios.get(`${host}/lesson/student/${studentId}`);
@@ -26,7 +25,6 @@ const fetchStudentLessons = async (studentId, setLessons) => {
   }
 };
 
-// Function to fetch texts
 const fetchStudentTexts = async (studentId, setTexts) => {
   try {
     const response = await axios.get(`${host}/text/${studentId}`);
@@ -58,39 +56,12 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     fetchStudentTexts(studentId, setTexts);
   }, [studentId]);
 
-  const handleDeleteLesson = async (lessonId) => {
-    try {
-      await axios.delete(`${host}/lesson/${lessonId}`);
-      console.log(`Lesson with ID ${lessonId} deleted successfully`);
-      setLessons(prevLessons => prevLessons.filter(lesson => lesson.id !== lessonId));
-    } catch (error) {
-      console.error('Error deleting lesson:', error);
-      throw error;
-    }
-  };
-
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
     setLessonDate(new Date(lesson.lesson_date).toISOString().slice(0, 10));
     setShowEditModal(true);
   };
 
-  const handleSaveEdit = async () => {
-    try {
-      const response = await axios.put(`${host}/lesson/${editLesson.id}`, { lesson_date: lessonDate });
-      console.log('Lesson updated successfully:', response.data);
-      setShowEditModal(false);
-      setEditLesson(null);
-      setLessonDate('');
-      fetchStudentLessons(studentId, setLessons);
-      fetchStudentTexts(studentId, setTexts);
-    } catch (error) {
-      console.error('Error updating lesson:', error);
-      throw error;
-    }
-  };
-
-  // Merge lessons and texts, sort by date
   const mergedRecords = [...lessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
   return (
@@ -125,12 +96,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       {record.formattedDate}
                     </td>
                     <td>
-                      <Button
-                        variant="outline-danger"
-                        onClick={() => handleDeleteLesson(record.id)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </Button>
+                      <DeleteLesson lessonId={record.id} onDelete={() => setLessons(prevLessons => prevLessons.filter(lesson => lesson.id !== record.id))} />
                     </td>
                   </>
                 ) : (
@@ -148,33 +114,19 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       </Modal.Footer>
 
       {/* Edit Lesson Modal */}
-      <Modal
+      <EditLesson
         show={showEditModal}
         onHide={() => setShowEditModal(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Lesson</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group controlId="lessonDate">
-            <Form.Label>Lesson Date</Form.Label>
-            <Form.Control
-              type="date"
-              value={lessonDate}
-              onChange={(e) => setLessonDate(e.target.value)}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleSaveEdit}>
-            Save
-          </Button>
-          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        lesson={editLesson}
+        lessonDate={lessonDate}
+        setLessonDate={setLessonDate}
+        setEditLesson={setEditLesson}
+        studentId={studentId}
+        fetchStudentLessons={fetchStudentLessons}
+        fetchStudentTexts={fetchStudentTexts}
+        setTexts={setTexts}
+        setLessons={setLessons}
+      />
     </Modal>
   );
 }
