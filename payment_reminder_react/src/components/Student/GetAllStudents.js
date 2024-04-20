@@ -71,6 +71,28 @@ const GetAllStudents = ({
   onSendTextClick,
 }) => (
   <>
+    {/* Row of column headers */}
+    <Row className="mt-3">
+      <Col>
+        <strong>Student Info</strong>
+      </Col>
+      <Col>
+        <strong>Add Lesson</strong>
+      </Col>
+      <Col>
+        <strong>Lesson Count</strong>
+      </Col>
+      <Col>
+        <strong>View Lessons</strong>
+      </Col>
+      <Col>
+        <strong>Send Text</strong>
+      </Col>
+      <Col>
+        <strong>Delete</strong>
+      </Col>
+    </Row>
+    {/* Rows of student items */}
     {students.map((student) => (
       <StudentItem
         key={student.id}
