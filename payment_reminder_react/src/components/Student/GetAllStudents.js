@@ -1,7 +1,9 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { host } from '../../lib/constants';
 
 const StudentItem = ({
   student,
@@ -11,7 +13,26 @@ const StudentItem = ({
   onAddLesson,
   onSendText,
   getLessonCount,
-}) => (
+  onResetLessonCount // callback to fetch data after reset
+}) => {
+  // Function to reset lesson count
+  const resetLessonCount = async (student) => {
+    try {
+      await axios.post(`${host}/lesson/reset`, {
+        student_id: student.id,
+        reset_lesson_date: new Date().toISOString().slice(0, 10), // current date
+      });
+
+      // Trigger success callback to refresh data or update the UI
+      if (onResetLessonCount) {
+        onResetLessonCount();
+      }
+    } catch (error) {
+      console.error('Error resetting lesson count:', error);
+    }
+  };
+
+  return (
   <Row className="mt-3">
     <Col>
       <div onClick={() => onEdit(student)} style={{ padding: '10px', cursor: 'pointer' }}>
@@ -40,6 +61,11 @@ const StudentItem = ({
       </div>
     </Col>
     <Col>
+      <Button variant="outline-warning" onClick={() => resetLessonCount(student)}>
+        <FontAwesomeIcon icon={faSyncAlt} />
+      </Button>
+    </Col>
+    <Col>
       <Button variant="outline-success" onClick={() => onViewLessons(student)}>
         View Lessons
       </Button>
@@ -59,7 +85,9 @@ const StudentItem = ({
       </Button>
     </Col>
   </Row>
-);
+  );
+};
+
 
 const GetAllStudents = ({
   students,
@@ -69,6 +97,7 @@ const GetAllStudents = ({
   getLessonCountForStudent,
   onAddLessonClick,
   onSendTextClick,
+  resetLessonCountForStudentClick
 }) => (
   <>
     {/* Row of column headers */}
@@ -81,6 +110,9 @@ const GetAllStudents = ({
       </Col>
       <Col>
         <strong>Lesson Count</strong>
+      </Col>
+      <Col>
+        <strong>Reset Lesson Count</strong>
       </Col>
       <Col>
         <strong>View Lessons</strong>
@@ -103,6 +135,7 @@ const GetAllStudents = ({
         onAddLesson={onAddLessonClick}
         onSendText={onSendTextClick}
         getLessonCount={getLessonCountForStudent}
+        onResetLessonCount={resetLessonCountForStudentClick}
       />
     ))}
   </>

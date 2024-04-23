@@ -81,9 +81,26 @@ function App() {
     setData({ ...data, showAllLessons: true });
   };
 
-  // TODO: update this function to get lesson count up to send text message / clear button
+   // Helper function to get the most recent reset date for a student
+   const getLatestResetDate = (studentId) => {
+    const studentLessons = lessons.filter((lesson) => lesson.student_id === studentId);
+    const resetDates = studentLessons
+      .map((lesson) => lesson.reset_lesson_date)
+      .filter((date) => date !== null);
+
+    return resetDates.length > 0 ? Math.max(...resetDates.map((date) => new Date(date))) : null;
+  };
+
+  // Updated getLessonCountForStudent
   const getLessonCountForStudent = (studentId) => {
-    return lessons.filter((lesson) => lesson.student_id === studentId).length;
+    const latestResetDate = getLatestResetDate(studentId);
+
+    return lessons.filter(
+      (lesson) =>
+        lesson.student_id === studentId &&
+        lesson.lesson_date !== null &&
+        (!latestResetDate || new Date(lesson.lesson_date) > latestResetDate)
+    ).length;
   };
 
   const handleAddLessonClick = (student) => {
@@ -126,6 +143,7 @@ function App() {
         onDeleteStudentClick={handleDeleteStudentClick}
         onViewStudentLessonsClick={handleViewStudentLessonsClick}
         getLessonCountForStudent={getLessonCountForStudent}
+        resetLessonCountForStudentClick={fetchData}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}
       />
