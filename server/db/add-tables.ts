@@ -1,9 +1,22 @@
 import dotenv from 'dotenv';
-import connection from './connection';
+import mysql from 'mysql2';
 dotenv.config();
 
-// Function to create tables
-export function createTables() {
+// Ensure we're connected to the correct database
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: 'payment_reminder', // Connect to the correct database
+  multipleStatements: true,
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to database:', err);
+    throw err;
+  }
+
   const sqlQueries = [
     `
     CREATE TABLE IF NOT EXISTS students (
@@ -20,6 +33,7 @@ export function createTables() {
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,
       lesson_date DATE,
+      reset_lesson_date DATE,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
@@ -36,10 +50,14 @@ export function createTables() {
 
   sqlQueries.forEach((sql) => {
     connection.query(sql, (err) => {
-      if (err) throw err;
+      if (err) {
+        console.error('Error creating table:', err);
+        throw err;
+      }
       console.log('Table created or already exists');
     });
   });
-}
 
-createTables();
+  // Close connection once tables are created
+  connection.end();
+});

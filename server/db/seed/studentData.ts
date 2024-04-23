@@ -175,7 +175,7 @@ export function seedStudents() {
       number_of_lessons_in_subscription: 13
     },
     {
-      student_name: 'daniel Beck',
+      student_name: 'Daniel Beck',
       phone_number: '949-299-6392',
       subscription_price: 1800,
       number_of_lessons_in_subscription: 13

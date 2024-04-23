@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 
 // Handler imports
 import { handleAddLesson } from "./handleAddLesson";
+import { handleResetLesson } from "./handleResetLesson";
 import { handleDeleteLesson } from "./handleDeleteLesson";
 import { handleEditLesson } from "./handleEditLesson";
 import { handleGetLesson } from "./handleGetLesson";
@@ -21,6 +22,15 @@ router.post(
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
     await handleAddLesson(request, response, next);
+  }
+);
+
+// Route to reset lesson count
+router.post(
+  "/reset",
+  jsonParser,
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleResetLesson(request, response, next);
   }
 );
 
