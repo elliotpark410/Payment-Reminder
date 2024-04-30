@@ -27,6 +27,8 @@ connection.connect((err) => {
       email VARCHAR(255),
       subscription_price INT UNSIGNED,
       number_of_lessons_in_subscription INT
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )`,
 
     `CREATE TABLE IF NOT EXISTS lessons (
@@ -34,6 +36,8 @@ connection.connect((err) => {
       student_id BIGINT UNSIGNED NOT NULL,
       lesson_date DATE,
       reset_lesson_date DATE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
@@ -43,6 +47,8 @@ connection.connect((err) => {
       student_id BIGINT UNSIGNED NOT NULL,
       date DATE,
       message TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
