@@ -7,7 +7,11 @@ import { host } from '../../lib/constants';
 const SendText = ({ studentId, studentName, onClose }) => {
   const fullName = studentName.split(' ');
   const firstName = fullName[0];
-  const defaultMessage = `Hi ${firstName}, this is a reminder to renew your subscription`;
+  // TODO: pass lessons in subscriptions and lesson dates as props
+  const lessonsInSubscription = "LESSONS IN SUBSCRIPTION";
+  const lessonDates = "LESSON DATES";
+  const defaultMessage = `Hi ${firstName}, \nThis is a gentle reminder that you have completed ${lessonsInSubscription} amount of lessons. The lessons dates are listed below: \n${lessonDates}`;
+
   const [message, setMessage] = useState(defaultMessage);
 
   const handleSendText = async () => {
