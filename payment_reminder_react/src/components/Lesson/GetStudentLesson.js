@@ -199,7 +199,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                         borderRadius: '4px',
                       }}
                     >
-                      Lesson Reset on {record.formattedDate}
+                      Lesson Count Reset on {record.formattedDate}
                     </td>
                     <td>
                       <DeleteLesson
