@@ -26,7 +26,7 @@ connection.connect((err) => {
       phone_number VARCHAR(20),
       email VARCHAR(255),
       subscription_price INT UNSIGNED,
-      number_of_lessons_in_subscription INT
+      number_of_lessons_in_subscription INT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )`,
