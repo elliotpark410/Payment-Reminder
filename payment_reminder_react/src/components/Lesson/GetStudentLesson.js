@@ -8,16 +8,30 @@ import EditLesson from './EditLesson';
 const fetchStudentLessons = async (studentId, setLessons) => {
   try {
     const response = await axios.get(`${host}/lesson/student/${studentId}`);
-    const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+
+    // Filter out records with null or invalid lesson_date
+    const validLessons = response.data.filter((lesson) => {
+      return lesson.lesson_date !== null && lesson.lesson_date !== undefined;
+    });
+
+    // Sort the valid records by lesson_date
+    const sortedLessons = validLessons.sort(
+      (a, b) => new Date(a.lesson_date) - new Date(b.lesson_date)
+    );
+
+    // Format the sorted lessons
     const formattedLessons = sortedLessons.map((lesson, index) => ({
       ...lesson,
+      lesson: true,
       lessonNumber: index + 1,
       formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
         month: '2-digit',
         day: '2-digit',
-        year: 'numeric'
-      })
+        year: 'numeric',
+      }),
     }));
+
+    // Set the filtered and formatted lessons
     setLessons(formattedLessons);
   } catch (error) {
     console.error('Error fetching lessons:', error);
@@ -25,19 +39,63 @@ const fetchStudentLessons = async (studentId, setLessons) => {
   }
 };
 
+const fetchStudentResetLessons = async (studentId, setResetLessons) => {
+  try {
+    // Fetch data from the API
+    const response = await axios.get(`${host}/lesson/student/${studentId}`);
+
+    // Filter out records with null or undefined reset_lesson_date
+    const validResetLessons = response.data.filter(
+      (resetLesson) => resetLesson.reset_lesson_date !== null && resetLesson.reset_lesson_date !== undefined
+    );
+
+    // Sort the valid records by reset_lesson_date
+    const sortedResetLessons = validResetLessons.sort(
+      (a, b) => new Date(a.reset_lesson_date) - new Date(b.reset_lesson_date)
+    );
+
+    // Format the sorted lessons
+    const formattedResetLessons = sortedResetLessons.map((resetLesson) => ({
+      ...resetLesson,
+      resetLesson: true,
+      formattedDate: new Date(resetLesson.reset_lesson_date).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+      }),
+    }));
+
+    // Update the state with the filtered, sorted, and formatted reset lessons
+    setResetLessons(formattedResetLessons);
+  } catch (error) {
+    console.error('Error fetching reset lessons:', error);
+    throw error;
+  }
+};
+
 const fetchStudentTexts = async (studentId, setTexts) => {
   try {
+    // Fetch data from the API
     const response = await axios.get(`${host}/text/${studentId}`);
-    const unsortedTexts = response.data;
-    const sortedTexts = unsortedTexts.map((text) => ({
+
+    // Filter out records with null or undefined dates
+    const validTexts = response.data.filter(
+      (text) => text.date !== null && text.date !== undefined
+    );
+
+    // Format the valid texts and sort them
+    const formattedTexts = validTexts.map((text) => ({
       ...text,
+      text: true,
       formattedDate: new Date(text.date).toLocaleDateString('en-US', {
         month: '2-digit',
         day: '2-digit',
-        year: 'numeric'
-      }).replace(/\//g, '-')
+        year: 'numeric',
+      }).replace(/\//g, '-'),
     }));
-    setTexts(sortedTexts);
+
+    // Set the texts in the state
+    setTexts(formattedTexts);
   } catch (error) {
     console.error('Error fetching texts:', error);
     throw error;
@@ -46,6 +104,7 @@ const fetchStudentTexts = async (studentId, setTexts) => {
 
 function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
+  const [resetLessons, setResetLessons] = useState([]);
   const [texts, setTexts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
@@ -53,6 +112,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   useEffect(() => {
     fetchStudentLessons(studentId, setLessons);
+    fetchStudentResetLessons(studentId, setResetLessons);
     fetchStudentTexts(studentId, setTexts);
   }, [studentId]);
 
@@ -62,7 +122,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setShowEditModal(true);
   };
 
-  const mergedRecords = [...lessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
+  const mergedRecords = [...lessons, ...resetLessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
   return (
     <Modal
@@ -87,23 +147,74 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
             </tr>
           </thead>
           <tbody>
-            {mergedRecords.map((record) => (
-              <tr key={record.id}>
-                {record.hasOwnProperty('lessonNumber') ? (
-                  <>
+            {mergedRecords.map((record, index) => {
+              const uniqueKey = `${record.id}-${index}`;
+              // lesson records
+              if (record.lesson) {
+                return (
+                  <tr key={uniqueKey}>
                     <td>{record.lessonNumber}</td>
-                    <td onClick={() => handleEditLesson(record)}>
-                      {record.formattedDate}
+                    <td onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
+                    <td>
+                      <DeleteLesson
+                        lessonId={record.id}
+                        onDelete={() =>
+                          setLessons((prevLessons) =>
+                            prevLessons.filter((lesson) => lesson.id !== record.id)
+                          )
+                        }
+                      />
+                    </td>
+                  </tr>
+                );
+                // text message records
+              } else if (record.text) {
+                return (
+                  <tr key={uniqueKey}>
+                    <td
+                      colSpan="2"
+                      className="text-center"
+                      style={{
+                        backgroundColor: '#007bff',
+                        color: 'white',
+                        padding: '8px 15px',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      Message Sent on {record.formattedDate}
+                    </td>
+                  </tr>
+                );
+              } else {
+                // lesson reset records
+                return (
+                  <tr key={uniqueKey}>
+                    <td
+                      colSpan="2"
+                      className="text-center"
+                      style={{
+                        backgroundColor: '#FFC107',
+                        color: 'black',
+                        padding: '8px 15px',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      Lesson Reset on {record.formattedDate}
                     </td>
                     <td>
-                      <DeleteLesson lessonId={record.id} onDelete={() => setLessons(prevLessons => prevLessons.filter(lesson => lesson.id !== record.id))} />
+                      <DeleteLesson
+                        lessonId={record.id}
+                        onDelete={() =>
+                          setLessons((prevLessons) =>
+                            prevLessons.filter((lesson) => lesson.id !== record.id)
+                          )
+                        }
+                      />
                     </td>
-                  </>
-                ) : (
-                  <td colSpan="3" className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 15px', margin: '10px 0', borderRadius: '4px' }}>Message Sent on {record.formattedDate}</td>
-                )}
-              </tr>
-            ))}
+                  </tr>
+                );
+              }
+            })}
           </tbody>
         </table>
       </Modal.Body>
