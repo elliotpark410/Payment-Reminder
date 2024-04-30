@@ -205,7 +205,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       <DeleteLesson
                         lessonId={record.id}
                         onDelete={() =>
-                          setLessons((prevLessons) =>
+                          setResetLessons((prevLessons) =>
                             prevLessons.filter((lesson) => lesson.id !== record.id)
                           )
                         }
