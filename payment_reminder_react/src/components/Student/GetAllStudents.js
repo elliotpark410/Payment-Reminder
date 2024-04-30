@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { host } from '../../lib/constants';
+import { formatInTimeZone } from 'date-fns-tz';
 
 const StudentItem = ({
   student,
@@ -18,9 +19,15 @@ const StudentItem = ({
   // Function to reset lesson count
   const resetLessonCount = async (student) => {
     try {
+      const now = new Date(); // Current local time
+      const timeZone = 'America/Los_Angeles';
+
+      // Get date in Pacific Time and format it
+      const formattedDate = formatInTimeZone(now, timeZone, 'yyyy-MM-dd');
+
       await axios.post(`${host}/lesson/reset`, {
         student_id: student.id,
-        reset_lesson_date: new Date().toISOString().slice(0, 10), // current date
+        reset_lesson_date: formattedDate
       });
 
       // Trigger success callback to refresh data or update the UI
