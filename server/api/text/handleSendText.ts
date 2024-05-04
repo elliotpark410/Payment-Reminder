@@ -70,7 +70,7 @@ async function getPhoneNumber(studentId: number): Promise<string> {
 // Function to save the sent text message to the database
 async function saveTextMessage(studentId: number, message: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    const query = 'INSERT INTO texts (student_id, date, message) VALUES (?, NOW(), ?)';
+    const query = 'INSERT INTO texts (student_id, created_date, message) VALUES (?, NOW(), ?)';
 
     connection.execute(query, [studentId, message], (error) => {
       if (error) {
