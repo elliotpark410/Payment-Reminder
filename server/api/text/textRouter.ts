@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 // Handler imports
 import { handleSendText } from "./handleSendText";
 import { handleGetStudentText } from "./handleGetStudentText";
+import { handleGetAllText } from "./handleGetAllText";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -27,6 +28,13 @@ router.get(
   }
 );
 
-export * from "./handleSendText";
+router.get(
+  "/",
+  jsonParser,
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleGetAllText(request, response, next);
+  }
+);
+
 
 export default router;

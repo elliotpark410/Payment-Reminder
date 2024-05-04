@@ -45,10 +45,8 @@ connection.connect((err) => {
     `CREATE TABLE IF NOT EXISTS texts (
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,
-      date DATE,
+      created_date DATE,
       message TEXT,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
