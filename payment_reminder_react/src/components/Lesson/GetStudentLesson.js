@@ -80,14 +80,14 @@ const fetchStudentTexts = async (studentId, setTexts) => {
 
     // Filter out records with null or undefined dates
     const validTexts = response.data.filter(
-      (text) => text.date !== null && text.date !== undefined
+      (text) => text.created_date !== null && text.created_date !== undefined
     );
 
     // Format the valid texts and sort them
     const formattedTexts = validTexts.map((text) => ({
       ...text,
       text: true,
-      formattedDate: new Date(text.date).toLocaleDateString('en-US', {
+      formattedDate: new Date(text.created_date).toLocaleDateString('en-US', {
         month: '2-digit',
         day: '2-digit',
         year: 'numeric',

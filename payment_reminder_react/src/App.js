@@ -16,7 +16,9 @@ function App() {
   // State variables
   const [students, setStudents] = useState([]);
   const [lessons, setLessons] = useState([]);
+  const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
+  // TODO: refactor state variables
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
@@ -38,15 +40,18 @@ function App() {
   // fetch students and lessons data
   const fetchData = async () => {
     try {
-      const [studentsResponse, lessonsResponse] = await Promise.all([
+      const [studentsResponse, lessonsResponse, textResponse] = await Promise.all([
         fetch(`${host}/student/`),
         fetch(`${host}/lesson/`),
+        fetch(`${host}/text/`),
       ]);
       const studentsData = await studentsResponse.json();
       const lessonsData = await lessonsResponse.json();
+      const textData = await textResponse.json();
       // order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
+      setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
@@ -81,8 +86,8 @@ function App() {
     setData({ ...data, showAllLessons: true });
   };
 
-   // Helper function to get the most recent reset date for a student
-   const getLatestResetDate = (studentId) => {
+  // Helper function to get the most recent reset date for a student
+  const getLatestResetDate = (studentId) => {
     const studentLessons = lessons.filter((lesson) => lesson.student_id === studentId);
     const resetDates = studentLessons
       .map((lesson) => lesson.reset_lesson_date)
@@ -91,16 +96,39 @@ function App() {
     return resetDates.length > 0 ? Math.max(...resetDates.map((date) => new Date(date))) : null;
   };
 
+  // Helper function to get the most recent send text date for a student
+  const getLatestTextDate = (studentId) => {
+    const studentTexts = texts.filter((textDate) => textDate.student_id === studentId);
+    const textDates = studentTexts
+      .map((text) => text.created_date)
+      .filter((date) => date !== null);
+
+    return textDates.length > 0 ? Math.max(...textDates.map((date) => new Date(date))) : null;
+  };
+
   // Updated getLessonCountForStudent
   const getLessonCountForStudent = (studentId) => {
     const latestResetDate = getLatestResetDate(studentId);
+    const latestTextDate = getLatestTextDate(studentId);
 
-    return lessons.filter(
+    let filterDate = null;
+
+    if (latestResetDate && latestTextDate) {
+      filterDate = new Date(Math.max(latestResetDate, latestTextDate));
+    } else if (latestResetDate) {
+      filterDate = new Date(latestResetDate);
+    } else if (latestTextDate) {
+      filterDate = new Date(latestTextDate);
+    }
+
+    const filteredLessons = lessons.filter(
       (lesson) =>
         lesson.student_id === studentId &&
         lesson.lesson_date !== null &&
-        (!latestResetDate || new Date(lesson.lesson_date) > latestResetDate)
+        (!filterDate || new Date(lesson.lesson_date) > filterDate)
     ).length;
+
+    return filteredLessons
   };
 
   const handleAddLessonClick = (student) => {
