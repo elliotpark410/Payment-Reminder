@@ -124,6 +124,24 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   const mergedRecords = [...lessons, ...resetLessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
+  // Function to reset lesson numbers after each text or reset record
+  const assignLessonNumbers = (records) => {
+    let currentLessonNumber = 0; // Start lesson counter
+
+    return records.map((record) => {
+      if (record.lesson) {
+        currentLessonNumber += 1; // Increment for each lesson
+        return { ...record, lessonNumber: currentLessonNumber }; // Assign the updated lesson number
+      } else {
+        // Reset counter if a "text" or "reset lesson" is encountered
+        currentLessonNumber = 0;
+        return record; // Just return the record
+      }
+    });
+  };
+
+  const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
+
   return (
     <Modal
       size="lg"
@@ -147,7 +165,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
             </tr>
           </thead>
           <tbody>
-            {mergedRecords.map((record, index) => {
+            {recordsWithLessonNumbers.map((record, index) => {
               const uniqueKey = `${record.id}-${index}`;
               // lesson records
               if (record.lesson) {
@@ -172,7 +190,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td
-                      colSpan="2"
+                      colSpan="3"
                       className="text-center"
                       style={{
                         backgroundColor: '#007bff',
@@ -181,7 +199,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                         borderRadius: '4px',
                       }}
                     >
-                      Message Sent on {record.formattedDate}
+                      Message sent on {record.formattedDate}
                     </td>
                   </tr>
                 );
@@ -199,7 +217,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                         borderRadius: '4px',
                       }}
                     >
-                      Lesson Count Reset on {record.formattedDate}
+                      Lesson reset on {record.formattedDate}
                     </td>
                     <td>
                       <DeleteLesson
