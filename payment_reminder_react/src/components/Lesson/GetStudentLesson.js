@@ -190,7 +190,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td
-                      colSpan="3"
+                      colSpan="2"
                       className="text-center"
                       style={{
                         backgroundColor: '#007bff',
