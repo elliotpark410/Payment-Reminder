@@ -50,6 +50,15 @@ connection.connect((err) => {
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
+
+    `CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      role VARCHAR(50) DEFAULT 'admin',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )`,
   ];
 
   sqlQueries.forEach((sql) => {
