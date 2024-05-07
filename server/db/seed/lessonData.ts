@@ -7,8 +7,9 @@ export function seedLessons() {
       lesson_date: '2024-02-20',
     },
     {
-      student_id: 17,
+      student_id: 2,
       lesson_date: '2024-03-25',
+      reset_lesson_date: '2024-03-26',
     },
   ];
 
