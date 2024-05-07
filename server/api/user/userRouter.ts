@@ -13,7 +13,7 @@ router.use(express.urlencoded({ extended: true }));
 
 // Route to add a new user
 router.post(
-  "/add",
+  "/register",
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
     await handleAddUser(request, response, next);
@@ -22,7 +22,7 @@ router.post(
 
 // Route to get a user by ID
 router.get(
-  "/",
+  "/login",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleGetUser(request, response, next);
   }
