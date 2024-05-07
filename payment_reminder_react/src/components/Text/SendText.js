@@ -4,13 +4,32 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 
-const SendText = ({ studentId, studentName, onClose }) => {
+const SendText = ({ studentId, studentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
   const fullName = studentName.split(' ');
   const firstName = fullName[0];
-  // TODO: pass lessons in subscriptions and lesson dates as props
-  const lessonsInSubscription = "LESSONS IN SUBSCRIPTION";
-  const lessonDates = "LESSON DATES";
-  const defaultMessage = `Hi ${firstName}, \nThis is a gentle reminder that you have completed ${lessonsInSubscription} amount of lessons. The lessons dates are listed below: \n${lessonDates}`;
+  const lessonCount = studentLessonCount;
+  const lessonsInSubscription = studentSusbscriptionCount;
+  const formattedSubscriptionAmount = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0, // No cents
+    maximumFractionDigits: 0,
+  }).format(studentSubscriptionAmount);
+  const formattedLessonDates = studentFilteredLessonDates
+  .sort((a, b) => new Date(a) - new Date(b))
+  .map((date) =>
+    new Date(date).toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    })
+  )
+  .join('\n');
+
+  const defaultMessage = `Hi ${firstName},
+  \nThis is a gentle reminder that you have completed ${lessonCount} / ${lessonsInSubscription} lessons with Park Vocal Studio.
+  \nLesson dates:\n${formattedLessonDates}
+  \nPlease renew your subscription payment of ${formattedSubscriptionAmount}`;
 
   const [message, setMessage] = useState(defaultMessage);
 

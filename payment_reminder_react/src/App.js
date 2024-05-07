@@ -106,7 +106,24 @@ function App() {
     return textDates.length > 0 ? Math.max(...textDates.map((date) => new Date(date))) : null;
   };
 
-  // Updated getLessonCountForStudent
+  const getFilteredLessonDates = (studentId) => {
+    const latestResetDate = getLatestResetDate(studentId);
+    const latestTextDate = getLatestTextDate(studentId);
+
+    const cutoffDate = new Date(Math.max(latestResetDate ?? 0, latestTextDate ?? 0));
+
+    const filteredLessonDates = lessons
+      .filter(
+        (lesson) =>
+          lesson.student_id === studentId &&
+          lesson.lesson_date !== null &&
+          new Date(lesson.lesson_date) > cutoffDate
+      )
+      .map((lesson) => lesson.lesson_date); // Return the list of filtered lesson dates
+
+    return filteredLessonDates;
+  };
+
   const getLessonCountForStudent = (studentId) => {
     const latestResetDate = getLatestResetDate(studentId);
     const latestTextDate = getLatestTextDate(studentId);
@@ -129,6 +146,16 @@ function App() {
     ).length;
 
     return filteredLessons
+  };
+
+  const getStudentSubscriptionCount = (studentId) => {
+    const student = students.find((s) => s.id === studentId);
+    return student?.number_of_lessons_in_subscription ?? 0;
+  };
+
+  const getStudentSubscriptionAmount = (studentId) => {
+    const student = students.find((s) => s.id === studentId);
+    return student?.subscription_price ?? 0;
   };
 
   const handleAddLessonClick = (student) => {
@@ -231,6 +258,10 @@ function App() {
         <SendText
         studentId={data.studentId}
         studentName={data.studentName}
+        studentLessonCount={getLessonCountForStudent(data.studentId)}
+        studentSusbscriptionCount={getStudentSubscriptionCount(data.studentId)}
+        studentFilteredLessonDates={getFilteredLessonDates(data.studentId)}
+        studentSubscriptionAmount={getStudentSubscriptionAmount(data.studentId)}
         onClose={handleCloseSendTextModal} />
       )}
       {/* Delete Student Modal is conditionally rendered if showDeleteStudentModal is truthy */}
