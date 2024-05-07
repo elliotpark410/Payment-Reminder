@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import connection from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export async function handleAddUser(
   request: Request,
@@ -17,7 +19,8 @@ export async function handleAddUser(
     }
 
     // Encrypt the password using bcrypt
-    const saltRounds = 10; // Number of rounds for hashing (adjustable for security vs. performance)
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS!); // Number of rounds for hashing
+
     const password_hash = await bcrypt.hash(password, saltRounds);
 
     // Query to insert a new user record into the users table
