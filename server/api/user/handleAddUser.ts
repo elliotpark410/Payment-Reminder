@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import connection from '../../db/connection';
-import { RowDataPacket } from 'mysql2';
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -44,21 +44,11 @@ export async function handleAddUser(
         const insertResultsJson: any = insertResults;
         const userId = insertResultsJson.insertId;
 
-        const selectQuery = 'SELECT * FROM users WHERE id = ?';
-        connection.query(selectQuery, [userId], (selectError, selectResults: RowDataPacket[]) => {
-          if (selectError) {
-            // Handle error
-            return next(selectError);
-          }
+        // Generate JWT token for the newly registered user
+        const token = jwt.sign({ username, userId }, process.env.JWT_SECRET!, { expiresIn: '168h' });
 
-          // If the record is found, send it in the response
-          if (selectResults.length > 0) {
-            response.status(201).send(selectResults[0]);
-          } else {
-            // If no user is found with the provided ID, return a 404 response
-            response.status(404).json({ message: 'User not found' });
-          }
-        });
+        // Return success with token
+        response.status(201).json({ message: "User created successfully", token });
       }
     );
   } catch (err) {

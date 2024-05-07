@@ -2,6 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import connection from "../../db/connection";
 import { RowDataPacket } from 'mysql2';
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 
 export async function handleGetUser(
   request: Request,
@@ -40,8 +45,11 @@ export async function handleGetUser(
          return response.status(401).json({ message: "Invalid password" });
        }
 
+       const token = jwt.sign({ username: user.username, userId: user.id }, process.env.JWT_SECRET!, { expiresIn: '168h' });
+
+
        // If the password is correct, return success
-       response.status(200).json({ message: "Successfully logged in" });
+       response.status(200).json({ message: "Successfully logged in", token });
     });
   } catch (err) {
     console.log(err)
