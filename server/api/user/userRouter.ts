@@ -21,7 +21,7 @@ router.post(
 );
 
 // Route to get a user by ID
-router.get(
+router.post(
   "/login",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleGetUser(request, response, next);
