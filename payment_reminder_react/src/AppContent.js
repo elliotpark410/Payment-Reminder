@@ -18,7 +18,6 @@ function AppContent() {
   const [lessons, setLessons] = useState([]);
   const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
-  // TODO: refactor state variables
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
