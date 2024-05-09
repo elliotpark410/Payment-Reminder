@@ -22,6 +22,7 @@ function AppContent() {
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
+    parentName: '',
     showAddStudentForm: false,
     showEditStudentForm: false,
     showDeleteStudentModal: false,
@@ -163,7 +164,7 @@ function AppContent() {
   };
 
   const handleSendTextClick = (student) => {
-    setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name });
+    setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name, parentName: student.parent_name });
   };
 
   const handleCloseAddLessonModal = () => {
@@ -258,6 +259,7 @@ function AppContent() {
         <SendText
         studentId={data.studentId}
         studentName={data.studentName}
+        parentName={data.parentName}
         studentLessonCount={getLessonCountForStudent(data.studentId)}
         studentSusbscriptionCount={getStudentSubscriptionCount(data.studentId)}
         studentFilteredLessonDates={getFilteredLessonDates(data.studentId)}

@@ -4,8 +4,9 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 
-const SendText = ({ studentId, studentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
-  const fullName = studentName.split(' ');
+const SendText = ({ studentId, studentName, parentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
+  const name = parentName || studentName;
+  const fullName = name.split(' ');
   const firstName = fullName[0];
   const lessonCount = studentLessonCount;
   const lessonsInSubscription = studentSusbscriptionCount;

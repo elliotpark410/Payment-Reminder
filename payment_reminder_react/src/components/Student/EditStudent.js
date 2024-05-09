@@ -5,13 +5,13 @@ import { host } from '../../lib/constants';
 
 function EditStudent({ student, onClose, onEdit }) {
   const [formData, setFormData] = useState({
-    student_name: student.student_name,
-    parent_name: student.parent_name,
-    phone_number: student.phone_number,
-    email: student.email,
-    subscription_price: student.subscription_price,
+    student_name: student.student_name || "",
+    parent_name: student.parent_name || "",
+    phone_number: student.phone_number || "",
+    email: student.email || "",
+    subscription_price: student.subscription_price || "",
     number_of_lessons_in_subscription:
-    student.number_of_lessons_in_subscription,
+    student.number_of_lessons_in_subscription || "",
   });
 
   const handleInputChange = (event) => {
