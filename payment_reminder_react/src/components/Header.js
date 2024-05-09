@@ -4,15 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
+  const website = "https://parkvocalstudio.com/";
   const openWebsite = () => {
-    window.open("https://parkvocalstudio.com/", "_blank"); // Open in a new tab
+    window.open(website, "_blank"); // Open in a new tab
   };
 
   return (
-    <Row className="mt-5 d-flex align-items-center">
+    <Row className="mt-4 d-flex align-items-center">
       <Col xs={6} className="text-left">
-        <h1 className="mb-4" onClick={openWebsite} title="https://parkvocalstudio.com" style={{ cursor: 'pointer' }}>
-          Park Vocal Studio <FontAwesomeIcon icon={faMusic} />
+        <h1 className="mb-4">
+            Park Vocal Studio
+            <FontAwesomeIcon
+              icon={faMusic}
+              onClick={openWebsite}
+              title={website}
+              style={{ cursor: 'pointer', marginLeft: '10px' }}
+            />
         </h1>
       </Col>
       <Col xs={2} />
