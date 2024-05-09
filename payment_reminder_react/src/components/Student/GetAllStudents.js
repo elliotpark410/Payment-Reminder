@@ -6,11 +6,6 @@ import axios from 'axios';
 import { host } from '../../lib/constants';
 import { formatInTimeZone } from 'date-fns-tz';
 
-const rowStyle = (index) => ({
-  borderBottom: '1px solid lightgray', // Thin, faint divider
-  backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff', // Alternating background colors
-});
-
 const StudentItem = ({
   index,
   student,
@@ -47,24 +42,22 @@ const StudentItem = ({
   };
 
   return (
-    <Row style={rowStyle(index)} className="py-2">
-      <Col>
+    <Row style={{ paddingTop: '12px', paddingBottom: '12px', borderBottom: '1px solid lightgray', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }} className="align-items-center">
+      <Col className="text-center">
           {index + 1}
       </Col>
-      <Col>
-        <div onClick={() => onEdit(student)} style={{ padding: '10px', cursor: 'pointer' }}>
-          <p>{student.student_name}</p>
-          {/* add inentation for parent */}
-          <p>{student.parent_name}</p>
+      <Col className="text-left">
+        <div onClick={() => onEdit(student)} style={{ paddingTop: '10px', paddingBottom: '10px', cursor: 'pointer' }}>
+          <p style={{ fontWeight: '600' }}>{student.student_name}</p>
+          <p style={{ paddingTop: '5px', fontSize: '0.9rem' }}>{student.parent_name}</p>
         </div>
       </Col>
-      <Col>
+      <Col className="text-center">
         <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)}>
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </Col>
-      <Col>
-        <div className="d-flex align-items-center">
+      <Col className="text-center">
           <div>
             {getLessonCount(student.id) >= student.number_of_lessons_in_subscription - 1 ? (
               <strong>
@@ -76,19 +69,18 @@ const StudentItem = ({
             {' '}
             / {student.number_of_lessons_in_subscription}
           </div>
-        </div>
       </Col>
-      <Col>
+      <Col className="text-center">
         <Button variant="outline-warning" title="Reset lesson count" onClick={() => resetLessonCount(student)}>
           <FontAwesomeIcon icon={faSyncAlt} />
         </Button>
       </Col>
-      <Col>
+      <Col className="text-center">
         <Button variant="outline-success" title="View lessons" onClick={() => onViewLessons(student)}>
           View Lessons
         </Button>
       </Col>
-      <Col>
+      <Col className="text-center">
         <Button
           variant={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
           title="Send text"
@@ -98,7 +90,7 @@ const StudentItem = ({
           Send Text
         </Button>
       </Col>
-      <Col>
+      <Col className="text-center">
         <Button variant="outline-danger" title="Delete student" onClick={() => onDelete(student)}>
           <FontAwesomeIcon icon={faTrash} />
         </Button>
@@ -119,15 +111,15 @@ const GetAllStudents = ({
   resetLessonCountForStudentClick,
 }) => (
   <>
-    <Row style={{ borderBottom: '1px solid lightgray' }} className="py-2">
-      <Col><strong>Number</strong></Col>
-      <Col><strong>Name</strong></Col>
-      <Col><strong>Add Lesson</strong></Col>
-      <Col><strong>Lessons</strong></Col>
-      <Col><strong>Reset</strong></Col>
-      <Col><strong>View Lessons</strong></Col>
-      <Col><strong>Send Text</strong></Col>
-      <Col><strong>Delete</strong></Col>
+    <Row style={{ borderBottom: '1px solid lightgray', paddingTop: '8px', paddingBottom: '8px', marginTop: '8px' }}>
+      <Col className="text-center"><strong>Number</strong></Col>
+      <Col className="text-ceneter"><strong>Name</strong></Col>
+      <Col className="text-center"><strong>Add Lesson</strong></Col>
+      <Col className="text-center"><strong>Lessons</strong></Col>
+      <Col className="text-center"><strong>Reset</strong></Col>
+      <Col className="text-center"><strong>View Lessons</strong></Col>
+      <Col className="text-center"><strong>Send Text</strong></Col>
+      <Col className="text-center"><strong>Delete</strong></Col>
     </Row>
     {/* Rows of student items */}
     {students.map((student, index) => (
