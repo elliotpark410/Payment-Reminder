@@ -54,7 +54,7 @@ const StudentItem = ({
       </div>
     </Col>
     <Col>
-      <Button variant="outline-success" onClick={() => onAddLesson(student)}>
+      <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)}>
         <FontAwesomeIcon icon={faPlus} />
       </Button>
     </Col>
@@ -74,18 +74,19 @@ const StudentItem = ({
       </div>
     </Col>
     <Col>
-      <Button variant="outline-warning" onClick={() => resetLessonCount(student)}>
+      <Button variant="outline-warning" title="Reset lesson count" onClick={() => resetLessonCount(student)}>
         <FontAwesomeIcon icon={faSyncAlt} />
       </Button>
     </Col>
     <Col>
-      <Button variant="outline-success" onClick={() => onViewLessons(student)}>
+      <Button variant="outline-success" title="View lessons" onClick={() => onViewLessons(student)}>
         View Lessons
       </Button>
     </Col>
     <Col>
       <Button
         variant={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
+        title="Send text"
         onClick={() => onSendText(student)}
         disabled={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1}
       >
@@ -93,7 +94,7 @@ const StudentItem = ({
       </Button>
     </Col>
     <Col>
-      <Button variant="outline-danger" onClick={() => onDelete(student)}>
+      <Button variant="outline-danger" title="Delete student" onClick={() => onDelete(student)}>
         <FontAwesomeIcon icon={faTrash} />
       </Button>
     </Col>

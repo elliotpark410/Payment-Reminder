@@ -1,19 +1,28 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
+  const openWebsite = () => {
+    window.open("https://parkvocalstudio.com/", "_blank"); // Open in a new tab
+  };
+
   return (
-    <Row className="mt-5">
-      <Col className="text-center">
-        <h1>Payment Reminder</h1>
+    <Row className="mt-5 d-flex align-items-center">
+      <Col xs={6} className="text-left">
+        <h1 className="mb-4" onClick={openWebsite} title="https://parkvocalstudio.com" style={{ cursor: 'pointer' }}>
+          Park Vocal Studio <FontAwesomeIcon icon={faMusic} />
+        </h1>
       </Col>
-      <Col className="text-left">
-        <Button variant="primary" onClick={onAddStudentClick}>
+      <Col xs={2} />
+      <Col xs={2} className="text-right">
+        <Button variant="primary" onClick={onAddStudentClick} title="Add Student">
           Add Student
         </Button>
       </Col>
-      <Col className="text-left">
-        <Button variant="success" onClick={onAllLessonsClick}>
+      <Col xs={2} className="text-right">
+        <Button variant="success" onClick={onAllLessonsClick} title="All Lessons">
           All Lessons
         </Button>
       </Col>

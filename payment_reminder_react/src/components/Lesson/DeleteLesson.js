@@ -21,6 +21,7 @@ const DeleteLesson = ({ lessonId, onDelete }) => {
     <Button
       variant="outline-danger"
       onClick={handleDeleteLesson}
+      title="Delete lesson"
     >
       <FontAwesomeIcon icon={faTrash} />
     </Button>
