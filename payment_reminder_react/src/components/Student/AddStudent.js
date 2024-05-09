@@ -59,7 +59,7 @@ function AddStudent({ onClose, onAdd }) {
               required
             />
           </Form.Group>
-          <Form.Group controlId="parentName">
+          <Form.Group controlId="parentName" className="py-3">
             <Form.Label>Parent Name</Form.Label>
             <Form.Control
               type="text"
@@ -68,7 +68,7 @@ function AddStudent({ onClose, onAdd }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="phoneNumber">
+          <Form.Group controlId="phoneNumber" className="py-3">
             <Form.Label>Phone Number <span style={{ color: 'red' }}>*</span></Form.Label>
             <Form.Control
               type="text"
@@ -78,7 +78,7 @@ function AddStudent({ onClose, onAdd }) {
               required
             />
           </Form.Group>
-          <Form.Group controlId="email">
+          <Form.Group controlId="email" className="py-3">
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
@@ -87,7 +87,7 @@ function AddStudent({ onClose, onAdd }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="subscriptionPrice">
+          <Form.Group controlId="subscriptionPrice" className="py-3">
             <Form.Label>Subscription Price</Form.Label>
             <Form.Control
               type="text"
@@ -96,7 +96,7 @@ function AddStudent({ onClose, onAdd }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="NumberOfLessonsInSubscription">
+          <Form.Group controlId="NumberOfLessonsInSubscription" className="py-3">
             <Form.Label>Number of Lessons in Subscription</Form.Label>
             <Form.Control
               type="text"
