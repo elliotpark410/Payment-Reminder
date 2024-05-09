@@ -7,6 +7,7 @@ import { host } from '../../lib/constants';
 import { formatInTimeZone } from 'date-fns-tz';
 
 const StudentItem = ({
+  index,
   student,
   onEdit,
   onDelete,
@@ -41,6 +42,11 @@ const StudentItem = ({
 
   return (
   <Row className="mt-3">
+      <Col>
+        <div style={{}}>
+          {index + 1}
+        </div>
+    </Col>
     <Col>
       <div onClick={() => onEdit(student)} style={{ padding: '10px', cursor: 'pointer' }}>
         <p>Student: {student.student_name}</p>
@@ -110,16 +116,19 @@ const GetAllStudents = ({
     {/* Row of column headers */}
     <Row className="mt-3">
       <Col>
-        <strong>Student Info</strong>
+        <strong>Number</strong>
+      </Col>
+      <Col>
+        <strong>Name</strong>
       </Col>
       <Col>
         <strong>Add Lesson</strong>
       </Col>
       <Col>
-        <strong>Lesson Count</strong>
+        <strong>Lessons</strong>
       </Col>
       <Col>
-        <strong>Reset Lesson Count</strong>
+        <strong>Reset</strong>
       </Col>
       <Col>
         <strong>View Lessons</strong>
@@ -132,9 +141,10 @@ const GetAllStudents = ({
       </Col>
     </Row>
     {/* Rows of student items */}
-    {students.map((student) => (
+    {students.map((student, index) => (
       <StudentItem
         key={student.id}
+        index={index}
         student={student}
         onEdit={onEditStudentClick}
         onDelete={onDeleteStudentClick}
