@@ -6,6 +6,17 @@ import axios from 'axios';
 import { host } from '../../lib/constants';
 import { formatInTimeZone } from 'date-fns-tz';
 
+// Function to determine color based on lesson count and subscription limit
+const getLessonCountColor = (lessonCount, subscriptionLimit) => {
+  if (lessonCount > subscriptionLimit) {
+    return 'red'; // If lesson count is greater than subscription limit
+  } else if (lessonCount === subscriptionLimit - 1 || lessonCount === subscriptionLimit) {
+    return '#007bff'; // Blue for nearly full or full subscription
+  } else {
+    return 'black'; // Default color for all other cases
+  }
+};
+
 const StudentItem = ({
   index,
   student,
@@ -17,6 +28,10 @@ const StudentItem = ({
   getLessonCount,
   onResetLessonCount,
 }) => {
+  const lessonCount = getLessonCount(student.id);
+  const subscriptionLimit = student.number_of_lessons_in_subscription;
+
+
   // Function to reset lesson count
   const resetLessonCount = async (student) => {
     try {
@@ -47,7 +62,7 @@ const StudentItem = ({
     borderBottom: '1px solid lightgray',
     backgroundColor: '#f9f9f9',
     transition: 'background-color 0.3s ease, transform 0.3s ease',
-    borderRadius: '10px', // Rounded corners
+    borderRadius: '10px',
   };
 
   const hoverEffect = {
@@ -84,13 +99,7 @@ const StudentItem = ({
       </Col>
       <Col className="text-center">
           <div>
-            {getLessonCount(student.id) >= student.number_of_lessons_in_subscription - 1 ? (
-              <strong>
-                <span style={{ color: '#007bff' }}>{getLessonCount(student.id)}</span>
-              </strong>
-            ) : (
-              <span>{getLessonCount(student.id)}</span>
-            )}
+            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit) }}>{lessonCount}</span> 
             {' '}
             / {student.number_of_lessons_in_subscription}
           </div>
