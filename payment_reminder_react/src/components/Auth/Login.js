@@ -4,7 +4,7 @@ import axios from 'axios';
 import { host } from '../../lib/constants';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faMusic } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import backgroundImg from '../../images/background.jpg';
 
 const Login = () => {
@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <div style={backgroundStyle}>
       <Col sm={6} md={4}>
-        <h2 className="text-center mb-4" style={headerStyle}>Park Vocal Studio <FontAwesomeIcon icon={faMusic} /></h2>
+        <h2 className="text-center mb-4" style={headerStyle}>Park Vocal Studio</h2>
         <Form onSubmit={handleLogin} style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
           {error && <Alert variant="danger">{error}</Alert>}
 
