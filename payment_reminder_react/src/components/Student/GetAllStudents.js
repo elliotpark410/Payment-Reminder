@@ -47,6 +47,7 @@ const StudentItem = ({
     borderBottom: '1px solid lightgray',
     backgroundColor: '#f9f9f9',
     transition: 'background-color 0.3s ease, transform 0.3s ease',
+    borderRadius: '10px', // Rounded corners
   };
 
   const hoverEffect = {

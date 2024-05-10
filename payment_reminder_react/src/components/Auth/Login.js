@@ -5,6 +5,7 @@ import { host } from '../../lib/constants';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faMusic } from '@fortawesome/free-solid-svg-icons';
+import backgroundImg from '../../images/background.jpg';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,17 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const backgroundStyle = {
+    backgroundImage: `url(${backgroundImg})`, // Background image
+    backgroundSize: 'cover', // Ensures the image covers the entire background
+    backgroundPosition: 'center', // Centers the image
+    backgroundRepeat: 'no-repeat', // Prevents repeating
+    height: '100vh', // Full viewport height
+    display: 'flex', // Ensures centering works
+    justifyContent: 'center', // Center content horizontally
+    alignItems: 'center', // Center content vertically
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+    <div style={backgroundStyle}>
       <Col sm={6} md={4}>
         <h2 className="text-center mb-4">Park Vocal Studio <FontAwesomeIcon icon={faMusic} /></h2>
         <Form onSubmit={handleLogin} style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
