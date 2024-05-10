@@ -45,11 +45,12 @@ const StudentItem = ({
     paddingTop: '12px',
     paddingBottom: '12px',
     borderBottom: '1px solid lightgray',
-    backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
-    transition: 'transform 0.3s ease, background-color 0.3s ease',
+    backgroundColor: '#f9f9f9',
+    transition: 'background-color 0.3s ease, transform 0.3s ease',
   };
 
   const hoverEffect = {
+    backgroundColor: '#ffffff',
     transform: 'scale(1.000)', // Increase for slight zoom-in effect on hover
   };
 
@@ -58,9 +59,11 @@ const StudentItem = ({
       style={rowStyle}
       className="align-items-center"
       onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = hoverEffect.backgroundColor;
         e.currentTarget.style.transform = hoverEffect.transform; // Apply zoom-in effect
       }}
       onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = rowStyle.backgroundColor;
         e.currentTarget.style.transform = 'scale(1)'; // Reset zoom effect
       }}
     >
@@ -120,12 +123,11 @@ const StudentItem = ({
   );
 };
 
-// Style the row to make it look like a header with a border and alignment
 const headerRowStyle = {
-  borderBottom: '3px solid lightgray', // Thicker border for better visibility
+  borderBottom: '3px solid lightgray',
   paddingTop: '15px',
   paddingBottom: '10px',
-  backgroundColor: 'rgb(229 229 229)', // Light blue color
+  backgroundColor: '#f4f9ff',
   borderRadius: '10px', // Rounded corners
 };
 
