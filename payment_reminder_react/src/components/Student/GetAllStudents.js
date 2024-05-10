@@ -99,6 +99,14 @@ const StudentItem = ({
   );
 };
 
+// Style the row to make it look like a header with a border and alignment
+const headerRowStyle = {
+  borderBottom: '3px solid lightgray', // Thicker border for better visibility
+  paddingTop: '15px',
+  paddingBottom: '10px',
+  backgroundColor: 'rgb(229 229 229)', // Light blue color
+  borderRadius: '10px', // Rounded corners
+};
 
 const GetAllStudents = ({
   students,
@@ -111,7 +119,7 @@ const GetAllStudents = ({
   resetLessonCountForStudentClick,
 }) => (
   <>
-    <Row style={{ borderBottom: '1px solid lightgray', paddingTop: '8px', paddingBottom: '8px', marginTop: '8px' }}>
+    <Row style={headerRowStyle}>
       <Col className="text-center"><strong>Number</strong></Col>
       <Col className="text-ceneter"><strong>Name</strong></Col>
       <Col className="text-center"><strong>Add Lesson</strong></Col>
