@@ -1,10 +1,17 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
+  const headerStyle = {
+    fontSize: '3.0rem', // Large font size
+    fontWeight: 'bold',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
+    transition: 'transform 0.3s ease', // Smooth transition for hover effect
+    cursor: 'pointer'
+  };
+
   const website = "https://parkvocalstudio.com/";
+
   const openWebsite = () => {
     window.open(website, "_blank"); // Open in a new tab
   };
@@ -12,14 +19,13 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
   return (
     <Row className="mt-4 d-flex align-items-center">
       <Col xs={6} className="text-left">
-        <h1 className="mb-4">
+        <h1
+          className="mb-4"
+          style={headerStyle}
+          onClick={openWebsite}
+          title={website}
+        >
             Park Vocal Studio
-            <FontAwesomeIcon
-              icon={faMusic}
-              onClick={openWebsite}
-              title={website}
-              style={{ cursor: 'pointer', marginLeft: '10px' }}
-            />
         </h1>
       </Col>
       <Col xs={2} />

@@ -25,6 +25,13 @@ const Login = () => {
     alignItems: 'center', // Center content vertically
   };
 
+  const headerStyle = {
+    fontSize: '3.0rem', // Large font size
+    fontWeight: 'bold',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
+    transition: 'transform 0.3s ease', // Smooth transition for hover effect
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -46,7 +53,7 @@ const Login = () => {
   return (
     <div style={backgroundStyle}>
       <Col sm={6} md={4}>
-        <h2 className="text-center mb-4">Park Vocal Studio <FontAwesomeIcon icon={faMusic} /></h2>
+        <h2 className="text-center mb-4" style={headerStyle}>Park Vocal Studio <FontAwesomeIcon icon={faMusic} /></h2>
         <Form onSubmit={handleLogin} style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
           {error && <Alert variant="danger">{error}</Alert>}
 
