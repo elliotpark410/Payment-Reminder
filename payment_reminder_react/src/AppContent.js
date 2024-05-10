@@ -269,7 +269,9 @@ function AppContent() {
       {data.showDeleteStudentModal && (
         <DeleteStudent
           student={studentSelected}
-          onCancel={() => setStudentSelected(null)}
+          onCancel={() => {
+            handleUpdateData({ showDeleteStudentModal: false });
+          }}
           onDelete={() => {
             fetchData();
             handleUpdateData({ showDeleteStudentModal: false });

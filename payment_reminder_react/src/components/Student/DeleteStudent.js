@@ -5,6 +5,11 @@ import axios from 'axios';
 import { host } from '../../lib/constants';
 
 const DeleteStudent = ({ student, onCancel, onDelete }) => {
+
+  if (!student) {
+    return null; // Do not render the modal if there's no valid student
+  };
+
   const handleDelete = async () => {
     try {
       console.log('Deleting student:', student);
