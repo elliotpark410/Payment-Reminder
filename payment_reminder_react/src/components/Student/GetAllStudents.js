@@ -41,8 +41,29 @@ const StudentItem = ({
     }
   };
 
+  const rowStyle = {
+    paddingTop: '12px',
+    paddingBottom: '12px',
+    borderBottom: '1px solid lightgray',
+    backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
+    transition: 'transform 0.3s ease, background-color 0.3s ease',
+  };
+
+  const hoverEffect = {
+    transform: 'scale(1.000)', // Increase for slight zoom-in effect on hover
+  };
+
   return (
-    <Row style={{ paddingTop: '12px', paddingBottom: '12px', borderBottom: '1px solid lightgray', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }} className="align-items-center">
+    <Row
+      style={rowStyle}
+      className="align-items-center"
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = hoverEffect.transform; // Apply zoom-in effect
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'scale(1)'; // Reset zoom effect
+      }}
+    >
       <Col className="text-center">
           {index + 1}
       </Col>
