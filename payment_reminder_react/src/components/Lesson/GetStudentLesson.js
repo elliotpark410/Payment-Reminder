@@ -28,7 +28,7 @@ const fetchStudentLessons = async (studentId, setLessons) => {
         month: '2-digit',
         day: '2-digit',
         year: 'numeric',
-      }),
+      }).replace(/\//g, ' / '),
     }));
 
     // Set the filtered and formatted lessons
@@ -62,7 +62,7 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
         month: '2-digit',
         day: '2-digit',
         year: 'numeric',
-      }),
+      }).replace(/\//g, ' / '),
     }));
 
     // Update the state with the filtered, sorted, and formatted reset lessons
@@ -91,7 +91,7 @@ const fetchStudentTexts = async (studentId, setTexts) => {
         month: '2-digit',
         day: '2-digit',
         year: 'numeric',
-      }).replace(/\//g, '-'),
+      }).replace(/\//g, ' / '),
     }));
 
     // Set the texts in the state
@@ -197,10 +197,12 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                         color: 'white',
                         padding: '8px 15px',
                         borderRadius: '4px',
+                        height: '55px',
                       }}
-                    >
-                      Message sent on {record.formattedDate}
+                      >
+                        Message sent on {record.formattedDate}
                     </td>
+                    <td colSpan="1"></td>
                   </tr>
                 );
               } else {
@@ -211,10 +213,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       colSpan="2"
                       className="text-center"
                       style={{
-                        backgroundColor: '#FFC107',
-                        color: 'black',
-                        padding: '8px 15px',
-                        borderRadius: '4px',
+                      backgroundColor: '#FFC107',
+                      color: 'black',
+                      padding: '8px 15px',
+                      borderRadius: '4px',
                       }}
                     >
                       Lesson reset on {record.formattedDate}

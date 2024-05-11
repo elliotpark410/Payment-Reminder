@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import connection from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 import { Twilio } from "twilio";
+import { format } from 'date-fns-tz';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -67,12 +68,15 @@ async function getPhoneNumber(studentId: number): Promise<string> {
   });
 }
 
-// Function to save the sent text message to the database
 async function saveTextMessage(studentId: number, message: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    const query = 'INSERT INTO texts (student_id, created_date, message) VALUES (?, NOW(), ?)';
+    // Get the current date and time in Pacific Time
+    const currentDate = new Date();
+    const pacificTime = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'America/Los_Angeles' });
 
-    connection.execute(query, [studentId, message], (error) => {
+    const query = 'INSERT INTO texts (student_id, created_date, message) VALUES (?, ?, ?)';
+
+    connection.execute(query, [studentId, pacificTime, message], (error) => {
       if (error) {
         reject(error);
       } else {
