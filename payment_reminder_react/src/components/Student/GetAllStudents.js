@@ -60,14 +60,14 @@ const StudentItem = ({
     paddingTop: '12px',
     paddingBottom: '12px',
     borderBottom: '1px solid lightgray',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#f7f7f7',
     transition: 'background-color 0.3s ease, transform 0.3s ease',
     borderRadius: '10px',
   };
 
   const hoverEffect = {
     backgroundColor: '#ffffff',
-    transform: 'scale(1.000)', // Increase for slight zoom-in effect on hover
+    transform: 'scale(1.01)', // Increase for slight zoom-in effect on hover
   };
 
   return (
@@ -87,9 +87,9 @@ const StudentItem = ({
           {index + 1}
       </Col>
       <Col className="text-left">
-        <div onClick={() => onEdit(student)} style={{ paddingTop: '10px', paddingBottom: '10px', cursor: 'pointer' }}>
-          <p style={{ fontWeight: '600' }}>{student.student_name}</p>
-          <p style={{ paddingTop: '5px', fontSize: '0.9rem' }}>{student.parent_name}</p>
+        <div onClick={() => onEdit(student)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px', paddingBottom: '10px', cursor: 'pointer' }}>
+          <p style={{ fontWeight: '600', paddingTop: '10px', marginBottom: '5px' }}>{student.student_name}</p>
+          <p style={{ fontSize: '0.9rem' }}>{student.parent_name}</p>
         </div>
       </Col>
       <Col className="text-center">
@@ -99,7 +99,7 @@ const StudentItem = ({
       </Col>
       <Col className="text-center">
           <div>
-            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit) }}>{lessonCount}</span> 
+            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit) }}>{lessonCount}</span>
             {' '}
             / {student.number_of_lessons_in_subscription}
           </div>
