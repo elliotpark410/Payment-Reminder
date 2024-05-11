@@ -108,10 +108,18 @@ function AddStudent({ onClose, onAdd }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={handleAddStudent}>
+        <Button
+          style={{ width: '120px' }}
+          variant="primary"
+          onClick={handleAddStudent}
+        >
           Add
         </Button>
-        <Button variant="secondary" onClick={onClose}>
+        <Button
+          style={{ width: '120px' }}
+          variant="secondary"
+          onClick={onClose}
+        >
           Cancel
         </Button>
       </Modal.Footer>

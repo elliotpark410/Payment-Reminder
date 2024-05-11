@@ -64,11 +64,19 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button variant="primary" onClick={handleSendText}>
+        <Button
+          style={{ width: '120px' }}
+          variant="primary"
+          onClick={handleSendText}
+        >
           Send
+        </Button>
+        <Button
+          style={{ width: '120px' }}
+          variant="secondary"
+          onClick={onClose}
+        >
+          Cancel
         </Button>
       </Modal.Footer>
     </Modal>

@@ -111,13 +111,18 @@ const StudentItem = ({
         </Button>
       </Col>
       <Col className="text-center">
-        <Button variant="outline-success" title="View lessons" onClick={() => onViewLessons(student)}>
+        <Button
+        style={{ width: '120px' }}
+        variant="outline-success"
+        title="View lessons"
+        onClick={() => onViewLessons(student)}>
           <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
           Lessons
         </Button>
       </Col>
       <Col className="text-center">
         <Button
+          style={{ width: '120px' }}
           variant={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
           title="Text"
           onClick={() => onSendText(student)}

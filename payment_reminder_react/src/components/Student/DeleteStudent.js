@@ -31,11 +31,19 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
         <p>Are you sure you want to delete {student.student_name}?</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onCancel}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={handleDelete}>
+        <Button
+          style={{ width: '100px' }}
+          variant="danger"
+          onClick={handleDelete}
+        >
           Delete
+        </Button>
+        <Button
+          style={{ width: '100px' }}
+          variant="secondary"
+          onClick={onCancel}
+        >
+          Cancel
         </Button>
       </Modal.Footer>
     </Modal>

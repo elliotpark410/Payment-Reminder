@@ -116,10 +116,18 @@ function EditStudent({ student, onClose, onEdit }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={handleSave}>
+        <Button
+          style={{ width: '120px' }}
+          variant="primary"
+          onClick={handleSave}
+        >
           Save
         </Button>
-        <Button variant="secondary" onClick={onClose}>
+        <Button
+          style={{ width: '120px' }}
+          variant="secondary"
+          onClick={onClose}
+        >
           Close
         </Button>
       </Modal.Footer>

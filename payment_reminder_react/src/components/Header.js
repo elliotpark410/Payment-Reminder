@@ -23,13 +23,23 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
       </Col>
       <Col xs={2} />
       <Col xs={2} className="text-right">
-        <Button variant="primary" onClick={onAddStudentClick} title="Add Student">
+        <Button
+          style={{ width: '180px' }}
+          variant="primary"
+          onClick={onAddStudentClick}
+          title="Add Student"
+        >
           <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '0.5em' }} />
           Add Student
         </Button>
       </Col>
       <Col xs={2} className="text-right">
-        <Button variant="success" onClick={onAllLessonsClick} title="All Lessons">
+        <Button
+          style={{ width: '180px' }}
+          variant="success"
+          onClick={onAllLessonsClick}
+          title="All Lessons"
+        >
           <FontAwesomeIcon icon={faThList} style={{ marginRight: '0.5em' }} />
           All Lessons
         </Button>

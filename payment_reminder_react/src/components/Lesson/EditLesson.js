@@ -39,10 +39,18 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={handleSaveEdit}>
+        <Button
+          style={{ width: '100px' }}
+          variant="primary"
+          onClick={handleSaveEdit}
+        >
           Save
         </Button>
-        <Button variant="secondary" onClick={onHide}>
+        <Button
+          style={{ width: '100px' }}
+          variant="secondary"
+          onClick={onHide}
+          >
           Cancel
         </Button>
       </Modal.Footer>

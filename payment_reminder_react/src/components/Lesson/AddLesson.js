@@ -45,11 +45,20 @@ function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
         <LessonCalendar onSelectDate={(date) => setSelectedDate(date)} />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose} disabled={loading}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleSave} disabled={loading}>
+      <Button
+          style={{ width: '120px' }}
+          variant="primary"
+          onClick={handleSave} disabled={loading}
+        >
           {loading ? 'Adding Lesson...' : 'Save'}
+        </Button>
+        <Button
+          style={{ width: '120px' }}
+          variant="secondary"
+          onClick={onClose}
+          disabled={loading}
+        >
+          Close
         </Button>
       </Modal.Footer>
     </Modal>
