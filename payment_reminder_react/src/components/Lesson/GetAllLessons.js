@@ -10,7 +10,14 @@ function GetAllLessons({ onClose }) {
     const fetchLessons = async () => {
       try {
         const response = await axios.get(`${host}/lesson/`);
-        const sortedLessons = response.data.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+
+        // Filter out records with null or invalid lesson_date
+        const validLessons = response.data.filter((lesson) => {
+          return lesson.lesson_date !== null && lesson.lesson_date !== undefined;
+        });
+
+        const sortedLessons = validLessons.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+
         const formattedLessons = sortedLessons.map((lesson, index) => ({
           ...lesson,
           lessonNumber: index + 1,
@@ -18,8 +25,9 @@ function GetAllLessons({ onClose }) {
             month: '2-digit',
             day: '2-digit',
             year: 'numeric'
-          })
+          }).replace(/\//g, ' / '),
         }));
+
         setLessons(formattedLessons);
       } catch (error) {
         console.error('Error fetching lessons:', error);
@@ -65,6 +73,9 @@ function GetAllLessons({ onClose }) {
         </table>
       </Modal.Body>
       <Modal.Footer>
+        <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
+          Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
+        </div>
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>

@@ -239,8 +239,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         </table>
       </Modal.Body>
       <Modal.Footer>
-        <div style={{ flex: 1, textAlign: 'left', fontSize: '18px' }}>
-          Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
+        <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
+        Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
         </div>
         <Button variant="secondary" onClick={onClose}>
           Close
