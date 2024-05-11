@@ -161,7 +161,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
             <tr>
               <th>Number</th>
               <th>Date</th>
-              <th>Action</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
