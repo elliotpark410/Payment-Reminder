@@ -57,7 +57,7 @@ const StudentItem = ({
   };
 
   const rowStyle = {
-    height: '130px',
+    height: '110px',
     paddingTop: '12px',
     paddingBottom: '12px',
     borderBottom: '1px solid lightgray',
