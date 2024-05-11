@@ -57,6 +57,7 @@ const StudentItem = ({
   };
 
   const rowStyle = {
+    height: '130px',
     paddingTop: '12px',
     paddingBottom: '12px',
     borderBottom: '1px solid lightgray',
@@ -87,9 +88,9 @@ const StudentItem = ({
           {index + 1}
       </Col>
       <Col className="text-left">
-        <div onClick={() => onEdit(student)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px', paddingBottom: '10px', cursor: 'pointer' }}>
-          <p style={{ fontWeight: '600', paddingTop: '10px', marginBottom: '5px' }}>{student.student_name}</p>
-          <p style={{ fontSize: '0.9rem' }}>{student.parent_name}</p>
+        <div onClick={() => onEdit(student)} style={{ display: 'flex', flexDirection: 'column', paddingTop: '10px', paddingBottom: '10px', cursor: 'pointer' }}>
+          <p style={{ fontSize: '1.2rem', fontWeight: '600', margin: 'auto 0 5px' }}>{student.student_name}</p>
+          <p style={{ fontSize: '0.9rem', margin: '0' }}>{student.parent_name}</p>
         </div>
       </Col>
       <Col className="text-center">
