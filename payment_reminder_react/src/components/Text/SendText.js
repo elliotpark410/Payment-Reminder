@@ -45,6 +45,9 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
     }
   };
 
+  // Calculate the number of lines in the text
+  const lineCount = message.split('\n').length + 2;
+
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
@@ -52,10 +55,9 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
       </Modal.Header>
       <Modal.Body>
         <Form.Group controlId="textMessage">
-          <Form.Label>Message</Form.Label>
           <Form.Control
             as="textarea"
-            rows={3}
+            rows={lineCount > 3 ? lineCount : 3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
