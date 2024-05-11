@@ -1,5 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faThList } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
   const headerStyle = {
@@ -22,11 +24,13 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
       <Col xs={2} />
       <Col xs={2} className="text-right">
         <Button variant="primary" onClick={onAddStudentClick} title="Add Student">
+          <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '0.5em' }} />
           Add Student
         </Button>
       </Col>
       <Col xs={2} className="text-right">
         <Button variant="success" onClick={onAllLessonsClick} title="All Lessons">
+          <FontAwesomeIcon icon={faThList} style={{ marginRight: '0.5em' }} />
           All Lessons
         </Button>
       </Col>

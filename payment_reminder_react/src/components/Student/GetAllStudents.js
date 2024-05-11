@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus, faSyncAlt, faList, faComment } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { host } from '../../lib/constants';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -112,17 +112,19 @@ const StudentItem = ({
       </Col>
       <Col className="text-center">
         <Button variant="outline-success" title="View lessons" onClick={() => onViewLessons(student)}>
-          View Lessons
+          <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
+          Lessons
         </Button>
       </Col>
       <Col className="text-center">
         <Button
           variant={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
-          title="Send text"
+          title="Text"
           onClick={() => onSendText(student)}
           disabled={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1}
         >
-          Send Text
+          <FontAwesomeIcon icon={faComment} style={{ marginRight: '0.5em' }} />
+          Text
         </Button>
       </Col>
       <Col className="text-center">
@@ -156,11 +158,11 @@ const GetAllStudents = ({
     <Row style={headerRowStyle}>
       <Col className="text-center"><strong>Number</strong></Col>
       <Col className="text-ceneter"><strong>Name</strong></Col>
-      <Col className="text-center"><strong>Add Lesson</strong></Col>
-      <Col className="text-center"><strong>Lessons</strong></Col>
+      <Col className="text-center"><strong>Add</strong></Col>
+      <Col className="text-center"><strong>Count</strong></Col>
       <Col className="text-center"><strong>Reset</strong></Col>
-      <Col className="text-center"><strong>View Lessons</strong></Col>
-      <Col className="text-center"><strong>Send Text</strong></Col>
+      <Col className="text-center"><strong>View</strong></Col>
+      <Col className="text-center"><strong>Send</strong></Col>
       <Col className="text-center"><strong>Delete</strong></Col>
     </Row>
     {/* Rows of student items */}
