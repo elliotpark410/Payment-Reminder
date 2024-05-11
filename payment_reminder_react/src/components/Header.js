@@ -7,13 +7,6 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
     fontWeight: 'bold',
     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
     transition: 'transform 0.3s ease', // Smooth transition for hover effect
-    cursor: 'pointer'
-  };
-
-  const website = "https://parkvocalstudio.com/";
-
-  const openWebsite = () => {
-    window.open(website, "_blank"); // Open in a new tab
   };
 
   return (
@@ -22,8 +15,6 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
         <h1
           className="mb-4"
           style={headerStyle}
-          onClick={openWebsite}
-          title={website}
         >
             Park Vocal Studio
         </h1>
