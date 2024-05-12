@@ -87,7 +87,7 @@ const StudentItem = ({
       <Col className="text-center">
           {index + 1}
       </Col>
-      <Col className="text-left">
+      <Col xs={2} className="text-left">
         <div onClick={() => onEdit(student)} style={{ display: 'flex', flexDirection: 'column', paddingTop: '10px', paddingBottom: '10px', cursor: 'pointer' }}>
           <p style={{ fontSize: '1.2rem', fontWeight: '600', margin: 'auto 0 5px' }}>{student.student_name}</p>
           <p style={{ fontSize: '0.9rem', margin: '0' }}>{student.parent_name}</p>
@@ -162,7 +162,7 @@ const GetAllStudents = ({
   <>
     <Row style={headerRowStyle}>
       <Col className="text-center"><strong>Number</strong></Col>
-      <Col className="text-ceneter"><strong>Name</strong></Col>
+      <Col xs={2} className="text-left"><strong>Name</strong></Col>
       <Col className="text-center"><strong>Add</strong></Col>
       <Col className="text-center"><strong>Count</strong></Col>
       <Col className="text-center"><strong>Reset</strong></Col>
