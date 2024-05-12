@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import backgroundImg from '../../images/background.jpg';
+import musicNotesIcon from '../../images/musicNotes.png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -28,8 +29,13 @@ const Login = () => {
   const headerStyle = {
     fontSize: '3.0rem', // Large font size
     fontWeight: 'bold',
-    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
+    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
     transition: 'transform 0.3s ease', // Smooth transition for hover effect
+  };
+
+  const iconStyle = {
+    height: '3.0rem', // Set height to match font size of the header
+    marginLeft: '10px', // Add some space between the header text and the icon
   };
 
   const handleLogin = async (e) => {
@@ -53,7 +59,9 @@ const Login = () => {
   return (
     <div style={backgroundStyle}>
       <Col sm={6} md={4}>
-        <h2 className="text-center mb-4" style={headerStyle}>Park Vocal Studio</h2>
+        <h2 className="text-center mb-4" style={headerStyle}>Park Vocal Studio
+        <img src={musicNotesIcon} alt="musical note icon" style={iconStyle} />
+        </h2>
         <Form onSubmit={handleLogin} style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
           {error && <Alert variant="danger">{error}</Alert>}
 
