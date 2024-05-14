@@ -36,9 +36,11 @@ const Login = () => {
   return (
     <div className="backgroundStyle backgroundLogin">
       <Col sm={6} md={4}>
-        <h2 className="text-center mb-4 header">Park Vocal Studio
-        <img className="icon" src={musicNotesIcon} alt="musical note icon" />
-        </h2>
+        <div className="horizontallyCenter">
+          <h2 className="text-center mb-4 header">Park Vocal Studio
+          <img className="icon" src={musicNotesIcon} alt="musical note icon" />
+          </h2>
+        </div>
         <Form onSubmit={handleLogin} style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
           {error && <Alert variant="danger">{error}</Alert>}
 
@@ -49,7 +51,7 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="inputField" 
+              className="inputField"
             />
           </Form.Group>
 
