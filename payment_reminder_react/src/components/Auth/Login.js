@@ -34,7 +34,7 @@ const Login = () => {
   };
 
   return (
-    <div className="background">
+    <div className="backgroundStyle backgroundLogin">
       <Col sm={6} md={4}>
         <h2 className="text-center mb-4 header">Park Vocal Studio
         <img className="icon" src={musicNotesIcon} alt="musical note icon" />
@@ -49,13 +49,11 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              placeholder="Enter your username"
               style={{
                 paddingTop: '14px',
                 paddingBottom: '14px',
                 fontWeight: '500',
-                fontSize: '1.2em',
-                color: 'black',
+                color: 'gray',
                }}
             />
           </Form.Group>
@@ -68,12 +66,10 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Enter your password"
                 style={{ paddingTop: '14px',
                 paddingBottom: '14px',
                 fontWeight: '500',
-                fontSize: '1.2em',
-                color: 'black',
+                color: 'gray',
                }}
               />
               <Button variant="outline-secondary" onClick={togglePasswordVisibility}>

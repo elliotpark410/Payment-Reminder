@@ -1,9 +1,14 @@
-.background {
+.backgroundStyle {
   background-image: url('./images/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+}
+
+.backgroundLogin {
   justify-content: center;
   align-items: center;
 }
