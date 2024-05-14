@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 const SendText = ({ studentId, studentName, parentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
   const name = parentName || studentName;
@@ -65,14 +66,14 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
       </Modal.Body>
       <Modal.Footer>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="primary"
           onClick={handleSendText}
         >
           Send
         </Button>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="secondary"
           onClick={onClose}
         >

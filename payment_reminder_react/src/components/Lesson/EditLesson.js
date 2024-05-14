@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLesson, studentId, fetchStudentLessons, fetchStudentTexts, setLessons, setTexts }) => {
   const handleSaveEdit = async () => {
@@ -40,14 +41,14 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
       </Modal.Body>
       <Modal.Footer>
         <Button
-          style={{ width: '100px' }}
+          className="smallButton"
           variant="primary"
           onClick={handleSaveEdit}
         >
           Save
         </Button>
         <Button
-          style={{ width: '100px' }}
+          className="smallButton"
           variant="secondary"
           onClick={onHide}
           >

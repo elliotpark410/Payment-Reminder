@@ -4,6 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar'; // Import your calendar component
 import axios from 'axios'; // Import Axios
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
   const [selectedDate, setSelectedDate] = useState(null);
@@ -46,14 +47,14 @@ function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
       </Modal.Body>
       <Modal.Footer>
       <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="primary"
           onClick={handleSave} disabled={loading}
         >
           {loading ? 'Adding Lesson...' : 'Save'}
         </Button>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="secondary"
           onClick={onClose}
           disabled={loading}

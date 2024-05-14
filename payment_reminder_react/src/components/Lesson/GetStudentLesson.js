@@ -4,6 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
 import EditLesson from './EditLesson';
+import '../../App.css';
 
 const fetchStudentLessons = async (studentId, setLessons) => {
   try {
@@ -243,7 +244,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
         </div>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="secondary"
           onClick={onClose}
         >

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 function GetAllLessons({ onClose }) {
   const [lessons, setLessons] = useState([]);
@@ -77,7 +78,7 @@ function GetAllLessons({ onClose }) {
           Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
         </div>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="secondary"
           onClick={onClose}
         >

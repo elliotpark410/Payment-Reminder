@@ -49,12 +49,7 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              style={{
-                paddingTop: '14px',
-                paddingBottom: '14px',
-                fontWeight: '500',
-                color: 'gray',
-               }}
+              className="inputField" 
             />
           </Form.Group>
 
@@ -66,11 +61,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{ paddingTop: '14px',
-                paddingBottom: '14px',
-                fontWeight: '500',
-                color: 'gray',
-               }}
+                className="inputField"
               />
               <Button variant="outline-secondary" onClick={togglePasswordVisibility}>
                 {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}

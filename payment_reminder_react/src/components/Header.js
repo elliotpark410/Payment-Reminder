@@ -5,20 +5,17 @@ import { faUserPlus, faThList } from '@fortawesome/free-solid-svg-icons';
 import musicNotesIcon from '../images/musicNotes.png';
 import '../App.css';
 
-
 const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
   return (
     <Row className="mt-4 d-flex align-items-center">
       <Col xs={6} className="text-left">
         <h1
           className="header mb-4"
-          // style={headerStyle}
         >
             Park Vocal Studio
             <img
               src={musicNotesIcon}
               alt="musical note icon"
-              // style={iconStyle}
               className="icon"
             />
         </h1>
@@ -26,7 +23,7 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
       <Col xs={2} />
       <Col xs={2} className="text-right">
         <Button
-          style={{ width: '180px' }}
+          className="bigButton"
           variant="primary"
           onClick={onAddStudentClick}
           title="Add Student"
@@ -37,7 +34,7 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
       </Col>
       <Col xs={2} className="text-right">
         <Button
-          style={{ width: '180px' }}
+          className="bigButton"
           variant="success"
           onClick={onAllLessonsClick}
           title="All Lessons"

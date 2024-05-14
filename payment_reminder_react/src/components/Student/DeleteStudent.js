@@ -3,6 +3,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 const DeleteStudent = ({ student, onCancel, onDelete }) => {
 
@@ -32,14 +33,14 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          style={{ width: '100px' }}
+          className="smallButton"
           variant="danger"
           onClick={handleDelete}
         >
           Delete
         </Button>
         <Button
-          style={{ width: '100px' }}
+          className="smallButton"
           variant="secondary"
           onClick={onCancel}
         >

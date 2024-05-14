@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 function AddStudent({ onClose, onAdd }) {
   const [formData, setFormData] = useState({
@@ -109,14 +110,14 @@ function AddStudent({ onClose, onAdd }) {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="primary"
           onClick={handleAddStudent}
         >
           Add
         </Button>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="secondary"
           onClick={onClose}
         >

@@ -68,7 +68,7 @@ const StudentItem = ({
 
   const hoverEffect = {
     backgroundColor: '#ffffff',
-    transform: 'scale(1.01)', // Increase for slight zoom-in effect on hover
+    transform: 'scale(1.02)', // Increase for slight zoom-in effect on hover
   };
 
   return (

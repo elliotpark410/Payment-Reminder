@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
+import '../../App.css';
 
 function EditStudent({ student, onClose, onEdit }) {
   const [formData, setFormData] = useState({
@@ -117,14 +118,14 @@ function EditStudent({ student, onClose, onEdit }) {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="primary"
           onClick={handleSave}
         >
           Save
         </Button>
         <Button
-          style={{ width: '120px' }}
+          className="button"
           variant="secondary"
           onClick={onClose}
         >
