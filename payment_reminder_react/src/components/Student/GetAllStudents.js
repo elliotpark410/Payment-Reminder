@@ -60,7 +60,7 @@ const StudentItem = ({
     height: '110px',
     paddingTop: '12px',
     paddingBottom: '12px',
-    borderBottom: '1px solid lightgray',
+    border: '1px solid lightgray',
     backgroundColor: '#f7f7f7',
     transition: 'background-color 0.3s ease, transform 0.3s ease',
     borderRadius: '10px',
@@ -118,7 +118,7 @@ const StudentItem = ({
         title="View lessons"
         onClick={() => onViewLessons(student)}>
           <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
-          Lessons
+          History
         </Button>
       </Col>
       <Col className="text-center">
