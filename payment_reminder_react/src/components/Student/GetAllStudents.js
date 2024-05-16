@@ -64,6 +64,7 @@ const StudentItem = ({
     backgroundColor: '#f7f7f7',
     transition: 'background-color 0.3s ease, transform 0.3s ease',
     borderRadius: '10px',
+    overflow: 'hidden',
   };
 
   const hoverEffect = {
@@ -160,31 +161,33 @@ const GetAllStudents = ({
   resetLessonCountForStudentClick,
 }) => (
   <>
-    <Row style={headerRowStyle}>
-      <Col className="text-center"><strong>Number</strong></Col>
-      <Col xs={2} className="text-left"><strong>Name</strong></Col>
-      <Col className="text-center"><strong>Add</strong></Col>
-      <Col className="text-center"><strong>Count</strong></Col>
-      <Col className="text-center"><strong>Reset</strong></Col>
-      <Col className="text-center"><strong>View</strong></Col>
-      <Col className="text-center"><strong>Send</strong></Col>
-      <Col className="text-center"><strong>Delete</strong></Col>
-    </Row>
-    {/* Rows of student items */}
-    {students.map((student, index) => (
-      <StudentItem
-        key={student.id}
-        index={index}
-        student={student}
-        onEdit={onEditStudentClick}
-        onDelete={onDeleteStudentClick}
-        onViewLessons={onViewStudentLessonsClick}
-        onAddLesson={onAddLessonClick}
-        onSendText={onSendTextClick}
-        getLessonCount={getLessonCountForStudent}
-        onResetLessonCount={resetLessonCountForStudentClick}
-      />
-    ))}
+    <div className="studentListContainer">
+      <Row style={headerRowStyle}>
+        <Col className="text-center"><strong>Number</strong></Col>
+        <Col xs={2} className="text-left"><strong>Name</strong></Col>
+        <Col className="text-center"><strong>Add</strong></Col>
+        <Col className="text-center"><strong>Count</strong></Col>
+        <Col className="text-center"><strong>Reset</strong></Col>
+        <Col className="text-center"><strong>View</strong></Col>
+        <Col className="text-center"><strong>Send</strong></Col>
+        <Col className="text-center"><strong>Delete</strong></Col>
+      </Row>
+      {/* Rows of student items */}
+      {students.map((student, index) => (
+        <StudentItem
+          key={student.id}
+          index={index}
+          student={student}
+          onEdit={onEditStudentClick}
+          onDelete={onDeleteStudentClick}
+          onViewLessons={onViewStudentLessonsClick}
+          onAddLesson={onAddLessonClick}
+          onSendText={onSendTextClick}
+          getLessonCount={getLessonCountForStudent}
+          onResetLessonCount={resetLessonCountForStudentClick}
+        />
+      ))}
+    </div>
   </>
 );
 

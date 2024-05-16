@@ -13,11 +13,24 @@
   align-items: center;
 }
 
+.appContainer {
+  flex: 1;
+  overflow: auto;
+}
+
 .header {
   font-size: 3.0rem;
   font-weight: bold;
   transition: transform 0.3s ease;
   display: flex;
+}
+
+.studentListContainer {
+  flex: 1;
+  overflow-y: auto; /* Enables vertical scrolling */
+  overflow-x: hidden; /* Hides horizontal overflow */
+  padding: 20px 20px 50px 20px;
+  border-radius: 10px;
 }
 
 .inputField {
