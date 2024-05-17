@@ -10,12 +10,16 @@ export async function handleDeleteStudent(
     // Extract student ID from request parameters
     const student_id: string = request.params.student_id;
 
-    // Generate the formatted date string
-    const formattedDate = new Date().toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric',
-    });
+    // Generate the formatted date string in 'YYYY-MM-DD' format for Pacific Time
+    const currentDate = new Date();
+    const options = {
+      timeZone: 'America/Los_Angeles',
+      year: 'numeric' as const,
+      month: '2-digit' as const,
+      day: '2-digit' as const,
+    };
+
+    const formattedDate = new Intl.DateTimeFormat('en-CA', options).format(currentDate);
 
     // Query to soft delete student (update deleted_at to current timestamp)
     const query = "UPDATE students SET deleted_at = ? WHERE id = ? AND deleted_at IS NULL";
