@@ -29,7 +29,7 @@ connection.connect((err) => {
       number_of_lessons_in_subscription INT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      deleted_at TIMESTAMP NULL DEFAULT NULL
+      deleted_at DATE NULL DEFAULT NULL
     )`,
 
     `CREATE TABLE IF NOT EXISTS lessons (
@@ -39,7 +39,7 @@ connection.connect((err) => {
       reset_lesson_date DATE,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      deleted_at TIMESTAMP NULL DEFAULT NULL,
+      deleted_at DATE NULL DEFAULT NULL,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,

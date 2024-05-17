@@ -10,11 +10,18 @@ export async function handleDeleteStudent(
     // Extract student ID from request parameters
     const student_id: string = request.params.student_id;
 
+    // Generate the formatted date string
+    const formattedDate = new Date().toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    });
+
     // Query to soft delete student (update deleted_at to current timestamp)
-    const query = "UPDATE students SET deleted_at = CURRENT_TIMESTAMP WHERE id = ? AND deleted_at IS NULL";
+    const query = "UPDATE students SET deleted_at = ? WHERE id = ? AND deleted_at IS NULL";
 
     // Execute the delete query with student ID as parameter
-    connection.query(query, [student_id], (error, deleteResults) => {
+    connection.query(query, [formattedDate, student_id], (error, deleteResults) => {
       if (error) {
         // If there's an error, pass it to the error handling middleware
         return next(error);
