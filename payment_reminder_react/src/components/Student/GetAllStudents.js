@@ -143,7 +143,7 @@ const StudentItem = ({
 };
 
 const headerRowStyle = {
-  borderBottom: '3px solid lightgray',
+  borderBottom: '3px solid gray',
   paddingTop: '15px',
   paddingBottom: '10px',
   backgroundColor: '#f4f9ff',

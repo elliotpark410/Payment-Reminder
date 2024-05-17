@@ -32,8 +32,8 @@ router.put(
 );
 
 // Route to delete a student by ID
-router.delete(
-  "/:student_id",
+router.put(
+  "/delete/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleDeleteStudent(request, response, next);
   }

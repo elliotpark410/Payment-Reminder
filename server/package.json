@@ -9,7 +9,7 @@
     "start-docker": "cd docker && docker-compose up -d",
     "stop-docker": "cd docker && docker-compose down",
     "drop-db": "docker exec -it mysql mysql -u root -ppassword -e 'DROP DATABASE IF EXISTS payment_reminder'",
-    "init-db": "npm run create-db && npm run add-tables",
+    "init-db": "npm run start-docker && npm run create-db && npm run add-tables",
     "create-db": "ts-node db/create-db.ts",
     "add-tables": "ts-node db/add-tables.ts",
     "add-data": "ts-node db/seed/index.ts"

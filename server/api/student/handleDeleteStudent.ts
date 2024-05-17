@@ -10,8 +10,8 @@ export async function handleDeleteStudent(
     // Extract student ID from request parameters
     const student_id: string = request.params.student_id;
 
-    // Query to delete student from the database
-    const query = "DELETE FROM students WHERE id = ?";
+    // Query to soft delete student (update deleted_at to current timestamp)
+    const query = "UPDATE students SET deleted_at = CURRENT_TIMESTAMP WHERE id = ? AND deleted_at IS NULL";
 
     // Execute the delete query with student ID as parameter
     connection.query(query, [student_id], (error, deleteResults) => {
@@ -24,7 +24,7 @@ export async function handleDeleteStudent(
       const deleteResultsJson: any = deleteResults;
       if (deleteResultsJson.affectedRows === 0) {
         // If no rows were affected, it means the student with the provided ID was not found
-        return response.status(404).json({ message: "Student not found" });
+        return response.status(404).json({ message: "Student not found or already deleted" });
       }
 
       // If the delete was successful, send a success response

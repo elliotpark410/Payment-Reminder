@@ -10,8 +10,8 @@ export async function handleDeleteLesson(
     // Extract lesson ID from request parameters
     const lesson_id: string = request.params.lesson_id;
 
-    // Query to delete lesson from the database
-    const query = "DELETE FROM lessons WHERE id = ?";
+    // Query to soft delete lesson (update deleted_at to current timestamp)
+    const query = "UPDATE lessons SET deleted_at = CURRENT_TIMESTAMP WHERE id = ? AND deleted_at IS NULL";
 
     // Execute the delete query with lesson ID as parameter
     connection.query(query, [lesson_id], (error, deleteResults) => {
@@ -24,7 +24,7 @@ export async function handleDeleteLesson(
       const deleteResultsJson: any = deleteResults;
       if (deleteResultsJson.affectedRows === 0) {
         // If no rows were affected, it means the lesson with the provided ID was not found
-        return response.status(404).json({ message: "Lesson not found" });
+        return response.status(404).json({ message: "Lesson not found or already deleted" });
       }
 
       // If the delete was successful, send a success response

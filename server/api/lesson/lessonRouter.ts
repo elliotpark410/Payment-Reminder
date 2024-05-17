@@ -35,8 +35,8 @@ router.post(
 );
 
 // Route to delete a lesson by ID
-router.delete(
-  "/:lesson_id",
+router.put(
+  "/delete/:lesson_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleDeleteLesson(request, response, next);
   }
