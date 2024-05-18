@@ -29,7 +29,8 @@ connection.connect((err) => {
       number_of_lessons_in_subscription INT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      deleted_at DATE NULL DEFAULT NULL
+      deleted_at DATE NULL DEFAULT NULL,
+      inactive BOOLEAN DEFAULT FALSE
     )`,
 
     `CREATE TABLE IF NOT EXISTS lessons (
