@@ -9,6 +9,7 @@ import DeleteStudent from './components/Student/DeleteStudent';
 import GetStudentLesson from './components/Lesson/GetStudentLesson';
 import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
+import ResetLesson from './components/Lesson/ResetLesson'
 import Header from './components/Header';
 import SendText from './components/Text/SendText';
 
@@ -18,6 +19,7 @@ function AppContent() {
   const [lessons, setLessons] = useState([]);
   const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
+  const [resetDate, setResetDate] = useState(null);
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
@@ -29,6 +31,7 @@ function AppContent() {
     showAddLessonModal: false,
     showStudentLessonModal: false,
     showSendTextModal: false,
+    showResetLessonModal: false,
     sendTextDate: null,
   });
 
@@ -174,12 +177,21 @@ function AppContent() {
     setData({ ...data, studentId: student.id, showAddLessonModal: true });
   };
 
+  const handleResetLessonClick = (resetDate) => {
+    setData({ ...data, showResetLessonModal: true });
+    setResetDate(resetDate)
+  };
+
   const handleSendTextClick = (student) => {
     setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name, parentName: student.parent_name });
   };
 
   const handleCloseAddLessonModal = () => {
     setData({ ...data, showAddLessonModal: false, studentId: null });
+  };
+
+  const handleCloseResetLessonModal = () => {
+    setData({ ...data, showResetLessonModal: false });
   };
 
   const handleCloseStudentLessonsModal = () => {
@@ -211,6 +223,7 @@ function AppContent() {
         onViewStudentLessonsClick={handleViewStudentLessonsClick}
         getLessonCountForStudent={getLessonCountForStudent}
         resetLessonCountForStudentClick={fetchData}
+        onResetLessonClick={handleResetLessonClick}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}
       />
@@ -250,6 +263,13 @@ function AppContent() {
             fetchData();
             handleCloseAddLessonModal();
           }}
+        />
+      )}
+      {/* Reset Lesson Modal is conditionally rendered if showResetLessonModal is truthy */}
+      {data.showResetLessonModal && (
+        <ResetLesson
+          onClose={handleCloseResetLessonModal}
+          resetDate={resetDate}
         />
       )}
       {/* Get Student Lesson Modal is conditionally rendered if showStudentLessonModal is truthy */}

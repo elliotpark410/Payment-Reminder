@@ -24,6 +24,7 @@ const StudentItem = ({
   onDelete,
   onViewLessons,
   onAddLesson,
+  onResetLesson,
   onSendText,
   getLessonCount,
   onResetLessonCount,
@@ -46,10 +47,16 @@ const StudentItem = ({
         reset_lesson_date: formattedDate
       });
 
+      // Get date in Pacific Time
+      const displayDate = formatInTimeZone(now, timeZone, 'MM-dd-yyyy');
+
       // Trigger success callback to refresh data or update the UI
       if (onResetLessonCount) {
         onResetLessonCount();
+        // Show Modal
+        onResetLesson(displayDate);
       }
+
     } catch (error) {
       console.error('Error resetting lesson count:', error);
       throw error
@@ -156,6 +163,7 @@ const GetAllStudents = ({
   onDeleteStudentClick,
   onViewStudentLessonsClick,
   getLessonCountForStudent,
+  onResetLessonClick,
   onAddLessonClick,
   onSendTextClick,
   resetLessonCountForStudentClick,
@@ -182,6 +190,7 @@ const GetAllStudents = ({
           onDelete={onDeleteStudentClick}
           onViewLessons={onViewStudentLessonsClick}
           onAddLesson={onAddLessonClick}
+          onResetLesson={onResetLessonClick}
           onSendText={onSendTextClick}
           getLessonCount={getLessonCountForStudent}
           onResetLessonCount={resetLessonCountForStudentClick}
