@@ -14,7 +14,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
   const handleDelete = async () => {
     try {
       console.log('Deleting student:', student);
-      await axios.delete(`${host}/student/${student.id}`);
+      await axios.put(`${host}/student/delete/${student.id}`);
       console.log(`Student deleted successfully`);
       onDelete(student.id); // Inform the parent component about the deletion
     } catch (error) {

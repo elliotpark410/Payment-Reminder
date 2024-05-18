@@ -8,7 +8,7 @@ import { host } from '../../lib/constants';
 const DeleteLesson = ({ lessonId, onDelete }) => {
   const handleDeleteLesson = async () => {
     try {
-      await axios.delete(`${host}/lesson/${lessonId}`);
+      await axios.put(`${host}/lesson/delete/${lessonId}`);
       console.log(`Lesson with ID ${lessonId} deleted successfully`);
       onDelete();
     } catch (error) {
