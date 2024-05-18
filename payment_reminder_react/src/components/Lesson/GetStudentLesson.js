@@ -12,7 +12,7 @@ const fetchStudentLessons = async (studentId, setLessons) => {
 
     // Filter out records with null or invalid lesson_date
     const validLessons = response.data.filter((lesson) => {
-      return lesson.lesson_date !== null && lesson.lesson_date !== undefined;
+      return lesson.lesson_date !== null && lesson.lesson_date !== undefined && lesson.deleted_at === null;
     });
 
     // Sort the valid records by lesson_date
@@ -47,7 +47,7 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
 
     // Filter out records with null or undefined reset_lesson_date
     const validResetLessons = response.data.filter(
-      (resetLesson) => resetLesson.reset_lesson_date !== null && resetLesson.reset_lesson_date !== undefined
+      (resetLesson) => resetLesson.reset_lesson_date !== null && resetLesson.reset_lesson_date !== undefined && resetLesson.deleted_at === null
     );
 
     // Sort the valid records by reset_lesson_date

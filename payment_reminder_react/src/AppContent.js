@@ -48,9 +48,21 @@ function AppContent() {
       const studentsData = await studentsResponse.json();
       const lessonsData = await lessonsResponse.json();
       const textData = await textResponse.json();
+
+      // Filter deleted records
+      const activeStudents = studentsData.filter(
+        (student) => {
+          return student.deleted_at === null;
+      });
+
+      const activeLessons = lessonsData.filter(
+        (lesson) => {
+          return lesson.deleted_at === null;
+      });
+
       // order students by alphabetical order
-      setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
-      setLessons(lessonsData);
+      setStudents(activeStudents.sort((a, b) => a.student_name.localeCompare(b.student_name)));
+      setLessons(activeLessons);
       setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
