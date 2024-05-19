@@ -7,6 +7,7 @@ import { handleDeleteStudent } from "./handleDeleteStudent";
 import { handleGetStudent } from "./handleGetStudent";
 import { handleGetStudents } from "./handleGetStudents";
 import { handleEditStudent } from "./handleEditStudent";
+import { handleInactiveStudent } from "./handleInactiveStudent";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -23,7 +24,7 @@ router.post(
   }
 );
 
-// Route to edit a student by ID
+// Route to edit a student
 router.put(
   "/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
@@ -31,7 +32,15 @@ router.put(
   }
 );
 
-// Route to delete a student by ID
+// Route to make a student inactive
+router.put(
+  "/inactive/:student_id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleInactiveStudent(request, response, next);
+  }
+);
+
+// Route to delete a student
 router.put(
   "/delete/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
@@ -39,7 +48,7 @@ router.put(
   }
 );
 
-// Route to get a student by ID
+// Route to get a student
 router.get(
   "/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
