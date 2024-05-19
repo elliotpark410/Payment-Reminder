@@ -5,6 +5,8 @@ import { faTrash, faPlus, faSyncAlt, faList, faComment } from '@fortawesome/free
 import axios from 'axios';
 import { host } from '../../lib/constants';
 import { formatInTimeZone } from 'date-fns-tz';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Function to determine color based on lesson count and subscription limit
 const getLessonCountColor = (lessonCount, subscriptionLimit) => {
@@ -24,10 +26,8 @@ const StudentItem = ({
   onDelete,
   onViewLessons,
   onAddLesson,
-  onResetLesson,
   onSendText,
   getLessonCount,
-  onResetLessonCount,
 }) => {
   const lessonCount = getLessonCount(student.id);
   const subscriptionLimit = student.number_of_lessons_in_subscription;
@@ -42,21 +42,22 @@ const StudentItem = ({
       // Get date in Pacific Time
       const formattedDate = formatInTimeZone(now, timeZone, 'yyyy-MM-dd');
 
-      await axios.post(`${host}/lesson/reset`, {
+      const response = await axios.post(`${host}/lesson/reset`, {
         student_id: student.id,
         reset_lesson_date: formattedDate
       });
 
-      // Get date in Pacific Time
-      const displayDate = formatInTimeZone(now, timeZone, 'MM-dd-yyyy');
+      if (response.status === 200 || 201) {
+        // Get date in Pacific Time
+        const displayDate = formatInTimeZone(now, timeZone, 'MM-dd-yyyy');
 
-      // Trigger success callback to refresh data or update the UI
-      if (onResetLessonCount) {
-        onResetLessonCount();
-        // Show Modal
-        onResetLesson(displayDate);
+        // Show notifcation
+        toast.success(`Lesson reset on ${displayDate}`, {
+          autoClose: 2000, // Close after 2 seconds
+        });
+      } else {
+        console.error('Error resetting lesson count. Unexpected response:', response);
       }
-
     } catch (error) {
       console.error('Error resetting lesson count:', error);
       throw error
@@ -163,10 +164,8 @@ const GetAllStudents = ({
   onDeleteStudentClick,
   onViewStudentLessonsClick,
   getLessonCountForStudent,
-  onResetLessonClick,
   onAddLessonClick,
   onSendTextClick,
-  resetLessonCountForStudentClick,
 }) => (
   <>
     <div className="studentListContainer">
@@ -190,10 +189,8 @@ const GetAllStudents = ({
           onDelete={onDeleteStudentClick}
           onViewLessons={onViewStudentLessonsClick}
           onAddLesson={onAddLessonClick}
-          onResetLesson={onResetLessonClick}
           onSendText={onSendTextClick}
           getLessonCount={getLessonCountForStudent}
-          onResetLessonCount={resetLessonCountForStudentClick}
         />
       ))}
     </div>
