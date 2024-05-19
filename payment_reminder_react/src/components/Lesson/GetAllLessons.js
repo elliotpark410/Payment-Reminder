@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import '../../App.css';
+import { formatDate } from '../../lib/util';
 
 function GetAllLessons({ onClose }) {
   const [lessons, setLessons] = useState([]);
@@ -22,11 +23,8 @@ function GetAllLessons({ onClose }) {
         const formattedLessons = sortedLessons.map((lesson, index) => ({
           ...lesson,
           lessonNumber: index + 1,
-          formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric'
-          }).replace(/\//g, ' / '),
+          formattedDate: formatDate(lesson.lesson_date)
+
         }));
 
         setLessons(formattedLessons);

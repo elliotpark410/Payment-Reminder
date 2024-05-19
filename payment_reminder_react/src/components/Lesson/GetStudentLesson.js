@@ -5,6 +5,7 @@ import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
 import EditLesson from './EditLesson';
 import '../../App.css';
+import { formatDate } from '../../lib/util';
 
 const fetchStudentLessons = async (studentId, setLessons) => {
   try {
@@ -25,11 +26,7 @@ const fetchStudentLessons = async (studentId, setLessons) => {
       ...lesson,
       lesson: true,
       lessonNumber: index + 1,
-      formattedDate: new Date(lesson.lesson_date).toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-      }).replace(/\//g, ' / '),
+      formattedDate: formatDate(lesson.lesson_date)
     }));
 
     // Set the filtered and formatted lessons
@@ -59,11 +56,7 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
     const formattedResetLessons = sortedResetLessons.map((resetLesson) => ({
       ...resetLesson,
       resetLesson: true,
-      formattedDate: new Date(resetLesson.reset_lesson_date).toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-      }).replace(/\//g, ' / '),
+      formattedDate: formatDate(resetLesson.reset_lesson_date)
     }));
 
     // Update the state with the filtered, sorted, and formatted reset lessons
@@ -88,11 +81,7 @@ const fetchStudentTexts = async (studentId, setTexts) => {
     const formattedTexts = validTexts.map((text) => ({
       ...text,
       text: true,
-      formattedDate: new Date(text.created_date).toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-      }).replace(/\//g, ' / '),
+      formattedDate: formatDate(text.created_date)
     }));
 
     // Set the texts in the state
