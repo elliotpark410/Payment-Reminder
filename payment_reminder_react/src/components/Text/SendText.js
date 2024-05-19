@@ -49,7 +49,7 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
 
         // Show notifcation
         toast.info(`Message sent on ${today}`, {
-          autoClose: 2000, // Close after 2 seconds
+          autoClose: 3000, // Close after 3 seconds
         });
       } else {
         console.error('Error sending text message. Unexpected response: ', response);
