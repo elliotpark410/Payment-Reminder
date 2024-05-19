@@ -1,8 +1,11 @@
 // SendText.js
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
+import { todaysDate } from '../../lib/util';
 import '../../App.css';
 
 const SendText = ({ studentId, studentName, parentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
@@ -37,11 +40,22 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
 
   const handleSendText = async () => {
     try {
-      await axios.post(`${host}/text/send`, { student_id: studentId, message });
+      const response = await axios.post(`${host}/text/send`, { student_id: studentId, message });
       console.log('Text message sent successfully');
       onClose(); // Close the modal after sending the text message
+
+      if (response.status === 200 || 201) {
+        const today = todaysDate();
+
+        // Show notifcation
+        toast.info(`Message sent on ${today}`, {
+          autoClose: 2000, // Close after 2 seconds
+        });
+      } else {
+        console.error('Error sending text message. Unexpected response: ', response);
+      };
     } catch (error) {
-      console.error('Error sending text message:', error);
+      console.error('Error sending text message: ', error);
       throw error;
     }
   };

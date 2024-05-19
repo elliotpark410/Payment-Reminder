@@ -1,3 +1,5 @@
+import { formatInTimeZone } from 'date-fns-tz';
+
 export const formatDate = (date) => {
   return new Date(date).toLocaleDateString('en-US', {
     month: '2-digit',
@@ -5,3 +7,11 @@ export const formatDate = (date) => {
     year: 'numeric',
   }).replace(/\//g, ' / ');
 };
+
+export const todaysDate = () => {
+    // Get date in Pacific Time
+    const now = new Date(); // Current local time
+    const timeZone = 'America/Los_Angeles';
+    const todaysDate = formatInTimeZone(now, timeZone, 'MM-dd-yyyy');
+    return todaysDate
+}
