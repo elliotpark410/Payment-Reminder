@@ -15,7 +15,7 @@ export async function handleGetStudentLessons(
     FROM lessons
     INNER JOIN students ON lessons.student_id = students.id
     WHERE lessons.deleted_at IS NULL
-    ABD lessons.student_id = ?
+    AND lessons.student_id = ?
   `;
 
     // Execute the query
