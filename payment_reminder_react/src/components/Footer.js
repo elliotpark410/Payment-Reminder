@@ -6,7 +6,7 @@ import '../App.css';
 
 const Footer = ({ onInactiveStudentsClick }) => {
   return (
-    <Row className="mt-4 d-flex justify-content-center">
+    <Row className="footer mt-4 d-flex justify-content-center">
       <Col xs="auto" className="text-center">
         <Button
           className="bigButton"
