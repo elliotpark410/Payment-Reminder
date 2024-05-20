@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
 import EditLesson from './EditLesson';
@@ -99,6 +99,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
+  const [showTextModal, setShowTextModal] = useState(false);
+  const [textMessage, setTextMessage] = useState('');
 
   useEffect(() => {
     fetchStudentLessons(studentId, setLessons);
@@ -111,6 +113,11 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setLessonDate(new Date(lesson.lesson_date).toISOString().slice(0, 10));
     setShowEditModal(true);
   };
+
+  const handleTextClick = (message) => {
+    setTextMessage(message);
+    setShowTextModal(true);
+  }
 
   const mergedRecords = [...lessons, ...resetLessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
@@ -181,6 +188,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                   <tr key={uniqueKey}>
                     <td
                       colSpan="2"
+                      onClick={() => handleTextClick(record.message)}
                       className="text-center"
                       style={{
                         backgroundColor: '#007bff',
@@ -255,6 +263,36 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setTexts={setTexts}
         setLessons={setLessons}
       />
+
+       {/* Text Modal */}
+       <Modal show={showTextModal} onHide={() => setShowTextModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="textMessage">
+            <Form.Control
+              as="textarea"
+              rows={Math.max(textMessage.split('\n').length + 1, 3)}
+              value={textMessage}
+              readOnly
+              style={{
+                border: 'none', // No border
+                pointerEvents: 'none', // Disable pointer events
+              }}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="button"
+            variant="secondary"
+            onClick={() => setShowTextModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Modal>
   );
 }
