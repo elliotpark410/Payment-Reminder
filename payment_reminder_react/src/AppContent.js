@@ -50,6 +50,8 @@ function AppContent() {
       const textData = await textResponse.json();
 
       // Filter deleted records
+      // TODO: update to show active students only
+      // TODO: create variable for inactive students
       const activeStudents = studentsData.filter(
         (student) => {
           return student.deleted_at === null;
