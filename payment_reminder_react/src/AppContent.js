@@ -238,7 +238,6 @@ function AppContent() {
           onClose={() => handleUpdateData({showEditStudentForm: false })}
           onEdit={() => {
             fetchData();
-            handleUpdateData({ showEditStudentForm: false });
           }}
         />
       )}

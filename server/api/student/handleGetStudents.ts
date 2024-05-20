@@ -9,7 +9,7 @@ export async function handleGetStudents(
   try {
     const query = `
     SELECT id, student_name, parent_name, phone_number, email,
-    subscription_price, number_of_lessons_in_subscription, deleted_at
+    subscription_price, number_of_lessons_in_subscription, deleted_at, inactive
     FROM students`;
 
 

@@ -13,6 +13,7 @@ function EditStudent({ student, onClose, onEdit }) {
     subscription_price: student.subscription_price || "",
     number_of_lessons_in_subscription:
     student.number_of_lessons_in_subscription || "",
+    inactive: student.inactive || false,
   });
 
   const handleInputChange = (event) => {
@@ -38,6 +39,21 @@ function EditStudent({ student, onClose, onEdit }) {
       throw error;
     }
   };
+
+  const handleInactiveChange = async () => {
+    try {
+      const response = await axios.put(
+        `${host}/student/inactive/${student.id}`
+      );
+      console.log('Inactivated student:', response.data);
+      setFormData({ ...formData, inactive: !formData.inactive });
+      onEdit(response.data);
+    } catch (error) {
+      console.error('Error inactivating student:', error);
+      throw error;
+    }
+  };
+
 
   return (
     <Modal
@@ -117,6 +133,14 @@ function EditStudent({ student, onClose, onEdit }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
+        <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
+          <Form.Check
+            type="checkbox"
+            label="Inactive"
+            onChange={handleInactiveChange}
+            checked={formData.inactive}
+          />
+        </div>
         <Button
           className="button"
           variant="primary"
