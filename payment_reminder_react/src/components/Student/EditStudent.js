@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
@@ -31,11 +33,23 @@ function EditStudent({ student, onClose, onEdit }) {
         `${host}/student/${student.id}`,
         formData
       );
+
       console.log('Updated student data:', response.data);
+
       onEdit(response.data);
+
+      if ((response.status === 200 || response.status === 201) && !formData.inactive) {
+        // Show notifcation
+        toast.success(`Sucessfully edited student`, {
+          autoClose: 3000, // Close after 3 seconds
+        });
+      } else {
+        console.error('Error editing student. Unexpected response:', response);
+      };
+
       onClose();
     } catch (error) {
-      console.error('Error saving student data:', error);
+      console.error('Error editing student data:', error);
       throw error;
     }
   };

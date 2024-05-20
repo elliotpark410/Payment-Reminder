@@ -1,5 +1,7 @@
 // DeleteStudent.js
 import React from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
@@ -14,8 +16,19 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
   const handleDelete = async () => {
     try {
       console.log('Deleting student:', student);
-      await axios.put(`${host}/student/delete/${student.id}`);
+
+      const response = await axios.put(`${host}/student/delete/${student.id}`);
+
       console.log(`Student deleted successfully`);
+
+      if (response.status === 200 || 201) {
+        // Show notifcation
+        toast.error(`Sucessfully deleted student`, {
+          autoClose: 3000, // Close after 3 seconds
+        });
+      } else {
+        console.error('Error deleting student. Unexpected response:', response);
+      };
       onDelete(student.id); // Inform the parent component about the deletion
     } catch (error) {
       console.error('Error deleting student:', error);

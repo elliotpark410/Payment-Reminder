@@ -1,5 +1,7 @@
 // AddLesson.js
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar'; // Import your calendar component
 import axios from 'axios'; // Import Axios
@@ -29,6 +31,16 @@ function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
 
       console.log('Added lesson:', response.data);
       onAdd();
+
+      if (response.status === 200 || 201) {
+        // Show notifcation
+        toast.success(`Sucessfully added lesson`, {
+          autoClose: 3000, // Close after 3 seconds
+        });
+      } else {
+        console.error('Error adding lesson. Unexpected response:', response);
+      };
+
       onClose();
     } catch (error) {
       console.error('Error adding lesson:', error);
