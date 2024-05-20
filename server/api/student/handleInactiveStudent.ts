@@ -11,7 +11,7 @@ export async function handleInactiveStudent(
     const student_id: string = request.params.student_id;
 
     // Query to inactivate student
-    const selectQuery = "SELECT inactive FROM students WHERE id = ?";
+    const selectQuery = "SELECT inactive FROM students WHERE deleted_at IS NULL AND id = ?";
 
     // Execute the inactive query with student ID as parameter
     connection.query(selectQuery, [student_id], (error, inactiveResults) => {

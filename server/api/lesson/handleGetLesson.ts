@@ -11,7 +11,7 @@ export async function handleGetLesson(
     const lesson_id: string = request.params.lesson_id;
 
     // Query to select a single lesson based on the provided ID
-    const query = "SELECT * FROM lessons WHERE id = ?";
+    const query = "SELECT * FROM lessons WHERE deleted_at IS NULL AND id = ?";
 
     // Execute the query with the lesson ID as a parameter
     connection.query(query, [lesson_id], (error, results: RowDataPacket[]) => {

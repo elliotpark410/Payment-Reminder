@@ -16,7 +16,7 @@ export async function handleEditLesson(
 
     // Query to update lesson data in the database
     const updateQuery =
-      'UPDATE lessons SET lesson_date = ? WHERE id = ?';
+      'UPDATE lessons SET lesson_date = ? WHERE deleted_at IS NULL AND id = ?';
 
     // Execute the query with lesson data and lesson ID as parameters
     connection.query(
