@@ -6,10 +6,12 @@ import GetAllStudents from './components/Student/GetAllStudents';
 import EditStudent from './components/Student/EditStudent';
 import AddStudent from './components/Student/AddStudent';
 import DeleteStudent from './components/Student/DeleteStudent';
+import InactiveStudents from './components/Student/InactiveStudents';
 import GetStudentLesson from './components/Lesson/GetStudentLesson';
 import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import SendText from './components/Text/SendText';
 
 function AppContent() {
@@ -29,6 +31,7 @@ function AppContent() {
     showAddLessonModal: false,
     showStudentLessonModal: false,
     showSendTextModal: false,
+    showInactiveStudentModal: false,
     sendTextDate: null,
   });
 
@@ -180,6 +183,10 @@ function AppContent() {
     setData({ ...data, showSendTextModal: true, studentId: student.id, studentName: student.student_name, parentName: student.parent_name });
   };
 
+  const handleInactiveStudentsClick = (student) => {
+    setData({ ...data, studentId: student.id, showInactiveStudentModal: true });
+  };
+
   const handleCloseAddLessonModal = () => {
     setData({ ...data, showAddLessonModal: false, studentId: null });
   };
@@ -216,6 +223,9 @@ function AppContent() {
         resetLessonCountForStudentClick={fetchData}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}
+      />
+      <Footer
+        onInactiveStudentsClick={handleInactiveStudentsClick}
       />
       {/* Add Student Modal is conditionally rendered if showAddStudentForm is truthy */}
       {data.showAddStudentForm && (
@@ -289,6 +299,18 @@ function AppContent() {
           onDelete={() => {
             fetchData();
             handleUpdateData({ showDeleteStudentModal: false });
+          }}
+        />
+      )}
+      {/* Inactive Student Modal is conditionally rendered if showInactiveStudentModal is truthy */}
+      {data.showInactiveStudentModal && (
+        <InactiveStudents
+          onClose={() => {
+            handleUpdateData({ showInactiveStudentModal: false });
+          }}
+          onActivate={() => {
+            fetchData();
+            handleUpdateData({ showInactiveStudentModal: false });
           }}
         />
       )}
