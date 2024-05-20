@@ -127,14 +127,20 @@ function AppContent() {
     const latestResetDate = getLatestResetDate(studentId);
     const latestTextDate = getLatestTextDate(studentId);
 
+    // Calculate the cutoff date based on the latest reset date and text date
     const cutoffDate = new Date(Math.max(latestResetDate ?? 0, latestTextDate ?? 0));
 
+    // Get today's date in the Pacific Time Zone (Los Angeles Time)
+    const today = new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles" });
+
+    // Filter lessons based on student ID, lesson date, current date, and map to lesson dates
     const filteredLessonDates = lessons
       .filter(
         (lesson) =>
           lesson.student_id === studentId &&
           lesson.lesson_date !== null &&
-          new Date(lesson.lesson_date) > cutoffDate
+          new Date(lesson.lesson_date) > cutoffDate &&
+          new Date(lesson.lesson_date) <= new Date(today)
       )
       .map((lesson) => lesson.lesson_date); // Return the list of filtered lesson dates
 

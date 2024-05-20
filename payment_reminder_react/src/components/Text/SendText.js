@@ -9,27 +9,34 @@ import { todaysDate } from '../../lib/util';
 import '../../App.css';
 
 const SendText = ({ studentId, studentName, parentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
+
   const name = parentName || studentName;
+
   const fullName = name.split(' ');
+
   const firstName = fullName[0];
+
   const lessonCount = studentLessonCount;
+
   const lessonsInSubscription = studentSusbscriptionCount;
+
   const formattedSubscriptionAmount = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0, // No cents
     maximumFractionDigits: 0,
   }).format(studentSubscriptionAmount);
+
   const formattedLessonDates = studentFilteredLessonDates
-  .sort((a, b) => new Date(a) - new Date(b))
-  .map((date) =>
-    new Date(date).toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric',
-    })
-  )
-  .join('\n');
+    .sort((a, b) => new Date(a) - new Date(b))
+    .map((date) =>
+      new Date(date).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+      })
+    )
+    .join('\n');
 
   const defaultMessage = `Hi ${firstName},
   \nThis is a gentle reminder that you have completed ${lessonCount} / ${lessonsInSubscription} lessons with Park Vocal Studio.
