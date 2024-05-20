@@ -70,7 +70,7 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
 const fetchStudentTexts = async (studentId, setTexts) => {
   try {
     // Fetch data from the API
-    const response = await axios.get(`${host}/text/${studentId}`);
+    const response = await axios.get(`${host}/text/student/${studentId}`);
 
     // Filter out records with null or undefined dates
     const validTexts = response.data.filter(

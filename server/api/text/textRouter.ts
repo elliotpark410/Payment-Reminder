@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import { handleSendText } from "./handleSendText";
 import { handleGetStudentText } from "./handleGetStudentText";
 import { handleGetAllText } from "./handleGetAllText";
+import { handleGetText } from "./handleGetText";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -21,7 +22,15 @@ router.post(
 );
 
 router.get(
-  "/:student_id",
+  "/:text_id",
+  jsonParser,
+  async (request: Request, response: Response, next: NextFunction) => {
+    await handleGetText(request, response, next);
+  }
+);
+
+router.get(
+  "/student/:student_id",
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
     await handleGetStudentText(request, response, next);
