@@ -66,3 +66,24 @@
   flex-direction: column;
   align-items: center;
 }
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  font-size: 1.25em; /* Increase font size */
+  border: 1px solid #808a93; /* Dark border */
+  padding-right: 40px; /* Space for the search icon */
+}
+
+.search-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-size: 1.25em;
+}

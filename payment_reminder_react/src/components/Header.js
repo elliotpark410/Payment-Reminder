@@ -1,14 +1,14 @@
 import React from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faThList } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faThList, faSearch } from '@fortawesome/free-solid-svg-icons';
 import musicNotesIcon from '../images/musicNotes.png';
 import '../App.css';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
   return (
     <Row className="mt-4 d-flex align-items-center">
-      <Col xs={6} className="text-left">
+      <Col xs={5} className="text-left">
         <h1
           className="header mb-4"
         >
@@ -20,7 +20,14 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
             />
         </h1>
       </Col>
-      <Col xs={2} />
+      <Col xs={3}>
+        <div className="search-container">
+          <Form.Control type="text" placeholder="Search..." className="search-input" />
+          <Button variant="outline-secondary" className="search-button">
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
+        </div>
+      </Col>
       <Col xs={2} className="text-right">
         <Button
           className="bigButton"
