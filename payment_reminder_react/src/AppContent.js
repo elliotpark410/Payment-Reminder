@@ -20,6 +20,7 @@ function AppContent() {
   const [lessons, setLessons] = useState([]);
   const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
+  const [searchName, setSearchName] = useState('');
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
@@ -215,6 +216,7 @@ function AppContent() {
         <Header
           onAddStudentClick={handleAddStudentClick}
           onAllLessonsClick={handleAllLessons}
+          onSearch={setSearchName}
         />
       </Row>
       {/* Components */}
@@ -227,6 +229,7 @@ function AppContent() {
         resetLessonCountForStudentClick={fetchData}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}
+        searchName={searchName}
       />
       <Footer
         onInactiveStudentsClick={handleInactiveStudentsClick}

@@ -5,7 +5,7 @@ import { faUserPlus, faThList, faSearch } from '@fortawesome/free-solid-svg-icon
 import musicNotesIcon from '../images/musicNotes.png';
 import '../App.css';
 
-const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
+const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
   return (
     <Row className="mt-4 d-flex align-items-center">
       <Col xs={5} className="text-left">
@@ -22,7 +22,12 @@ const Header = ({ onAddStudentClick, onAllLessonsClick }) => {
       </Col>
       <Col xs={3}>
         <div className="search-container">
-          <Form.Control type="text" placeholder="Search..." className="search-input" />
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            className="search-input"
+            onChange={(e) => onSearch(e.target.value)}
+          />
           <Button variant="outline-secondary" className="search-button">
             <FontAwesomeIcon icon={faSearch} />
           </Button>

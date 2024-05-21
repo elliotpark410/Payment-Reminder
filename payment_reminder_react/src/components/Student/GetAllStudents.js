@@ -165,35 +165,42 @@ const GetAllStudents = ({
   getLessonCountForStudent,
   onAddLessonClick,
   onSendTextClick,
-}) => (
-  <>
-    <div className="studentListContainer">
-      <Row style={headerRowStyle}>
-        <Col className="text-center"><strong>Number</strong></Col>
-        <Col xs={2} className="text-left"><strong>Name</strong></Col>
-        <Col className="text-center"><strong>Add</strong></Col>
-        <Col className="text-center"><strong>Count</strong></Col>
-        <Col className="text-center"><strong>Reset</strong></Col>
-        <Col className="text-center"><strong>View</strong></Col>
-        <Col className="text-center"><strong>Send</strong></Col>
-        <Col className="text-center"><strong>Delete</strong></Col>
-      </Row>
-      {/* Rows of student items */}
-      {students.map((student, index) => (
-        <StudentItem
-          key={student.id}
-          index={index}
-          student={student}
-          onEdit={onEditStudentClick}
-          onDelete={onDeleteStudentClick}
-          onViewLessons={onViewStudentLessonsClick}
-          onAddLesson={onAddLessonClick}
-          onSendText={onSendTextClick}
-          getLessonCount={getLessonCountForStudent}
-        />
-      ))}
-    </div>
-  </>
-);
+  searchName,
+}) => {
+  const filteredStudents = students.filter((student) =>
+    student.student_name.toLowerCase().includes(searchName.toLowerCase())
+  );
+
+  return (
+    <>
+      <div className="studentListContainer">
+        <Row style={headerRowStyle}>
+          <Col className="text-center"><strong>Number</strong></Col>
+          <Col xs={2} className="text-left"><strong>Name</strong></Col>
+          <Col className="text-center"><strong>Add</strong></Col>
+          <Col className="text-center"><strong>Count</strong></Col>
+          <Col className="text-center"><strong>Reset</strong></Col>
+          <Col className="text-center"><strong>View</strong></Col>
+          <Col className="text-center"><strong>Send</strong></Col>
+          <Col className="text-center"><strong>Delete</strong></Col>
+        </Row>
+        {/* Rows of student items */}
+        {filteredStudents.map((student, index) => (
+          <StudentItem
+            key={student.id}
+            index={index}
+            student={student}
+            onEdit={onEditStudentClick}
+            onDelete={onDeleteStudentClick}
+            onViewLessons={onViewStudentLessonsClick}
+            onAddLesson={onAddLessonClick}
+            onSendText={onSendTextClick}
+            getLessonCount={getLessonCountForStudent}
+          />
+        ))}
+      </div>
+    </>
+  );
+};
 
 export default GetAllStudents;
