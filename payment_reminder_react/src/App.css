@@ -70,6 +70,7 @@
 .search-container {
   position: relative;
   width: 100%;
+  margin-left: -20px;
 }
 
 .search-input {
