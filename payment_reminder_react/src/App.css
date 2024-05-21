@@ -37,6 +37,30 @@
   border-radius: 10px;
 }
 
+.studentDiv {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.studentDiv:hover .studentName,
+.studentDiv:hover .parentName {
+  text-decoration: underline; /* Underline text on hover */
+}
+
+.studentName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: auto 0 5px;
+}
+
+.parentName {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
 .inputField {
   padding-top: 14px;
   padding-bottom: 14px;
