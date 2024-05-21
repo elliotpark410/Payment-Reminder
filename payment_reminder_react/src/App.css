@@ -48,6 +48,7 @@
 .studentDiv:hover .studentName,
 .studentDiv:hover .parentName {
   text-decoration: underline; /* Underline text on hover */
+  color: #026bdb;
 }
 
 .studentName {
