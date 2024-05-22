@@ -63,7 +63,7 @@ function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
           variant="primary"
           onClick={handleSave} disabled={loading}
         >
-          {loading ? 'Adding Lesson...' : 'Save'}
+          {loading ? 'Adding Lesson...' : 'Add Lesson'}
         </Button>
         <Button
           className="button"
