@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
+import DeletePayment from '../Payment/DeletePayment';
 import EditLesson from './EditLesson';
 import '../../App.css';
 import { formatDate } from '../../lib/util';
@@ -67,6 +68,31 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
   }
 };
 
+const fetchStudentPayments = async (studentId, setPayments) => {
+  try {
+    // Fetch data from the API
+    const response = await axios.get(`${host}/payment/student/${studentId}`);
+
+    // Filter out records with null or undefined dates
+    const validPayments = response.data.filter(
+      (payment) => payment.created_at !== null && payment.created_at !== undefined
+    );
+
+    // Format the valid payments and sort them
+    const formattedPayments = validPayments.map((payment) => ({
+      ...payment,
+      payment: true,
+      formattedDate: formatDate(payment.created_at)
+    }));
+
+    // Set the texts in the state
+    setPayments(formattedPayments);
+  } catch (error) {
+    console.error('Error fetching payments:', error);
+    throw error;
+  }
+};
+
 const fetchStudentTexts = async (studentId, setTexts) => {
   try {
     // Fetch data from the API
@@ -96,6 +122,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
   const [resetLessons, setResetLessons] = useState([]);
   const [texts, setTexts] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
@@ -105,6 +132,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   useEffect(() => {
     fetchStudentLessons(studentId, setLessons);
     fetchStudentResetLessons(studentId, setResetLessons);
+    fetchStudentPayments(studentId, setPayments);
     fetchStudentTexts(studentId, setTexts);
   }, [studentId]);
 
@@ -119,7 +147,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setShowTextModal(true);
   }
 
-  const mergedRecords = [...lessons, ...resetLessons, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
+  const mergedRecords = [...lessons, ...resetLessons, ...payments, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
   // Function to reset lesson numbers after each text or reset record
   const assignLessonNumbers = (records) => {
@@ -203,7 +231,36 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                     <td colSpan="1"></td>
                   </tr>
                 );
-              } else {
+              } else if (record.payment) {
+                // payment records
+                return (
+                  <tr key={uniqueKey}>
+                    <td
+                      colSpan="2"
+                      className="text-center"
+                      style={{
+                      backgroundColor: '#74db79', // green
+                      color: 'black',
+                      padding: '8px 15px',
+                      borderRadius: '4px',
+                      }}
+                    >
+                      ${record.amount} received on {record.formattedDate}
+                    </td>
+                    <td>
+                      <DeletePayment
+                        paymentId={record.id}
+                        onDelete={() =>
+                          setPayments((prevPayments) =>
+                            prevPayments.filter((payment) => payment.id !== record.id)
+                          )
+                        }
+                      />
+                    </td>
+                  </tr>
+                )
+              }
+               else {
                 // lesson reset records
                 return (
                   <tr key={uniqueKey}>
