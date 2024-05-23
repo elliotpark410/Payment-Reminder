@@ -49,7 +49,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
           <Form.Label>Payment Amount</Form.Label>
           <Form.Control
             type="number"
-            value={paymentAmount}
+            value={paymentAmount ?? ''}
             onChange={(e) => setPaymentAmount(e.target.value)}
           />
         </Form.Group>
