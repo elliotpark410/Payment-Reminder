@@ -102,7 +102,7 @@ function GetAllLessons({ onClose }) {
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-          Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
+          Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length.toLocaleString()}</span>
         <br />
           Total Payment: <span style={{ fontWeight: 'bold' }}>{getTotalPaymentAmount(payments)}</span>
         </div>

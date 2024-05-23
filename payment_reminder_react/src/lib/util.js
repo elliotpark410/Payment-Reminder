@@ -20,5 +20,12 @@ export const todaysDate = () => {
 export const getTotalPaymentAmount = (paymentsArray) => {
   const totalAmount = paymentsArray.reduce((total, payment) => total + payment.amount, 0);
 
-  return totalAmount
+  // Format the total amount as a dollar amount
+  const formattedTotalAmount = totalAmount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  });
+
+  return formattedTotalAmount
 };
