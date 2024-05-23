@@ -68,20 +68,34 @@ function AddPayment({ show, onClose, studentId, selectedDate, onAdd }) {
         <Form>
           <Form.Group controlId="formPaymentAmount">
             <Form.Label>Amount</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Enter amount"
-              value={amount}
-              onChange={handleInputChange}
-              style={{
-                fontSize: isInputEmpty ? 'inherit' : '18px', // Change font size based on input content
-                fontWeight: isInputEmpty ? 'inherit' : 'bold', // Change font weight based on input content
-                '::placeholder': {
-                  color: 'gray', // Placeholder color remains the same
-                  fontStyle: 'italic', // Placeholder font style remains the same
-                },
-              }}
-            />
+            <div style={{ position: 'relative' }}>
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '10px',
+                  transform: 'translateY(-50%)',
+                  fontSize: '18px',
+                }}
+              >
+                $
+              </span>
+              <Form.Control
+                type="number"
+                // placeholder="Enter amount"
+                value={amount}
+                onChange={handleInputChange}
+                style={{
+                  paddingLeft: '30px',
+                  fontSize: isInputEmpty ? 'inherit' : '18px', // Change font size based on input content
+                  fontWeight: isInputEmpty ? 'inherit' : 'bold', // Change font weight based on input content
+                  '::placeholder': {
+                    color: 'gray', // Placeholder color remains the same
+                    fontStyle: 'italic', // Placeholder font style remains the same
+                  },
+                }}
+              />
+            </div>
           </Form.Group>
         </Form>
       </Modal.Body>

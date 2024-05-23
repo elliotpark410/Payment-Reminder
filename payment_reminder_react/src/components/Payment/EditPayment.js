@@ -58,15 +58,29 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
         <br />
         <Form.Group controlId="paymentAmount">
           <Form.Label>Amount</Form.Label>
-          <Form.Control
-            type="number"
-            value={paymentAmount ?? ''}
-            onChange={(e) => setPaymentAmount(e.target.value)}
-            style={{
-              fontSize: '18px',
-              fontWeight: 'bold',
-            }}
-          />
+          <div style={{ position: 'relative' }}>
+            <span
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '10px',
+                transform: 'translateY(-50%)',
+                fontSize: '18px',
+              }}
+            >
+              $
+            </span>
+            <Form.Control
+              type="number"
+              value={paymentAmount ?? ''}
+              onChange={(e) => setPaymentAmount(e.target.value)}
+              style={{
+                fontSize: '18px',
+                fontWeight: 'bold',
+                paddingLeft: '30px',
+              }}
+            />
+          </div>
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
