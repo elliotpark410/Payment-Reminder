@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { host } from '../../lib/constants';
 import '../../App.css';
 
-function AddPayment({ show, onClose, studentId, selectedDate, onAdd, subscriptionAmount }) {
+function AddPayment({ show, onClose, studentId, selectedDate, onAdd }) {
   const [amount, setAmount] = useState('');
   const [isInputEmpty, setIsInputEmpty] = useState(true);
 
@@ -70,7 +70,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onAdd, subscriptio
             <Form.Label>Amount</Form.Label>
             <Form.Control
               type="number"
-              placeholder={subscriptionAmount}
+              placeholder="Enter amount"
               value={amount}
               onChange={handleInputChange}
               style={{

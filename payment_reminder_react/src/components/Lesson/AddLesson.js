@@ -9,7 +9,7 @@ import { host } from '../../lib/constants';
 import AddPayment from '../Payment/AddPayment';
 import '../../App.css';
 
-function AddLesson({ onClose, studentId, onAdd, subscriptionAmount }) {
+function AddLesson({ onClose, studentId, onAdd }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -100,7 +100,6 @@ function AddLesson({ onClose, studentId, onAdd, subscriptionAmount }) {
           studentId={studentId}
           selectedDate={selectedDate}
           onAdd={onAdd}
-          subscriptionAmount={subscriptionAmount}
         />
       )}
     </>
