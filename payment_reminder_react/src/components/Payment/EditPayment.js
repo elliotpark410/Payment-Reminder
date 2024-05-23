@@ -49,7 +49,6 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
           <Form.Label>Payment Amount</Form.Label>
           <Form.Control
             type="number"
-            // placeholder="Enter amount"
             value={paymentAmount}
             onChange={(e) => setPaymentAmount(e.target.value)}
           />
