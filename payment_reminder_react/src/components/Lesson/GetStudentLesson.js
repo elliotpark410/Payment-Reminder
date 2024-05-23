@@ -245,7 +245,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       borderRadius: '4px',
                       }}
                     >
-                      ${record.amount} received on {record.formattedDate}
+                      ${record.amount.toLocaleString()} received on {record.formattedDate}
                     </td>
                     <td>
                       <DeletePayment
