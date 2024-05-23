@@ -59,7 +59,7 @@ router.get(
   }
 );
 
-// Route to get all students
+// Route to get all lessons
 router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {

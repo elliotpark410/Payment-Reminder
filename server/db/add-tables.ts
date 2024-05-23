@@ -45,6 +45,18 @@ connection.connect((err) => {
       ON DELETE CASCADE
     )`,
 
+    `CREATE TABLE IF NOT EXISTS payments (
+      id SERIAL PRIMARY KEY,
+      student_id BIGINT UNSIGNED NOT NULL,
+      payment_date DATE,
+      amount BIGINT UNSIGNED NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      deleted_at DATE NULL DEFAULT NULL,
+      FOREIGN KEY (student_id) REFERENCES students(id)
+      ON DELETE CASCADE
+    )`,
+
     `CREATE TABLE IF NOT EXISTS texts (
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,

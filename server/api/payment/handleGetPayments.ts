@@ -1,17 +1,17 @@
 import { NextFunction, Request, Response } from "express";
 import connection from "../../db/connection";
 
-export async function handleGetLessons(
+export async function handleGetPayments(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   try {
     const query = `
-    SELECT lessons.*, students.student_name
-    FROM lessons
-    INNER JOIN students ON lessons.student_id = students.id
-    WHERE lessons.deleted_at IS NULL
+    SELECT payments.*, students.student_name
+    FROM payments
+    INNER JOIN students ON payments.student_id = students.id
+    WHERE payments.deleted_at IS NULL
     `;
 
     // Execute the query
@@ -21,7 +21,7 @@ export async function handleGetLessons(
         return next(error);
       }
 
-      // If successful, send the lessons data in the response
+      // If successful, send the payments data in the response
       response.send(results);
     });
   } catch (err) {
