@@ -6,7 +6,7 @@ import DeleteLesson from './DeleteLesson';
 import DeletePayment from '../Payment/DeletePayment';
 import EditLesson from './EditLesson';
 import '../../App.css';
-import { formatDate } from '../../lib/util';
+import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 
 const fetchStudentLessons = async (studentId, setLessons) => {
   try {
@@ -219,7 +219,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       onClick={() => handleTextClick(record.message)}
                       className="text-center"
                       style={{
-                        backgroundColor: '#007bff',
+                        backgroundColor: '#007bff', // blue
                         color: 'white',
                         padding: '8px 15px',
                         borderRadius: '4px',
@@ -268,7 +268,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       colSpan="2"
                       className="text-center"
                       style={{
-                      backgroundColor: '#FFC107',
+                      backgroundColor: '#FFC107', // yellow
                       color: 'black',
                       padding: '8px 15px',
                       borderRadius: '4px',
@@ -294,9 +294,11 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         </table>
       </Modal.Body>
       <Modal.Footer>
-        <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-        Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
-        </div>
+      <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
+        Lessons Completed: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
+        <br />
+        Payments Received: <span style={{ fontWeight: 'bold' }}>{getTotalPaymentAmount(payments)}</span>
+      </div>
         <Button
           className="button"
           variant="secondary"

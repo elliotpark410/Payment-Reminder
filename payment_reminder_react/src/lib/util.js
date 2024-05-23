@@ -15,3 +15,10 @@ export const todaysDate = () => {
     const todaysDate = formatInTimeZone(now, timeZone, 'MM-dd-yyyy');
     return todaysDate
 }
+
+// Function to calculate total amount from payments
+export const getTotalPaymentAmount = (paymentsArray) => {
+  const totalAmount = paymentsArray.reduce((total, payment) => total + payment.amount, 0);
+
+  return totalAmount
+};

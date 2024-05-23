@@ -3,38 +3,67 @@ import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import '../../App.css';
-import { formatDate } from '../../lib/util';
+import { formatDate, getTotalPaymentAmount } from '../../lib/util';
+
+const fetchLessons = async (setLessons) => {
+  try {
+    const response = await axios.get(`${host}/lesson/`);
+
+    // Filter out records with null or invalid lesson_date
+    const validLessons = response.data.filter((lesson) => {
+      return (
+        lesson.lesson_date !== null &&
+        lesson.lesson_date !== undefined &&
+        lesson.deleted_at === null
+      );
+    });
+
+    const sortedLessons = validLessons.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+
+    const formattedLessons = sortedLessons.map((lesson, index) => ({
+      ...lesson,
+      lessonNumber: index + 1,
+      formattedDate: formatDate(lesson.lesson_date)
+
+    }));
+
+    setLessons(formattedLessons);
+  } catch (error) {
+    console.error('Error fetching lessons:', error);
+    throw error;
+  }
+};
+
+const fetchPayments = async (setPayments) => {
+  try {
+    const response = await axios.get(`${host}/payment/`);
+
+    // Filter out invalid records
+    const validPayments = response.data.filter((payment) => {
+      return (
+        payment.amount !== null &&
+        payment.amount !== undefined &&
+        payment.amount !== 0 &&
+        payment.payment_date !== null &&
+        payment.payment_date !== undefined &&
+        payment.deleted_at === null
+      );
+    });
+
+    setPayments(validPayments);
+  } catch (error) {
+    console.error('Error fetching payments:', error);
+    throw error;
+  }
+};
 
 function GetAllLessons({ onClose }) {
   const [lessons, setLessons] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
-    const fetchLessons = async () => {
-      try {
-        const response = await axios.get(`${host}/lesson/`);
-
-        // Filter out records with null or invalid lesson_date
-        const validLessons = response.data.filter((lesson) => {
-          return lesson.lesson_date !== null && lesson.lesson_date !== undefined;
-        });
-
-        const sortedLessons = validLessons.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
-
-        const formattedLessons = sortedLessons.map((lesson, index) => ({
-          ...lesson,
-          lessonNumber: index + 1,
-          formattedDate: formatDate(lesson.lesson_date)
-
-        }));
-
-        setLessons(formattedLessons);
-      } catch (error) {
-        console.error('Error fetching lessons:', error);
-        throw error;
-      }
-    };
-
-    fetchLessons();
+    fetchLessons(setLessons);
+    fetchPayments(setPayments);
   }, []);
 
   return (
@@ -74,6 +103,8 @@ function GetAllLessons({ onClose }) {
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
           Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length}</span>
+        <br />
+          Total Payment: <span style={{ fontWeight: 'bold' }}>{getTotalPaymentAmount(payments)}</span>
         </div>
         <Button
           className="button"
