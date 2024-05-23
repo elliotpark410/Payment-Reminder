@@ -6,6 +6,7 @@ import DeleteLesson from './DeleteLesson';
 import DeletePayment from '../Payment/DeletePayment';
 import EditPayment from '../Payment/EditPayment';
 import EditLesson from './EditLesson';
+import SentText from '../Text/SentText';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 import '../../App.css';
 
@@ -358,35 +359,12 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setLessons={setLessons}
       />
 
-       {/* Display Sent Text Modal */}
-       <Modal show={showTextModal} onHide={() => setShowTextModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group controlId="textMessage">
-            <Form.Control
-              as="textarea"
-              rows={Math.max(textMessage.split('\n').length + 1, 3)}
-              value={textMessage}
-              readOnly
-              style={{
-                border: 'none', // No border
-                pointerEvents: 'none', // Disable pointer events
-              }}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="button"
-            variant="secondary"
-            onClick={() => setShowTextModal(false)}
-          >
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* Display Sent Text Modal */}
+      <SentText
+        show={showTextModal}
+        onHide={() => setShowTextModal(false)}
+        textMessage={textMessage}
+      />
     </Modal>
   );
 }
