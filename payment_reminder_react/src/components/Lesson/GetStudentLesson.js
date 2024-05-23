@@ -82,7 +82,7 @@ const fetchStudentPayments = async (studentId, setPayments) => {
     const formattedPayments = validPayments.map((payment) => ({
       ...payment,
       payment: true,
-      formattedDate: formatDate(payment.created_at)
+      formattedDate: formatDate(payment.payment_date)
     }));
 
     // Set the texts in the state
@@ -157,10 +157,14 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       if (record.lesson) {
         currentLessonNumber += 1; // Increment for each lesson
         return { ...record, lessonNumber: currentLessonNumber }; // Assign the updated lesson number
+      } else if (record.text || record.resetLesson) {
+         // Reset counter if a "text" or "reset lesson" is encountered
+         currentLessonNumber = 0;
+         return record; // Just return the record
       } else {
-        // Reset counter if a "text" or "reset lesson" is encountered
-        currentLessonNumber = 0;
-        return record; // Just return the record
+        // Skip for payment records
+        return record
+
       }
     });
   };
@@ -197,7 +201,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td>{record.lessonNumber}</td>
-                    <td onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
+                    <td className="lessonDate" onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
                     <td>
                       <DeleteLesson
                         lessonId={record.id}
