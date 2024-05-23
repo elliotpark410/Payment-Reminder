@@ -53,6 +53,7 @@
 }
 
 .lessonDate:hover {
+  text-decoration: underline;
   color: #026bdb;
   cursor: pointer;
 }
