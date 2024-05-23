@@ -137,7 +137,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
+  const itemsPerPage = 15;
 
   useEffect(() => {
     fetchStudentLessons(studentId, setLessons);
