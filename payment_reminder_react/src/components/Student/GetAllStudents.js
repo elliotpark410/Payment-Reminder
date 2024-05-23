@@ -109,7 +109,7 @@ const StudentItem = ({
       </Col>
       <Col className="text-center">
           <div style={{ fontSize: '1.2em' }}>
-            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit), fontWeight: 'bold' }}>{lessonCount}</span>
+            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit), fontWeight: '600' }}>{lessonCount}</span>
             {' '}
             / {student.number_of_lessons_in_subscription}
           </div>

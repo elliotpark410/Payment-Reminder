@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { host } from '../../lib/constants';
-import '../../App.css';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
+import '../../App.css';
 
 const fetchLessons = async (setLessons) => {
   try {
@@ -102,9 +102,9 @@ function GetAllLessons({ onClose }) {
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-          Total Lessons: <span style={{ fontWeight: 'bold' }}>{lessons.length.toLocaleString()}</span>
+          Total Lessons: <span className="lessonPaymentText">{lessons.length.toLocaleString()}</span>
         <br />
-          Total Payment: <span style={{ fontWeight: 'bold' }}>{getTotalPaymentAmount(payments)}</span>
+          Total Payment: <span className="lessonPaymentText">{getTotalPaymentAmount(payments)}</span>
         </div>
         <Button
           className="button"

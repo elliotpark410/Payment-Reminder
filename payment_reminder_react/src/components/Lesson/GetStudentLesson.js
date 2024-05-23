@@ -5,8 +5,8 @@ import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
 import DeletePayment from '../Payment/DeletePayment';
 import EditLesson from './EditLesson';
-import '../../App.css';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
+import '../../App.css';
 
 const fetchStudentLessons = async (studentId, setLessons) => {
   try {
@@ -295,9 +295,9 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       </Modal.Body>
       <Modal.Footer>
       <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-        Lessons Completed: <span style={{ fontWeight: 'bold' }}>{lessons.length.toLocaleString()}</span>
+        Lessons Completed: <span className="lessonPaymentText">{lessons.length.toLocaleString()}</span>
         <br />
-        Payments Received: <span style={{ fontWeight: 'bold' }}>{getTotalPaymentAmount(payments)}</span>
+        Payments Received: <span className="lessonPaymentText">{getTotalPaymentAmount(payments)}</span>
       </div>
         <Button
           className="button"
