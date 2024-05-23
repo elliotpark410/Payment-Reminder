@@ -52,7 +52,18 @@
   cursor: pointer;
 }
 
-.lessonDate:hover {
+.lessonData:hover {
+  text-decoration: underline;
+  color: #026bdb;
+  cursor: pointer;
+}
+
+.textData:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.paymentData:hover {
   text-decoration: underline;
   color: #026bdb;
   cursor: pointer;

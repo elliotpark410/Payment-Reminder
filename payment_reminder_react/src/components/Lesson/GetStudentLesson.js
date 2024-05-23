@@ -4,6 +4,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
 import DeletePayment from '../Payment/DeletePayment';
+import EditPayment from '../Payment/EditPayment';
 import EditLesson from './EditLesson';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 import '../../App.css';
@@ -123,9 +124,13 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [resetLessons, setResetLessons] = useState([]);
   const [texts, setTexts] = useState([]);
   const [payments, setPayments] = useState([]);
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditLessonModal, setShowEditLessonModal] = useState(false);
+  const [showEditPaymentModal, setShowEditPaymentModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
+  const [editPayment, setEditPayment] = useState(null);
+  const [paymentDate, setPaymentDate] = useState('');
+  const [paymentAmount, setPaymentAmount] = useState(null);
   const [showTextModal, setShowTextModal] = useState(false);
   const [textMessage, setTextMessage] = useState('');
 
@@ -139,7 +144,14 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
     setLessonDate(new Date(lesson.lesson_date).toISOString().slice(0, 10));
-    setShowEditModal(true);
+    setShowEditLessonModal(true);
+  };
+
+  const handleEditPayment = (payment) => {
+    setEditPayment(payment);
+    setPaymentDate(new Date(payment.payment_date).toISOString().slice(0, 10));
+    setPaymentAmount(payment.amount);
+    setShowEditPaymentModal(true);
   };
 
   const handleTextClick = (message) => {
@@ -201,7 +213,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td>{record.lessonNumber}</td>
-                    <td className="lessonDate" onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
+                    <td className="lessonData" onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
                     <td>
                       <DeleteLesson
                         lessonId={record.id}
@@ -221,7 +233,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                     <td
                       colSpan="2"
                       onClick={() => handleTextClick(record.message)}
-                      className="text-center"
+                      className="textData text-center"
                       style={{
                         backgroundColor: '#007bff', // blue
                         color: 'white',
@@ -241,13 +253,13 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                   <tr key={uniqueKey}>
                     <td
                       colSpan="2"
-                      className="text-center"
+                      className="paymentData text-center"
                       style={{
                       backgroundColor: '#74db79', // green
-                      color: 'black',
                       padding: '8px 15px',
                       borderRadius: '4px',
                       }}
+                      onClick={() => handleEditPayment(record)}
                     >
                       ${record.amount.toLocaleString()} received on {record.formattedDate}
                     </td>
@@ -314,8 +326,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
       {/* Edit Lesson Modal */}
       <EditLesson
-        show={showEditModal}
-        onHide={() => setShowEditModal(false)}
+        show={showEditLessonModal}
+        onHide={() => setShowEditLessonModal(false)}
         lesson={editLesson}
         lessonDate={lessonDate}
         setLessonDate={setLessonDate}
@@ -327,7 +339,26 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setLessons={setLessons}
       />
 
-       {/* Text Modal */}
+      {/* Edit Payment Modal */}
+      <EditPayment
+        show={showEditPaymentModal}
+        onHide={() => setShowEditPaymentModal(false)}
+        payment={editPayment}
+        paymentDate={paymentDate}
+        paymentAmount={paymentAmount}
+        setPaymentDate={setPaymentDate}
+        setPaymentAmount={setPaymentAmount}
+        setEditPayment={setEditPayment}
+        studentId={studentId}
+        fetchStudentPayments={fetchStudentPayments}
+        fetchStudentLessons={fetchStudentLessons}
+        fetchStudentTexts={fetchStudentTexts}
+        setPayments={setPayments}
+        setTexts={setTexts}
+        setLessons={setLessons}
+      />
+
+       {/* Display Sent Text Modal */}
        <Modal show={showTextModal} onHide={() => setShowTextModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Message</Modal.Title>
