@@ -269,6 +269,7 @@ function AppContent() {
             fetchData();
             handleCloseAddLessonModal();
           }}
+          subscriptionAmount={getStudentSubscriptionAmount(data.studentId)}
         />
       )}
       {/* Get Student Lesson Modal is conditionally rendered if showStudentLessonModal is truthy */}

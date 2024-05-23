@@ -75,7 +75,7 @@
 }
 
 .button {
-  width: 120px;
+  width: 140px;
 }
 
 .bigButton {
@@ -83,7 +83,7 @@
 }
 
 .smallButton {
-  width: 100px;
+  width: 110px;
 }
 
 .horizontallyCenter {
@@ -92,19 +92,19 @@
   align-items: center;
 }
 
-.search-container {
+.searchContainer {
   position: relative;
   width: 100%;
   margin-left: -20px;
 }
 
-.search-input {
+.searchInput {
   font-size: 1.25em; /* Increase font size */
   border: 1px solid #808a93; /* Dark border */
   padding-right: 40px; /* Space for the search icon */
 }
 
-.search-button {
+.searchButton {
   position: absolute;
   top: 0;
   right: 0;

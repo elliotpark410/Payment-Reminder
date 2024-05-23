@@ -6,17 +6,16 @@ import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar'; // Import your calendar component
 import axios from 'axios'; // Import Axios
 import { host } from '../../lib/constants';
+import AddPayment from '../Payment/AddPayment';
 import '../../App.css';
 
-function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
+function AddLesson({ onClose, studentId, onAdd, subscriptionAmount }) {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [loading, setLoading] = useState(false); // State to manage loading state
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  // Function to handle saving the selected date
-  const handleSave = async () => {
+  // Function to handle add lesson on the selected date
+  const handleAddLesson = async () => {
     try {
-      setLoading(true); // Set loading state to true
-
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',
@@ -44,37 +43,67 @@ function AddLesson({ onClose, studentId, onAdd }) { // Pass onAdd as a prop
       onClose();
     } catch (error) {
       console.error('Error adding lesson:', error);
-    } finally {
-      setLoading(false); // Set loading state back to false
+      throw error
     }
   };
 
+  // Function to open AddPayment modal
+  const handleAddPayment = () => {
+    setShowPaymentModal(true);
+  };
+
+  // Function to close AddPayment modal
+  const handleClosePaymentModal = () => {
+    setShowPaymentModal(false);
+  };
+
   return (
-    <Modal show onHide={onClose} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>Add Lesson</Modal.Title>
-      </Modal.Header>
-      <Modal.Body style={{ padding: 0, height: '100%' }}>
-        <LessonCalendar onSelectDate={(date) => setSelectedDate(date)} />
-      </Modal.Body>
-      <Modal.Footer>
-      <Button
-          className="button"
-          variant="primary"
-          onClick={handleSave} disabled={loading}
-        >
-          {loading ? 'Adding Lesson...' : 'Add Lesson'}
-        </Button>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-          disabled={loading}
-        >
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal show onHide={onClose} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Select Date</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ padding: 0, height: '100%' }}>
+          <LessonCalendar onSelectDate={(date) => setSelectedDate(date)} />
+        </Modal.Body>
+        <Modal.Footer>
+          <div style={{ flex: 1, textAlign: 'left' }}>
+            <Button
+              className="button"
+              variant="success"
+              onClick={handleAddPayment}
+            >
+              Add Payment
+            </Button>
+          </div>
+          <Button
+            className="button"
+            variant="primary"
+            onClick={handleAddLesson}
+          >
+            Add Lesson
+          </Button>
+          <Button
+            className="button"
+            variant="secondary"
+            onClick={onClose}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {showPaymentModal && (
+        <AddPayment
+          show={showPaymentModal}
+          onClose={handleClosePaymentModal}
+          studentId={studentId}
+          selectedDate={selectedDate}
+          onAdd={onAdd}
+          subscriptionAmount={subscriptionAmount}
+        />
+      )}
+    </>
   );
 }
 

@@ -21,14 +21,14 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
         </h1>
       </Col>
       <Col xs={3}>
-        <div className="search-container">
+        <div className="searchContainer">
           <Form.Control
             type="text"
             placeholder="Search..."
-            className="search-input"
+            className="searchInput"
             onChange={(e) => onSearch(e.target.value)}
           />
-          <Button variant="outline-secondary" className="search-button">
+          <Button variant="outline-secondary" className="searchButton">
             <FontAwesomeIcon icon={faSearch} />
           </Button>
         </div>
