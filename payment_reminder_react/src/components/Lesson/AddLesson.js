@@ -1,5 +1,5 @@
 // AddLesson.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
@@ -12,6 +12,10 @@ import '../../App.css';
 function AddLesson({ onClose, studentId, onAdd }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  useEffect(() => {
+    setSelectedDate(new Date());
+  }, []);
 
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
@@ -64,7 +68,7 @@ function AddLesson({ onClose, studentId, onAdd }) {
           <Modal.Title>Select Date</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
-          <LessonCalendar onSelectDate={(date) => setSelectedDate(date)} />
+          <LessonCalendar onSelectDate={(date) => setSelectedDate(date)} selectedDate={selectedDate}/>
         </Modal.Body>
         <Modal.Footer>
           <div style={{ flex: 1, textAlign: 'left' }}>
