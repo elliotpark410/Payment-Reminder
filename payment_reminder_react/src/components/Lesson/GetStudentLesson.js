@@ -32,8 +32,7 @@ const fetchStudentLessons = async (studentId, setLessons) => {
       formattedDate: formatDate(lesson.lesson_date)
     }));
 
-    // Set the filtered and formatted lessons
-    setLessons(formattedLessons);
+    return formattedLessons;
   } catch (error) {
     console.error('Error fetching lessons:', error);
     throw error;
@@ -62,8 +61,7 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
       formattedDate: formatDate(resetLesson.reset_lesson_date)
     }));
 
-    // Update the state with the filtered, sorted, and formatted reset lessons
-    setResetLessons(formattedResetLessons);
+    return formattedResetLessons;
   } catch (error) {
     console.error('Error fetching reset lessons:', error);
     throw error;
@@ -87,8 +85,7 @@ const fetchStudentPayments = async (studentId, setPayments) => {
       formattedDate: formatDate(payment.payment_date)
     }));
 
-    // Set the texts in the state
-    setPayments(formattedPayments);
+    return formattedPayments;
   } catch (error) {
     console.error('Error fetching payments:', error);
     throw error;
@@ -112,8 +109,7 @@ const fetchStudentTexts = async (studentId, setTexts) => {
       formattedDate: formatDate(text.created_date)
     }));
 
-    // Set the texts in the state
-    setTexts(formattedTexts);
+    return formattedTexts
   } catch (error) {
     console.error('Error fetching texts:', error);
     throw error;
@@ -136,11 +132,27 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [textMessage, setTextMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const itemsPerPage = 15;
+
   useEffect(() => {
-    fetchStudentLessons(studentId, setLessons);
-    fetchStudentResetLessons(studentId, setResetLessons);
-    fetchStudentPayments(studentId, setPayments);
-    fetchStudentTexts(studentId, setTexts);
+    const fetchData = async () => {
+      const fetchedLessons = await fetchStudentLessons(studentId);
+      const fetchedResetLessons = await fetchStudentResetLessons(studentId);
+      const fetchedPayments = await fetchStudentPayments(studentId);
+      const fetchedTexts = await fetchStudentTexts(studentId);
+
+      const mergedRecords = [...fetchedLessons, ...fetchedResetLessons, ...fetchedPayments, ...fetchedTexts];
+      const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
+      const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
+
+      setLessons(fetchedLessons);
+      setResetLessons(fetchedResetLessons);
+      setPayments(fetchedPayments);
+      setTexts(fetchedTexts);
+      setCurrentPage(totalPages);
+    };
+
+    fetchData();
   }, [studentId]);
 
   const handleEditLesson = (lesson) => {
@@ -205,7 +217,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
 
   // Pagination logic
-  const itemsPerPage = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentRecords = recordsWithLessonNumbers.slice(indexOfFirstItem, indexOfLastItem);
