@@ -137,14 +137,26 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+  const itemsPerPage = 3;
 
   useEffect(() => {
     fetchStudentLessons(studentId, setLessons);
     fetchStudentResetLessons(studentId, setResetLessons);
     fetchStudentPayments(studentId, setPayments);
     fetchStudentTexts(studentId, setTexts);
+
   }, [studentId]);
+
+  // Update current page after data is fetched
+  useEffect(() => {
+    // Calculate total pages
+    const totalRecords = [...lessons, ...resetLessons, ...payments, ...texts];
+    const totalPages = Math.ceil(totalRecords.length / itemsPerPage);
+
+    // Set current page to the last page
+    setCurrentPage(totalPages);
+
+  }, [lessons, resetLessons, payments, texts]);
 
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
@@ -162,20 +174,21 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const handleDelete = (itemId, setState) => {
     setState(prevItems => {
       const updatedItems = prevItems.filter(item => item.id !== itemId);
-      const newPage = Math.min(currentPage, Math.ceil(updatedItems.length / itemsPerPage));
-      setCurrentPage(newPage);
+      const newTotalPages = Math.min(currentPage, Math.ceil(updatedItems.length / itemsPerPage));
+       // Only update the current page if it exceeds the new total pages
+      setCurrentPage(currentPage => Math.min(currentPage, newTotalPages));
       return updatedItems;
     });
   };
-  
+
   const handleDeleteLesson = lessonId => {
     handleDelete(lessonId, setLessons);
   };
-  
+
   const handleDeleteResetLesson = resetLessonId => {
     handleDelete(resetLessonId, setResetLessons);
   };
-  
+
   const handleDeletePayment = paymentId => {
     handleDelete(paymentId, setPayments);
   };
