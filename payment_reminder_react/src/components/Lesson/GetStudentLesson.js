@@ -144,12 +144,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     fetchStudentResetLessons(studentId, setResetLessons);
     fetchStudentPayments(studentId, setPayments);
     fetchStudentTexts(studentId, setTexts);
-    // Calculate the last page based on the total number of records
-    const totalRecords = lessons.length + resetLessons.length + payments.length + texts.length;
-    const lastPage = Math.ceil(totalRecords / itemsPerPage);
 
-    setCurrentPage(lastPage)
-  }, [studentId, lessons.length, resetLessons.length, payments.length, texts.length]);
+  }, [studentId]);
 
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
