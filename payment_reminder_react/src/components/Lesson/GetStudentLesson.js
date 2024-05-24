@@ -134,17 +134,13 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [paymentAmount, setPaymentAmount] = useState(null);
   const [showTextModal, setShowTextModal] = useState(false);
   const [textMessage, setTextMessage] = useState('');
-
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
 
   useEffect(() => {
     fetchStudentLessons(studentId, setLessons);
     fetchStudentResetLessons(studentId, setResetLessons);
     fetchStudentPayments(studentId, setPayments);
     fetchStudentTexts(studentId, setTexts);
-
   }, [studentId]);
 
   const handleEditLesson = (lesson) => {
@@ -209,6 +205,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
 
   // Pagination logic
+  const itemsPerPage = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentRecords = recordsWithLessonNumbers.slice(indexOfFirstItem, indexOfLastItem);
