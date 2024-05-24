@@ -144,13 +144,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     fetchStudentResetLessons(studentId, setResetLessons);
     fetchStudentPayments(studentId, setPayments);
     fetchStudentTexts(studentId, setTexts);
-
-    // Calculate the last page based on the total number of records
-    const totalRecords = lessons.length + resetLessons.length + payments.length + texts.length;
-    const lastPage = Math.ceil(totalRecords / itemsPerPage);
-
-    setCurrentPage(lastPage)
-  }, [studentId, lessons.length, resetLessons.length, payments.length, texts.length]);
+  }, [studentId]);
 
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
@@ -163,6 +157,27 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setPaymentDate(new Date(payment.payment_date).toISOString().slice(0, 10));
     setPaymentAmount(payment.amount);
     setShowEditPaymentModal(true);
+  };
+
+  const handleDelete = (itemId, setState) => {
+    setState(prevItems => {
+      const updatedItems = prevItems.filter(item => item.id !== itemId);
+      const newPage = Math.min(currentPage, Math.ceil(updatedItems.length / itemsPerPage));
+      setCurrentPage(newPage);
+      return updatedItems;
+    });
+  };
+  
+  const handleDeleteLesson = lessonId => {
+    handleDelete(lessonId, setLessons);
+  };
+  
+  const handleDeleteResetLesson = resetLessonId => {
+    handleDelete(resetLessonId, setResetLessons);
+  };
+  
+  const handleDeletePayment = paymentId => {
+    handleDelete(paymentId, setPayments);
   };
 
   const handleTextClick = (message) => {
@@ -235,11 +250,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                     <td>
                       <DeleteLesson
                         lessonId={record.id}
-                        onDelete={() =>
-                          setLessons((prevLessons) =>
-                            prevLessons.filter((lesson) => lesson.id !== record.id)
-                          )
-                        }
+                        onDelete={() => handleDeleteLesson(record.id)}
                       />
                     </td>
                   </tr>
@@ -284,11 +295,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                     <td>
                       <DeletePayment
                         paymentId={record.id}
-                        onDelete={() =>
-                          setPayments((prevPayments) =>
-                            prevPayments.filter((payment) => payment.id !== record.id)
-                          )
-                        }
+                        onDelete={() => handleDeletePayment(record.id)}
                       />
                     </td>
                   </tr>
@@ -313,11 +320,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                     <td>
                       <DeleteLesson
                         lessonId={record.id}
-                        onDelete={() =>
-                          setResetLessons((prevLessons) =>
-                            prevLessons.filter((lesson) => lesson.id !== record.id)
-                          )
-                        }
+                        onDelete={() => handleDeleteResetLesson(record.id)}
                       />
                     </td>
                   </tr>
