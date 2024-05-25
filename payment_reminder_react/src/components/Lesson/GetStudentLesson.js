@@ -6,6 +6,7 @@ import DeleteLesson from './DeleteLesson';
 import DeletePayment from '../Payment/DeletePayment';
 import EditPayment from '../Payment/EditPayment';
 import EditLesson from './EditLesson';
+import EditReset from './EditReset';
 import SentText from '../Text/SentText';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 import '../../App.css';
@@ -122,9 +123,11 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [texts, setTexts] = useState([]);
   const [payments, setPayments] = useState([]);
   const [showEditLessonModal, setShowEditLessonModal] = useState(false);
+  const [showEditResetModal, setShowEditResetModal] = useState(false);
   const [showEditPaymentModal, setShowEditPaymentModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
+  const [resetDate, setResetDate] = useState('');
   const [editPayment, setEditPayment] = useState(null);
   const [paymentDate, setPaymentDate] = useState('');
   const [paymentAmount, setPaymentAmount] = useState(null);
@@ -159,6 +162,12 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setEditLesson(lesson);
     setLessonDate(new Date(lesson.lesson_date).toISOString().slice(0, 10));
     setShowEditLessonModal(true);
+  };
+
+  const handleEditReset = (reset) => {
+    setEditLesson(reset);
+    setResetDate(new Date(reset.reset_lesson_date).toISOString().slice(0, 10));
+    setShowEditResetModal(true);
   };
 
   const handleEditPayment = (payment) => {
@@ -314,13 +323,13 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                   <tr key={uniqueKey}>
                     <td
                       colSpan="2"
-                      className="text-center"
+                      className="resetData text-center"
                       style={{
                       backgroundColor: '#FFC107', // yellow
-                      color: 'black',
                       padding: '8px 15px',
                       borderRadius: '4px',
                       }}
+                      onClick={() => handleEditReset(record)}
                     >
                       Lesson reset on {record.formattedDate}
                     </td>
@@ -376,6 +385,23 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         fetchStudentTexts={fetchStudentTexts}
         setTexts={setTexts}
         setLessons={setLessons}
+      />
+
+      {/* Edit Reset Modal */}
+      <EditReset
+        show={showEditResetModal}
+        onHide={() => setShowEditResetModal(false)}
+        lesson={editLesson}
+        resetDate={resetDate}
+        setResetDate={setResetDate}
+        setEditLesson={setEditLesson}
+        studentId={studentId}
+        fetchStudentLessons={fetchStudentLessons}
+        fetchStudentResetLessons={fetchStudentResetLessons}
+        fetchStudentTexts={fetchStudentTexts}
+        setLessons={setLessons}
+        setResetLessons={setResetLessons}
+        setTexts={setTexts}
       />
 
       {/* Edit Payment Modal */}
