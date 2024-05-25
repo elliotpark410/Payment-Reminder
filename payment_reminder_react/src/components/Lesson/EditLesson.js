@@ -7,8 +7,18 @@ import { host } from '../../lib/constants';
 import '../../App.css';
 
 const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLesson, fetchData }) => {
+
   const handleSaveEdit = async () => {
     try {
+      // Validate date
+      const date = new Date(lessonDate);
+      const isValidDate = date instanceof Date && !isNaN(date);
+
+      if (!lessonDate || !isValidDate) {
+        toast.error('Please enter a valid date.');
+        return;
+      }
+
       const response = await axios.put(`${host}/lesson/${lesson.id}`, { lesson_date: lessonDate });
       console.log('Lesson updated successfully:', response.data);
       onHide();

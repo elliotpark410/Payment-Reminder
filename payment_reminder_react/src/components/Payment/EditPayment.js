@@ -10,6 +10,15 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
 
   const handleSaveEdit = async () => {
     try {
+      // Validate date
+      const date = new Date(paymentDate);
+      const isValidDate = date instanceof Date && !isNaN(date);
+
+      if (!paymentDate || !isValidDate) {
+        toast.error('Please enter a valid date.');
+        return;
+      }
+
       const isValidAmount = /^[1-9]\d*(\.\d+)?$/.test(paymentAmount);
 
       if (!isValidAmount) {
