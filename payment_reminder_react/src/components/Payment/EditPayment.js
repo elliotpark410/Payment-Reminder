@@ -28,7 +28,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Sucessfully edited payment`, {
+        toast.success(`Edited payment`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

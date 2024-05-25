@@ -40,7 +40,7 @@ function EditStudent({ student, onClose, onEdit }) {
 
       if ((response.status === 200 || response.status === 201) && !formData.inactive) {
         // Show notifcation
-        toast.success(`Sucessfully edited student`, {
+        toast.success(`Edited student`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

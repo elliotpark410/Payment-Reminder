@@ -39,7 +39,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onAdd }) {
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Sucessfully added payment`, {
+        toast.success(`Added payment`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

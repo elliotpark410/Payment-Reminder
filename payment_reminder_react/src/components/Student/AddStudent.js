@@ -36,7 +36,7 @@ function AddStudent({ onClose, onAdd }) {
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Sucessfully added student`, {
+        toast.success(`Added student`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

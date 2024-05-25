@@ -40,7 +40,7 @@ const resetLessonCount = async (student) => {
 
       // Show notifcation
       toast.warning(`Lesson reset on ${today}`, {
-        autoClose: 3000, // Close after 3 seconds
+        autoClose: 4000, // Close after 3 seconds
       });
     } else {
       console.error('Error resetting lesson count. Unexpected response:', response);

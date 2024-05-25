@@ -15,7 +15,7 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Sucessfully edited lesson`, {
+        toast.success(`Edited lesson`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

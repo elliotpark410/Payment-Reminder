@@ -15,7 +15,7 @@ const EditReset = ({ show, onHide, lesson, resetDate, setResetDate, setEditLesso
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.warning(`Sucessfully edited reset`, {
+        toast.warning(`Edited reset`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {
