@@ -26,9 +26,46 @@ function EditStudent({ student, onClose, onEdit }) {
     });
   };
 
+  const validatePhoneNumber = (phoneNumber) => {
+    const re = /^\+?[0-9()-]{10,15}$/; // Basic validation for phone number
+    return re.test(phoneNumber);
+  };
+
+  const validatePositiveWholeNumber = (value) => {
+    const re = /^[1-9]\d*$/;
+    return re.test(value);
+  };
+
   const handleSave = async () => {
     try {
+      // Data validation
+      if (!formData.student_name) {
+        toast.error('Student name is required.');
+        return;
+      }
+
+      if (!formData.phone_number) {
+        toast.error('Phone number is required.');
+        return;
+      }
+
+      if (!validatePhoneNumber(formData.phone_number)) {
+        toast.error('Invalid phone number.');
+        return;
+      }
+
+      if (formData.subscription_price && !validatePositiveWholeNumber(formData.subscription_price)) {
+        toast.error('Subscription price must be a positive whole number.');
+        return;
+      }
+
+      if (formData.number_of_lessons_in_subscription && !validatePositiveWholeNumber(formData.number_of_lessons_in_subscription)) {
+        toast.error('Number of lessons in subscription must be a positive whole number.');
+        return;
+      }
+
       console.log('Saving edit for student', student);
+
       const response = await axios.put(
         `${host}/student/${student.id}`,
         formData
