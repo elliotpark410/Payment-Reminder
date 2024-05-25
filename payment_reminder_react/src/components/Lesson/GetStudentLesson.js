@@ -10,7 +10,7 @@ import SentText from '../Text/SentText';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 import '../../App.css';
 
-const fetchStudentLessons = async (studentId, setLessons) => {
+const fetchStudentLessons = async (studentId) => {
   try {
     const response = await axios.get(`${host}/lesson/student/${studentId}`);
 
@@ -39,7 +39,7 @@ const fetchStudentLessons = async (studentId, setLessons) => {
   }
 };
 
-const fetchStudentResetLessons = async (studentId, setResetLessons) => {
+const fetchStudentResetLessons = async (studentId) => {
   try {
     // Fetch data from the API
     const response = await axios.get(`${host}/lesson/student/${studentId}`);
@@ -68,7 +68,7 @@ const fetchStudentResetLessons = async (studentId, setResetLessons) => {
   }
 };
 
-const fetchStudentPayments = async (studentId, setPayments) => {
+const fetchStudentPayments = async (studentId) => {
   try {
     // Fetch data from the API
     const response = await axios.get(`${host}/payment/student/${studentId}`);
@@ -92,7 +92,7 @@ const fetchStudentPayments = async (studentId, setPayments) => {
   }
 };
 
-const fetchStudentTexts = async (studentId, setTexts) => {
+const fetchStudentTexts = async (studentId) => {
   try {
     // Fetch data from the API
     const response = await axios.get(`${host}/text/student/${studentId}`);
