@@ -10,6 +10,7 @@ const DeleteLesson = ({ lessonId, onDelete }) => {
     try {
       await axios.put(`${host}/lesson/delete/${lessonId}`);
       console.log(`Lesson with ID ${lessonId} deleted successfully`);
+
       onDelete();
     } catch (error) {
       console.error('Error deleting lesson:', error);

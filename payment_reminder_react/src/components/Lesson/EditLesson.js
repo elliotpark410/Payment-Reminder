@@ -1,4 +1,6 @@
 import React from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
@@ -10,6 +12,16 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
       const response = await axios.put(`${host}/lesson/${lesson.id}`, { lesson_date: lessonDate });
       console.log('Lesson updated successfully:', response.data);
       onHide();
+
+      if (response.status === 200 || 201) {
+        // Show notifcation
+        toast.success(`Sucessfully edited lesson`, {
+          autoClose: 3000, // Close after 3 seconds
+        });
+      } else {
+        console.error('Error editing lesson. Unexpected response:', response);
+      };
+
       setEditLesson(null);
       setLessonDate('');
       fetchData();

@@ -10,6 +10,7 @@ const DeletePayment= ({ paymentId, onDelete }) => {
     try {
       await axios.put(`${host}/payment/delete/${paymentId}`);
       console.log(`Payment with ID ${paymentId} deleted successfully`);
+
       onDelete();
     } catch (error) {
       console.error('Error deleting payment:', error);

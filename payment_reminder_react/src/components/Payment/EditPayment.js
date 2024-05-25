@@ -25,6 +25,16 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
       console.log('Payment updated successfully:', response.data);
 
       onHide();
+
+      if (response.status === 200 || 201) {
+        // Show notifcation
+        toast.success(`Sucessfully edited payment`, {
+          autoClose: 3000, // Close after 3 seconds
+        });
+      } else {
+        console.error('Error editing payment. Unexpected response:', response);
+      };
+
       setEditPayment(null);
       setPaymentDate('');
       setPaymentAmount(null);
