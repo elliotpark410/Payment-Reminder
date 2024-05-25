@@ -381,10 +381,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setLessonDate={setLessonDate}
         setEditLesson={setEditLesson}
         studentId={studentId}
-        fetchStudentLessons={fetchStudentLessons}
-        fetchStudentTexts={fetchStudentTexts}
-        setTexts={setTexts}
-        setLessons={setLessons}
         fetchData={fetchData}
       />
 
@@ -397,12 +393,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setResetDate={setResetDate}
         setEditLesson={setEditLesson}
         studentId={studentId}
-        fetchStudentLessons={fetchStudentLessons}
-        fetchStudentResetLessons={fetchStudentResetLessons}
-        fetchStudentTexts={fetchStudentTexts}
-        setLessons={setLessons}
-        setResetLessons={setResetLessons}
-        setTexts={setTexts}
         fetchData={fetchData}
       />
 
@@ -417,12 +407,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setPaymentAmount={setPaymentAmount}
         setEditPayment={setEditPayment}
         studentId={studentId}
-        fetchStudentPayments={fetchStudentPayments}
-        fetchStudentLessons={fetchStudentLessons}
-        fetchStudentTexts={fetchStudentTexts}
-        setPayments={setPayments}
-        setTexts={setTexts}
-        setLessons={setLessons}
         fetchData={fetchData}
       />
 
