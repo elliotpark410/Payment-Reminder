@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
 
-const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPaymentDate, setPaymentAmount, setEditPayment, studentId, fetchStudentPayments, fetchStudentLessons, fetchStudentTexts, setLessons, setPayments, setTexts }) => {
+const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPaymentDate, setPaymentAmount, setEditPayment, studentId, fetchStudentPayments, fetchStudentLessons, fetchStudentTexts, setLessons, setPayments, setTexts, fetchData }) => {
 
   const handleSaveEdit = async () => {
     try {
@@ -28,6 +28,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
       setEditPayment(null);
       setPaymentDate('');
       setPaymentAmount(null);
+      fetchData();
       fetchStudentLessons(studentId, setLessons);
       fetchStudentPayments(studentId, setPayments);
       fetchStudentTexts(studentId, setTexts);

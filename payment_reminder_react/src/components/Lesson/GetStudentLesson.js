@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Modal, Button, Pagination } from 'react-bootstrap';
 import { host } from '../../lib/constants';
@@ -137,26 +137,26 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   const itemsPerPage = 15;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedLessons = await fetchStudentLessons(studentId);
-      const fetchedResetLessons = await fetchStudentResetLessons(studentId);
-      const fetchedPayments = await fetchStudentPayments(studentId);
-      const fetchedTexts = await fetchStudentTexts(studentId);
+  const fetchData = useCallback(async () => {
+    const fetchedLessons = await fetchStudentLessons(studentId);
+    const fetchedResetLessons = await fetchStudentResetLessons(studentId);
+    const fetchedPayments = await fetchStudentPayments(studentId);
+    const fetchedTexts = await fetchStudentTexts(studentId);
 
-      const mergedRecords = [...fetchedLessons, ...fetchedResetLessons, ...fetchedPayments, ...fetchedTexts];
-      const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
-      const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
+    const mergedRecords = [...fetchedLessons, ...fetchedResetLessons, ...fetchedPayments, ...fetchedTexts];
+    const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
+    const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
 
-      setLessons(fetchedLessons);
-      setResetLessons(fetchedResetLessons);
-      setPayments(fetchedPayments);
-      setTexts(fetchedTexts);
-      setCurrentPage(totalPages);
-    };
-
-    fetchData();
+    setLessons(fetchedLessons);
+    setResetLessons(fetchedResetLessons);
+    setPayments(fetchedPayments);
+    setTexts(fetchedTexts);
+    setCurrentPage(totalPages);
   }, [studentId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, studentId]);
 
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
@@ -385,6 +385,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         fetchStudentTexts={fetchStudentTexts}
         setTexts={setTexts}
         setLessons={setLessons}
+        fetchData={fetchData}
       />
 
       {/* Edit Reset Modal */}
@@ -402,6 +403,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setLessons={setLessons}
         setResetLessons={setResetLessons}
         setTexts={setTexts}
+        fetchData={fetchData}
       />
 
       {/* Edit Payment Modal */}
@@ -421,6 +423,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setPayments={setPayments}
         setTexts={setTexts}
         setLessons={setLessons}
+        fetchData={fetchData}
       />
 
       {/* Display Sent Text Modal */}
