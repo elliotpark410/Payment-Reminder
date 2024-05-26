@@ -135,7 +135,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [textMessage, setTextMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 15;
+  const itemsPerPage = 10;
 
   const fetchData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
