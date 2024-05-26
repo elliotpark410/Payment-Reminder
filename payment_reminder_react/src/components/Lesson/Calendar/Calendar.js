@@ -1,6 +1,6 @@
 import React from 'react';
 import { Calendar } from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import default calendar styles
+import 'react-calendar/dist/Calendar.css';
 import './calendarStyles.css';
 
 function LessonCalendar({ onSelectDate }) {
