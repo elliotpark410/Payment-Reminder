@@ -70,6 +70,13 @@ function GetAllLessons({ onClose }) {
     fetchPayments(setPayments);
   }, []);
 
+  useEffect(() => {
+    if (lessons.length > 0) {
+      const totalPages = Math.ceil(lessons.length / itemsPerPage);
+      setCurrentPage(totalPages);
+    }
+  }, [lessons]);
+
     // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
