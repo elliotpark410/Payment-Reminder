@@ -17,7 +17,9 @@ function AddLesson({
   onAdd,
   getLessonCount,
   subscriptionLimit,
-  // onViewLessons
+  students,
+  onUpdate,
+  onViewLessons
  }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -85,6 +87,7 @@ function AddLesson({
         toast.warning(`Lesson reset on ${notificationDate}`, {
           autoClose: 4000, // Close after 3 seconds
         });
+        onUpdate();
       } else {
         console.error('Error resetting lesson count. Unexpected response:', response);
       };
@@ -117,11 +120,14 @@ function AddLesson({
 
   const lessonCount = getLessonCount(studentId);
 
+  const student = students.find((s) => s.id === studentId);
+  const studentName = student ? student.student_name : '';
+
   return (
     <>
       <Modal show onHide={onClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Select Date</Modal.Title>
+          <Modal.Title>{studentName}</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
           <div style={{ flex: 1, textAlign: 'right', paddingRight: '100px' }}>
@@ -129,11 +135,7 @@ function AddLesson({
               className="button"
               variant="outline-success"
               title="View lessons"
-              // TODO: 
-              // onClick={() => onViewLessons({
-              //   studentId: studentId,
-              //   studentName: studentName
-              // })}
+              onClick={() => onViewLessons(student)}
             >
                 <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
                 History

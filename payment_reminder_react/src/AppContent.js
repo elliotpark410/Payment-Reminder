@@ -263,11 +263,13 @@ function AppContent() {
       {/* Add Lesson Modal is conditionally rendered if showAddLessonModal is truthy */}
       {data.showAddLessonModal && (
         <AddLesson
+          students={students}
           studentId={data.studentId}
           onViewLessons={handleViewStudentLessonsClick}
           getLessonCount={getLessonCountForStudent}
           subscriptionLimit={getStudentSubscriptionCount(data.studentId)}
           onClose={handleCloseAddLessonModal}
+          onUpdate={fetchData}
           onAdd={() => {
             fetchData();
             handleCloseAddLessonModal();
