@@ -15,8 +15,6 @@ function AddLesson({
   onClose,
   studentId,
   onAdd,
-  getLessonCount,
-  subscriptionLimit,
   students,
   onUpdate,
   onViewLessons
@@ -107,19 +105,6 @@ function AddLesson({
     setShowPaymentModal(false);
   };
 
-  // Function to determine color based on lesson count and subscription limit
-  const getLessonCountColor = (lessonCount, subscriptionLimit) => {
-    if (lessonCount > subscriptionLimit) {
-      return 'red'; // If lesson count is greater than subscription limit
-    } else if (lessonCount === subscriptionLimit - 1 || lessonCount === subscriptionLimit) {
-      return '#007bff'; // Blue for nearly full or full subscription
-    } else {
-      return 'black'; // Default color for all other cases
-    }
-  };
-
-  const lessonCount = getLessonCount(studentId);
-
   const student = students.find((s) => s.id === studentId);
   const studentName = student ? student.student_name : '';
 
@@ -152,11 +137,6 @@ function AddLesson({
             >
               Add Payment
             </Button>
-          </div>
-          <div style={{ fontSize: '1.2em' }}>
-            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit), fontWeight: '600' }}>{lessonCount}</span>
-            {' '}
-            / {subscriptionLimit}
           </div>
           <Button
             className="button"

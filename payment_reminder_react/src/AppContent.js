@@ -266,8 +266,6 @@ function AppContent() {
           students={students}
           studentId={data.studentId}
           onViewLessons={handleViewStudentLessonsClick}
-          getLessonCount={getLessonCountForStudent}
-          subscriptionLimit={getStudentSubscriptionCount(data.studentId)}
           onClose={handleCloseAddLessonModal}
           onUpdate={fetchData}
           onAdd={() => {
