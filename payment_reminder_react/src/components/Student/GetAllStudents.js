@@ -1,13 +1,7 @@
 import React from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus, faSyncAlt, faList, faComment } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import { host } from '../../lib/constants';
-import { todaysDate } from '../../lib/util';
-import { formatInTimeZone } from 'date-fns-tz';
+import { faTrash, faPlus, faList, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 // Function to determine color based on lesson count and subscription limit
@@ -18,36 +12,6 @@ const getLessonCountColor = (lessonCount, subscriptionLimit) => {
     return '#007bff'; // Blue for nearly full or full subscription
   } else {
     return 'black'; // Default color for all other cases
-  }
-};
-
-// Function to reset lesson count
-const resetLessonCount = async (student) => {
-  try {
-    const now = new Date(); // Current local time
-    const timeZone = 'America/Los_Angeles';
-
-    // Get date in Pacific Time
-    const formattedDate = formatInTimeZone(now, timeZone, 'yyyy-MM-dd');
-
-    const response = await axios.post(`${host}/lesson/reset`, {
-      student_id: student.id,
-      reset_lesson_date: formattedDate
-    });
-
-    if (response.status === 200 || 201) {
-      const today = todaysDate();
-
-      // Show notifcation
-      toast.warning(`Lesson reset on ${today}`, {
-        autoClose: 4000, // Close after 3 seconds
-      });
-    } else {
-      console.error('Error resetting lesson count. Unexpected response:', response);
-    };
-  } catch (error) {
-    console.error('Error resetting lesson count:', error);
-    throw error
   }
 };
 
@@ -115,11 +79,6 @@ const StudentItem = ({
           </div>
       </Col>
       <Col className="text-center">
-        <Button variant="outline-warning" title="Reset lesson count" onClick={() => resetLessonCount(student)}>
-          <FontAwesomeIcon icon={faSyncAlt} />
-        </Button>
-      </Col>
-      <Col className="text-center">
         <Button
         style={{ width: '120px' }}
         variant="outline-success"
@@ -180,7 +139,6 @@ const GetAllStudents = ({
           <Col xs={2} className="text-left"><strong>Name</strong></Col>
           <Col className="text-center"><strong>Add</strong></Col>
           <Col className="text-center"><strong>Count</strong></Col>
-          <Col className="text-center"><strong>Reset</strong></Col>
           <Col className="text-center"><strong>View</strong></Col>
           <Col className="text-center"><strong>Send</strong></Col>
           <Col className="text-center"><strong>Delete</strong></Col>
