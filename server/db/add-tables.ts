@@ -26,7 +26,7 @@ connection.connect((err) => {
       phone_number VARCHAR(20),
       email VARCHAR(255),
       subscription_price INT UNSIGNED,
-      number_of_lessons_in_subscription INT,
+      subscription_number INT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       deleted_at DATE NULL DEFAULT NULL,
@@ -36,11 +36,19 @@ connection.connect((err) => {
     `CREATE TABLE IF NOT EXISTS lessons (
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,
-      lesson_date DATE,
-      reset_lesson_date DATE,
+      date DATE,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      deleted_at DATE NULL DEFAULT NULL,
+      FOREIGN KEY (student_id) REFERENCES students(id)
+      ON DELETE CASCADE
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS resets (
+      id SERIAL PRIMARY KEY,
+      student_id BIGINT UNSIGNED NOT NULL,
+      date DATE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
@@ -48,11 +56,10 @@ connection.connect((err) => {
     `CREATE TABLE IF NOT EXISTS payments (
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,
-      payment_date DATE,
+      date DATE,
       amount BIGINT UNSIGNED NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      deleted_at DATE NULL DEFAULT NULL,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
@@ -60,8 +67,10 @@ connection.connect((err) => {
     `CREATE TABLE IF NOT EXISTS texts (
       id SERIAL PRIMARY KEY,
       student_id BIGINT UNSIGNED NOT NULL,
-      created_date DATE,
+      date DATE,
       message TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students(id)
       ON DELETE CASCADE
     )`,
