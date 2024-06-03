@@ -1,5 +1,5 @@
 // AddLesson.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import LessonCalendar from './Calendar/Calendar';
 import axios from 'axios';
 import { host } from '../../lib/constants';
 import AddPayment from '../Payment/AddPayment';
-import { formatDate } from '../../lib/util';
+import { fetchStudentLessons, fetchStudentResetLessons, fetchStudentPayments, fetchStudentTexts } from '../Lesson/GetStudentLesson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt, faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
@@ -20,41 +20,29 @@ function AddLesson({
  }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [lessons, setLessons] = useState([]);
+  const [resets, setResets] = useState([]);
+  const [payments, setPayments] = useState([]);
+  const [texts, setTexts] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    const fetchedLessons = await fetchStudentLessons(studentId);
+    const fetchedResets = await fetchStudentResetLessons(studentId);
+    const fetchedPayments = await fetchStudentPayments(studentId);
+    const fetchedTexts = await fetchStudentTexts(studentId);
+
+    setLessons(fetchedLessons);
+    setResets(fetchedResets);
+    setPayments(fetchedPayments);
+    setTexts(fetchedTexts);
+  }, [studentId]);
 
   useEffect(() => {
     setSelectedDate(new Date());
-    fetchStudentLessons(studentId);
-  }, [studentId]);
+    fetchData();
+  }, [fetchData, studentId]);
 
-  const fetchStudentLessons = async (studentId) => {
-    try {
-      const response = await axios.get(`${host}/lesson/student/${studentId}`);
 
-      // Filter out records with null or invalid lesson_date
-      const validLessons = response.data.filter((lesson) => {
-        return lesson.lesson_date !== null && lesson.lesson_date !== undefined && lesson.deleted_at === null;
-      });
-
-      // Sort the valid records by lesson_date
-      const sortedLessons = validLessons.sort(
-        (a, b) => new Date(a.lesson_date) - new Date(b.lesson_date)
-      );
-
-      // Format the sorted lessons
-      const formattedLessons = sortedLessons.map((lesson, index) => ({
-        ...lesson,
-        lesson: true,
-        lessonNumber: index + 1,
-        formattedDate: formatDate(lesson.lesson_date)
-      }));
-
-      setLessons(formattedLessons);
-    } catch (error) {
-      console.error('Error fetching lessons:', error);
-      throw error;
-    }
-  };
 
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
@@ -78,7 +66,7 @@ function AddLesson({
         toast.success(`Added lesson`, {
           autoClose: 3000, // Close after 3 seconds
         });
-        fetchStudentLessons(studentId);
+        fetchData();
         onUpdate();
       } else {
         console.error('Error adding lesson. Unexpected response:', response);
@@ -114,7 +102,7 @@ function AddLesson({
         toast.warning(`Lesson reset on ${notificationDate}`, {
           autoClose: 3000, // Close after 3 seconds
         });
-        fetchStudentLessons(studentId);
+        fetchData();
         onUpdate();
       } else {
         console.error('Error resetting lesson count. Unexpected response:', response);
@@ -148,6 +136,9 @@ function AddLesson({
           <LessonCalendar
           onSelectDate={(date) => setSelectedDate(date)} selectedDate={selectedDate}
           lessons={lessons}
+          resets={resets}
+          payments={payments}
+          texts={texts}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -194,7 +185,7 @@ function AddLesson({
           onClose={handleClosePaymentModal}
           studentId={studentId}
           selectedDate={selectedDate}
-          onUpdate={onUpdate}
+          onUpdate={fetchData}
         />
       )}
     </>
