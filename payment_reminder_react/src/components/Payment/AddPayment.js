@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { host } from '../../lib/constants';
 import '../../App.css';
 
-function AddPayment({ show, onClose, studentId, selectedDate, onAdd }) {
+function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
   const [amount, setAmount] = useState('');
   const [isInputEmpty, setIsInputEmpty] = useState(true);
 
@@ -35,13 +35,14 @@ function AddPayment({ show, onClose, studentId, selectedDate, onAdd }) {
       });
 
       console.log('Added payment:', response.data);
-      onAdd();
 
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added payment`, {
           autoClose: 3000, // Close after 3 seconds
         });
+
+        onUpdate();
       } else {
         console.error('Error adding payment. Unexpected response:', response);
       };

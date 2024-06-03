@@ -8,16 +8,14 @@ import axios from 'axios'; // Import Axios
 import { host } from '../../lib/constants';
 import AddPayment from '../Payment/AddPayment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt, faList } from '@fortawesome/free-solid-svg-icons';
+import { faSyncAlt, faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 function AddLesson({
   onClose,
   studentId,
-  onAdd,
   students,
-  onUpdate,
-  onViewLessons
+  onUpdate
  }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -42,18 +40,16 @@ function AddLesson({
       });
 
       console.log('Added lesson:', response.data);
-      onAdd();
 
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added lesson`, {
           autoClose: 3000, // Close after 3 seconds
         });
+        onUpdate();
       } else {
         console.error('Error adding lesson. Unexpected response:', response);
       };
-
-      onClose();
     } catch (error) {
       console.error('Error adding lesson:', error);
       throw error
@@ -83,7 +79,7 @@ function AddLesson({
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.warning(`Lesson reset on ${notificationDate}`, {
-          autoClose: 4000, // Close after 3 seconds
+          autoClose: 3000, // Close after 3 seconds
         });
         onUpdate();
       } else {
@@ -115,17 +111,6 @@ function AddLesson({
           <Modal.Title>{studentName}</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
-          <div style={{ flex: 1, textAlign: 'right', paddingRight: '100px' }}>
-            <Button
-              className="button"
-              variant="outline-success"
-              title="View lessons"
-              onClick={() => onViewLessons(student)}
-            >
-                <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
-                History
-              </Button>
-          </div>
           <LessonCalendar onSelectDate={(date) => setSelectedDate(date)} selectedDate={selectedDate}/>
         </Modal.Body>
         <Modal.Footer>
@@ -135,23 +120,26 @@ function AddLesson({
               variant="success"
               onClick={handleAddPayment}
             >
-              Add Payment
+              <FontAwesomeIcon icon={faCreditCard} style={{ marginRight: '0.5em' }} />
+              Payment
             </Button>
           </div>
           <Button
             className="button"
-            variant="outline-warning"
+            variant="warning"
             title="Reset lesson count"
             onClick={resetLessonCount}
           >
-            <FontAwesomeIcon icon={faSyncAlt} />
+            <FontAwesomeIcon icon={faSyncAlt} style={{ marginRight: '0.5em' }} />
+            Reset
           </Button>
           <Button
             className="button"
             variant="primary"
             onClick={handleAddLesson}
           >
-            Add Lesson
+            <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5em' }} />
+            Lesson
           </Button>
           <Button
             className="button"
@@ -169,7 +157,7 @@ function AddLesson({
           onClose={handleClosePaymentModal}
           studentId={studentId}
           selectedDate={selectedDate}
-          onAdd={onAdd}
+          onUpdate={onUpdate}
         />
       )}
     </>

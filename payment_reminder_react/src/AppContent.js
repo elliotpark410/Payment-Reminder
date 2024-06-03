@@ -268,10 +268,6 @@ function AppContent() {
           onViewLessons={handleViewStudentLessonsClick}
           onClose={handleCloseAddLessonModal}
           onUpdate={fetchData}
-          onAdd={() => {
-            fetchData();
-            handleCloseAddLessonModal();
-          }}
         />
       )}
       {/* Get Student Lesson Modal is conditionally rendered if showStudentLessonModal is truthy */}
