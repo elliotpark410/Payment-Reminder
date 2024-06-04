@@ -26,7 +26,7 @@ const StudentItem = ({
   getLessonCount,
 }) => {
   const lessonCount = getLessonCount(student.id);
-  const subscriptionLimit = student.number_of_lessons_in_subscription;
+  const subscriptionLimit = student.subscription_number;
 
   const rowStyle = {
     height: '110px',
@@ -75,7 +75,7 @@ const StudentItem = ({
           <div style={{ fontSize: '1.2em' }}>
             <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit), fontWeight: '600' }}>{lessonCount}</span>
             {' '}
-            / {student.number_of_lessons_in_subscription}
+            / {student.subscription_number}
           </div>
       </Col>
       <Col className="text-center">
@@ -91,10 +91,10 @@ const StudentItem = ({
       <Col className="text-center">
         <Button
           style={{ width: '120px' }}
-          variant={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1 ? 'outline-secondary' : 'outline-primary'}
+          variant={getLessonCount(student.id) < student.subscription_number - 1 ? 'outline-secondary' : 'outline-primary'}
           title="Text"
           onClick={() => onSendText(student)}
-          disabled={getLessonCount(student.id) < student.number_of_lessons_in_subscription - 1}
+          disabled={getLessonCount(student.id) < student.subscription_number - 1}
         >
           <FontAwesomeIcon icon={faComment} style={{ marginRight: '0.5em' }} />
           Text

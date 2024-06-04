@@ -13,8 +13,8 @@ function EditStudent({ student, onClose, onEdit }) {
     phone_number: student.phone_number || "",
     email: student.email || "",
     subscription_price: student.subscription_price || "",
-    number_of_lessons_in_subscription:
-    student.number_of_lessons_in_subscription || "",
+    subscription_number:
+    student.subscription_number || "",
     inactive: student.inactive || false,
   });
 
@@ -59,8 +59,8 @@ function EditStudent({ student, onClose, onEdit }) {
         return;
       }
 
-      if (formData.number_of_lessons_in_subscription && !validatePositiveWholeNumber(formData.number_of_lessons_in_subscription)) {
-        toast.error('Number of lessons in subscription must be a positive whole number.');
+      if (formData.subscription_number && !validatePositiveWholeNumber(formData.subscription_number)) {
+        toast.error('Subscription number must be a positive whole number.');
         return;
       }
 
@@ -173,11 +173,11 @@ function EditStudent({ student, onClose, onEdit }) {
             />
           </Form.Group>
           <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
-            <Form.Label>Number of Lessons in Subscription</Form.Label>
+            <Form.Label>Subscription Count</Form.Label>
             <Form.Control
               type="text"
-              name="number_of_lessons_in_subscription"
-              value={formData.number_of_lessons_in_subscription}
+              name="subscription_number"
+              value={formData.subscription_number}
               onChange={handleInputChange}
             />
           </Form.Group>

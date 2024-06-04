@@ -59,14 +59,9 @@ function AppContent() {
           return student.deleted_at === null;
       });
 
-      const activeLessons = lessonsData.filter(
-        (lesson) => {
-          return lesson.deleted_at === null;
-      });
-
       // order students by alphabetical order
       setStudents(activeStudents.sort((a, b) => a.student_name.localeCompare(b.student_name)));
-      setLessons(activeLessons);
+      setLessons(lessonsData);
       setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -172,7 +167,7 @@ function AppContent() {
 
   const getStudentSubscriptionCount = (studentId) => {
     const student = students.find((s) => s.id === studentId);
-    return student?.number_of_lessons_in_subscription ?? 0;
+    return student?.subscription_number ?? 0;
   };
 
   const getStudentSubscriptionAmount = (studentId) => {

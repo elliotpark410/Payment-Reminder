@@ -13,7 +13,7 @@ function AddStudent({ onClose, onAdd }) {
     phone_number: '',
     email: '',
     subscription_price: '',
-    number_of_lessons_in_subscription: ''
+    subscription_number: ''
   });
 
   const handleInputChange = (event) => {
@@ -57,8 +57,8 @@ function AddStudent({ onClose, onAdd }) {
         return;
       }
 
-      if (formData.number_of_lessons_in_subscription && !validatePositiveWholeNumber(formData.number_of_lessons_in_subscription)) {
-        toast.error('Number of lessons in subscription must be a positive whole number.');
+      if (formData.subscription_number && !validatePositiveWholeNumber(formData.subscription_number)) {
+        toast.error('Subscription number must be a positive whole number.');
         return;
       }
 
@@ -150,11 +150,11 @@ function AddStudent({ onClose, onAdd }) {
             />
           </Form.Group>
           <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
-            <Form.Label>Number of Lessons in Subscription</Form.Label>
+            <Form.Label>Subscription Count</Form.Label>
             <Form.Control
               type="text"
-              name="number_of_lessons_in_subscription"
-              value={formData.number_of_lessons_in_subscription}
+              name="subscription_number"
+              value={formData.subscription_number}
               onChange={handleInputChange}
             />
           </Form.Group>
