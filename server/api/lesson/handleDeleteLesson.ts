@@ -10,22 +10,11 @@ export async function handleDeleteLesson(
     // Extract lesson ID from request parameters
     const lesson_id: string = request.params.lesson_id;
 
-    // Generate the formatted date string in 'YYYY-MM-DD' format for Pacific Time
-    const currentDate = new Date();
-    const options = {
-      timeZone: 'America/Los_Angeles',
-      year: 'numeric' as const,
-      month: '2-digit' as const,
-      day: '2-digit' as const,
-    };
-
-    const formattedDate = new Intl.DateTimeFormat('en-CA', options).format(currentDate);
-
-    // Query to soft delete lesson (update deleted_at to formatted date)
-    const query = "UPDATE lessons SET deleted_at = ? WHERE id = ? AND deleted_at IS NULL";
+    // Query to delete lesson
+    const query = "DELETE FROM lessons WHERE id = ?";
 
     // Execute the delete query with lesson ID as parameter
-    connection.query(query, [formattedDate, lesson_id], (error, deleteResults) => {
+    connection.query(query, [lesson_id], (error, deleteResults) => {
       if (error) {
         // If there's an error, pass it to the error handling middleware
         return next(error);

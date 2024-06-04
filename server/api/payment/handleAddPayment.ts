@@ -16,7 +16,7 @@ export async function handleAddPayment(
     } = request.body;
 
     // Query to insert a new payment into the payments table
-    const insertQuery = `INSERT INTO payments (student_id, payment_date, amount) VALUES (?, ?, ?)`;
+    const insertQuery = `INSERT INTO payments (student_id, date, amount) VALUES (?, ?, ?)`;
 
     // Execute the insert query
     connection.query(

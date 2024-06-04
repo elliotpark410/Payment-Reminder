@@ -16,7 +16,7 @@ export async function handleEditPayment(
 
     // Query to update payment data in the database
     const updateQuery =
-      'UPDATE payments SET payment_date = ?, amount = ? WHERE deleted_at IS NULL AND id = ?';
+      'UPDATE payments SET date = ?, amount = ? WHERE id = ?';
 
     // Execute the query with payment data and payment ID as parameters
     connection.query(

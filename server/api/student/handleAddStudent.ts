@@ -9,16 +9,16 @@ export async function handleAddStudent(
 ) {
   try {
     // Extract student data from request body
-    const { student_name, parent_name, phone_number, email, subscription_price, number_of_lessons_in_subscription } = request.body;
+    const { student_name, parent_name, phone_number, email, subscription_price, subscription_number } = request.body;
 
     // Query to insert a new student record into the students table
     const insertQuery =
-      'INSERT INTO students (student_name, parent_name, phone_number, email, subscription_price, number_of_lessons_in_subscription) VALUES (?, ?, ?, ?, ?, ?)';
+      'INSERT INTO students (student_name, parent_name, phone_number, email, subscription_price, subscription_number) VALUES (?, ?, ?, ?, ?, ?)';
 
     // Execute the query with student data as parameters
     connection.query(
       insertQuery,
-      [student_name, parent_name, phone_number, email, subscription_price,number_of_lessons_in_subscription],
+      [student_name, parent_name, phone_number, email, subscription_price, subscription_number],
       (insertError, insertResults) => {
         if (insertError) {
           // If there's an error, pass it to the error handling middleware

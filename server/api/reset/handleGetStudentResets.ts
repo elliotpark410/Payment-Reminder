@@ -1,19 +1,24 @@
 import { NextFunction, Request, Response } from "express";
 import connection from "../../db/connection";
 
-export async function handleGetStudents(
+export async function handleGetStudentResets(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   try {
-    const query = `
-    SELECT id, student_name, parent_name, phone_number, email,
-    subscription_price, subscription_number, deleted_at, inactive
-    FROM students WHERE deleted_at IS NULL AND inactive = false`;
+    // Extract student ID from request parameters
+    const student_id: string = request.params.student_id;
+
+    const selectQuery = `
+    SELECT resets.*, students.student_name
+    FROM resets
+    INNER JOIN students ON resets.student_id = students.id
+    WHERE resets.student_id = ?
+  `;
 
     // Execute the query
-    connection.query(query, (error, results) => {
+    connection.query(selectQuery, [student_id], (error, results) => {
       if (error) {
         // If there's an error, pass it to the error handling middleware
         return next(error);

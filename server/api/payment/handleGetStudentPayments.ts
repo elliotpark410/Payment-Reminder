@@ -14,8 +14,7 @@ export async function handleGetStudentPayments(
     SELECT payments.*, students.student_name
     FROM payments
     INNER JOIN students ON payments.student_id = students.id
-    WHERE payments.deleted_at IS NULL
-    AND payments.student_id = ?
+    WHERE payments.student_id = ?
   `;
 
     // Execute the query

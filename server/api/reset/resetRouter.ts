@@ -2,12 +2,12 @@ import express, { NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
 
 // Handler imports
-import { handleAddLesson } from "./handleAddLesson";
-import { handleDeleteLesson } from "./handleDeleteLesson";
-import { handleEditLesson } from "./handleEditLesson";
-import { handleGetLesson } from "./handleGetLesson";
-import { handleGetLessons } from "./handleGetLessons";
-import { handleGetStudentLessons } from "./handleGetStudentLessons";
+import { handleAddReset } from "./handleAddReset";
+import { handleDeleteReset } from "./handleDeleteReset";
+import { handleEditReset } from "./handleEditReset";
+import { handleGetReset } from "./handleGetReset";
+import { handleGetResets } from "./handleGetResets";
+import { handleGetStudentResets } from "./handleGetStudentResets";
 
 const router = express.Router();
 const jsonParser = bodyParser.json();
@@ -15,53 +15,53 @@ const jsonParser = bodyParser.json();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-// Route to add a new lesson
+// Route to add a new reset
 router.post(
   "/add",
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleAddLesson(request, response, next);
+    await handleAddReset(request, response, next);
   }
 );
 
-// Route to delete a lesson by ID
+// Route to delete a reset by ID
 router.put(
-  "/delete/:lesson_id",
+  "/delete/:reset_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleDeleteLesson(request, response, next);
+    await handleDeleteReset(request, response, next);
   }
 );
 
-// Route to edit a lesson by ID
+// Route to edit a reset by ID
 router.put(
-  "/:lesson_id",
+  "/:reset_id",
   jsonParser,
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleEditLesson(request, response, next);
+    await handleEditReset(request, response, next);
   }
 );
 
-// Route to get a lesson by ID
+// Route to get a reset by ID
 router.get(
-  "/:lesson_id",
+  "/:reset_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleGetLesson(request, response, next);
+    await handleGetReset(request, response, next);
   }
 );
 
-// Route to get all lessons
+// Route to get all resets
 router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleGetLessons(request, response, next);
+    await handleGetResets(request, response, next);
   }
 );
 
-// Route to get lessons for a student
+// Route to get resets for a student
 router.get(
   "/student/:student_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    await handleGetStudentLessons(request, response, next);
+    await handleGetStudentResets(request, response, next);
   }
 );
 

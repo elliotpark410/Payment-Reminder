@@ -11,7 +11,7 @@ export async function handleGetPayment(
     const payment_id: string = request.params.payment_id;
 
     // Query to select a single payment based on the provided ID
-    const query = "SELECT * FROM payments WHERE deleted_at IS NULL AND id = ?";
+    const query = "SELECT * FROM payments WHERE id = ?";
 
     // Execute the query with the payment ID as a parameter
     connection.query(query, [payment_id], (error, results: RowDataPacket[]) => {

@@ -74,7 +74,7 @@ async function saveTextMessage(studentId: number, message: string): Promise<void
     const currentDate = new Date();
     const pacificTime = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'America/Los_Angeles' });
 
-    const query = 'INSERT INTO texts (student_id, created_date, message) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
 
     connection.execute(query, [studentId, pacificTime, message], (error) => {
       if (error) {

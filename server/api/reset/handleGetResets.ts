@@ -1,16 +1,17 @@
 import { NextFunction, Request, Response } from "express";
 import connection from "../../db/connection";
 
-export async function handleGetStudents(
+export async function handleGetResets(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   try {
     const query = `
-    SELECT id, student_name, parent_name, phone_number, email,
-    subscription_price, subscription_number, deleted_at, inactive
-    FROM students WHERE deleted_at IS NULL AND inactive = false`;
+    SELECT resets.*, students.student_name
+    FROM resets
+    INNER JOIN students ON resets.student_id = students.id
+    `;
 
     // Execute the query
     connection.query(query, (error, results) => {
@@ -19,7 +20,7 @@ export async function handleGetStudents(
         return next(error);
       }
 
-      // If successful, send the students data in the response
+      // If successful, send the lessons data in the response
       response.send(results);
     });
   } catch (err) {

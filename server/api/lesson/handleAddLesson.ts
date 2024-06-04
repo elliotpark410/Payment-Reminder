@@ -15,7 +15,7 @@ export async function handleAddLesson(
     } = request.body;
 
     // Query to insert a new lesson into the lessons table
-    const insertQuery = `INSERT INTO lessons (student_id, lesson_date) VALUES (?, ?)`;
+    const insertQuery = `INSERT INTO lessons (student_id, date) VALUES (?, ?)`;
 
     // Execute the insert query
     connection.query(

@@ -10,22 +10,11 @@ export async function handleDeletePayment(
     // Extract payment ID from request parameters
     const payment_id: string = request.params.payment_id;
 
-    // Generate the formatted date string in 'YYYY-MM-DD' format for Pacific Time
-    const currentDate = new Date();
-    const options = {
-      timeZone: 'America/Los_Angeles',
-      year: 'numeric' as const,
-      month: '2-digit' as const,
-      day: '2-digit' as const,
-    };
-
-    const formattedDate = new Intl.DateTimeFormat('en-CA', options).format(currentDate);
-
-    // Query to soft delete payment (update deleted_at to formatted date)
-    const query = "UPDATE payments SET deleted_at = ? WHERE id = ? AND deleted_at IS NULL";
+    // Query to hard delete
+    const query = "DELETE FROM payments WHERE id = ?";
 
     // Execute the delete query with payment ID as parameter
-    connection.query(query, [formattedDate, payment_id], (error, deleteResults) => {
+    connection.query(query, [payment_id], (error, deleteResults) => {
       if (error) {
         // If there's an error, pass it to the error handling middleware
         return next(error);
