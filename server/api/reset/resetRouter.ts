@@ -25,7 +25,7 @@ router.post(
 );
 
 // Route to delete a reset by ID
-router.put(
+router.delete(
   "/delete/:reset_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleDeleteReset(request, response, next);

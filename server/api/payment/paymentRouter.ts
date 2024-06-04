@@ -25,7 +25,7 @@ router.post(
 );
 
 // Route to delete a payment by ID
-router.put(
+router.delete(
   "/delete/:payment_id",
   async (request: Request, response: Response, next: NextFunction) => {
     await handleDeletePayment(request, response, next);

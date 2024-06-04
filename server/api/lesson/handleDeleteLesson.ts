@@ -7,11 +7,18 @@ export async function handleDeleteLesson(
   next: NextFunction
 ) {
   try {
+
     // Extract lesson ID from request parameters
     const lesson_id: string = request.params.lesson_id;
 
+    console.log("lesson_id")
+    console.log(lesson_id)
+
     // Query to delete lesson
     const query = "DELETE FROM lessons WHERE id = ?";
+
+    console.log("query")
+    console.log(query)
 
     // Execute the delete query with lesson ID as parameter
     connection.query(query, [lesson_id], (error, deleteResults) => {
