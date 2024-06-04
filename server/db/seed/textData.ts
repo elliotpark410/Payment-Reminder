@@ -5,7 +5,7 @@ export function seedTexts() {
     // Insert text data here
     {
       student_id: 2,
-      created_date: '2024-02-23',
+      date: '2024-02-23',
       message: 'Hello',
     },
   ];
