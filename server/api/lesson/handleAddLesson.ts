@@ -11,7 +11,7 @@ export async function handleAddLesson(
     // Extract lesson data from request body
     const {
       student_id,
-      lesson_date,
+      date,
     } = request.body;
 
     // Query to insert a new lesson into the lessons table
@@ -22,7 +22,7 @@ export async function handleAddLesson(
       insertQuery,
       [
         student_id,
-        lesson_date,
+        date,
       ],
       (insertError, insertResults) => {
         if (insertError) {

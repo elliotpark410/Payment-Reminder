@@ -19,7 +19,7 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
         return;
       }
 
-      const response = await axios.put(`${host}/lesson/${lesson.id}`, { lesson_date: lessonDate });
+      const response = await axios.put(`${host}/lesson/${lesson.id}`, { date: lessonDate });
       console.log('Lesson updated successfully:', response.data);
       onHide();
 

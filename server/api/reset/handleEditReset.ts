@@ -12,7 +12,7 @@ export async function handleEditReset(
     const reset_id: string = request.params.reset_id;
 
     // Extract updated reset data from request body
-    const { reset_date } = request.body;
+    const { date } = request.body;
 
     // Query to update reset data in the database
     const updateQuery =
@@ -21,7 +21,7 @@ export async function handleEditReset(
     // Execute the query with reset data and reset ID as parameters
     connection.query(
       updateQuery,
-      [reset_date, reset_id],
+      [date, reset_id],
       (updateError, updateResults) => {
         if (updateError) {
           // If there's an error, pass it to the error handling middleware

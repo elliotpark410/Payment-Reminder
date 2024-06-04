@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Button, Pagination } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
+import DeleteReset from './DeleteReset';
 import DeletePayment from '../Payment/DeletePayment';
 import EditPayment from '../Payment/EditPayment';
 import EditLesson from './EditLesson';
@@ -15,14 +16,14 @@ export const fetchStudentLessons = async (studentId) => {
   try {
     const response = await axios.get(`${host}/lesson/student/${studentId}`);
 
-    // Filter out records with null or invalid lesson_date
+    // Filter out records with null or invalid date
     const validLessons = response.data.filter((lesson) => {
-      return lesson.lesson_date !== null && lesson.lesson_date !== undefined && lesson.deleted_at === null;
+      return lesson.date !== null && lesson.date !== undefined;
     });
 
-    // Sort the valid records by lesson_date
+    // Sort the valid records by date
     const sortedLessons = validLessons.sort(
-      (a, b) => new Date(a.lesson_date) - new Date(b.lesson_date)
+      (a, b) => new Date(a.date) - new Date(b.date)
     );
 
     // Format the sorted lessons
@@ -30,7 +31,7 @@ export const fetchStudentLessons = async (studentId) => {
       ...lesson,
       lesson: true,
       lessonNumber: index + 1,
-      formattedDate: formatDate(lesson.lesson_date)
+      formattedDate: formatDate(lesson.date)
     }));
 
     return formattedLessons;
@@ -40,29 +41,29 @@ export const fetchStudentLessons = async (studentId) => {
   }
 };
 
-export const fetchStudentResetLessons = async (studentId) => {
+export const fetchStudentResets = async (studentId) => {
   try {
     // Fetch data from the API
-    const response = await axios.get(`${host}/lesson/student/${studentId}`);
+    const response = await axios.get(`${host}/reset/student/${studentId}`);
 
-    // Filter out records with null or undefined reset_lesson_date
-    const validResetLessons = response.data.filter(
-      (resetLesson) => resetLesson.reset_lesson_date !== null && resetLesson.reset_lesson_date !== undefined && resetLesson.deleted_at === null
+    // Filter out records with null or undefined reset date
+    const validResets = response.data.filter(
+      (reset) => reset.date !== null && reset.date !== undefined
     );
 
-    // Sort the valid records by reset_lesson_date
-    const sortedResetLessons = validResetLessons.sort(
-      (a, b) => new Date(a.reset_lesson_date) - new Date(b.reset_lesson_date)
+    // Sort the valid records by reset date
+    const sortedResets = validResets.sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
     );
 
     // Format the sorted lessons
-    const formattedResetLessons = sortedResetLessons.map((resetLesson) => ({
+    const formattedResets = sortedResets.map((resetLesson) => ({
       ...resetLesson,
       resetLesson: true,
-      formattedDate: formatDate(resetLesson.reset_lesson_date)
+      formattedDate: formatDate(resetLesson.date)
     }));
 
-    return formattedResetLessons;
+    return formattedResets;
   } catch (error) {
     console.error('Error fetching reset lessons:', error);
     throw error;
@@ -83,7 +84,7 @@ export const fetchStudentPayments = async (studentId) => {
     const formattedPayments = validPayments.map((payment) => ({
       ...payment,
       payment: true,
-      formattedDate: formatDate(payment.payment_date)
+      formattedDate: formatDate(payment.date)
     }));
 
     return formattedPayments;
@@ -100,14 +101,14 @@ export const fetchStudentTexts = async (studentId) => {
 
     // Filter out records with null or undefined dates
     const validTexts = response.data.filter(
-      (text) => text.created_date !== null && text.created_date !== undefined
+      (text) => text.date !== null && text.date !== undefined
     );
 
     // Format the valid texts and sort them
     const formattedTexts = validTexts.map((text) => ({
       ...text,
       text: true,
-      formattedDate: formatDate(text.created_date)
+      formattedDate: formatDate(text.date)
     }));
 
     return formattedTexts
@@ -119,13 +120,14 @@ export const fetchStudentTexts = async (studentId) => {
 
 function GetStudentLesson({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
-  const [resetLessons, setResetLessons] = useState([]);
+  const [resets, setResets] = useState([]);
   const [texts, setTexts] = useState([]);
   const [payments, setPayments] = useState([]);
   const [showEditLessonModal, setShowEditLessonModal] = useState(false);
   const [showEditResetModal, setShowEditResetModal] = useState(false);
   const [showEditPaymentModal, setShowEditPaymentModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
+  const [editReset, setEditReset] = useState(null);
   const [lessonDate, setLessonDate] = useState('');
   const [resetDate, setResetDate] = useState('');
   const [editPayment, setEditPayment] = useState(null);
@@ -139,16 +141,16 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   const fetchData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
-    const fetchedResetLessons = await fetchStudentResetLessons(studentId);
+    const fetchedResets = await fetchStudentResets(studentId);
     const fetchedPayments = await fetchStudentPayments(studentId);
     const fetchedTexts = await fetchStudentTexts(studentId);
 
-    const mergedRecords = [...fetchedLessons, ...fetchedResetLessons, ...fetchedPayments, ...fetchedTexts];
+    const mergedRecords = [...fetchedLessons, ...fetchedResets, ...fetchedPayments, ...fetchedTexts];
     const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
     const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
 
     setLessons(fetchedLessons);
-    setResetLessons(fetchedResetLessons);
+    setResets(fetchedResets);
     setPayments(fetchedPayments);
     setTexts(fetchedTexts);
     setCurrentPage(totalPages);
@@ -160,19 +162,19 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
 
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
-    setLessonDate(new Date(lesson.lesson_date).toISOString().slice(0, 10));
+    setLessonDate(new Date(lesson.date).toISOString().slice(0, 10));
     setShowEditLessonModal(true);
   };
 
   const handleEditReset = (reset) => {
-    setEditLesson(reset);
-    setResetDate(new Date(reset.reset_lesson_date).toISOString().slice(0, 10));
+    setEditReset(reset);
+    setResetDate(new Date(reset.date).toISOString().slice(0, 10));
     setShowEditResetModal(true);
   };
 
   const handleEditPayment = (payment) => {
     setEditPayment(payment);
-    setPaymentDate(new Date(payment.payment_date).toISOString().slice(0, 10));
+    setPaymentDate(new Date(payment.date).toISOString().slice(0, 10));
     setPaymentAmount(payment.amount);
     setShowEditPaymentModal(true);
   };
@@ -188,8 +190,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     handleDelete(lessonId, setLessons);
   };
 
-  const handleDeleteResetLesson = resetLessonId => {
-    handleDelete(resetLessonId, setResetLessons);
+  const handleDeleteResets = resetLessonId => {
+    handleDelete(resetLessonId, setResets);
   };
 
   const handleDeletePayment = paymentId => {
@@ -201,7 +203,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setShowTextModal(true);
   }
 
-  const mergedRecords = [...lessons, ...resetLessons, ...payments, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
+  const mergedRecords = [...lessons, ...resets, ...payments, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
 
   // Function to reset lesson numbers after each text or reset record
   const assignLessonNumbers = (records) => {
@@ -334,9 +336,9 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       Lesson reset on {record.formattedDate}
                     </td>
                     <td>
-                      <DeleteLesson
-                        lessonId={record.id}
-                        onDelete={() => handleDeleteResetLesson(record.id)}
+                      <DeleteReset
+                        resetId={record.id}
+                        onDelete={() => handleDeleteResets(record.id)}
                       />
                     </td>
                   </tr>
@@ -388,7 +390,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       <EditReset
         show={showEditResetModal}
         onHide={() => setShowEditResetModal(false)}
-        lesson={editLesson}
+        reset={editReset}
         resetDate={resetDate}
         setResetDate={setResetDate}
         setEditLesson={setEditLesson}

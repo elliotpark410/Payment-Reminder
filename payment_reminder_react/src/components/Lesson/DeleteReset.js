@@ -5,15 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
-const DeleteLesson = ({ lessonId, onDelete }) => {
-  const handleDeleteLesson = async () => {
+const DeleteReset = ({ resetId, onDelete }) => {
+  const handleDeleteReset = async () => {
     try {
-      await axios.delete(`${host}/lesson/delete/${lessonId}`);
-      console.log(`Lesson with ID ${lessonId} deleted successfully`);
+      await axios.delete(`${host}/reset/delete/${resetId}`);
+      console.log(`Reset with ID ${resetId} deleted successfully`);
 
       onDelete();
     } catch (error) {
-      console.error('Error deleting lesson:', error);
+      console.error('Error deleting reset:', error);
       throw error;
     }
   };
@@ -21,12 +21,12 @@ const DeleteLesson = ({ lessonId, onDelete }) => {
   return (
     <Button
       variant="outline-danger"
-      onClick={handleDeleteLesson}
-      title="Delete lesson"
+      onClick={handleDeleteReset}
+      title="Delete reset"
     >
       <FontAwesomeIcon icon={faTrash} />
     </Button>
   );
 };
 
-export default DeleteLesson;
+export default DeleteReset

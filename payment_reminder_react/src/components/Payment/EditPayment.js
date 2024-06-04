@@ -27,7 +27,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
       }
 
       const response = await axios.put(`${host}/payment/${payment.id}`, {
-        payment_date: paymentDate,
+        date: paymentDate,
         amount: paymentAmount
        });
 

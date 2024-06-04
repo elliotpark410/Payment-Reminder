@@ -6,7 +6,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import '../../App.css';
 
-const EditReset = ({ show, onHide, lesson, resetDate, setResetDate, setEditLesson, fetchData }) => {
+const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson, fetchData }) => {
 
   const handleSaveEdit = async () => {
     try {
@@ -19,7 +19,7 @@ const EditReset = ({ show, onHide, lesson, resetDate, setResetDate, setEditLesso
         return;
       }
 
-      const response = await axios.put(`${host}/lesson/${lesson.id}`, { reset_lesson_date: resetDate });
+      const response = await axios.put(`${host}/reset/${reset.id}`, { date: resetDate });
       console.log('Reset updated successfully:', response.data);
       onHide();
 

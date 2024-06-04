@@ -8,7 +8,7 @@ import { host } from '../../lib/constants';
 const DeletePayment= ({ paymentId, onDelete }) => {
   const handleDeletePayment = async () => {
     try {
-      await axios.put(`${host}/payment/delete/${paymentId}`);
+      await axios.delete(`${host}/payment/delete/${paymentId}`);
       console.log(`Payment with ID ${paymentId} deleted successfully`);
 
       onDelete();

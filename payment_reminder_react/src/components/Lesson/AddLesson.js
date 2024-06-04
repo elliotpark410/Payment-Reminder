@@ -7,7 +7,7 @@ import LessonCalendar from './Calendar/Calendar';
 import axios from 'axios';
 import { host } from '../../lib/constants';
 import AddPayment from '../Payment/AddPayment';
-import { fetchStudentLessons, fetchStudentResetLessons, fetchStudentPayments, fetchStudentTexts } from '../Lesson/GetStudentLesson';
+import { fetchStudentLessons, fetchStudentResets, fetchStudentPayments, fetchStudentTexts } from '../Lesson/GetStudentLesson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt, faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
@@ -27,7 +27,7 @@ function AddLesson({
 
   const fetchData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
-    const fetchedResets = await fetchStudentResetLessons(studentId);
+    const fetchedResets = await fetchStudentResets(studentId);
     const fetchedPayments = await fetchStudentPayments(studentId);
     const fetchedTexts = await fetchStudentTexts(studentId);
 
@@ -56,7 +56,7 @@ function AddLesson({
       // Make API call to add lesson using Axios
       const response = await axios.post(`${host}/lesson/add`, {
         student_id: studentId,
-        lesson_date: formattedDate
+        date: formattedDate
       });
 
       console.log('Added lesson:', response.data);
@@ -92,9 +92,9 @@ function AddLesson({
         day: '2-digit',
       }).replace(/\//g, ' / ');
 
-      const response = await axios.post(`${host}/lesson/reset`, {
+      const response = await axios.post(`${host}/reset/add`, {
         student_id: studentId,
-        reset_lesson_date: formattedDate
+        date: formattedDate
       });
 
       if (response.status === 200 || 201) {

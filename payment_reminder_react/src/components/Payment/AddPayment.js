@@ -30,7 +30,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
       // Make API call to add payment using Axios
       const response = await axios.post(`${host}/payment/add`, {
         student_id: studentId,
-        payment_date: formattedDate,
+        date: formattedDate,
         amount: amount
       });
 

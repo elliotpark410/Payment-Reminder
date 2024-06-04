@@ -9,21 +9,20 @@ const fetchLessons = async (setLessons) => {
   try {
     const response = await axios.get(`${host}/lesson/`);
 
-    // Filter out records with null or invalid lesson_date
+    // Filter out records with null or invalid date
     const validLessons = response.data.filter((lesson) => {
       return (
-        lesson.lesson_date !== null &&
-        lesson.lesson_date !== undefined &&
-        lesson.deleted_at === null
+        lesson.date !== null &&
+        lesson.date !== undefined
       );
     });
 
-    const sortedLessons = validLessons.sort((a, b) => new Date(a.lesson_date) - new Date(b.lesson_date));
+    const sortedLessons = validLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     const formattedLessons = sortedLessons.map((lesson, index) => ({
       ...lesson,
       lessonNumber: index + 1,
-      formattedDate: formatDate(lesson.lesson_date)
+      formattedDate: formatDate(lesson.date)
 
     }));
 
@@ -44,9 +43,8 @@ const fetchPayments = async (setPayments) => {
         payment.amount !== null &&
         payment.amount !== undefined &&
         payment.amount !== 0 &&
-        payment.payment_date !== null &&
-        payment.payment_date !== undefined &&
-        payment.deleted_at === null
+        payment.date !== null &&
+        payment.date !== undefined
       );
     });
 

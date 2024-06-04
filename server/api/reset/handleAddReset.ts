@@ -11,7 +11,7 @@ export async function handleAddReset(
     // Extract reset data from request body
     const {
       student_id,
-      reset_date,
+      date,
     } = request.body;
 
     // Query to insert a new reset into the resets table
@@ -22,7 +22,7 @@ export async function handleAddReset(
       insertQuery,
       [
         student_id,
-        reset_date,
+        date,
       ],
       (insertError, insertResults) => {
         if (insertError) {

@@ -12,7 +12,7 @@ export async function handleEditPayment(
     const payment_id: string = request.params.payment_id;
 
     // Extract updated payment data from request body
-    const { payment_date, amount } = request.body;
+    const { date, amount } = request.body;
 
     // Query to update payment data in the database
     const updateQuery =
@@ -21,7 +21,7 @@ export async function handleEditPayment(
     // Execute the query with payment data and payment ID as parameters
     connection.query(
       updateQuery,
-      [payment_date, amount, payment_id],
+      [date, amount, payment_id],
       (updateError, updateResults) => {
         if (updateError) {
           // If there's an error, pass it to the error handling middleware

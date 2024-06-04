@@ -18,6 +18,7 @@ function AppContent() {
   // State variables
   const [students, setStudents] = useState([]);
   const [lessons, setLessons] = useState([]);
+  const [resets, setResets] = useState([]);
   const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
   const [searchName, setSearchName] = useState('');
@@ -44,13 +45,15 @@ function AppContent() {
   // fetch students and lessons data
   const fetchData = async () => {
     try {
-      const [studentsResponse, lessonsResponse, textResponse] = await Promise.all([
+      const [studentsResponse, lessonsResponse, resetsResponse, textResponse] = await Promise.all([
         fetch(`${host}/student/`),
         fetch(`${host}/lesson/`),
+        fetch(`${host}/reset/`),
         fetch(`${host}/text/`),
       ]);
       const studentsData = await studentsResponse.json();
       const lessonsData = await lessonsResponse.json();
+      const resetsData = await resetsResponse.json();
       const textData = await textResponse.json();
 
       // Filter deleted records
@@ -62,6 +65,7 @@ function AppContent() {
       // order students by alphabetical order
       setStudents(activeStudents.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
+      setResets(resetsData);
       setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -99,9 +103,11 @@ function AppContent() {
 
   // Helper function to get the most recent reset date for a student
   const getLatestResetDate = (studentId) => {
-    const studentLessons = lessons.filter((lesson) => lesson.student_id === studentId);
-    const resetDates = studentLessons
-      .map((lesson) => lesson.reset_lesson_date)
+
+    const studentResets = resets.filter((reset) => reset.student_id === studentId);
+
+    const resetDates = studentResets
+      .map((reset) => reset.date)
       .filter((date) => date !== null);
 
     return resetDates.length > 0 ? Math.max(...resetDates.map((date) => new Date(date))) : null;
@@ -111,7 +117,7 @@ function AppContent() {
   const getLatestTextDate = (studentId) => {
     const studentTexts = texts.filter((textDate) => textDate.student_id === studentId);
     const textDates = studentTexts
-      .map((text) => text.created_date)
+      .map((text) => text.date)
       .filter((date) => date !== null);
 
     return textDates.length > 0 ? Math.max(...textDates.map((date) => new Date(date))) : null;
@@ -132,11 +138,11 @@ function AppContent() {
       .filter(
         (lesson) =>
           lesson.student_id === studentId &&
-          lesson.lesson_date !== null &&
-          new Date(lesson.lesson_date) > cutoffDate &&
-          new Date(lesson.lesson_date) <= new Date(today)
+          lesson.date !== null &&
+          new Date(lesson.date) > cutoffDate &&
+          new Date(lesson.date) <= new Date(today)
       )
-      .map((lesson) => lesson.lesson_date); // Return the list of filtered lesson dates
+      .map((lesson) => lesson.date); // Return the list of filtered lesson dates
 
     return filteredLessonDates;
   };
@@ -158,8 +164,8 @@ function AppContent() {
     const filteredLessons = lessons.filter(
       (lesson) =>
         lesson.student_id === studentId &&
-        lesson.lesson_date !== null &&
-        (!filterDate || new Date(lesson.lesson_date) > filterDate)
+        lesson.date !== null &&
+        (!filterDate || new Date(lesson.date) > filterDate)
     ).length;
 
     return filteredLessons

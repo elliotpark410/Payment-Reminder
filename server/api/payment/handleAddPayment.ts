@@ -11,7 +11,7 @@ export async function handleAddPayment(
     // Extract payment data from request body
     const {
       student_id,
-      payment_date,
+      date,
       amount,
     } = request.body;
 
@@ -23,7 +23,7 @@ export async function handleAddPayment(
       insertQuery,
       [
         student_id,
-        payment_date,
+        date,
         amount,
       ],
       (insertError, insertResults) => {
