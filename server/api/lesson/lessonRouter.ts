@@ -28,8 +28,6 @@ router.post(
 router.delete(
   "/delete/:lesson_id",
   async (request: Request, response: Response, next: NextFunction) => {
-    console.log("before handleDeleteLesson")
-    console.log(handleDeleteLesson)
     await handleDeleteLesson(request, response, next);
   }
 );
