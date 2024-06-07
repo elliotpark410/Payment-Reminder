@@ -1,11 +1,7 @@
 import React from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUserPlus,
-  faThList,
-  faSearch,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faThList, faSearch } from '@fortawesome/free-solid-svg-icons';
 import musicNotesIcon from '../images/musicNotes.png';
 import '../App.css';
 

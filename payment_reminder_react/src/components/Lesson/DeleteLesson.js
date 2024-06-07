@@ -19,11 +19,7 @@ const DeleteLesson = ({ lessonId, onDelete }) => {
   };
 
   return (
-    <Button
-      variant="outline-danger"
-      onClick={handleDeleteLesson}
-      title="Delete lesson"
-    >
+    <Button variant="outline-danger" onClick={handleDeleteLesson} title="Delete lesson">
       <FontAwesomeIcon icon={faTrash} />
     </Button>
   );

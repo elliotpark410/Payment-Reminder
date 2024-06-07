@@ -5,7 +5,7 @@ export const formatDate = (date) => {
     .toLocaleDateString('en-US', {
       month: '2-digit',
       day: '2-digit',
-      year: 'numeric',
+      year: 'numeric'
     })
     .replace(/\//g, ' / ');
 };
@@ -20,16 +20,13 @@ export const todaysDate = () => {
 
 // Function to calculate total amount from payments
 export const getTotalPaymentAmount = (paymentsArray) => {
-  const totalAmount = paymentsArray.reduce(
-    (total, payment) => total + payment.amount,
-    0
-  );
+  const totalAmount = paymentsArray.reduce((total, payment) => total + payment.amount, 0);
 
   // Format the total amount as a dollar amount
   const formattedTotalAmount = totalAmount.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 0
   });
 
   return formattedTotalAmount;

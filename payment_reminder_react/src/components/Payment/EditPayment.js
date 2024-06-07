@@ -16,7 +16,7 @@ const EditPayment = ({
   setPaymentDate,
   setPaymentAmount,
   setEditPayment,
-  fetchData,
+  fetchData
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -38,7 +38,7 @@ const EditPayment = ({
 
       const response = await axios.put(`${host}/payment/${payment.id}`, {
         date: paymentDate,
-        amount: paymentAmount,
+        amount: paymentAmount
       });
 
       console.log('Payment updated successfully:', response.data);
@@ -50,7 +50,7 @@ const EditPayment = ({
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Edited payment ${notificationDate} `, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
       } else {
         console.error('Error editing payment. Unexpected response:', response);
@@ -90,7 +90,7 @@ const EditPayment = ({
                 top: '50%',
                 left: '10px',
                 transform: 'translateY(-50%)',
-                fontSize: '18px',
+                fontSize: '18px'
               }}
             >
               $
@@ -102,18 +102,14 @@ const EditPayment = ({
               style={{
                 fontSize: '18px',
                 fontWeight: 'bold',
-                paddingLeft: '30px',
+                paddingLeft: '30px'
               }}
             />
           </div>
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="small-button"
-          variant="primary"
-          onClick={handleSaveEdit}
-        >
+        <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>
         <Button className="small-button" variant="secondary" onClick={onHide}>

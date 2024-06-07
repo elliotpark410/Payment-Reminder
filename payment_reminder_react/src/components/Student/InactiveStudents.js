@@ -18,7 +18,7 @@ const fetchInactiveStudents = async (setInactiveStudents) => {
     // Format the students
     const formattedStudents = sortedStudents.map((student, index) => ({
       ...student,
-      number: index + 1,
+      number: index + 1
     }));
 
     // Set the filtered and formatted lessons
@@ -37,13 +37,10 @@ const handleActivateStudent = async (studentId, studentName) => {
     if (response.status === 200 || 201) {
       // Show notifcation
       toast.success(`Activated ${studentName}`, {
-        autoClose: 3000, // Close after 3 seconds
+        autoClose: 3000 // Close after 3 seconds
       });
     } else {
-      console.error(
-        'Error activating student. Unexpected response: ',
-        response
-      );
+      console.error('Error activating student. Unexpected response: ', response);
     }
   } catch (error) {
     console.error('Error activating student: ', error);
@@ -67,9 +64,7 @@ function InactiveStudents({ onActivate, onClose }) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Inactive Students
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Inactive Students</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <table className="table">
@@ -90,9 +85,7 @@ function InactiveStudents({ onActivate, onClose }) {
                     <Form.Check
                       type="checkbox"
                       defaultChecked={false}
-                      onChange={() =>
-                        handleActivateStudent(student.id, student.student_name)
-                      }
+                      onChange={() => handleActivateStudent(student.id, student.student_name)}
                     />
                   </td>
                 </tr>

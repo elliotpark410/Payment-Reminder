@@ -34,7 +34,7 @@ function AppContent() {
     showStudentLessonModal: false,
     showSendTextModal: false,
     showInactiveStudentModal: false,
-    sendTextDate: null,
+    sendTextDate: null
   });
 
   // fetch initial data
@@ -45,13 +45,12 @@ function AppContent() {
   // fetch students and lessons data
   const fetchData = async () => {
     try {
-      const [studentsResponse, lessonsResponse, resetsResponse, textResponse] =
-        await Promise.all([
-          fetch(`${host}/student/`),
-          fetch(`${host}/lesson/`),
-          fetch(`${host}/reset/`),
-          fetch(`${host}/text/`),
-        ]);
+      const [studentsResponse, lessonsResponse, resetsResponse, textResponse] = await Promise.all([
+        fetch(`${host}/student/`),
+        fetch(`${host}/lesson/`),
+        fetch(`${host}/reset/`),
+        fetch(`${host}/text/`)
+      ]);
       const studentsData = await studentsResponse.json();
       const lessonsData = await lessonsResponse.json();
       const resetsData = await resetsResponse.json();
@@ -63,11 +62,7 @@ function AppContent() {
       });
 
       // order students by alphabetical order
-      setStudents(
-        activeStudents.sort((a, b) =>
-          a.student_name.localeCompare(b.student_name)
-        )
-      );
+      setStudents(activeStudents.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
       setResets(resetsData);
       setTexts(textData);
@@ -97,7 +92,7 @@ function AppContent() {
       ...data,
       studentId: student.id,
       studentName: student.student_name,
-      showStudentLessonModal: true,
+      showStudentLessonModal: true
     });
   };
 
@@ -107,31 +102,19 @@ function AppContent() {
 
   // Helper function to get the most recent reset date for a student
   const getLatestResetDate = (studentId) => {
-    const studentResets = resets.filter(
-      (reset) => reset.student_id === studentId
-    );
+    const studentResets = resets.filter((reset) => reset.student_id === studentId);
 
-    const resetDates = studentResets
-      .map((reset) => reset.date)
-      .filter((date) => date !== null);
+    const resetDates = studentResets.map((reset) => reset.date).filter((date) => date !== null);
 
-    return resetDates.length > 0
-      ? Math.max(...resetDates.map((date) => new Date(date)))
-      : null;
+    return resetDates.length > 0 ? Math.max(...resetDates.map((date) => new Date(date))) : null;
   };
 
   // Helper function to get the most recent send text date for a student
   const getLatestTextDate = (studentId) => {
-    const studentTexts = texts.filter(
-      (textDate) => textDate.student_id === studentId
-    );
-    const textDates = studentTexts
-      .map((text) => text.date)
-      .filter((date) => date !== null);
+    const studentTexts = texts.filter((textDate) => textDate.student_id === studentId);
+    const textDates = studentTexts.map((text) => text.date).filter((date) => date !== null);
 
-    return textDates.length > 0
-      ? Math.max(...textDates.map((date) => new Date(date)))
-      : null;
+    return textDates.length > 0 ? Math.max(...textDates.map((date) => new Date(date))) : null;
   };
 
   const getFilteredLessonDates = (studentId) => {
@@ -139,13 +122,11 @@ function AppContent() {
     const latestTextDate = getLatestTextDate(studentId);
 
     // Calculate the cutoff date based on the latest reset date and text date
-    const cutoffDate = new Date(
-      Math.max(latestResetDate ?? 0, latestTextDate ?? 0)
-    );
+    const cutoffDate = new Date(Math.max(latestResetDate ?? 0, latestTextDate ?? 0));
 
     // Get today's date in the Pacific Time Zone (Los Angeles Time)
     const today = new Date().toLocaleDateString('en-US', {
-      timeZone: 'America/Los_Angeles',
+      timeZone: 'America/Los_Angeles'
     });
 
     // Filter lessons based on student ID, lesson date, current date, and map to lesson dates
@@ -206,7 +187,7 @@ function AppContent() {
       showSendTextModal: true,
       studentId: student.id,
       studentName: student.student_name,
-      parentName: student.parent_name,
+      parentName: student.parent_name
     });
   };
 
@@ -223,7 +204,7 @@ function AppContent() {
       ...data,
       showStudentLessonModal: false,
       studentId: null,
-      studentName: null,
+      studentName: null
     });
   };
 
@@ -232,7 +213,7 @@ function AppContent() {
       ...data,
       showSendTextModal: false,
       studentId: null,
-      studentName: null,
+      studentName: null
     });
   };
 
@@ -275,9 +256,7 @@ function AppContent() {
       )}
       {/* Get All Lesson Modal is conditionally rendered if showAllLessons is truthy */}
       {data.showAllLessons && (
-        <GetAllLessons
-          onClose={() => handleUpdateData({ showAllLessons: false })}
-        />
+        <GetAllLessons onClose={() => handleUpdateData({ showAllLessons: false })} />
       )}
       {/* Edit Student Modal is conditionally rendered if showEditStudentForm is truthy */}
       {data.showEditStudentForm && (
@@ -319,13 +298,9 @@ function AppContent() {
           studentName={data.studentName}
           parentName={data.parentName}
           studentLessonCount={getLessonCountForStudent(data.studentId)}
-          studentSusbscriptionCount={getStudentSubscriptionCount(
-            data.studentId
-          )}
+          studentSusbscriptionCount={getStudentSubscriptionCount(data.studentId)}
           studentFilteredLessonDates={getFilteredLessonDates(data.studentId)}
-          studentSubscriptionAmount={getStudentSubscriptionAmount(
-            data.studentId
-          )}
+          studentSubscriptionAmount={getStudentSubscriptionAmount(data.studentId)}
           onClose={handleCloseSendTextModal}
         />
       )}

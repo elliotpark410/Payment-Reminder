@@ -23,16 +23,14 @@ export const fetchStudentLessons = async (studentId) => {
     });
 
     // Sort the valid records by date
-    const sortedLessons = validLessons.sort(
-      (a, b) => new Date(a.date) - new Date(b.date)
-    );
+    const sortedLessons = validLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Format the sorted lessons
     const formattedLessons = sortedLessons.map((lesson, index) => ({
       ...lesson,
       lesson: true,
       lessonNumber: index + 1,
-      formattedDate: formatDate(lesson.date),
+      formattedDate: formatDate(lesson.date)
     }));
 
     return formattedLessons;
@@ -53,15 +51,13 @@ export const fetchStudentResets = async (studentId) => {
     );
 
     // Sort the valid records by reset date
-    const sortedResets = validResets.sort(
-      (a, b) => new Date(a.date) - new Date(b.date)
-    );
+    const sortedResets = validResets.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Format the sorted lessons
     const formattedResets = sortedResets.map((resetLesson) => ({
       ...resetLesson,
       resetLesson: true,
-      formattedDate: formatDate(resetLesson.date),
+      formattedDate: formatDate(resetLesson.date)
     }));
 
     return formattedResets;
@@ -78,15 +74,14 @@ export const fetchStudentPayments = async (studentId) => {
 
     // Filter out records with null or undefined dates
     const validPayments = response.data.filter(
-      (payment) =>
-        payment.created_at !== null && payment.created_at !== undefined
+      (payment) => payment.created_at !== null && payment.created_at !== undefined
     );
 
     // Format the valid payments and sort them
     const formattedPayments = validPayments.map((payment) => ({
       ...payment,
       payment: true,
-      formattedDate: formatDate(payment.date),
+      formattedDate: formatDate(payment.date)
     }));
 
     return formattedPayments;
@@ -110,7 +105,7 @@ export const fetchStudentTexts = async (studentId) => {
     const formattedTexts = validTexts.map((text) => ({
       ...text,
       text: true,
-      formattedDate: formatDate(text.date),
+      formattedDate: formatDate(text.date)
     }));
 
     return formattedTexts;
@@ -151,12 +146,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       ...fetchedLessons,
       ...fetchedResets,
       ...fetchedPayments,
-      ...fetchedTexts,
+      ...fetchedTexts
     ];
     const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
-    const totalPages = Math.ceil(
-      recordsWithLessonNumbers.length / itemsPerPage
-    );
+    const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
 
     setLessons(fetchedLessons);
     setResets(fetchedResets);
@@ -240,10 +233,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentRecords = recordsWithLessonNumbers.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentRecords = recordsWithLessonNumbers.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
 
@@ -256,9 +246,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {studentName}
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{studentName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <table className="table">
@@ -277,10 +265,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td>{record.lessonNumber}</td>
-                    <td
-                      className="lesson-data"
-                      onClick={() => handleEditLesson(record)}
-                    >
+                    <td className="lesson-data" onClick={() => handleEditLesson(record)}>
                       {record.formattedDate}
                     </td>
                     <td>
@@ -304,7 +289,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                         color: 'white',
                         padding: '8px 15px',
                         borderRadius: '4px',
-                        height: '55px',
+                        height: '55px'
                       }}
                     >
                       Message sent on {record.formattedDate}
@@ -322,12 +307,11 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       style={{
                         backgroundColor: '#74db79', // green
                         padding: '8px 15px',
-                        borderRadius: '4px',
+                        borderRadius: '4px'
                       }}
                       onClick={() => handleEditPayment(record)}
                     >
-                      ${record.amount.toLocaleString()} received on{' '}
-                      {record.formattedDate}
+                      ${record.amount.toLocaleString()} received on {record.formattedDate}
                     </td>
                     <td>
                       <DeletePayment
@@ -347,7 +331,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       style={{
                         backgroundColor: '#FFC107', // yellow
                         padding: '8px 15px',
-                        borderRadius: '4px',
+                        borderRadius: '4px'
                       }}
                       onClick={() => handleEditReset(record)}
                     >
@@ -374,14 +358,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
           Lessons Completed:{' '}
-          <span className="lesson-payment-text">
-            {lessons.length.toLocaleString()}
-          </span>
+          <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
           <br />
           Payments Received:{' '}
-          <span className="lesson-payment-text">
-            {getTotalPaymentAmount(payments)}
-          </span>
+          <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
         </div>
         <Button className="button" variant="secondary" onClick={onClose}>
           Close

@@ -2,11 +2,7 @@ import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import './paginationStyles.css';
 
-export const PaginationComponent = ({
-  currentPage,
-  totalPages,
-  setCurrentPage,
-}) => {
+export const PaginationComponent = ({ currentPage, totalPages, setCurrentPage }) => {
   const renderPaginationItems = () => {
     const pageNumbers = [];
 
@@ -41,19 +37,14 @@ export const PaginationComponent = ({
   return (
     <div className="pagination-container">
       <Pagination className="pagination">
-        <Pagination.First
-          onClick={() => setCurrentPage(1)}
-          disabled={currentPage === 1}
-        />
+        <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
         <Pagination.Prev
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         />
         {renderPaginationItems()}
         <Pagination.Next
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
         />
         <Pagination.Last

@@ -16,7 +16,7 @@ const SendText = ({
   studentSusbscriptionCount,
   studentFilteredLessonDates,
   studentSubscriptionAmount,
-  onClose,
+  onClose
 }) => {
   const name = parentName || studentName;
 
@@ -32,7 +32,7 @@ const SendText = ({
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0, // No cents
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 0
   }).format(studentSubscriptionAmount);
 
   const formattedLessonDates = studentFilteredLessonDates
@@ -41,7 +41,7 @@ const SendText = ({
       new Date(date).toLocaleDateString('en-US', {
         month: '2-digit',
         day: '2-digit',
-        year: 'numeric',
+        year: 'numeric'
       })
     )
     .join('\n');
@@ -57,7 +57,7 @@ const SendText = ({
     try {
       const response = await axios.post(`${host}/text/send`, {
         student_id: studentId,
-        message,
+        message
       });
       console.log('Text message sent successfully');
       onClose(); // Close the modal after sending the text message
@@ -67,13 +67,10 @@ const SendText = ({
 
         // Show notifcation
         toast.info(`Message sent on ${today}`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
       } else {
-        console.error(
-          'Error sending text message. Unexpected response: ',
-          response
-        );
+        console.error('Error sending text message. Unexpected response: ', response);
       }
     } catch (error) {
       console.error('Error sending text message: ', error);

@@ -19,11 +19,7 @@ const DeletePayment = ({ paymentId, onDelete }) => {
   };
 
   return (
-    <Button
-      variant="outline-danger"
-      onClick={handleDeletePayment}
-      title="Delete payment"
-    >
+    <Button variant="outline-danger" onClick={handleDeletePayment} title="Delete payment">
       <FontAwesomeIcon icon={faTrash} />
     </Button>
   );

@@ -14,7 +14,7 @@ const EditLesson = ({
   lessonDate,
   setLessonDate,
   setEditLesson,
-  fetchData,
+  fetchData
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -28,7 +28,7 @@ const EditLesson = ({
       }
 
       const response = await axios.put(`${host}/lesson/${lesson.id}`, {
-        date: lessonDate,
+        date: lessonDate
       });
       console.log('Lesson updated successfully:', response.data);
       onHide();
@@ -38,7 +38,7 @@ const EditLesson = ({
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Edited lesson ${notificationDate}`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
       } else {
         console.error('Error editing lesson. Unexpected response:', response);
@@ -69,11 +69,7 @@ const EditLesson = ({
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="small-button"
-          variant="primary"
-          onClick={handleSaveEdit}
-        >
+        <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>
         <Button className="small-button" variant="secondary" onClick={onHide}>

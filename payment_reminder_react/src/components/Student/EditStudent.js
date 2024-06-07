@@ -14,14 +14,14 @@ function EditStudent({ student, onClose, onEdit }) {
     email: student.email || '',
     subscription_price: student.subscription_price || '',
     subscription_number: student.subscription_number || '',
-    inactive: student.inactive || false,
+    inactive: student.inactive || false
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -71,22 +71,16 @@ function EditStudent({ student, onClose, onEdit }) {
 
       console.log('Saving edit for student', student);
 
-      const response = await axios.put(
-        `${host}/student/${student.id}`,
-        formData
-      );
+      const response = await axios.put(`${host}/student/${student.id}`, formData);
 
       console.log('Updated student data:', response.data);
 
       onEdit(response.data);
 
-      if (
-        (response.status === 200 || response.status === 201) &&
-        !formData.inactive
-      ) {
+      if ((response.status === 200 || response.status === 201) && !formData.inactive) {
         // Show notifcation
         toast.success(`Edited student`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
       } else {
         console.error('Error editing student. Unexpected response:', response);
@@ -101,9 +95,7 @@ function EditStudent({ student, onClose, onEdit }) {
 
   const handleInactiveChange = async () => {
     try {
-      const response = await axios.put(
-        `${host}/student/inactive/${student.id}`
-      );
+      const response = await axios.put(`${host}/student/inactive/${student.id}`);
       console.log('Inactivated student:', response.data);
       setFormData({ ...formData, inactive: !formData.inactive });
       onEdit(response.data);
@@ -114,17 +106,9 @@ function EditStudent({ student, onClose, onEdit }) {
   };
 
   return (
-    <Modal
-      size="lg"
-      show
-      onHide={onClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal size="lg" show onHide={onClose} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Edit Student
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Edit Student</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -179,10 +163,7 @@ function EditStudent({ student, onClose, onEdit }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group
-            controlId="NumberOfLessonsInSubscription"
-            className="py-2"
-          >
+          <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
             <Form.Label>Subscription Count</Form.Label>
             <Form.Control
               type="text"

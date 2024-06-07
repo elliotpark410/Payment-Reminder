@@ -12,14 +12,10 @@ import {
   fetchStudentLessons,
   fetchStudentResets,
   fetchStudentPayments,
-  fetchStudentTexts,
+  fetchStudentTexts
 } from '../Lesson/GetStudentLesson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSyncAlt,
-  faBook,
-  faCreditCard,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSyncAlt, faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 function AddLesson({ onClose, studentId, students, onUpdate }) {
@@ -53,13 +49,13 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',
-        day: '2-digit',
+        day: '2-digit'
       });
 
       // Make API call to add lesson using Axios
       const response = await axios.post(`${host}/lesson/add`, {
         student_id: studentId,
-        date: formattedDate,
+        date: formattedDate
       });
 
       console.log('Added lesson:', response.data);
@@ -69,7 +65,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added lesson ${notificationDate}`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
         fetchData();
         onUpdate();
@@ -88,28 +84,25 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',
-        day: '2-digit',
+        day: '2-digit'
       });
 
       const notificationDate = formatDate(selectedDate);
 
       const response = await axios.post(`${host}/reset/add`, {
         student_id: studentId,
-        date: formattedDate,
+        date: formattedDate
       });
 
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.warning(`Lesson reset ${notificationDate}`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
         fetchData();
         onUpdate();
       } else {
-        console.error(
-          'Error resetting lesson count. Unexpected response:',
-          response
-        );
+        console.error('Error resetting lesson count. Unexpected response:', response);
       }
     } catch (error) {
       console.error('Error resetting lesson count:', error);
@@ -148,15 +141,8 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
         </Modal.Body>
         <Modal.Footer>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <Button
-              className="button"
-              variant="success"
-              onClick={handleAddPayment}
-            >
-              <FontAwesomeIcon
-                icon={faCreditCard}
-                style={{ marginRight: '0.5em' }}
-              />
+            <Button className="button" variant="success" onClick={handleAddPayment}>
+              <FontAwesomeIcon icon={faCreditCard} style={{ marginRight: '0.5em' }} />
               Payment
             </Button>
           </div>
@@ -166,17 +152,10 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             title="Reset lesson count"
             onClick={resetLessonCount}
           >
-            <FontAwesomeIcon
-              icon={faSyncAlt}
-              style={{ marginRight: '0.5em' }}
-            />
+            <FontAwesomeIcon icon={faSyncAlt} style={{ marginRight: '0.5em' }} />
             Reset
           </Button>
-          <Button
-            className="button"
-            variant="primary"
-            onClick={handleAddLesson}
-          >
+          <Button className="button" variant="primary" onClick={handleAddLesson}>
             <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5em' }} />
             Lesson
           </Button>

@@ -33,14 +33,14 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',
-        day: '2-digit',
+        day: '2-digit'
       });
 
       // Make API call to add payment using Axios
       const response = await axios.post(`${host}/payment/add`, {
         student_id: studentId,
         date: formattedDate,
-        amount: amount,
+        amount: amount
       });
 
       console.log('Added payment:', response.data);
@@ -50,7 +50,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added payment ${notificationDate}`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
 
         onUpdate();
@@ -87,7 +87,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
                   top: '50%',
                   left: '10px',
                   transform: 'translateY(-50%)',
-                  fontSize: '18px',
+                  fontSize: '18px'
                 }}
               >
                 $
@@ -104,8 +104,8 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
                   fontWeight: isInputEmpty ? 'inherit' : 'bold', // Change font weight based on input content
                   '::placeholder': {
                     color: 'gray', // Placeholder color remains the same
-                    fontStyle: 'italic', // Placeholder font style remains the same
-                  },
+                    fontStyle: 'italic' // Placeholder font style remains the same
+                  }
                 }}
               />
             </div>

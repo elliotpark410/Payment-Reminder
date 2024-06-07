@@ -21,7 +21,7 @@ const Login = () => {
     try {
       const response = await axios.post(`${host}/user/login`, {
         username,
-        password,
+        password
       });
       console.log('Logged in user:', response.data);
       localStorage.setItem('token', response.data.token); // Store token for persistent login
@@ -42,11 +42,7 @@ const Login = () => {
         <div className="horizontally-center">
           <h2 className="text-center mb-4 header">
             Park Vocal Studio
-            <img
-              className="icon"
-              src={musicNotesIcon}
-              alt="musical note icon"
-            />
+            <img className="icon" src={musicNotesIcon} alt="musical note icon" />
           </h2>
         </div>
         <Form
@@ -55,7 +51,7 @@ const Login = () => {
             padding: '20px',
             background: 'white',
             borderRadius: '8px',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
           }}
         >
           {error && <Alert variant="danger">{error}</Alert>}
@@ -81,10 +77,7 @@ const Login = () => {
                 required
                 className="input-field"
               />
-              <Button
-                variant="outline-secondary"
-                onClick={togglePasswordVisibility}
-              >
+              <Button variant="outline-secondary" onClick={togglePasswordVisibility}>
                 {showPassword ? (
                   <FontAwesomeIcon icon={faEyeSlash} />
                 ) : (

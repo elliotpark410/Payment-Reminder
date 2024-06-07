@@ -1,22 +1,14 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTrash,
-  faPlus,
-  faList,
-  faComment,
-} from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus, faList, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 // Function to determine color based on lesson count and subscription limit
 const getLessonCountColor = (lessonCount, subscriptionLimit) => {
   if (lessonCount > subscriptionLimit) {
     return 'red'; // If lesson count is greater than subscription limit
-  } else if (
-    lessonCount === subscriptionLimit - 1 ||
-    lessonCount === subscriptionLimit
-  ) {
+  } else if (lessonCount === subscriptionLimit - 1 || lessonCount === subscriptionLimit) {
     return '#007bff'; // Blue for nearly full or full subscription
   } else {
     return 'black'; // Default color for all other cases
@@ -31,7 +23,7 @@ const StudentItem = ({
   onViewLessons,
   onAddLesson,
   onSendText,
-  getLessonCount,
+  getLessonCount
 }) => {
   const lessonCount = getLessonCount(student.id);
   const subscriptionLimit = student.subscription_number;
@@ -44,12 +36,12 @@ const StudentItem = ({
     backgroundColor: '#f7f7f7',
     transition: 'background-color 0.3s ease, transform 0.3s ease',
     borderRadius: '10px',
-    overflow: 'hidden',
+    overflow: 'hidden'
   };
 
   const hoverEffect = {
     backgroundColor: '#ffffff',
-    transform: 'scale(1.02)', // Increase for slight zoom-in effect on hover
+    transform: 'scale(1.02)' // Increase for slight zoom-in effect on hover
   };
 
   return (
@@ -73,11 +65,7 @@ const StudentItem = ({
         </div>
       </Col>
       <Col className="text-center">
-        <Button
-          variant="outline-success"
-          title="Add lesson"
-          onClick={() => onAddLesson(student)}
-        >
+        <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)}>
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </Col>
@@ -86,7 +74,7 @@ const StudentItem = ({
           <span
             style={{
               color: getLessonCountColor(lessonCount, subscriptionLimit),
-              fontWeight: '600',
+              fontWeight: '600'
             }}
           >
             {lessonCount}
@@ -115,20 +103,14 @@ const StudentItem = ({
           }
           title="Text"
           onClick={() => onSendText(student)}
-          disabled={
-            getLessonCount(student.id) < student.subscription_number - 1
-          }
+          disabled={getLessonCount(student.id) < student.subscription_number - 1}
         >
           <FontAwesomeIcon icon={faComment} style={{ marginRight: '0.5em' }} />
           Text
         </Button>
       </Col>
       <Col className="text-center">
-        <Button
-          variant="outline-danger"
-          title="Delete student"
-          onClick={() => onDelete(student)}
-        >
+        <Button variant="outline-danger" title="Delete student" onClick={() => onDelete(student)}>
           <FontAwesomeIcon icon={faTrash} />
         </Button>
       </Col>
@@ -141,7 +123,7 @@ const headerRowStyle = {
   paddingTop: '15px',
   paddingBottom: '10px',
   backgroundColor: '#f4f9ff',
-  borderRadius: '10px', // Rounded corners
+  borderRadius: '10px' // Rounded corners
 };
 
 const GetAllStudents = ({
@@ -152,7 +134,7 @@ const GetAllStudents = ({
   getLessonCountForStudent,
   onAddLessonClick,
   onSendTextClick,
-  searchName,
+  searchName
 }) => {
   const filteredStudents = students.filter((student) =>
     student.student_name.toLowerCase().includes(searchName.toLowerCase())

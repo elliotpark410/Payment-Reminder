@@ -17,7 +17,7 @@ const SentTextModal = ({ show, onHide, textMessage }) => {
             readOnly
             style={{
               border: 'none', // No border
-              pointerEvents: 'none', // Disable pointer events
+              pointerEvents: 'none' // Disable pointer events
             }}
           />
         </Form.Group>

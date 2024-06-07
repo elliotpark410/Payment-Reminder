@@ -23,7 +23,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.error(`Deleted student`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
       } else {
         console.error('Error deleting student. Unexpected response:', response);
@@ -44,11 +44,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
         <p>Are you sure you want to delete {student.student_name}?</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="small-button"
-          variant="danger"
-          onClick={handleDelete}
-        >
+        <Button className="small-button" variant="danger" onClick={handleDelete}>
           Delete
         </Button>
         <Button className="small-button" variant="secondary" onClick={onCancel}>

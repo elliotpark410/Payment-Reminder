@@ -15,14 +15,12 @@ const fetchLessons = async (setLessons) => {
       return lesson.date !== null && lesson.date !== undefined;
     });
 
-    const sortedLessons = validLessons.sort(
-      (a, b) => new Date(a.date) - new Date(b.date)
-    );
+    const sortedLessons = validLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     const formattedLessons = sortedLessons.map((lesson, index) => ({
       ...lesson,
       lessonNumber: index + 1,
-      formattedDate: formatDate(lesson.date),
+      formattedDate: formatDate(lesson.date)
     }));
 
     setLessons(formattedLessons);
@@ -80,17 +78,9 @@ function GetAllLessons({ onClose }) {
   const totalPages = Math.ceil(lessons.length / itemsPerPage);
 
   return (
-    <Modal
-      size="lg"
-      show
-      onHide={onClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal size="lg" show onHide={onClose} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          All Lessons
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">All Lessons</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <table className="table">
@@ -120,14 +110,10 @@ function GetAllLessons({ onClose }) {
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
           Total Lessons:{' '}
-          <span className="lesson-payment-text">
-            {lessons.length.toLocaleString()}
-          </span>
+          <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
           <br />
           Total Payment:{' '}
-          <span className="lesson-payment-text">
-            {getTotalPaymentAmount(payments)}
-          </span>
+          <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
         </div>
         <Button className="button" variant="secondary" onClick={onClose}>
           Close

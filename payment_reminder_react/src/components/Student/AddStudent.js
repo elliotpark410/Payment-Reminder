@@ -13,14 +13,14 @@ function AddStudent({ onClose, onAdd }) {
     phone_number: '',
     email: '',
     subscription_price: '',
-    subscription_number: '',
+    subscription_number: ''
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -79,7 +79,7 @@ function AddStudent({ onClose, onAdd }) {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added student`, {
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000 // Close after 3 seconds
         });
       } else {
         console.error('Error adding student. Unexpected response:', response);
@@ -93,17 +93,9 @@ function AddStudent({ onClose, onAdd }) {
   };
 
   return (
-    <Modal
-      size="lg"
-      show
-      onHide={onClose}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal size="lg" show onHide={onClose} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add Student
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Add Student</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -158,10 +150,7 @@ function AddStudent({ onClose, onAdd }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group
-            controlId="NumberOfLessonsInSubscription"
-            className="py-2"
-          >
+          <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
             <Form.Label>Subscription Count</Form.Label>
             <Form.Control
               type="text"

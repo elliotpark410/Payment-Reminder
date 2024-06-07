@@ -19,11 +19,7 @@ const DeleteReset = ({ resetId, onDelete }) => {
   };
 
   return (
-    <Button
-      variant="outline-danger"
-      onClick={handleDeleteReset}
-      title="Delete reset"
-    >
+    <Button variant="outline-danger" onClick={handleDeleteReset} title="Delete reset">
       <FontAwesomeIcon icon={faTrash} />
     </Button>
   );
