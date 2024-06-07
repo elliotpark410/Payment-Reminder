@@ -142,16 +142,3 @@
   font-weight: 600;
 }
 
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding: 0.5rem;
-}
-
-.pagination-container .pagination {
-  flex-wrap: wrap;
-}
-

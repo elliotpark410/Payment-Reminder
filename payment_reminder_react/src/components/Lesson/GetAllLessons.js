@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Modal, Button, Pagination } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import { PaginationComponent } from './Pagination/Pagination';
 import { host } from '../../lib/constants';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 import '../../App.css';
@@ -81,37 +82,6 @@ function GetAllLessons({ onClose }) {
     const currentRecords = lessons.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(lessons.length / itemsPerPage);
 
-    const renderPaginationItems = () => {
-      const pageNumbers = [];
-
-      let startPage = currentPage - 5;
-      let endPage = currentPage + 4;
-
-      if (startPage < 1) {
-        startPage = 1;
-        endPage = Math.min(10, totalPages);
-      }
-
-      if (endPage > totalPages) {
-        endPage = totalPages;
-        startPage = Math.max(1, totalPages - 9);
-      }
-
-      for (let number = startPage; number <= endPage; number++) {
-        pageNumbers.push(
-          <Pagination.Item
-            key={number}
-            active={number === currentPage}
-            onClick={() => setCurrentPage(number)}
-          >
-            {number}
-          </Pagination.Item>
-        );
-      }
-
-      return pageNumbers;
-    };
-
   return (
     <Modal
       size="lg"
@@ -145,15 +115,11 @@ function GetAllLessons({ onClose }) {
             ))}
           </tbody>
         </table>
-          <div className="pagination-container">
-            <Pagination className="pagination">
-              <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
-              <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
-              {renderPaginationItems()}
-              <Pagination.Next onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} />
-              <Pagination.Last onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} />
-            </Pagination>
-          </div>
+          <PaginationComponent
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
