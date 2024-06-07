@@ -5,7 +5,7 @@ import { host } from '../../lib/constants';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import musicNotesIcon from '../../images/musicNotes.png';
+import logo from '../../images/logo.png';
 import '../../App.css';
 
 const Login = () => {
@@ -41,8 +41,7 @@ const Login = () => {
       <Col sm={6} md={4}>
         <div className="horizontally-center">
           <h2 className="text-center mb-4 header">
-            Park Vocal Studio
-            <img className="icon" src={musicNotesIcon} alt="musical note icon" />
+            <img src={logo} alt="Park Vocal Studio logo" className="logo-login" />
           </h2>
         </div>
         <Form

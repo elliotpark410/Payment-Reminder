@@ -98,6 +98,20 @@
   margin-left: 10px; /* Add some space between the header text and the icon */
 }
 
+.logo {
+  width: 35%;
+  border-radius: 10%;
+  padding: 10px;
+}
+
+.logo-login{
+  width: 50%;
+  border-radius: 10%;
+  padding: 10px;
+  display: block; /* Ensures the element is treated as a block-level element */
+  margin: 0 auto; /* Centers the element on the x-axis */
+}
+
 .button {
   width: 140px;
 }
