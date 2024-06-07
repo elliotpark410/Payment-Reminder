@@ -21,21 +21,21 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
         </h1>
       </Col>
       <Col xs={3}>
-        <div className="searchContainer">
+        <div className="search-container">
           <Form.Control
             type="text"
             placeholder="Search..."
-            className="searchInput"
+            className="search-input"
             onChange={(e) => onSearch(e.target.value)}
           />
-          <Button variant="outline-secondary" className="searchButton">
+          <Button variant="outline-secondary" className="search-button">
             <FontAwesomeIcon icon={faSearch} />
           </Button>
         </div>
       </Col>
       <Col xs={2} className="text-right">
         <Button
-          className="bigButton"
+          className="big-button"
           variant="primary"
           onClick={onAddStudentClick}
           title="Add Student"
@@ -46,7 +46,7 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
       </Col>
       <Col xs={2} className="text-right">
         <Button
-          className="bigButton"
+          className="big-button"
           variant="success"
           onClick={onAllLessonsClick}
           title="All Lessons"

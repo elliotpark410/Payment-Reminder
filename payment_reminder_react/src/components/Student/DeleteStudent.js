@@ -46,14 +46,14 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="danger"
           onClick={handleDelete}
         >
           Delete
         </Button>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="secondary"
           onClick={onCancel}
         >

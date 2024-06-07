@@ -114,14 +114,14 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="primary"
           onClick={handleSave}
         >
           Save
         </Button>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="secondary"
           onClick={onClose}
         >

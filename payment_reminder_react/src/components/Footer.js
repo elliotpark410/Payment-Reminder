@@ -9,7 +9,7 @@ const Footer = ({ onInactiveStudentsClick }) => {
     <Row className="footer mt-4 d-flex justify-content-center">
       <Col xs="auto" className="text-center">
         <Button
-          className="bigButton"
+          className="big-button"
           variant="secondary"
           onClick={onInactiveStudentsClick}
           title="Inactive Students"

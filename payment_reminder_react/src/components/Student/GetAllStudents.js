@@ -61,7 +61,7 @@ const StudentItem = ({
           {index + 1}
       </Col>
       <Col xs={2} className="text-left">
-        <div className="studentDiv" onClick={() => onEdit(student)}>
+        <div className="student-div" onClick={() => onEdit(student)}>
           <p className="studentName">{student.student_name}</p>
           <p className="parentName">{student.parent_name}</p>
         </div>
@@ -133,7 +133,7 @@ const GetAllStudents = ({
 
   return (
     <>
-      <div className="studentListContainer">
+      <div className="student-list-container">
         <Row style={headerRowStyle}>
           <Col className="text-center"><strong>Number</strong></Col>
           <Col xs={2} className="text-left"><strong>Name</strong></Col>

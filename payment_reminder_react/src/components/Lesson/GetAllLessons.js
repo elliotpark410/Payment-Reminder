@@ -115,23 +115,25 @@ function GetAllLessons({ onClose }) {
             ))}
           </tbody>
         </table>
-        <Pagination className="justify-content-center">
-          <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
-          <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
-          {Array.from({ length: totalPages }, (_, index) => (
-            <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => setCurrentPage(index + 1)}>
-              {index + 1}
-            </Pagination.Item>
-          ))}
-          <Pagination.Next onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} />
-          <Pagination.Last onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} />
-        </Pagination>
+          <div className="pagination-container">
+            <Pagination className="pagination">
+              <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
+              <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
+              {Array.from({ length: totalPages }, (_, index) => (
+                <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => setCurrentPage(index + 1)}>
+                  {index + 1}
+                </Pagination.Item>
+              ))}
+              <Pagination.Next onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} />
+              <Pagination.Last onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} />
+            </Pagination>
+          </div>
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-          Total Lessons: <span className="lessonPaymentText">{lessons.length.toLocaleString()}</span>
+          Total Lessons: <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
         <br />
-          Total Payment: <span className="lessonPaymentText">{getTotalPaymentAmount(payments)}</span>
+          Total Payment: <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
         </div>
         <Button
           className="button"

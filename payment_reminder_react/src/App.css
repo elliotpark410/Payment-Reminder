@@ -1,4 +1,4 @@
-.backgroundStyle {
+.background-style {
   background-image: url('./images/background.jpg');
   background-size: cover;
   background-position: center;
@@ -8,12 +8,12 @@
   flex-direction: column;
 }
 
-.backgroundLogin {
+.background-login {
   justify-content: center;
   align-items: center;
 }
 
-.appContainer {
+.app-container {
   flex: 1;
   overflow: auto;
 }
@@ -29,7 +29,7 @@
   margin-bottom: 5rem;
 }
 
-.studentListContainer {
+.student-list-container {
   flex: 1;
   overflow-y: auto; /* Enables vertical scrolling */
   overflow-x: hidden; /* Hides horizontal overflow */
@@ -37,7 +37,7 @@
   border-radius: 10px;
 }
 
-.studentDiv {
+.student-div {
   display: flex;
   flex-direction: column;
   padding-top: 10px;
@@ -45,31 +45,31 @@
   cursor: pointer;
 }
 
-.studentDiv:hover .studentName,
-.studentDiv:hover .parentName {
+.student-div:hover .studentName,
+.student-div:hover .parentName {
   text-decoration: underline;
   color: #026bdb;
   cursor: pointer;
 }
 
-.lessonData:hover {
+.lesson-data:hover {
   text-decoration: underline;
   color: #026bdb;
   cursor: pointer;
 }
 
-.resetData:hover {
+.reset-data:hover {
   text-decoration: underline;
   color: #026bdb;
   cursor: pointer;
 }
 
-.textData:hover {
+.text-data:hover {
   text-decoration: underline;
   cursor: pointer;
 }
 
-.paymentData:hover {
+.payment-data:hover {
   text-decoration: underline;
   color: #026bdb;
   cursor: pointer;
@@ -86,7 +86,7 @@
   margin: 0;
 }
 
-.inputField {
+.input-field {
   padding-top: 14px;
   padding-bottom: 14px;
   font-weight: 500;
@@ -102,33 +102,33 @@
   width: 140px;
 }
 
-.bigButton {
+.big-button {
   width: 180px;
 }
 
-.smallButton {
+.small-button {
   width: 110px;
 }
 
-.horizontallyCenter {
+.horizontally-center {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.searchContainer {
+.search-container {
   position: relative;
   width: 100%;
   margin-left: -20px;
 }
 
-.searchInput {
+.search-input {
   font-size: 1.25em; /* Increase font size */
   border: 1px solid #808a93; /* Dark border */
   padding-right: 40px; /* Space for the search icon */
 }
 
-.searchButton {
+.search-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -138,6 +138,20 @@
   font-size: 1.25em;
 }
 
-.lessonPaymentText {
+.lesson-payment-text {
   font-weight: 600;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+}
+
+.pagination-container .pagination {
+  flex-wrap: wrap;
+}
+

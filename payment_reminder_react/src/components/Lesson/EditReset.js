@@ -66,14 +66,14 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
       </Modal.Body>
       <Modal.Footer>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="primary"
           onClick={handleSaveEdit}
         >
           Save
         </Button>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="secondary"
           onClick={onHide}
           >

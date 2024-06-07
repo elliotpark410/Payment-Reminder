@@ -105,14 +105,14 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
       </Modal.Body>
       <Modal.Footer>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="primary"
           onClick={handleSaveEdit}
         >
           Save
         </Button>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="secondary"
           onClick={onHide}
           >

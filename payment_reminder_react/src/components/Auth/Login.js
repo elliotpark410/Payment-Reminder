@@ -34,9 +34,9 @@ const Login = () => {
   };
 
   return (
-    <div className="backgroundStyle backgroundLogin">
+    <div className="background-style background-login">
       <Col sm={6} md={4}>
-        <div className="horizontallyCenter">
+        <div className="horizontally-center">
           <h2 className="text-center mb-4 header">Park Vocal Studio
           <img className="icon" src={musicNotesIcon} alt="musical note icon" />
           </h2>
@@ -51,7 +51,7 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="inputField"
+              className="input-field"
             />
           </Form.Group>
 
@@ -63,7 +63,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="inputField"
+                className="input-field"
               />
               <Button variant="outline-secondary" onClick={togglePasswordVisibility}>
                 {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}

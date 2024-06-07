@@ -15,9 +15,9 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <div className="backgroundStyle">
+    <div className="background-style">
       <Router>
-        <div className="appContainer">
+        <div className="app-container">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route
@@ -31,7 +31,7 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-      <ToastContainer /> 
+      <ToastContainer />
     </div>
   );
 };

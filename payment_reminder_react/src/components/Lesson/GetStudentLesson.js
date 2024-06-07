@@ -264,7 +264,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td>{record.lessonNumber}</td>
-                    <td className="lessonData" onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
+                    <td className="lesson-data" onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
                     <td>
                       <DeleteLesson
                         lessonId={record.id}
@@ -280,7 +280,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                     <td
                       colSpan="2"
                       onClick={() => handleTextClick(record.message)}
-                      className="textData text-center"
+                      className="text-data text-center"
                       style={{
                         backgroundColor: '#007bff', // blue
                         color: 'white',
@@ -300,7 +300,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                   <tr key={uniqueKey}>
                     <td
                       colSpan="2"
-                      className="paymentData text-center"
+                      className="payment-data text-center"
                       style={{
                       backgroundColor: '#74db79', // green
                       padding: '8px 15px',
@@ -325,7 +325,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                   <tr key={uniqueKey}>
                     <td
                       colSpan="2"
-                      className="resetData text-center"
+                      className="reset-data text-center"
                       style={{
                       backgroundColor: '#FFC107', // yellow
                       padding: '8px 15px',
@@ -347,23 +347,25 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
             })}
           </tbody>
         </table>
-        <Pagination className="justify-content-center">
-          <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
-          <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
-          {Array.from({ length: totalPages }, (_, index) => (
-            <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => setCurrentPage(index + 1)}>
-              {index + 1}
-            </Pagination.Item>
-          ))}
-          <Pagination.Next onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} />
-          <Pagination.Last onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} />
-        </Pagination>
+          <div className="pagination-container">
+            <Pagination className="pagination">
+              <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
+              <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
+              {Array.from({ length: totalPages }, (_, index) => (
+                <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => setCurrentPage(index + 1)}>
+                  {index + 1}
+                </Pagination.Item>
+              ))}
+              <Pagination.Next onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} />
+              <Pagination.Last onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} />
+            </Pagination>
+          </div>
       </Modal.Body>
       <Modal.Footer>
       <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-        Lessons Completed: <span className="lessonPaymentText">{lessons.length.toLocaleString()}</span>
+        Lessons Completed: <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
         <br />
-        Payments Received: <span className="lessonPaymentText">{getTotalPaymentAmount(payments)}</span>
+        Payments Received: <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
       </div>
         <Button
           className="button"

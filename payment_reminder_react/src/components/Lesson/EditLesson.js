@@ -65,14 +65,14 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
       </Modal.Body>
       <Modal.Footer>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="primary"
           onClick={handleSaveEdit}
         >
           Save
         </Button>
         <Button
-          className="smallButton"
+          className="small-button"
           variant="secondary"
           onClick={onHide}
           >
