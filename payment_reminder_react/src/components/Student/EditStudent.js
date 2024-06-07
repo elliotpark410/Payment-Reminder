@@ -8,13 +8,12 @@ import '../../App.css';
 
 function EditStudent({ student, onClose, onEdit }) {
   const [formData, setFormData] = useState({
-    student_name: student.student_name || "",
-    parent_name: student.parent_name || "",
-    phone_number: student.phone_number || "",
-    email: student.email || "",
-    subscription_price: student.subscription_price || "",
-    subscription_number:
-    student.subscription_number || "",
+    student_name: student.student_name || '',
+    parent_name: student.parent_name || '',
+    phone_number: student.phone_number || '',
+    email: student.email || '',
+    subscription_price: student.subscription_price || '',
+    subscription_number: student.subscription_number || '',
     inactive: student.inactive || false,
   });
 
@@ -54,12 +53,18 @@ function EditStudent({ student, onClose, onEdit }) {
         return;
       }
 
-      if (formData.subscription_price && !validatePositiveWholeNumber(formData.subscription_price)) {
+      if (
+        formData.subscription_price &&
+        !validatePositiveWholeNumber(formData.subscription_price)
+      ) {
         toast.error('Subscription price must be a positive whole number.');
         return;
       }
 
-      if (formData.subscription_number && !validatePositiveWholeNumber(formData.subscription_number)) {
+      if (
+        formData.subscription_number &&
+        !validatePositiveWholeNumber(formData.subscription_number)
+      ) {
         toast.error('Subscription number must be a positive whole number.');
         return;
       }
@@ -75,14 +80,17 @@ function EditStudent({ student, onClose, onEdit }) {
 
       onEdit(response.data);
 
-      if ((response.status === 200 || response.status === 201) && !formData.inactive) {
+      if (
+        (response.status === 200 || response.status === 201) &&
+        !formData.inactive
+      ) {
         // Show notifcation
         toast.success(`Edited student`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {
         console.error('Error editing student. Unexpected response:', response);
-      };
+      }
 
       onClose();
     } catch (error) {
@@ -104,7 +112,6 @@ function EditStudent({ student, onClose, onEdit }) {
       throw error;
     }
   };
-
 
   return (
     <Modal
@@ -172,7 +179,10 @@ function EditStudent({ student, onClose, onEdit }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
+          <Form.Group
+            controlId="NumberOfLessonsInSubscription"
+            className="py-2"
+          >
             <Form.Label>Subscription Count</Form.Label>
             <Form.Control
               type="text"
@@ -192,18 +202,10 @@ function EditStudent({ student, onClose, onEdit }) {
             checked={formData.inactive}
           />
         </div>
-        <Button
-          className="button"
-          variant="primary"
-          onClick={handleSave}
-        >
+        <Button className="button" variant="primary" onClick={handleSave}>
           Save
         </Button>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <Button className="button" variant="secondary" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

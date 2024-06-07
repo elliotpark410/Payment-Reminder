@@ -29,4 +29,4 @@ const DeleteReset = ({ resetId, onDelete }) => {
   );
 };
 
-export default DeleteReset
+export default DeleteReset;

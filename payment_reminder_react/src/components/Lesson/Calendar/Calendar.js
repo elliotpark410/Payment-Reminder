@@ -4,13 +4,18 @@ import 'react-calendar/dist/Calendar.css';
 import './calendarStyles.css';
 
 function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
-
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
-      const lessonDates = lessons.map(lesson => new Date(lesson.date).toDateString());
-      const textDates = texts.map(text => new Date(text.date).toDateString());
-      const resetDates = resets.map(reset => new Date(reset.date).toDateString());
-      const paymentDates = payments.map(payment => new Date(payment.date).toDateString());
+      const lessonDates = lessons.map((lesson) =>
+        new Date(lesson.date).toDateString()
+      );
+      const textDates = texts.map((text) => new Date(text.date).toDateString());
+      const resetDates = resets.map((reset) =>
+        new Date(reset.date).toDateString()
+      );
+      const paymentDates = payments.map((payment) =>
+        new Date(payment.date).toDateString()
+      );
 
       const hasLesson = lessonDates.includes(date.toDateString());
       const hasText = textDates.includes(date.toDateString());
@@ -18,11 +23,58 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
       const hasPayment = paymentDates.includes(date.toDateString());
 
       return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5px' }}>
-          {hasLesson && <div style={{ width: '30px', height: '10px', backgroundColor: 'blue', borderRadius: '5px', margin: '2px' }} />}
-          {hasText && <div style={{ width: '30px', height: '10px', backgroundColor: '#00bbf0', borderRadius: '5px', margin: '2px' }} />}
-          {hasReset && <div style={{ width: '30px', height: '10px', backgroundColor: '#ffc107', borderRadius: '5px', margin: '2px' }} />}
-          {hasPayment && <div style={{ width: '30px', height: '10px', backgroundColor: 'green', borderRadius: '5px', margin: '2px' }} />}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '5px',
+          }}
+        >
+          {hasLesson && (
+            <div
+              style={{
+                width: '30px',
+                height: '10px',
+                backgroundColor: 'blue',
+                borderRadius: '5px',
+                margin: '2px',
+              }}
+            />
+          )}
+          {hasText && (
+            <div
+              style={{
+                width: '30px',
+                height: '10px',
+                backgroundColor: '#00bbf0',
+                borderRadius: '5px',
+                margin: '2px',
+              }}
+            />
+          )}
+          {hasReset && (
+            <div
+              style={{
+                width: '30px',
+                height: '10px',
+                backgroundColor: '#ffc107',
+                borderRadius: '5px',
+                margin: '2px',
+              }}
+            />
+          )}
+          {hasPayment && (
+            <div
+              style={{
+                width: '30px',
+                height: '10px',
+                backgroundColor: 'green',
+                borderRadius: '5px',
+                margin: '2px',
+              }}
+            />
+          )}
         </div>
       );
     }

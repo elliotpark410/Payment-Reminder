@@ -1,7 +1,11 @@
 import React from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faThList, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUserPlus,
+  faThList,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 import musicNotesIcon from '../images/musicNotes.png';
 import '../App.css';
 
@@ -9,15 +13,9 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
   return (
     <Row className="mt-4 d-flex align-items-center">
       <Col xs={5} className="text-left">
-        <h1
-          className="header mb-4"
-        >
-            Park Vocal Studio
-            <img
-              src={musicNotesIcon}
-              alt="musical note icon"
-              className="icon"
-            />
+        <h1 className="header mb-4">
+          Park Vocal Studio
+          <img src={musicNotesIcon} alt="musical note icon" className="icon" />
         </h1>
       </Col>
       <Col xs={3}>

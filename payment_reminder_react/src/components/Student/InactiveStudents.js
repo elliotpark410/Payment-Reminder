@@ -11,7 +11,9 @@ const fetchInactiveStudents = async (setInactiveStudents) => {
     const response = await axios.get(`${host}/student/inactive`);
 
     // Sort students alphabetically by their names
-    const sortedStudents = response.data.sort((a, b) => a.student_name.localeCompare(b.student_name));
+    const sortedStudents = response.data.sort((a, b) =>
+      a.student_name.localeCompare(b.student_name)
+    );
 
     // Format the students
     const formattedStudents = sortedStudents.map((student, index) => ({
@@ -27,7 +29,7 @@ const fetchInactiveStudents = async (setInactiveStudents) => {
   }
 };
 
-const handleActivateStudent = async (studentId, studentName, ) => {
+const handleActivateStudent = async (studentId, studentName) => {
   try {
     console.log(`Activating ${studentName}`);
     const response = await axios.put(`${host}/student/inactive/${studentId}`);
@@ -38,14 +40,16 @@ const handleActivateStudent = async (studentId, studentName, ) => {
         autoClose: 3000, // Close after 3 seconds
       });
     } else {
-      console.error('Error activating student. Unexpected response: ', response);
-    };
+      console.error(
+        'Error activating student. Unexpected response: ',
+        response
+      );
+    }
   } catch (error) {
     console.error('Error activating student: ', error);
     throw error;
   }
 };
-
 
 function InactiveStudents({ onActivate, onClose }) {
   const [inactiveStudents, setInactiveStudents] = useState([]);
@@ -77,38 +81,31 @@ function InactiveStudents({ onActivate, onClose }) {
             </tr>
           </thead>
           <tbody>
-          {inactiveStudents.map((student) => {
-                return (
-                  <tr key={student.number}>
-                    <td>{student.number}</td>
-                    <td>{student.student_name}</td>
-                    <td style={{ paddingLeft: '70px' }}>
-                      <Form.Check
-                        type="checkbox"
-                        defaultChecked={false}
-                        onChange={() => handleActivateStudent(student.id, student.student_name)}
-                      />
-                    </td>
-                  </tr>
-                );
-
+            {inactiveStudents.map((student) => {
+              return (
+                <tr key={student.number}>
+                  <td>{student.number}</td>
+                  <td>{student.student_name}</td>
+                  <td style={{ paddingLeft: '70px' }}>
+                    <Form.Check
+                      type="checkbox"
+                      defaultChecked={false}
+                      onChange={() =>
+                        handleActivateStudent(student.id, student.student_name)
+                      }
+                    />
+                  </td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="button"
-          variant="primary"
-          onClick={onActivate}
-        >
+        <Button className="button" variant="primary" onClick={onActivate}>
           Save
         </Button>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <Button className="button" variant="secondary" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

@@ -7,8 +7,17 @@ import { formatDate } from '../../lib/util';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
 
-const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPaymentDate, setPaymentAmount, setEditPayment, fetchData }) => {
-
+const EditPayment = ({
+  show,
+  onHide,
+  payment,
+  paymentDate,
+  paymentAmount,
+  setPaymentDate,
+  setPaymentAmount,
+  setEditPayment,
+  fetchData,
+}) => {
   const handleSaveEdit = async () => {
     try {
       // Validate date
@@ -29,8 +38,8 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
 
       const response = await axios.put(`${host}/payment/${payment.id}`, {
         date: paymentDate,
-        amount: paymentAmount
-       });
+        amount: paymentAmount,
+      });
 
       console.log('Payment updated successfully:', response.data);
 
@@ -45,7 +54,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
         });
       } else {
         console.error('Error editing payment. Unexpected response:', response);
-      };
+      }
 
       setEditPayment(null);
       setPaymentDate('');
@@ -58,11 +67,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      centered
-    >
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit Payment</Modal.Title>
       </Modal.Header>
@@ -111,11 +116,7 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
         >
           Save
         </Button>
-        <Button
-          className="small-button"
-          variant="secondary"
-          onClick={onHide}
-          >
+        <Button className="small-button" variant="secondary" onClick={onHide}>
           Cancel
         </Button>
       </Modal.Footer>

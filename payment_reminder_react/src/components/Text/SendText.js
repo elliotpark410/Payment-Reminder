@@ -8,8 +8,16 @@ import { host } from '../../lib/constants';
 import { todaysDate } from '../../lib/util';
 import '../../App.css';
 
-const SendText = ({ studentId, studentName, parentName, studentLessonCount, studentSusbscriptionCount, studentFilteredLessonDates, studentSubscriptionAmount, onClose }) => {
-
+const SendText = ({
+  studentId,
+  studentName,
+  parentName,
+  studentLessonCount,
+  studentSusbscriptionCount,
+  studentFilteredLessonDates,
+  studentSubscriptionAmount,
+  onClose,
+}) => {
   const name = parentName || studentName;
 
   const fullName = name.split(' ');
@@ -47,7 +55,10 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
 
   const handleSendText = async () => {
     try {
-      const response = await axios.post(`${host}/text/send`, { student_id: studentId, message });
+      const response = await axios.post(`${host}/text/send`, {
+        student_id: studentId,
+        message,
+      });
       console.log('Text message sent successfully');
       onClose(); // Close the modal after sending the text message
 
@@ -59,8 +70,11 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
           autoClose: 3000, // Close after 3 seconds
         });
       } else {
-        console.error('Error sending text message. Unexpected response: ', response);
-      };
+        console.error(
+          'Error sending text message. Unexpected response: ',
+          response
+        );
+      }
     } catch (error) {
       console.error('Error sending text message: ', error);
       throw error;
@@ -86,18 +100,10 @@ const SendText = ({ studentId, studentName, parentName, studentLessonCount, stud
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="button"
-          variant="primary"
-          onClick={handleSendText}
-        >
+        <Button className="button" variant="primary" onClick={handleSendText}>
           Send
         </Button>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <Button className="button" variant="secondary" onClick={onClose}>
           Cancel
         </Button>
       </Modal.Footer>

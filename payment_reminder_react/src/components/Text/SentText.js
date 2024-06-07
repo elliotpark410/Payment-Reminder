@@ -23,11 +23,7 @@ const SentTextModal = ({ show, onHide, textMessage }) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onHide}
-        >
+        <Button className="button" variant="secondary" onClick={onHide}>
           Close
         </Button>
       </Modal.Footer>

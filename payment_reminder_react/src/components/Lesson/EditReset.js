@@ -7,8 +7,15 @@ import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson, fetchData }) => {
-
+const EditReset = ({
+  show,
+  onHide,
+  reset,
+  resetDate,
+  setResetDate,
+  setEditLesson,
+  fetchData,
+}) => {
   const handleSaveEdit = async () => {
     try {
       // Validate date
@@ -20,12 +27,13 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
         return;
       }
 
-      const response = await axios.put(`${host}/reset/${reset.id}`, { date: resetDate });
+      const response = await axios.put(`${host}/reset/${reset.id}`, {
+        date: resetDate,
+      });
       console.log('Reset updated successfully:', response.data);
       onHide();
 
       const notificationDate = formatDate(date);
-
 
       if (response.status === 200 || 201) {
         // Show notifcation
@@ -34,7 +42,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
         });
       } else {
         console.error('Error editing reset. Unexpected response:', response);
-      };
+      }
 
       setEditLesson(null);
       setResetDate('');
@@ -46,11 +54,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      centered
-    >
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit Reset</Modal.Title>
       </Modal.Header>
@@ -72,11 +76,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
         >
           Save
         </Button>
-        <Button
-          className="small-button"
-          variant="secondary"
-          onClick={onHide}
-          >
+        <Button className="small-button" variant="secondary" onClick={onHide}>
           Cancel
         </Button>
       </Modal.Footer>

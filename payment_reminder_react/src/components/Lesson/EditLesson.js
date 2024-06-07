@@ -7,8 +7,15 @@ import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLesson, fetchData }) => {
-
+const EditLesson = ({
+  show,
+  onHide,
+  lesson,
+  lessonDate,
+  setLessonDate,
+  setEditLesson,
+  fetchData,
+}) => {
   const handleSaveEdit = async () => {
     try {
       // Validate date
@@ -20,7 +27,9 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
         return;
       }
 
-      const response = await axios.put(`${host}/lesson/${lesson.id}`, { date: lessonDate });
+      const response = await axios.put(`${host}/lesson/${lesson.id}`, {
+        date: lessonDate,
+      });
       console.log('Lesson updated successfully:', response.data);
       onHide();
 
@@ -33,7 +42,7 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
         });
       } else {
         console.error('Error editing lesson. Unexpected response:', response);
-      };
+      }
 
       setEditLesson(null);
       setLessonDate('');
@@ -45,11 +54,7 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      centered
-    >
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit Lesson</Modal.Title>
       </Modal.Header>
@@ -71,11 +76,7 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
         >
           Save
         </Button>
-        <Button
-          className="small-button"
-          variant="secondary"
-          onClick={onHide}
-          >
+        <Button className="small-button" variant="secondary" onClick={onHide}>
           Cancel
         </Button>
       </Modal.Footer>

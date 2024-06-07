@@ -8,10 +8,9 @@ import { host } from '../../lib/constants';
 import '../../App.css';
 
 const DeleteStudent = ({ student, onCancel, onDelete }) => {
-
   if (!student) {
     return null; // Do not render the modal if there's no valid student
-  };
+  }
 
   const handleDelete = async () => {
     try {
@@ -28,7 +27,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
         });
       } else {
         console.error('Error deleting student. Unexpected response:', response);
-      };
+      }
       onDelete(student.id); // Inform the parent component about the deletion
     } catch (error) {
       console.error('Error deleting student:', error);
@@ -52,11 +51,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
         >
           Delete
         </Button>
-        <Button
-          className="small-button"
-          variant="secondary"
-          onClick={onCancel}
-        >
+        <Button className="small-button" variant="secondary" onClick={onCancel}>
           Cancel
         </Button>
       </Modal.Footer>

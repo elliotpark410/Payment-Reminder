@@ -32,7 +32,7 @@ export const fetchStudentLessons = async (studentId) => {
       ...lesson,
       lesson: true,
       lessonNumber: index + 1,
-      formattedDate: formatDate(lesson.date)
+      formattedDate: formatDate(lesson.date),
     }));
 
     return formattedLessons;
@@ -61,7 +61,7 @@ export const fetchStudentResets = async (studentId) => {
     const formattedResets = sortedResets.map((resetLesson) => ({
       ...resetLesson,
       resetLesson: true,
-      formattedDate: formatDate(resetLesson.date)
+      formattedDate: formatDate(resetLesson.date),
     }));
 
     return formattedResets;
@@ -78,14 +78,15 @@ export const fetchStudentPayments = async (studentId) => {
 
     // Filter out records with null or undefined dates
     const validPayments = response.data.filter(
-      (payment) => payment.created_at !== null && payment.created_at !== undefined
+      (payment) =>
+        payment.created_at !== null && payment.created_at !== undefined
     );
 
     // Format the valid payments and sort them
     const formattedPayments = validPayments.map((payment) => ({
       ...payment,
       payment: true,
-      formattedDate: formatDate(payment.date)
+      formattedDate: formatDate(payment.date),
     }));
 
     return formattedPayments;
@@ -109,10 +110,10 @@ export const fetchStudentTexts = async (studentId) => {
     const formattedTexts = validTexts.map((text) => ({
       ...text,
       text: true,
-      formattedDate: formatDate(text.date)
+      formattedDate: formatDate(text.date),
     }));
 
-    return formattedTexts
+    return formattedTexts;
   } catch (error) {
     console.error('Error fetching texts:', error);
     throw error;
@@ -146,9 +147,16 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     const fetchedPayments = await fetchStudentPayments(studentId);
     const fetchedTexts = await fetchStudentTexts(studentId);
 
-    const mergedRecords = [...fetchedLessons, ...fetchedResets, ...fetchedPayments, ...fetchedTexts];
+    const mergedRecords = [
+      ...fetchedLessons,
+      ...fetchedResets,
+      ...fetchedPayments,
+      ...fetchedTexts,
+    ];
     const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
-    const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
+    const totalPages = Math.ceil(
+      recordsWithLessonNumbers.length / itemsPerPage
+    );
 
     setLessons(fetchedLessons);
     setResets(fetchedResets);
@@ -181,30 +189,32 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   };
 
   const handleDelete = (itemId, setState) => {
-    setState(prevItems => {
-      const updatedItems = prevItems.filter(item => item.id !== itemId);
+    setState((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== itemId);
       return updatedItems;
     });
   };
 
-  const handleDeleteLesson = lessonId => {
+  const handleDeleteLesson = (lessonId) => {
     handleDelete(lessonId, setLessons);
   };
 
-  const handleDeleteResets = resetLessonId => {
+  const handleDeleteResets = (resetLessonId) => {
     handleDelete(resetLessonId, setResets);
   };
 
-  const handleDeletePayment = paymentId => {
+  const handleDeletePayment = (paymentId) => {
     handleDelete(paymentId, setPayments);
   };
 
   const handleTextClick = (message) => {
     setTextMessage(message);
     setShowTextModal(true);
-  }
+  };
 
-  const mergedRecords = [...lessons, ...resets, ...payments, ...texts].sort((a, b) => new Date(a.formattedDate) - new Date(b.formattedDate));
+  const mergedRecords = [...lessons, ...resets, ...payments, ...texts].sort(
+    (a, b) => new Date(a.formattedDate) - new Date(b.formattedDate)
+  );
 
   // Function to reset lesson numbers after each text or reset record
   const assignLessonNumbers = (records) => {
@@ -215,13 +225,12 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         currentLessonNumber += 1; // Increment for each lesson
         return { ...record, lessonNumber: currentLessonNumber }; // Assign the updated lesson number
       } else if (record.text || record.resetLesson) {
-         // Reset counter if a "text" or "reset lesson" is encountered
-         currentLessonNumber = 0;
-         return record; // Just return the record
+        // Reset counter if a "text" or "reset lesson" is encountered
+        currentLessonNumber = 0;
+        return record; // Just return the record
       } else {
         // Skip for payment records
-        return record
-
+        return record;
       }
     });
   };
@@ -231,7 +240,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentRecords = recordsWithLessonNumbers.slice(indexOfFirstItem, indexOfLastItem);
+  const currentRecords = recordsWithLessonNumbers.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
 
@@ -265,7 +277,12 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                 return (
                   <tr key={uniqueKey}>
                     <td>{record.lessonNumber}</td>
-                    <td className="lesson-data" onClick={() => handleEditLesson(record)}>{record.formattedDate}</td>
+                    <td
+                      className="lesson-data"
+                      onClick={() => handleEditLesson(record)}
+                    >
+                      {record.formattedDate}
+                    </td>
                     <td>
                       <DeleteLesson
                         lessonId={record.id}
@@ -289,8 +306,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                         borderRadius: '4px',
                         height: '55px',
                       }}
-                      >
-                        Message sent on {record.formattedDate}
+                    >
+                      Message sent on {record.formattedDate}
                     </td>
                     <td colSpan="1"></td>
                   </tr>
@@ -303,13 +320,14 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       colSpan="2"
                       className="payment-data text-center"
                       style={{
-                      backgroundColor: '#74db79', // green
-                      padding: '8px 15px',
-                      borderRadius: '4px',
+                        backgroundColor: '#74db79', // green
+                        padding: '8px 15px',
+                        borderRadius: '4px',
                       }}
                       onClick={() => handleEditPayment(record)}
                     >
-                      ${record.amount.toLocaleString()} received on {record.formattedDate}
+                      ${record.amount.toLocaleString()} received on{' '}
+                      {record.formattedDate}
                     </td>
                     <td>
                       <DeletePayment
@@ -318,9 +336,8 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       />
                     </td>
                   </tr>
-                )
-              }
-               else {
+                );
+              } else {
                 // lesson reset records
                 return (
                   <tr key={uniqueKey}>
@@ -328,9 +345,9 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
                       colSpan="2"
                       className="reset-data text-center"
                       style={{
-                      backgroundColor: '#FFC107', // yellow
-                      padding: '8px 15px',
-                      borderRadius: '4px',
+                        backgroundColor: '#FFC107', // yellow
+                        padding: '8px 15px',
+                        borderRadius: '4px',
                       }}
                       onClick={() => handleEditReset(record)}
                     >
@@ -348,23 +365,25 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
             })}
           </tbody>
         </table>
-          <PaginationComponent
-            currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={setCurrentPage}
-          />
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
       </Modal.Body>
       <Modal.Footer>
-      <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-        Lessons Completed: <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
-        <br />
-        Payments Received: <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
-      </div>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
+          Lessons Completed:{' '}
+          <span className="lesson-payment-text">
+            {lessons.length.toLocaleString()}
+          </span>
+          <br />
+          Payments Received:{' '}
+          <span className="lesson-payment-text">
+            {getTotalPaymentAmount(payments)}
+          </span>
+        </div>
+        <Button className="button" variant="secondary" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

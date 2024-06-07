@@ -13,14 +13,14 @@ function AddStudent({ onClose, onAdd }) {
     phone_number: '',
     email: '',
     subscription_price: '',
-    subscription_number: ''
+    subscription_number: '',
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -52,16 +52,21 @@ function AddStudent({ onClose, onAdd }) {
         return;
       }
 
-      if (formData.subscription_price && !validatePositiveWholeNumber(formData.subscription_price)) {
+      if (
+        formData.subscription_price &&
+        !validatePositiveWholeNumber(formData.subscription_price)
+      ) {
         toast.error('Subscription price must be a positive whole number.');
         return;
       }
 
-      if (formData.subscription_number && !validatePositiveWholeNumber(formData.subscription_number)) {
+      if (
+        formData.subscription_number &&
+        !validatePositiveWholeNumber(formData.subscription_number)
+      ) {
         toast.error('Subscription number must be a positive whole number.');
         return;
       }
-
 
       console.log('Adding new student:', formData);
 
@@ -78,12 +83,12 @@ function AddStudent({ onClose, onAdd }) {
         });
       } else {
         console.error('Error adding student. Unexpected response:', response);
-      };
+      }
 
       onClose();
     } catch (error) {
       console.error('Error adding student:', error);
-      throw error
+      throw error;
     }
   };
 
@@ -103,7 +108,9 @@ function AddStudent({ onClose, onAdd }) {
       <Modal.Body>
         <Form>
           <Form.Group controlId="studentName" className="pb-2">
-          <Form.Label>Student Name <span style={{ color: 'red' }}>*</span></Form.Label>
+            <Form.Label>
+              Student Name <span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               name="student_name"
@@ -122,7 +129,9 @@ function AddStudent({ onClose, onAdd }) {
             />
           </Form.Group>
           <Form.Group controlId="phoneNumber" className="py-2">
-            <Form.Label>Phone Number <span style={{ color: 'red' }}>*</span></Form.Label>
+            <Form.Label>
+              Phone Number <span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               name="phone_number"
@@ -149,7 +158,10 @@ function AddStudent({ onClose, onAdd }) {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
+          <Form.Group
+            controlId="NumberOfLessonsInSubscription"
+            className="py-2"
+          >
             <Form.Label>Subscription Count</Form.Label>
             <Form.Control
               type="text"
@@ -161,18 +173,10 @@ function AddStudent({ onClose, onAdd }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="button"
-          variant="primary"
-          onClick={handleAddStudent}
-        >
+        <Button className="button" variant="primary" onClick={handleAddStudent}>
           Add
         </Button>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <Button className="button" variant="secondary" onClick={onClose}>
           Cancel
         </Button>
       </Modal.Footer>

@@ -8,17 +8,21 @@ import axios from 'axios';
 import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
-import { fetchStudentLessons, fetchStudentResets, fetchStudentPayments, fetchStudentTexts } from '../Lesson/GetStudentLesson';
+import {
+  fetchStudentLessons,
+  fetchStudentResets,
+  fetchStudentPayments,
+  fetchStudentTexts,
+} from '../Lesson/GetStudentLesson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt, faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSyncAlt,
+  faBook,
+  faCreditCard,
+} from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
-function AddLesson({
-  onClose,
-  studentId,
-  students,
-  onUpdate
- }) {
+function AddLesson({ onClose, studentId, students, onUpdate }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
@@ -43,8 +47,6 @@ function AddLesson({
     fetchData();
   }, [fetchData, studentId]);
 
-
-
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
     try {
@@ -57,12 +59,12 @@ function AddLesson({
       // Make API call to add lesson using Axios
       const response = await axios.post(`${host}/lesson/add`, {
         student_id: studentId,
-        date: formattedDate
+        date: formattedDate,
       });
 
       console.log('Added lesson:', response.data);
 
-      const notificationDate = formatDate(selectedDate)
+      const notificationDate = formatDate(selectedDate);
 
       if (response.status === 200 || 201) {
         // Show notifcation
@@ -73,10 +75,10 @@ function AddLesson({
         onUpdate();
       } else {
         console.error('Error adding lesson. Unexpected response:', response);
-      };
+      }
     } catch (error) {
       console.error('Error adding lesson:', error);
-      throw error
+      throw error;
     }
   };
 
@@ -93,7 +95,7 @@ function AddLesson({
 
       const response = await axios.post(`${host}/reset/add`, {
         student_id: studentId,
-        date: formattedDate
+        date: formattedDate,
       });
 
       if (response.status === 200 || 201) {
@@ -104,11 +106,14 @@ function AddLesson({
         fetchData();
         onUpdate();
       } else {
-        console.error('Error resetting lesson count. Unexpected response:', response);
-      };
+        console.error(
+          'Error resetting lesson count. Unexpected response:',
+          response
+        );
+      }
     } catch (error) {
       console.error('Error resetting lesson count:', error);
-      throw error
+      throw error;
     }
   };
 
@@ -133,11 +138,12 @@ function AddLesson({
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
           <LessonCalendar
-          onSelectDate={(date) => setSelectedDate(date)} selectedDate={selectedDate}
-          lessons={lessons}
-          resets={resets}
-          payments={payments}
-          texts={texts}
+            onSelectDate={(date) => setSelectedDate(date)}
+            selectedDate={selectedDate}
+            lessons={lessons}
+            resets={resets}
+            payments={payments}
+            texts={texts}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -147,7 +153,10 @@ function AddLesson({
               variant="success"
               onClick={handleAddPayment}
             >
-              <FontAwesomeIcon icon={faCreditCard} style={{ marginRight: '0.5em' }} />
+              <FontAwesomeIcon
+                icon={faCreditCard}
+                style={{ marginRight: '0.5em' }}
+              />
               Payment
             </Button>
           </div>
@@ -157,7 +166,10 @@ function AddLesson({
             title="Reset lesson count"
             onClick={resetLessonCount}
           >
-            <FontAwesomeIcon icon={faSyncAlt} style={{ marginRight: '0.5em' }} />
+            <FontAwesomeIcon
+              icon={faSyncAlt}
+              style={{ marginRight: '0.5em' }}
+            />
             Reset
           </Button>
           <Button
@@ -168,11 +180,7 @@ function AddLesson({
             <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5em' }} />
             Lesson
           </Button>
-          <Button
-            className="button"
-            variant="secondary"
-            onClick={onClose}
-          >
+          <Button className="button" variant="secondary" onClick={onClose}>
             Close
           </Button>
         </Modal.Footer>

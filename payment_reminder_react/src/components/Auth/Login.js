@@ -19,7 +19,10 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${host}/user/login`, { username, password });
+      const response = await axios.post(`${host}/user/login`, {
+        username,
+        password,
+      });
       console.log('Logged in user:', response.data);
       localStorage.setItem('token', response.data.token); // Store token for persistent login
       setError(null);
@@ -37,11 +40,24 @@ const Login = () => {
     <div className="background-style background-login">
       <Col sm={6} md={4}>
         <div className="horizontally-center">
-          <h2 className="text-center mb-4 header">Park Vocal Studio
-          <img className="icon" src={musicNotesIcon} alt="musical note icon" />
+          <h2 className="text-center mb-4 header">
+            Park Vocal Studio
+            <img
+              className="icon"
+              src={musicNotesIcon}
+              alt="musical note icon"
+            />
           </h2>
         </div>
-        <Form onSubmit={handleLogin} style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+        <Form
+          onSubmit={handleLogin}
+          style={{
+            padding: '20px',
+            background: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          }}
+        >
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form.Group className="mb-3 pb-3">
@@ -65,14 +81,26 @@ const Login = () => {
                 required
                 className="input-field"
               />
-              <Button variant="outline-secondary" onClick={togglePasswordVisibility}>
-                {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+              <Button
+                variant="outline-secondary"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                ) : (
+                  <FontAwesomeIcon icon={faEye} />
+                )}
               </Button>
             </InputGroup>
           </Form.Group>
 
           <div className="d-flex justify-content-center">
-            <Button type="submit" variant="primary" className="btn-lg" style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+            <Button
+              type="submit"
+              variant="primary"
+              className="btn-lg"
+              style={{ paddingLeft: '30px', paddingRight: '30px' }}
+            >
               Login
             </Button>
           </div>

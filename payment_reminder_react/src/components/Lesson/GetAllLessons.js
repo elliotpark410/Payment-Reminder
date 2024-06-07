@@ -12,19 +12,17 @@ const fetchLessons = async (setLessons) => {
 
     // Filter out records with null or invalid date
     const validLessons = response.data.filter((lesson) => {
-      return (
-        lesson.date !== null &&
-        lesson.date !== undefined
-      );
+      return lesson.date !== null && lesson.date !== undefined;
     });
 
-    const sortedLessons = validLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const sortedLessons = validLessons.sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
 
     const formattedLessons = sortedLessons.map((lesson, index) => ({
       ...lesson,
       lessonNumber: index + 1,
-      formattedDate: formatDate(lesson.date)
-
+      formattedDate: formatDate(lesson.date),
     }));
 
     setLessons(formattedLessons);
@@ -63,7 +61,6 @@ function GetAllLessons({ onClose }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-
   useEffect(() => {
     fetchLessons(setLessons);
     fetchPayments(setPayments);
@@ -76,11 +73,11 @@ function GetAllLessons({ onClose }) {
     }
   }, [lessons]);
 
-    // Pagination logic
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentRecords = lessons.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(lessons.length / itemsPerPage);
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentRecords = lessons.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(lessons.length / itemsPerPage);
 
   return (
     <Modal
@@ -102,7 +99,6 @@ function GetAllLessons({ onClose }) {
               <th>Number</th>
               <th>Name</th>
               <th>Date</th>
-
             </tr>
           </thead>
           <tbody>
@@ -115,23 +111,25 @@ function GetAllLessons({ onClose }) {
             ))}
           </tbody>
         </table>
-          <PaginationComponent
-            currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={setCurrentPage}
-          />
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-          Total Lessons: <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
-        <br />
-          Total Payment: <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
+          Total Lessons:{' '}
+          <span className="lesson-payment-text">
+            {lessons.length.toLocaleString()}
+          </span>
+          <br />
+          Total Payment:{' '}
+          <span className="lesson-payment-text">
+            {getTotalPaymentAmount(payments)}
+          </span>
         </div>
-        <Button
-          className="button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <Button className="button" variant="secondary" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

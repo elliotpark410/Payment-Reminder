@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { host } from '../../lib/constants';
 
-const DeletePayment= ({ paymentId, onDelete }) => {
+const DeletePayment = ({ paymentId, onDelete }) => {
   const handleDeletePayment = async () => {
     try {
       await axios.delete(`${host}/payment/delete/${paymentId}`);

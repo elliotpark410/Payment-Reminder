@@ -14,7 +14,10 @@ const Footer = ({ onInactiveStudentsClick }) => {
           onClick={onInactiveStudentsClick}
           title="Inactive Students"
         >
-          <FontAwesomeIcon icon={faUserSlash} style={{ marginRight: '0.5em' }} />
+          <FontAwesomeIcon
+            icon={faUserSlash}
+            style={{ marginRight: '0.5em' }}
+          />
           Inactive Students
         </Button>
       </Col>

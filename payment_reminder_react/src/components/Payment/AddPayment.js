@@ -40,7 +40,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
       const response = await axios.post(`${host}/payment/add`, {
         student_id: studentId,
         date: formattedDate,
-        amount: amount
+        amount: amount,
       });
 
       console.log('Added payment:', response.data);
@@ -56,12 +56,12 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
         onUpdate();
       } else {
         console.error('Error adding payment. Unexpected response:', response);
-      };
+      }
 
       onClose();
     } catch (error) {
       console.error('Error adding payment:', error);
-      throw error
+      throw error;
     }
   };
 
@@ -113,18 +113,10 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="small-button"
-          variant="primary"
-          onClick={handleSave}
-        >
+        <Button className="small-button" variant="primary" onClick={handleSave}>
           Save
         </Button>
-        <Button
-          className="small-button"
-          variant="secondary"
-          onClick={onClose}
-        >
+        <Button className="small-button" variant="secondary" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

@@ -1,14 +1,22 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus, faList, faComment } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTrash,
+  faPlus,
+  faList,
+  faComment,
+} from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 // Function to determine color based on lesson count and subscription limit
 const getLessonCountColor = (lessonCount, subscriptionLimit) => {
   if (lessonCount > subscriptionLimit) {
     return 'red'; // If lesson count is greater than subscription limit
-  } else if (lessonCount === subscriptionLimit - 1 || lessonCount === subscriptionLimit) {
+  } else if (
+    lessonCount === subscriptionLimit - 1 ||
+    lessonCount === subscriptionLimit
+  ) {
     return '#007bff'; // Blue for nearly full or full subscription
   } else {
     return 'black'; // Default color for all other cases
@@ -57,9 +65,7 @@ const StudentItem = ({
         e.currentTarget.style.transform = 'scale(1)'; // Reset zoom effect
       }}
     >
-      <Col className="text-center">
-          {index + 1}
-      </Col>
+      <Col className="text-center">{index + 1}</Col>
       <Col xs={2} className="text-left">
         <div className="student-div" onClick={() => onEdit(student)}>
           <p className="studentName">{student.student_name}</p>
@@ -67,23 +73,34 @@ const StudentItem = ({
         </div>
       </Col>
       <Col className="text-center">
-        <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)}>
+        <Button
+          variant="outline-success"
+          title="Add lesson"
+          onClick={() => onAddLesson(student)}
+        >
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </Col>
       <Col className="text-center">
-          <div style={{ fontSize: '1.2em' }}>
-            <span style={{ color: getLessonCountColor(lessonCount, subscriptionLimit), fontWeight: '600' }}>{lessonCount}</span>
-            {' '}
-            / {student.subscription_number}
-          </div>
+        <div style={{ fontSize: '1.2em' }}>
+          <span
+            style={{
+              color: getLessonCountColor(lessonCount, subscriptionLimit),
+              fontWeight: '600',
+            }}
+          >
+            {lessonCount}
+          </span>{' '}
+          / {student.subscription_number}
+        </div>
       </Col>
       <Col className="text-center">
         <Button
-        style={{ width: '120px' }}
-        variant="outline-success"
-        title="View lessons"
-        onClick={() => onViewLessons(student)}>
+          style={{ width: '120px' }}
+          variant="outline-success"
+          title="View lessons"
+          onClick={() => onViewLessons(student)}
+        >
           <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
           History
         </Button>
@@ -91,17 +108,27 @@ const StudentItem = ({
       <Col className="text-center">
         <Button
           style={{ width: '120px' }}
-          variant={getLessonCount(student.id) < student.subscription_number - 1 ? 'outline-secondary' : 'outline-primary'}
+          variant={
+            getLessonCount(student.id) < student.subscription_number - 1
+              ? 'outline-secondary'
+              : 'outline-primary'
+          }
           title="Text"
           onClick={() => onSendText(student)}
-          disabled={getLessonCount(student.id) < student.subscription_number - 1}
+          disabled={
+            getLessonCount(student.id) < student.subscription_number - 1
+          }
         >
           <FontAwesomeIcon icon={faComment} style={{ marginRight: '0.5em' }} />
           Text
         </Button>
       </Col>
       <Col className="text-center">
-        <Button variant="outline-danger" title="Delete student" onClick={() => onDelete(student)}>
+        <Button
+          variant="outline-danger"
+          title="Delete student"
+          onClick={() => onDelete(student)}
+        >
           <FontAwesomeIcon icon={faTrash} />
         </Button>
       </Col>
@@ -135,13 +162,27 @@ const GetAllStudents = ({
     <>
       <div className="student-list-container">
         <Row style={headerRowStyle}>
-          <Col className="text-center"><strong>Number</strong></Col>
-          <Col xs={2} className="text-left"><strong>Name</strong></Col>
-          <Col className="text-center"><strong>Add</strong></Col>
-          <Col className="text-center"><strong>Count</strong></Col>
-          <Col className="text-center"><strong>View</strong></Col>
-          <Col className="text-center"><strong>Send</strong></Col>
-          <Col className="text-center"><strong>Delete</strong></Col>
+          <Col className="text-center">
+            <strong>Number</strong>
+          </Col>
+          <Col xs={2} className="text-left">
+            <strong>Name</strong>
+          </Col>
+          <Col className="text-center">
+            <strong>Add</strong>
+          </Col>
+          <Col className="text-center">
+            <strong>Count</strong>
+          </Col>
+          <Col className="text-center">
+            <strong>View</strong>
+          </Col>
+          <Col className="text-center">
+            <strong>Send</strong>
+          </Col>
+          <Col className="text-center">
+            <strong>Delete</strong>
+          </Col>
         </Row>
         {/* Rows of student items */}
         {filteredStudents.map((student, index) => (
