@@ -74,7 +74,9 @@ const SendText = ({
       }
     } catch (error) {
       console.error('Error sending text message: ', error);
-      throw error;
+      // TODO: update error handling
+      // throw error;
+      return;
     }
   };
 
