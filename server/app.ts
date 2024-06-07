@@ -21,7 +21,15 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use(cors());
+// Configure CORS
+const corsOptions = {
+  // TODO: update origin 
+  origin: 'http://localhost:3001', // allow requests from this origin
+  optionsSuccessStatus: 200, // some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
