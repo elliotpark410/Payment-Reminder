@@ -1,5 +1,5 @@
 // AddPayment.js
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -10,6 +10,14 @@ import '../../App.css';
 function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
   const [amount, setAmount] = useState('');
   const [isInputEmpty, setIsInputEmpty] = useState(true);
+
+  const amountInputRef = useRef(null);
+
+  useEffect(() => {
+    if (show) {
+      amountInputRef.current.focus();
+    }
+  }, [show]);
 
   // Function to handle add payment on the selected date
   const handleSave = async () => {
@@ -86,6 +94,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
                 // placeholder="Enter amount"
                 value={amount}
                 onChange={handleInputChange}
+                ref={amountInputRef}
                 style={{
                   paddingLeft: '30px',
                   fontSize: isInputEmpty ? 'inherit' : '18px', // Change font size based on input content
