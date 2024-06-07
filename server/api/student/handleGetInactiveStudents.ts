@@ -8,7 +8,7 @@ export async function handleGetInactiveStudents(
 ) {
   try {
     const query = `
-    SELECT id, student_name, inactive FROM students WHERE inactive = true AND deleted_at IS NULL`;
+    SELECT id, student_name, inactive FROM students WHERE inactive = true`;
 
     // Execute the query
     connection.query(query, (error, results) => {

@@ -29,7 +29,6 @@ connection.connect((err) => {
       subscription_number INT UNSIGNED,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      deleted_at DATE NULL DEFAULT NULL,
       inactive BOOLEAN DEFAULT FALSE
     )`,
 
