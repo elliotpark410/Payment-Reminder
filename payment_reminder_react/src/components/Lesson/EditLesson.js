@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
+import { formatDate } from '../../lib/util';
 import '../../App.css';
 
 const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLesson, fetchData }) => {
@@ -23,9 +24,11 @@ const EditLesson = ({ show, onHide, lesson, lessonDate, setLessonDate, setEditLe
       console.log('Lesson updated successfully:', response.data);
       onHide();
 
+      const notificationDate = formatDate(date);
+
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Edited lesson`, {
+        toast.success(`Edited lesson ${notificationDate}`, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

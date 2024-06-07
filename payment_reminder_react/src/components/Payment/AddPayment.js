@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { host } from '../../lib/constants';
+import { formatDate } from '../../lib/util';
 import '../../App.css';
 
 function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
@@ -44,9 +45,11 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
 
       console.log('Added payment:', response.data);
 
+      const notificationDate = formatDate(selectedDate);
+
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Added payment`, {
+        toast.success(`Added payment ${notificationDate}`, {
           autoClose: 3000, // Close after 3 seconds
         });
 

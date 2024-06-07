@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import { toast } from 'react-toastify';
+import { formatDate } from '../../lib/util';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
 
@@ -35,9 +36,11 @@ const EditPayment = ({ show, onHide, payment, paymentDate, paymentAmount, setPay
 
       onHide();
 
+      const notificationDate = formatDate(date);
+
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Edited payment`, {
+        toast.success(`Edited payment ${notificationDate} `, {
           autoClose: 3000, // Close after 3 seconds
         });
       } else {

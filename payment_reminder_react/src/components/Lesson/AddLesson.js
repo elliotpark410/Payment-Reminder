@@ -6,6 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar';
 import axios from 'axios';
 import { host } from '../../lib/constants';
+import { formatDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
 import { fetchStudentLessons, fetchStudentResets, fetchStudentPayments, fetchStudentTexts } from '../Lesson/GetStudentLesson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,9 +62,11 @@ function AddLesson({
 
       console.log('Added lesson:', response.data);
 
+      const notificationDate = formatDate(selectedDate)
+
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Added lesson`, {
+        toast.success(`Added lesson ${notificationDate}`, {
           autoClose: 3000, // Close after 3 seconds
         });
         fetchData();
@@ -86,11 +89,7 @@ function AddLesson({
         day: '2-digit',
       });
 
-      const notificationDate = selectedDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }).replace(/\//g, ' / ');
+      const notificationDate = formatDate(selectedDate);
 
       const response = await axios.post(`${host}/reset/add`, {
         student_id: studentId,
@@ -99,7 +98,7 @@ function AddLesson({
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.warning(`Lesson reset on ${notificationDate}`, {
+        toast.warning(`Lesson reset ${notificationDate}`, {
           autoClose: 3000, // Close after 3 seconds
         });
         fetchData();
