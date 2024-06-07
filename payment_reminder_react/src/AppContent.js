@@ -56,13 +56,8 @@ function AppContent() {
       const resetsData = await resetsResponse.json();
       const textData = await textResponse.json();
 
-      // Filter deleted records
-      const activeStudents = studentsData.filter((student) => {
-        return student.deleted_at === null;
-      });
-
       // order students by alphabetical order
-      setStudents(activeStudents.sort((a, b) => a.student_name.localeCompare(b.student_name)));
+      setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
       setResets(resetsData);
       setTexts(textData);
