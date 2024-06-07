@@ -125,6 +125,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const [showEditPaymentModal, setShowEditPaymentModal] = useState(false);
   const [editLesson, setEditLesson] = useState(null);
   const [editReset, setEditReset] = useState(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [lessonDate, setLessonDate] = useState('');
   const [resetDate, setResetDate] = useState('');
   const [editPayment, setEditPayment] = useState(null);
@@ -166,12 +167,14 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setEditLesson(lesson);
     setLessonDate(new Date(lesson.date).toISOString().slice(0, 10));
     setShowEditLessonModal(true);
+    setEditModalOpen(true);
   };
 
   const handleEditReset = (reset) => {
     setEditReset(reset);
     setResetDate(new Date(reset.date).toISOString().slice(0, 10));
     setShowEditResetModal(true);
+    setEditModalOpen(true);
   };
 
   const handleEditPayment = (payment) => {
@@ -179,6 +182,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
     setPaymentDate(new Date(payment.date).toISOString().slice(0, 10));
     setPaymentAmount(payment.amount);
     setShowEditPaymentModal(true);
+    setEditModalOpen(true);
   };
 
   const handleDelete = (itemId, setState) => {
@@ -203,6 +207,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   const handleTextClick = (message) => {
     setTextMessage(message);
     setShowTextModal(true);
+    setEditModalOpen(true);
   };
 
   const mergedRecords = [...lessons, ...resets, ...payments, ...texts].sort(
@@ -244,6 +249,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       onHide={onClose}
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className={editModalOpen ? 'modal-disabled' : ''}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">{studentName}</Modal.Title>
@@ -371,7 +377,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       {/* Edit Lesson Modal */}
       <EditLesson
         show={showEditLessonModal}
-        onHide={() => setShowEditLessonModal(false)}
+        onHide={() => {
+          setShowEditLessonModal(false);
+          setEditModalOpen(false);
+        }}
         lesson={editLesson}
         lessonDate={lessonDate}
         setLessonDate={setLessonDate}
@@ -383,7 +392,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       {/* Edit Reset Modal */}
       <EditReset
         show={showEditResetModal}
-        onHide={() => setShowEditResetModal(false)}
+        onHide={() => {
+          setShowEditResetModal(false);
+          setEditModalOpen(false);
+        }}
         reset={editReset}
         resetDate={resetDate}
         setResetDate={setResetDate}
@@ -395,7 +407,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       {/* Edit Payment Modal */}
       <EditPayment
         show={showEditPaymentModal}
-        onHide={() => setShowEditPaymentModal(false)}
+        onHide={() => {
+          setShowEditPaymentModal(false);
+          setEditModalOpen(false);
+        }}
         payment={editPayment}
         paymentDate={paymentDate}
         paymentAmount={paymentAmount}
@@ -409,7 +424,10 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
       {/* Display Sent Text Modal */}
       <SentText
         show={showTextModal}
-        onHide={() => setShowTextModal(false)}
+        onHide={() => {
+          setShowTextModal(false);
+          setEditModalOpen(false);
+        }}
         textMessage={textMessage}
       />
     </Modal>
