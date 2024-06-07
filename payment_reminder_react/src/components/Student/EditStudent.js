@@ -17,6 +17,8 @@ function EditStudent({ student, onClose, onEdit }) {
     inactive: student.inactive || false
   });
 
+  const [duplicateNameError, setDuplicateNameError] = useState('');
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -87,7 +89,7 @@ function EditStudent({ student, onClose, onEdit }) {
 
       if ((response.status === 200 || response.status === 201) && !formData.inactive) {
         // Show notifcation
-        toast.success(`Edited student`, {
+        toast.success(`Edited ${formData.student_name}`, {
           autoClose: 3000 // Close after 3 seconds
         });
       } else {
@@ -97,6 +99,15 @@ function EditStudent({ student, onClose, onEdit }) {
       onClose();
     } catch (error) {
       console.error('Error editing student data:', error);
+
+      // Disallow duplicate name
+      if (error.response && error.response.status === 500) {
+        if (error.response.data.includes("Duplicate entry")) {
+          setDuplicateNameError(`${formData.student_name} already exists!`);
+          return; // Prevent closing the modal
+        }
+      }
+
       throw error;
     }
   };
@@ -131,6 +142,7 @@ function EditStudent({ student, onClose, onEdit }) {
               onChange={handleInputChange}
               required
             />
+             {duplicateNameError && <Form.Text className="text-danger">{duplicateNameError}</Form.Text>}
           </Form.Group>
           <Form.Group controlId="parentName" className="py-2">
             <Form.Label>Parent Name</Form.Label>

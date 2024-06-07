@@ -16,7 +16,6 @@ function AddStudent({ onClose, onAdd }) {
     subscription_number: ''
   });
 
-  // state variable for duplicate name entry
   const [duplicateNameError, setDuplicateNameError] = useState('');
 
   const handleInputChange = (event) => {
@@ -89,7 +88,7 @@ function AddStudent({ onClose, onAdd }) {
 
       if (response.status === 200 || 201) {
         // Show notifcation
-        toast.success(`Added student`, {
+        toast.success(`Added ${formData.student_name}`, {
           autoClose: 3000 // Close after 3 seconds
         });
       } else {
