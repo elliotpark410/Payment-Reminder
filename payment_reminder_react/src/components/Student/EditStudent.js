@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { Modal, Form, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
 import '../../App.css';
@@ -33,6 +33,14 @@ function EditStudent({ student, onClose, onEdit }) {
   const validatePositiveWholeNumber = (value) => {
     const re = /^[1-9]\d*$/;
     return re.test(value);
+  };
+
+  const formatPhoneNumber = (phoneNumber) => {
+    // Remove all non-numeric characters
+    const numericValue = phoneNumber.replace(/\D/g, '');
+    // Apply phone number formatting
+    const formattedNumber = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '($1)  $2 - $3');
+    return formattedNumber;
   };
 
   const handleSave = async () => {
@@ -140,8 +148,11 @@ function EditStudent({ student, onClose, onEdit }) {
             <Form.Control
               type="text"
               name="phone_number"
-              value={formData.phone_number}
+              value={formatPhoneNumber(formData.phone_number)}
               onChange={handleInputChange}
+              pattern="[0-9]*" // Only allow numbers
+              inputMode="numeric"
+              maxLength="14"
               required
             />
           </Form.Group>
@@ -156,12 +167,17 @@ function EditStudent({ student, onClose, onEdit }) {
           </Form.Group>
           <Form.Group controlId="subscriptionPrice" className="py-2">
             <Form.Label>Subscription Price</Form.Label>
-            <Form.Control
-              type="text"
-              name="subscription_price"
-              value={formData.subscription_price}
-              onChange={handleInputChange}
-            />
+            <InputGroup>
+              <InputGroup.Text>$</InputGroup.Text>
+              <Form.Control
+                type="text"
+                name="subscription_price"
+                value={formData.subscription_price}
+                onChange={handleInputChange}
+                pattern="[0-9]*" // Only allow numbers
+                inputMode="numeric"
+              />
+            </InputGroup>
           </Form.Group>
           <Form.Group controlId="NumberOfLessonsInSubscription" className="py-2">
             <Form.Label>Subscription Count</Form.Label>
@@ -170,6 +186,8 @@ function EditStudent({ student, onClose, onEdit }) {
               name="subscription_number"
               value={formData.subscription_number}
               onChange={handleInputChange}
+              pattern="[0-9]*" // Only allow numbers
+              inputMode="numeric"
             />
           </Form.Group>
         </Form>

@@ -30,7 +30,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
               style={{
                 width: '30px',
                 height: '10px',
-                backgroundColor: 'blue',
+                backgroundColor: 'navy',
                 borderRadius: '5px',
                 margin: '2px',
               }}
