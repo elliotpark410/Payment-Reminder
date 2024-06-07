@@ -16,16 +16,16 @@ app.use(helmet());
 // Rate limiting to prevent brute-force attacks
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 200, // limit each IP to 200 requests per windowMs
   message: 'Too many requests from this IP, please try again later',
 });
 app.use(limiter);
 
 // Configure CORS
 const corsOptions = {
-  // TODO: update origin 
+  // TODO: update origin
   origin: 'http://localhost:3001', // allow requests from this origin
-  optionsSuccessStatus: 200, // some legacy browsers choke on 204
+  optionsSuccessStatus: 200 || 204, // some legacy browsers choke on 204
 };
 
 app.use(cors(corsOptions));
