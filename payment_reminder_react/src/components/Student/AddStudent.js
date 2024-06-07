@@ -16,6 +16,9 @@ function AddStudent({ onClose, onAdd }) {
     subscription_number: ''
   });
 
+  // state variable for duplicate name entry
+  const [duplicateNameError, setDuplicateNameError] = useState('');
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -96,6 +99,15 @@ function AddStudent({ onClose, onAdd }) {
       onClose();
     } catch (error) {
       console.error('Error adding student:', error);
+
+      // Disallow duplicate name
+      if (error.response && error.response.status === 500) {
+        if (error.response.data.includes("Duplicate entry")) {
+          setDuplicateNameError(`${formData.student_name} already exists!`);
+          return; // Prevent closing the modal
+        }
+      }
+
       throw error;
     }
   };
@@ -118,6 +130,7 @@ function AddStudent({ onClose, onAdd }) {
               onChange={handleInputChange}
               required
             />
+            {duplicateNameError && <Form.Text className="text-danger">{duplicateNameError}</Form.Text>}
           </Form.Group>
           <Form.Group controlId="parentName" className="py-2">
             <Form.Label>Parent Name</Form.Label>

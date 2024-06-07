@@ -32,7 +32,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
                 height: '10px',
                 backgroundColor: 'navy',
                 borderRadius: '5px',
-                margin: '2px',
+                margin: '2px'
               }}
             />
           )}
