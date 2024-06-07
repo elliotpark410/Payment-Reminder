@@ -1,6 +1,6 @@
 .react-calendar {
   width: 100%;
-  max-width: 600px;
+  max-width: 795px;
   margin: 0 auto;
 }
 
@@ -23,7 +23,7 @@
   background-color: #d1def0; /* Set background color for today's date */
 }
 
-.react-calendar__tile--now:active,
+/* .react-calendar__tile--now:active, */
 .react-calendar__tile--now:hover {
   background-color: #e6e6e6 !important; /* Set background color for today's date when hovered */
 }
