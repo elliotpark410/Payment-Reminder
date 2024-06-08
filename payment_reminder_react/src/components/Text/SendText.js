@@ -60,9 +60,9 @@ const SendText = ({
     if (preElement) {
       const errorText = preElement.innerHTML || '';
       const errorMessage = errorText.split('<br>')[0].replace('Error: ', '').trim();
-      return errorMessage + ". Please hit the reset button to reset lesson count.";
+      return errorMessage + '. Please hit the reset button to reset lesson count.';
     }
-    return "An error occurred";
+    return 'An error occurred';
   };
 
   const handleSendText = async () => {

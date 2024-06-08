@@ -8,13 +8,18 @@ import '../App.css';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
   const openWebsite = () => {
-    window.open(`${website}`, "_blank"); // Open link in a new tab
+    window.open(`${website}`, '_blank'); // Open link in a new tab
   };
 
   return (
     <Row className="mt-4 d-flex align-items-center">
       <Col xs={5} className="text-left">
-        <a href="Park Vocal Studio website" target="_blank" rel="noopener noreferrer" onClick={openWebsite}>
+        <a
+          href="Park Vocal Studio website"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={openWebsite}
+        >
           <img src={logo} alt="Park Vocal Studio logo" className="logo" />
         </a>
       </Col>

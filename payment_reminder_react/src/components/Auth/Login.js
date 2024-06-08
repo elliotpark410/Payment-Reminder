@@ -17,7 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const openWebsite = () => {
-    window.open(`${website}`, "_blank"); // Open link in a new tab
+    window.open(`${website}`, '_blank'); // Open link in a new tab
   };
 
   const handleLogin = async (e) => {
@@ -45,7 +45,12 @@ const Login = () => {
     <div className="background-style background-login">
       <Col sm={6} md={4}>
         <div className="horizontally-center">
-          <a href="Park Vocal Studio website" target="_blank" rel="noopener noreferrer" onClick={openWebsite}>
+          <a
+            href="Park Vocal Studio website"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={openWebsite}
+          >
             <img src={logo} alt="Park Vocal Studio logo" className="logo-login" />
           </a>
         </div>
