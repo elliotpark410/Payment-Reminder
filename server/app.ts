@@ -25,7 +25,7 @@ app.use(limiter);
 const corsOptions = {
   // TODO: update origin
   origin: 'http://localhost:3001', // allow requests from this origin
-  optionsSuccessStatus: 200 || 204, // some legacy browsers choke on 204
+  optionsSuccessStatus: 200 || 201 || 204,
 };
 
 app.use(cors(corsOptions));

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { host } from '../../lib/constants';
 import { todaysDate } from '../../lib/util';
 import '../../App.css';
@@ -52,6 +52,18 @@ const SendText = ({
   \nPlease renew your subscription payment of ${formattedSubscriptionAmount}`;
 
   const [message, setMessage] = useState(defaultMessage);
+  const [error, setError] = useState('');
+
+  const extractErrorMessage = (htmlString) => {
+    const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+    const preElement = doc.querySelector('pre');
+    if (preElement) {
+      const errorText = preElement.innerHTML || '';
+      const errorMessage = errorText.split('<br>')[0].replace('Error: ', '').trim();
+      return errorMessage + ". Please hit the reset button to reset lesson count.";
+    }
+    return "An error occurred";
+  };
 
   const handleSendText = async () => {
     try {
@@ -71,11 +83,17 @@ const SendText = ({
         });
       } else {
         console.error('Error sending text message. Unexpected response: ', response);
+        toast.error('Unexpected response from the server. Please try again later.');
+        setError('Unexpected response from the server. Please try again later.');
       }
     } catch (error) {
-      console.error('Error sending text message: ', error);
-      // TODO: update error handling
-      // throw error;
+      let errorMessage = 'Failed to send text message. Please try again later.';
+      if (error.response && error.response.data) {
+        errorMessage = extractErrorMessage(error.response.data);
+      }
+      console.error('Error sending text message: ', error.response.data);
+      toast.error('Failed to send text message. Please try again later.');
+      setError(errorMessage);
       return;
     }
   };
@@ -89,6 +107,7 @@ const SendText = ({
         <Modal.Title>Send Text Message</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group controlId="textMessage">
           <Form.Control
             as="textarea"
