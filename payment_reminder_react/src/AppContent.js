@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Alert } from 'react-bootstrap';
 import { host } from './lib/constants';
 import GetAllStudents from './components/Student/GetAllStudents';
 import EditStudent from './components/Student/EditStudent';
@@ -22,6 +22,7 @@ function AppContent() {
   const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
   const [searchName, setSearchName] = useState('');
+  const [error, setError] = useState(null);
   const [data, setData] = useState({
     studentId: null,
     studentName: '',
@@ -63,7 +64,7 @@ function AppContent() {
       setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
-      throw error;
+      setError(error.response?.data?.message || 'Error fetching data');
     }
   };
 
@@ -226,6 +227,7 @@ function AppContent() {
           onSearch={setSearchName}
         />
       </Row>
+      {error && <Alert variant="danger">{error}</Alert>}
       {/* Components */}
       <GetAllStudents
         students={students}
