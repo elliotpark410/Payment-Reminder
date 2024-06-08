@@ -30,7 +30,7 @@ const EditLesson = ({
       const response = await axios.put(`${host}/lesson/${lesson.id}`, {
         date: lessonDate
       });
-      console.log('Lesson updated successfully:', response.data);
+      // console.log('Lesson updated successfully:', response.data);
       onHide();
 
       const notificationDate = formatDate(date);

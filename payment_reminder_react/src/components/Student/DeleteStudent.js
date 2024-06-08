@@ -14,11 +14,11 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
 
   const handleDelete = async () => {
     try {
-      console.log('Deleting student:', student);
+      // console.log('Deleting student:', student);
 
       const response = await axios.put(`${host}/student/delete/${student.id}`);
 
-      console.log(`Student deleted successfully`);
+      // console.log(`Student deleted successfully`);
 
       if (response.status === 200 || 201) {
         // Show notifcation

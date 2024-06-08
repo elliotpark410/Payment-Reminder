@@ -79,11 +79,11 @@ function EditStudent({ student, onClose, onEdit }) {
         return;
       }
 
-      console.log('Saving edit for student', student);
+      // console.log('Saving edit for student', student);
 
       const response = await axios.put(`${host}/student/${student.id}`, formData);
 
-      console.log('Updated student data:', response.data);
+      // console.log('Updated student data:', response.data);
 
       onEdit(response.data);
 

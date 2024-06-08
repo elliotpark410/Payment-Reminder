@@ -78,11 +78,11 @@ function AddStudent({ onClose, onAdd }) {
         return;
       }
 
-      console.log('Adding new student:', formData);
+      // console.log('Adding new student:', formData);
 
       const response = await axios.post(`${host}/student/add`, formData);
 
-      console.log('Added student:', response.data);
+      // console.log('Added student:', response.data);
 
       onAdd(response.data); // Pass the added student data to the parent component
 

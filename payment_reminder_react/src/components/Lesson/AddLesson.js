@@ -58,7 +58,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
         date: formattedDate
       });
 
-      console.log('Added lesson:', response.data);
+      // console.log('Added lesson:', response.data);
 
       const notificationDate = formatDate(selectedDate);
 

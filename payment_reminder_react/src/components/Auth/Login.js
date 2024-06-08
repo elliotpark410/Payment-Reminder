@@ -23,7 +23,7 @@ const Login = () => {
         username,
         password
       });
-      console.log('Logged in user:', response.data);
+      // console.log('Logged in user:', response.data);
       localStorage.setItem('token', response.data.token); // Store token for persistent login
       setError(null);
       navigate('/'); // Redirect to home page after login

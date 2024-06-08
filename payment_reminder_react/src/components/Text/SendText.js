@@ -71,7 +71,7 @@ const SendText = ({
         student_id: studentId,
         message
       });
-      console.log('Text message sent successfully');
+      // console.log('Text message sent successfully');
       onClose(); // Close the modal after sending the text message
 
       if (response.status === 200 || 201) {

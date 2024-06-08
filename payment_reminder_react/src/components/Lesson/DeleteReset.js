@@ -9,7 +9,7 @@ const DeleteReset = ({ resetId, onDelete }) => {
   const handleDeleteReset = async () => {
     try {
       await axios.delete(`${host}/reset/delete/${resetId}`);
-      console.log(`Reset with ID ${resetId} deleted successfully`);
+      // console.log(`Reset with ID ${resetId} deleted successfully`);
 
       onDelete();
     } catch (error) {

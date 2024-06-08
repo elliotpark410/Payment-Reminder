@@ -43,7 +43,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
         amount: amount
       });
 
-      console.log('Added payment:', response.data);
+      // console.log('Added payment:', response.data);
 
       const notificationDate = formatDate(selectedDate);
 

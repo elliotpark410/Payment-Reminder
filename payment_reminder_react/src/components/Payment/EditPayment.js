@@ -41,7 +41,7 @@ const EditPayment = ({
         amount: paymentAmount
       });
 
-      console.log('Payment updated successfully:', response.data);
+      // console.log('Payment updated successfully:', response.data);
 
       onHide();
 

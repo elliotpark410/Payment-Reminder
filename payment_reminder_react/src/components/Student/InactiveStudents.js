@@ -31,7 +31,7 @@ const fetchInactiveStudents = async (setInactiveStudents) => {
 
 const handleActivateStudent = async (studentId, studentName) => {
   try {
-    console.log(`Activating ${studentName}`);
+    // console.log(`Activating ${studentName}`);
     const response = await axios.put(`${host}/student/inactive/${studentId}`);
 
     if (response.status === 200 || 201) {

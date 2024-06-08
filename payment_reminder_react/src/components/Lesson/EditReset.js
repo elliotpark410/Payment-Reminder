@@ -22,7 +22,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
       const response = await axios.put(`${host}/reset/${reset.id}`, {
         date: resetDate
       });
-      console.log('Reset updated successfully:', response.data);
+      // console.log('Reset updated successfully:', response.data);
       onHide();
 
       const notificationDate = formatDate(date);

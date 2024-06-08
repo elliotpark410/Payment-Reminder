@@ -9,7 +9,7 @@ const DeleteLesson = ({ lessonId, onDelete }) => {
   const handleDeleteLesson = async () => {
     try {
       await axios.delete(`${host}/lesson/delete/${lessonId}`);
-      console.log(`Lesson with ID ${lessonId} deleted successfully`);
+      // console.log(`Lesson with ID ${lessonId} deleted successfully`);
 
       onDelete();
     } catch (error) {
