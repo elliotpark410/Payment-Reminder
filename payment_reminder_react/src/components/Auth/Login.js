@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../images/logo.png';
+import { website } from '../../lib/constants';
 import '../../App.css';
 
 const Login = () => {
@@ -14,6 +15,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const openWebsite = () => {
+    window.open(`${website}`, "_blank"); // Open link in a new tab
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,9 +45,9 @@ const Login = () => {
     <div className="background-style background-login">
       <Col sm={6} md={4}>
         <div className="horizontally-center">
-          <h2 className="text-center mb-4 header">
+          <a href="Park Vocal Studio website" target="_blank" rel="noopener noreferrer" onClick={openWebsite}>
             <img src={logo} alt="Park Vocal Studio logo" className="logo-login" />
-          </h2>
+          </a>
         </div>
         <Form
           onSubmit={handleLogin}

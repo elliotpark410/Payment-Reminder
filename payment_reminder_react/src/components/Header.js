@@ -3,15 +3,20 @@ import { Row, Col, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faThList, faSearch } from '@fortawesome/free-solid-svg-icons';
 import logo from '../images/logo.png';
+import { website } from '../lib/constants';
 import '../App.css';
 
 const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
+  const openWebsite = () => {
+    window.open(`${website}`, "_blank"); // Open link in a new tab
+  };
+
   return (
     <Row className="mt-4 d-flex align-items-center">
       <Col xs={5} className="text-left">
-        <h1 className="header mb-4">
+        <a href="Park Vocal Studio website" target="_blank" rel="noopener noreferrer" onClick={openWebsite}>
           <img src={logo} alt="Park Vocal Studio logo" className="logo" />
-        </h1>
+        </a>
       </Col>
       <Col xs={3}>
         <div className="search-container">
