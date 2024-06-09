@@ -64,7 +64,7 @@ function AppContent() {
       setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
-      setError(error.response?.data?.message || 'Error fetching data');
+      setError(error.response?.data?.message || 'Error getting data');
     }
   };
 
