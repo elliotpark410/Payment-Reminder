@@ -16,7 +16,7 @@ import {
   fetchStudentTexts
 } from '../Lesson/GetStudentLesson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt, faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 function AddLesson({ onClose, studentId, students, onUpdate }) {
@@ -101,7 +101,6 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
         <Modal.Body style={{ padding: 0, height: '100%' }}>
           <LessonCalendar
             onSelectDate={(date) => setSelectedDate(date)}
-            selectedDate={selectedDate}
             lessons={lessons}
             resets={resets}
             payments={payments}
