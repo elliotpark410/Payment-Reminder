@@ -11,7 +11,7 @@ export async function handleGetStudent(
     const student_id: string = request.params.student_id;
 
     // Query to select a single student based on the provided ID
-    const query = "SELECT * FROM students WHERE id = ?";
+    const query = "SELECT * FROM students WHERE deleted_at IS NULL AND id = ?";
 
     // Execute the query with the student ID as a parameter
     connection.query(query, [student_id], (error, results: RowDataPacket[]) => {

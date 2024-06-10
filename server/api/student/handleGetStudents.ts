@@ -10,7 +10,7 @@ export async function handleGetStudents(
     const query = `
     SELECT id, student_name, parent_name, phone_number, email,
     subscription_price, subscription_number, inactive
-    FROM students WHERE inactive = false`;
+    FROM students WHERE deleted_at IS NULL AND inactive = false`;
 
     // Execute the query
     connection.query(query, (error, results) => {
