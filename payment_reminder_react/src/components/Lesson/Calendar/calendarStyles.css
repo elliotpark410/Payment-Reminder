@@ -27,3 +27,12 @@
 .react-calendar__tile--now:hover {
   background-color: #e6e6e6 !important; /* Set background color for today's date when hovered */
 }
+
+.lessonRecord, .resetRecord .paymentRecord, .textRecord {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.lessonRecord:hover, .resetRecord:hover, .paymentRecord:hover, .textRecord:hover {
+  transform: scale(1.3);
+}

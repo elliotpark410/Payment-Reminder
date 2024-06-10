@@ -2,6 +2,11 @@ import React from 'react';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyles.css';
+// import EditLesson from './EditLesson';
+// import EditReset from './EditReset';
+// import EditPayment from './EditPayment';
+// import SentText from './SentText';
+
 
 function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
   const tileContent = ({ date, view }) => {
@@ -27,6 +32,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
         >
           {hasLesson && (
             <div
+              className="lessonRecord"
               style={{
                 width: '30px',
                 height: '10px',
@@ -38,6 +44,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
           )}
           {hasText && (
             <div
+              className="textRecord"
               style={{
                 width: '30px',
                 height: '10px',
@@ -49,6 +56,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
           )}
           {hasReset && (
             <div
+            className="resetRecord"
               style={{
                 width: '30px',
                 height: '10px',
@@ -60,6 +68,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
           )}
           {hasPayment && (
             <div
+              className="paymentRecord"
               style={{
                 width: '30px',
                 height: '10px',

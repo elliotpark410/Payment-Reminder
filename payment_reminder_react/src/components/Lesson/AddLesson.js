@@ -8,6 +8,7 @@ import axios from 'axios';
 import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
+import AddReset from '../Reset/AddReset';
 import {
   fetchStudentLessons,
   fetchStudentResets,
@@ -78,38 +79,6 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
     }
   };
 
-  // Function to reset lesson count
-  const resetLessonCount = async () => {
-    try {
-      const formattedDate = selectedDate.toLocaleDateString('en-CA', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      });
-
-      const notificationDate = formatDate(selectedDate);
-
-      const response = await axios.post(`${host}/reset/add`, {
-        student_id: studentId,
-        date: formattedDate
-      });
-
-      if (response.status === 200 || 201) {
-        // Show notifcation
-        toast.warning(`Lesson reset ${notificationDate}`, {
-          autoClose: 3000 // Close after 3 seconds
-        });
-        fetchData();
-        onUpdate();
-      } else {
-        console.error('Error resetting lesson count. Unexpected response:', response);
-      }
-    } catch (error) {
-      console.error('Error resetting lesson count:', error);
-      throw error;
-    }
-  };
-
   // Function to open AddPayment modal
   const handleAddPayment = () => {
     setShowPaymentModal(true);
@@ -146,15 +115,12 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
               Payment
             </Button>
           </div>
-          <Button
-            className="button"
-            variant="warning"
-            title="Reset lesson count"
-            onClick={resetLessonCount}
-          >
-            <FontAwesomeIcon icon={faSyncAlt} style={{ marginRight: '0.5em' }} />
-            Reset
-          </Button>
+          <AddReset
+            studentId={studentId}
+            selectedDate={selectedDate}
+            fetchData={fetchData}
+            onUpdate={onUpdate}
+          />
           <Button className="button" variant="primary" onClick={handleAddLesson}>
             <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5em' }} />
             Lesson
