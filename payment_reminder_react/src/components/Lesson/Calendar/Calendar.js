@@ -2,11 +2,6 @@ import React from 'react';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendarStyles.css';
-// import EditLesson from './EditLesson';
-// import EditReset from './EditReset';
-// import EditPayment from './EditPayment';
-// import SentText from './SentText';
-
 
 function LessonCalendar({ onSelectDate, lessons, resets, payments, texts }) {
   const tileContent = ({ date, view }) => {

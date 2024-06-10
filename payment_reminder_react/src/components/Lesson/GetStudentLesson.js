@@ -399,7 +399,7 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         reset={editReset}
         resetDate={resetDate}
         setResetDate={setResetDate}
-        setEditLesson={setEditLesson}
+        setEditReset={setEditReset}
         studentId={studentId}
         fetchData={fetchData}
       />
