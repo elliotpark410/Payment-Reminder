@@ -24,7 +24,7 @@ app.use(limiter);
 // Configure CORS
 const corsOptions = {
   // TODO: update origin
-  origin: 'http://localhost:3001', // allow requests from this origin
+  origin: 'http://localhost:3001' || 'http://localhost:3000', // allow requests from this origin
   optionsSuccessStatus: 200 || 201 || 204,
 };
 
