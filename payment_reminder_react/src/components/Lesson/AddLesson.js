@@ -106,7 +106,6 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             resets={resets}
             payments={payments}
             texts={texts}
-            disabled={showPaymentModal}
           />
         </Modal.Body>
         <Modal.Footer>
