@@ -18,6 +18,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
+import './Calendar/calendarStyles.css';
 
 function AddLesson({ onClose, studentId, students, onUpdate }) {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -94,7 +95,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
 
   return (
     <>
-      <Modal show onHide={onClose} size="lg">
+      <Modal show onHide={onClose} size="lg" className={showPaymentModal ? 'calendar-disabled' : ''}>
         <Modal.Header closeButton>
           <Modal.Title>{studentName}</Modal.Title>
         </Modal.Header>
@@ -105,6 +106,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             resets={resets}
             payments={payments}
             texts={texts}
+            disabled={showPaymentModal}
           />
         </Modal.Body>
         <Modal.Footer>
