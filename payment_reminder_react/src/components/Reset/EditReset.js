@@ -7,7 +7,7 @@ import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson, fetchData }) => {
+const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset, fetchData }) => {
   const handleSaveEdit = async () => {
     try {
       // Validate date
@@ -25,18 +25,19 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditLesson
       // console.log('Reset updated successfully:', response.data);
       onHide();
 
-      const notificationDate = formatDate(date);
+      const notificationDate = formatDate(response.data.date);
 
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.warning(`Edited reset ${notificationDate}`, {
+          position: "top-left",
           autoClose: 3000 // Close after 3 seconds
         });
       } else {
         console.error('Error editing reset. Unexpected response:', response);
       }
 
-      setEditLesson(null);
+      setEditReset(null);
       setResetDate('');
       fetchData();
     } catch (error) {

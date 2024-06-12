@@ -385,7 +385,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         lessonDate={lessonDate}
         setLessonDate={setLessonDate}
         setEditLesson={setEditLesson}
-        studentId={studentId}
         fetchData={fetchData}
       />
 
@@ -400,7 +399,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         resetDate={resetDate}
         setResetDate={setResetDate}
         setEditReset={setEditReset}
-        studentId={studentId}
         fetchData={fetchData}
       />
 
@@ -417,7 +415,6 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
         setPaymentDate={setPaymentDate}
         setPaymentAmount={setPaymentAmount}
         setEditPayment={setEditPayment}
-        studentId={studentId}
         fetchData={fetchData}
       />
 

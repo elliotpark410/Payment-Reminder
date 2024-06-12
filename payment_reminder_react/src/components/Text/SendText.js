@@ -79,6 +79,7 @@ const SendText = ({
 
         // Show notifcation
         toast.info(`Message sent on ${today}`, {
+          position: "top-left",
           autoClose: 3000 // Close after 3 seconds
         });
       } else {

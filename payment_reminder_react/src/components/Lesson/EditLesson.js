@@ -33,11 +33,12 @@ const EditLesson = ({
       // console.log('Lesson updated successfully:', response.data);
       onHide();
 
-      const notificationDate = formatDate(date);
+      const notificationDate = formatDate(response.data.date);
 
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Edited lesson ${notificationDate}`, {
+          position: "top-left",
           autoClose: 3000 // Close after 3 seconds
         });
       } else {

@@ -23,6 +23,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.error(`Deleted ${student.student_name}`, {
+          position: "top-left",
           autoClose: 3000 // Close after 3 seconds
         });
       } else {

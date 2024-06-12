@@ -8,7 +8,7 @@ import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
+function AddPayment({ show, onClose, studentId, selectedDate, fetchData }) {
   const [amount, setAmount] = useState('');
   const [isInputEmpty, setIsInputEmpty] = useState(true);
 
@@ -50,10 +50,11 @@ function AddPayment({ show, onClose, studentId, selectedDate, onUpdate }) {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added payment ${notificationDate}`, {
+          position: "top-left",
           autoClose: 3000 // Close after 3 seconds
         });
 
-        onUpdate();
+        fetchData();
       } else {
         console.error('Error adding payment. Unexpected response:', response);
       }

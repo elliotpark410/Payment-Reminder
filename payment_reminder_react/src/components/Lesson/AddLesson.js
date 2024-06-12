@@ -67,6 +67,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added lesson ${notificationDate}`, {
+          position: "top-left",
           autoClose: 3000 // Close after 3 seconds
         });
         fetchData();
@@ -106,6 +107,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             resets={resets}
             payments={payments}
             texts={texts}
+            fetchData={fetchData}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -137,7 +139,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
           onClose={handleClosePaymentModal}
           studentId={studentId}
           selectedDate={selectedDate}
-          onUpdate={fetchData}
+          fetchData={fetchData}
         />
       )}
     </>

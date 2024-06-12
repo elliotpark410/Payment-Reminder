@@ -26,6 +26,7 @@ function AddReset({ studentId, selectedDate, fetchData, onUpdate }) {
 
       if (response.status === 200 || 201) {
         toast.warning(`Lesson reset ${notificationDate}`, {
+          position: "top-left",
           autoClose: 3000
         });
         fetchData();

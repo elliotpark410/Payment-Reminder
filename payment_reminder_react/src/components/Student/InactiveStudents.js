@@ -37,6 +37,7 @@ const handleActivateStudent = async (studentId, studentName) => {
     if (response.status === 200 || 201) {
       // Show notifcation
       toast.success(`Activated ${studentName}`, {
+        position: "top-left",
         autoClose: 3000 // Close after 3 seconds
       });
     } else {
