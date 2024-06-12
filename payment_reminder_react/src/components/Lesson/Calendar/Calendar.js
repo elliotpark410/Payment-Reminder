@@ -23,40 +23,46 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
 
   const [editText, setEditText] = useState(null);
 
-
-
-  const handleEditClick = (date) => {
-    const lesson = lessons.find((lesson) => new Date(lesson.date).toDateString() === date.toDateString());
-    const reset = resets.find((reset) => new Date(reset.date).toDateString() === date.toDateString());
-    const payment = payments.find((payment) => new Date(payment.date).toDateString() === date.toDateString());
-    const text = texts.find((text) => new Date(text.date).toDateString() === date.toDateString());
-
-    if (lesson) {
-      setEditModalOpen(true);
-      setEditType("lesson");
-      setEditLesson(lesson);
-      setLessonDate(new Date(lesson.date).toISOString().slice(0, 10));
-    }
-
-    if (reset) {
-      setEditModalOpen(true);
-      setEditType("reset");
-      setEditReset(reset);
-      setResetDate(new Date(reset.date).toISOString().slice(0, 10));
-    }
-
-    if (payment) {
-      setEditModalOpen(true);
-      setEditType("payment");
-      setEditPayment(payment);
-      setPaymentDate(new Date(payment.date).toISOString().slice(0, 10));
-      setPaymentAmount(payment.amount);
-    }
-
-    if (text) {
-      setEditModalOpen(true);
-      setEditType("text");
-      setEditText(text);
+  const handleEditClick = (type, id) => {
+    switch(type) {
+      case 'lesson':
+        const lesson = lessons.find((lesson) => lesson.id === id);
+        if (lesson) {
+          setEditModalOpen(true);
+          setEditType("lesson");
+          setEditLesson(lesson);
+          setLessonDate(new Date(lesson.date).toISOString().slice(0, 10));
+        }
+        break;
+      case 'reset':
+        const reset = resets.find((reset) => reset.id === id);
+        if (reset) {
+          setEditModalOpen(true);
+          setEditType("reset");
+          setEditReset(reset);
+          setResetDate(new Date(reset.date).toISOString().slice(0, 10));
+        }
+        break;
+      case 'payment':
+        const payment = payments.find((payment) => payment.id === id);
+        if (payment) {
+          setEditModalOpen(true);
+          setEditType("payment");
+          setEditPayment(payment);
+          setPaymentDate(new Date(payment.date).toISOString().slice(0, 10));
+          setPaymentAmount(payment.amount);
+        }
+        break;
+      case 'text':
+        const text = texts.find((text) => text.id === id);
+        if (text) {
+          setEditModalOpen(true);
+          setEditType("text");
+          setEditText(text);
+        }
+        break;
+      default:
+        break;
     }
   };
 
@@ -72,15 +78,10 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
-      const lessonDates = lessons.map((lesson) => new Date(lesson.date).toDateString());
-      const textDates = texts.map((text) => new Date(text.date).toDateString());
-      const resetDates = resets.map((reset) => new Date(reset.date).toDateString());
-      const paymentDates = payments.map((payment) => new Date(payment.date).toDateString());
-
-      const hasLesson = lessonDates.includes(date.toDateString());
-      const hasText = textDates.includes(date.toDateString());
-      const hasReset = resetDates.includes(date.toDateString());
-      const hasPayment = paymentDates.includes(date.toDateString());
+      const lessonRecords = lessons.filter((lesson) => new Date(lesson.date).toDateString() === date.toDateString());
+      const textRecords = texts.filter((text) => new Date(text.date).toDateString() === date.toDateString());
+      const resetRecords = resets.filter((reset) => new Date(reset.date).toDateString() === date.toDateString());
+      const paymentRecords = payments.filter((payment) => new Date(payment.date).toDateString() === date.toDateString());
 
       return (
         <div
@@ -91,8 +92,9 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
             marginTop: '5px'
           }}
         >
-          {hasLesson && (
+          {lessonRecords.map((lesson) => (
             <div
+              key={lesson.id}
               className="lessonRecord"
               style={{
                 width: '30px',
@@ -101,11 +103,12 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
                 borderRadius: '5px',
                 margin: '2px'
               }}
-              onClick={() => handleEditClick(date)}
+              onClick={() => handleEditClick('lesson', lesson.id)}
             />
-          )}
-          {hasText && (
+          ))}
+          {textRecords.map((text) => (
             <div
+              key={text.id}
               className="textRecord"
               style={{
                 width: '30px',
@@ -114,12 +117,13 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
                 borderRadius: '5px',
                 margin: '2px'
               }}
-              onClick={() => handleEditClick(date)}
+              onClick={() => handleEditClick('text', text.id)}
             />
-          )}
-          {hasReset && (
+          ))}
+          {resetRecords.map((reset) => (
             <div
-            className="resetRecord"
+              key={reset.id}
+              className="resetRecord"
               style={{
                 width: '30px',
                 height: '10px',
@@ -127,11 +131,12 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
                 borderRadius: '5px',
                 margin: '2px'
               }}
-              onClick={() => handleEditClick(date)}
+              onClick={() => handleEditClick('reset', reset.id)}
             />
-          )}
-          {hasPayment && (
+          ))}
+          {paymentRecords.map((payment) => (
             <div
+              key={payment.id}
               className="paymentRecord"
               style={{
                 width: '30px',
@@ -140,9 +145,9 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
                 borderRadius: '5px',
                 margin: '2px'
               }}
-              onClick={() => handleEditClick(date)}
+              onClick={() => handleEditClick('payment', payment.id)}
             />
-          )}
+          ))}
         </div>
       );
     }
