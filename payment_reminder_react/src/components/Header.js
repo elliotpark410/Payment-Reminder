@@ -12,8 +12,8 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
   };
 
   return (
-    <Row className="mt-4 d-flex align-items-center">
-      <Col xs={5} className="text-left">
+    <Row className="mt-4 d-flex align-items-center justify-content-between">
+      <Col xs={8} md={4} className="text-left">
         <a
           href="Park Vocal Studio website"
           target="_blank"
@@ -23,7 +23,7 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
           <img src={logo} alt="Park Vocal Studio logo" className="logo" />
         </a>
       </Col>
-      <Col xs={3}>
+      <Col xs={12} md={4}>
         <div className="search-container">
           <Form.Control
             type="text"
@@ -36,7 +36,7 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
           </Button>
         </div>
       </Col>
-      <Col xs={2} className="text-right">
+      <Col xs={6} md={2} className="text-right">
         <Button
           className="big-button"
           variant="primary"
@@ -47,7 +47,7 @@ const Header = ({ onAddStudentClick, onAllLessonsClick, onSearch }) => {
           Add Student
         </Button>
       </Col>
-      <Col xs={2} className="text-right">
+      <Col xs={6} md={2} className="text-right">
         <Button
           className="big-button"
           variant="success"
