@@ -154,11 +154,13 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
     return null;
   };
 
+  const calendarStyling = `shadow-none border-0 ${editModalOpen ? 'calendar-disabled' : ''}`;
+
   return (
     <div className="d-flex justify-content-center">
       <Calendar
         onClickDay={(date) => onSelectDate(date)} // Use onClickDay instead of onSelectSlot
-        className="shadow-none border-0" // Remove default calendar shadow and border
+        className={calendarStyling}
         tileContent={tileContent}
       />
 
