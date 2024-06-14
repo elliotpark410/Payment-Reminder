@@ -4,9 +4,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 
-// import db from "./config/connection.ts"
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 // Set up middleware
@@ -36,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", rootRouter);
 
 app.listen(PORT, async () => {
-  console.log(`Express app listening on port ${PORT}`);
+  console.log(`Express app listening on port ${PORT} in ${process.env.NODE_ENV} mode`);
 });
 
 export default app;
