@@ -20,7 +20,7 @@ const StudentItem = ({
   student,
   onEdit,
   onDelete,
-  onViewLessons,
+  onViewHistory,
   onAddLesson,
   onSendText,
   getLessonCount
@@ -87,7 +87,7 @@ const StudentItem = ({
           style={{ width: '120px' }}
           variant="outline-success"
           title="View lessons"
-          onClick={() => onViewLessons(student)}
+          onClick={() => onViewHistory(student)}
         >
           <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
           History
@@ -130,7 +130,7 @@ const GetAllStudents = ({
   students,
   onEditStudentClick,
   onDeleteStudentClick,
-  onViewStudentLessonsClick,
+  onViewStudentHistoryClick,
   getLessonCountForStudent,
   onAddLessonClick,
   onSendTextClick,
@@ -174,7 +174,7 @@ const GetAllStudents = ({
             student={student}
             onEdit={onEditStudentClick}
             onDelete={onDeleteStudentClick}
-            onViewLessons={onViewStudentLessonsClick}
+            onViewHistory={onViewStudentHistoryClick}
             onAddLesson={onAddLessonClick}
             onSendText={onSendTextClick}
             getLessonCount={getLessonCountForStudent}

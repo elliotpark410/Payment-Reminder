@@ -32,7 +32,7 @@ function AppContent() {
     showDeleteStudentModal: false,
     showAllLessons: false,
     showAddLessonModal: false,
-    showStudentLessonModal: false,
+    showStudentHistoryModal: false,
     showSendTextModal: false,
     showInactiveStudentModal: false,
     sendTextDate: null
@@ -132,12 +132,12 @@ function AppContent() {
     setData({ ...data, showDeleteStudentModal: true });
   };
 
-  const handleViewStudentLessonsClick = (student) => {
+  const handleViewStudentHistoryClick = (student) => {
     setData({
       ...data,
       studentId: student.id,
       studentName: student.student_name,
-      showStudentLessonModal: true
+      showStudentHistoryModal: true
     });
   };
 
@@ -244,10 +244,10 @@ function AppContent() {
     setData({ ...data, showAddLessonModal: false, studentId: null });
   };
 
-  const handleCloseStudentLessonsModal = () => {
+  const handleCloseStudentHistoryModal = () => {
     setData({
       ...data,
-      showStudentLessonModal: false,
+      showStudentHistoryModal: false,
       studentId: null,
       studentName: null
     });
@@ -282,7 +282,7 @@ function AppContent() {
         students={students}
         onEditStudentClick={handleEditStudentClick}
         onDeleteStudentClick={handleDeleteStudentClick}
-        onViewStudentLessonsClick={handleViewStudentLessonsClick}
+        onViewStudentHistoryClick={handleViewStudentHistoryClick}
         getLessonCountForStudent={getLessonCountForStudent}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}
@@ -318,13 +318,12 @@ function AppContent() {
         <AddLesson
           students={students}
           studentId={data.studentId}
-          onViewLessons={handleViewStudentLessonsClick}
           onClose={handleCloseAddLessonModal}
           onUpdate={fetchLessonData}
         />
       )}
-      {/* Get Student Lesson Modal is conditionally rendered if showStudentLessonModal is truthy */}
-      {data.showStudentLessonModal && (
+      {/* Get Student Lesson Modal is conditionally rendered if showStudentHistoryModal is truthy */}
+      {data.showStudentHistoryModal && (
         <GetStudentHistory
           studentId={data.studentId}
           studentName={data.studentName}
@@ -332,7 +331,7 @@ function AppContent() {
           sendTextDate={data.sendTextDate}
           onClose={() => {
             fetchData();
-            handleCloseStudentLessonsModal();
+            handleCloseStudentHistoryModal();
           }}
         />
       )}
