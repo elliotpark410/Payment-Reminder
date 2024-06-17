@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-import mysql from 'mysql2';
+import mysql from "mysql2";
+import dotenv from "dotenv";
 dotenv.config();
 
 // Ensure we're connected to the correct database

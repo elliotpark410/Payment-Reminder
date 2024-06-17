@@ -1,5 +1,5 @@
-import { Twilio } from 'twilio';
-import dotenv from 'dotenv';
+import { Twilio } from "twilio";
+import dotenv from "dotenv";
 dotenv.config();
 
 // Your AccountSID and Auth Token from console.twilio.com

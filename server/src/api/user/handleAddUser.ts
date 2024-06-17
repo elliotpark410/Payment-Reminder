@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import connection from '../../db/connection';
+import connection from "../../db/connection";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 dotenv.config();
 
 export async function handleAddUser(

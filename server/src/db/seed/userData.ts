@@ -1,4 +1,4 @@
-import connection from '../connection';
+import connection from "../connection";
 
 export function seedUsers() {
   const userData = [
