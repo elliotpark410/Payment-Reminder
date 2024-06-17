@@ -8,7 +8,7 @@ import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-function AddPayment({ show, onClose, studentId, selectedDate, fetchData }) {
+function AddPayment({ show, onClose, studentId, selectedDate, fetchStudentPaymentData }) {
   const [amount, setAmount] = useState('');
   const [isInputEmpty, setIsInputEmpty] = useState(true);
 
@@ -54,7 +54,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, fetchData }) {
           autoClose: 3000 // Close after 3 seconds
         });
 
-        fetchData();
+        fetchStudentPaymentData();
       } else {
         console.error('Error adding payment. Unexpected response:', response);
       }

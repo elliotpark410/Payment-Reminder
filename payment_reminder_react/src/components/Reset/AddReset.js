@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
-function AddReset({ studentId, selectedDate, fetchData, onUpdate }) {
+function AddReset({ studentId, selectedDate, fetchStudentResetData, onUpdate }) {
   const resetLessonCount = async () => {
     try {
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
@@ -29,7 +29,7 @@ function AddReset({ studentId, selectedDate, fetchData, onUpdate }) {
           position: "top-left",
           autoClose: 3000
         });
-        fetchData();
+        fetchStudentResetData();
         onUpdate();
       } else {
         console.error('Error resetting lesson count. Unexpected response:', response);

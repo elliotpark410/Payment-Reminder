@@ -7,7 +7,7 @@ import { host } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset, fetchData }) => {
+const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset, fetchStudentResetData }) => {
   const handleSaveEdit = async () => {
     try {
       // Validate date
@@ -39,7 +39,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset,
 
       setEditReset(null);
       setResetDate('');
-      fetchData();
+      fetchStudentResetData();
     } catch (error) {
       console.error('Error updating lesson:', error);
       throw error;

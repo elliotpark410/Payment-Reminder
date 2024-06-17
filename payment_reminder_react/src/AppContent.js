@@ -318,8 +318,8 @@ function AppContent() {
         <AddLesson
           students={students}
           studentId={data.studentId}
+          onUpdate={fetchData}
           onClose={handleCloseAddLessonModal}
-          onUpdate={fetchLessonData}
         />
       )}
       {/* Get Student Lesson Modal is conditionally rendered if showStudentHistoryModal is truthy */}

@@ -7,7 +7,7 @@ import EditReset from '../../Reset/EditReset';
 import EditPayment from '../../Payment/EditPayment';
 import SentText from '../../Text/SentText';
 
-function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchData }) {
+function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchStudentLessonData, fetchStudentResetData, fetchStudentPaymentData }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editType, setEditType] = useState('');
 
@@ -172,7 +172,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
           lessonDate={lessonDate}
           setLessonDate={setLessonDate}
           setEditLesson={setEditLesson}
-          fetchData={fetchData}
+          fetchStudentLessonData={fetchStudentLessonData}
         />
       )}
       {editType === 'reset' && (
@@ -183,7 +183,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
           resetDate={resetDate}
           setResetDate={setResetDate}
           setEditReset={setEditReset}
-          fetchData={fetchData}
+          fetchStudentResetData={fetchStudentResetData}
         />
       )}
       {editType === 'payment' && (
@@ -196,7 +196,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchD
           setPaymentDate={setPaymentDate}
           setPaymentAmount={setPaymentAmount}
           setEditPayment={setEditPayment}
-          fetchData={fetchData}
+          fetchStudentPaymentData={fetchStudentPaymentData}
           />
       )}
       {editType === 'text' && (

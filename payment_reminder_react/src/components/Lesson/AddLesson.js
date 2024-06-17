@@ -28,7 +28,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   const [texts, setTexts] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  const fetchData = useCallback(async () => {
+  const fetchStudentData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
     const fetchedResets = await fetchStudentResets(studentId);
     const fetchedPayments = await fetchStudentPayments(studentId);
@@ -42,8 +42,23 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
 
   useEffect(() => {
     setSelectedDate(new Date());
-    fetchData();
-  }, [fetchData, studentId]);
+    fetchStudentData();
+  }, [fetchStudentData, studentId]);
+
+  const fetchStudentLessonData = async () => {
+    const fetchedLessons = await fetchStudentLessons(studentId);
+    setLessons(fetchedLessons);
+  };
+
+  const fetchStudentResetData = async () => {
+    const fetchedResets = await fetchStudentResets(studentId);
+    setResets(fetchedResets);
+  };
+
+  const fetchStudentPaymentData = async () => {
+    const fetchedPayments = await fetchStudentPayments(studentId);
+    setPayments(fetchedPayments);
+  };
 
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
@@ -70,7 +85,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
           position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
-        fetchData();
+        fetchStudentLessonData();
         onUpdate();
       } else {
         console.error('Error adding lesson. Unexpected response:', response);
@@ -112,7 +127,9 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             resets={resets}
             payments={payments}
             texts={texts}
-            fetchData={fetchData}
+            fetchStudentLessonData={fetchStudentLessonData}
+            fetchStudentResetData={fetchStudentResetData}
+            fetchStudentPaymentData={fetchStudentPaymentData}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -125,7 +142,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
           <AddReset
             studentId={studentId}
             selectedDate={selectedDate}
-            fetchData={fetchData}
+            fetchStudentResetData={fetchStudentResetData}
             onUpdate={onUpdate}
           />
           <Button className="button" variant="primary" onClick={handleAddLesson}>
@@ -144,7 +161,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
           onClose={handleClosePaymentModal}
           studentId={studentId}
           selectedDate={selectedDate}
-          fetchData={fetchData}
+          fetchStudentPaymentData={fetchStudentPaymentData}
         />
       )}
     </>

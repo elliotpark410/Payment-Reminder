@@ -14,7 +14,7 @@ const EditLesson = ({
   lessonDate,
   setLessonDate,
   setEditLesson,
-  fetchData
+  fetchStudentLessonData
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -47,7 +47,7 @@ const EditLesson = ({
 
       setEditLesson(null);
       setLessonDate('');
-      fetchData();
+      fetchStudentLessonData();
     } catch (error) {
       console.error('Error updating lesson:', error);
       throw error;

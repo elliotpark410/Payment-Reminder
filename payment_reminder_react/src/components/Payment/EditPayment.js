@@ -16,7 +16,7 @@ const EditPayment = ({
   setPaymentDate,
   setPaymentAmount,
   setEditPayment,
-  fetchData
+  fetchStudentPaymentData
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -60,7 +60,7 @@ const EditPayment = ({
       setEditPayment(null);
       setPaymentDate('');
       setPaymentAmount(null);
-      fetchData();
+      fetchStudentPaymentData();
     } catch (error) {
       console.error('Error updating payment:', error);
       throw error;

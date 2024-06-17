@@ -137,7 +137,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
 
   const itemsPerPage = 6;
 
-  const fetchData = useCallback(async () => {
+  const fetchStudentData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
     const fetchedResets = await fetchStudentResets(studentId);
     const fetchedPayments = await fetchStudentPayments(studentId);
@@ -160,8 +160,23 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
   }, [studentId]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData, studentId]);
+    fetchStudentData();
+  }, [fetchStudentData, studentId]);
+
+  const fetchStudentLessonData = async () => {
+    const fetchedLessons = await fetchStudentLessons(studentId);
+    setLessons(fetchedLessons);
+  };
+
+  const fetchStudentResetData = async () => {
+    const fetchedResets = await fetchStudentResets(studentId);
+    setResets(fetchedResets);
+  };
+
+  const fetchStudentPaymentData = async () => {
+    const fetchedPayments = await fetchStudentPayments(studentId);
+    setPayments(fetchedPayments);
+  };
 
   const handleEditLesson = (lesson) => {
     setEditLesson(lesson);
@@ -385,7 +400,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         lessonDate={lessonDate}
         setLessonDate={setLessonDate}
         setEditLesson={setEditLesson}
-        fetchData={fetchData}
+        fetchStudentLessonData={fetchStudentLessonData}
       />
 
       {/* Edit Reset Modal */}
@@ -399,7 +414,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         resetDate={resetDate}
         setResetDate={setResetDate}
         setEditReset={setEditReset}
-        fetchData={fetchData}
+        fetchStudentResetData={fetchStudentResetData}
       />
 
       {/* Edit Payment Modal */}
@@ -415,7 +430,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         setPaymentDate={setPaymentDate}
         setPaymentAmount={setPaymentAmount}
         setEditPayment={setEditPayment}
-        fetchData={fetchData}
+        fetchStudentPaymentData={fetchStudentPaymentData}
       />
 
       {/* Display Sent Text Modal */}
