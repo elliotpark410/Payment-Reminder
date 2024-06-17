@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start-dev": "nodemon --exec ts-node app.ts",
+    "start-dev": "nodemon --exec ts-node src/app.ts",
     "start": "npm run build && pm2 start ecosystem.config.cjs && pm2 logs",
     "restart": "npm run build && pm2 restart ecosystem.config.cjs && pm2 logs",
     "stop": "pm2 stop ecosystem.config.cjs",
     "delete": "pm2 delete ecosystem.config.cjs",
     "start-docker": "cd docker && docker-compose up -d",
     "stop-docker": "cd docker && docker-compose down",
-    "drop-db": "ts-node db/drop-db.ts",
+    "drop-db": "ts-node src/db/drop-db.ts",
     "init-db": "npm run start-docker && npm run create-db && npm run add-tables",
-    "create-db": "ts-node db/create-db.ts",
-    "add-tables": "ts-node db/add-tables.ts",
-    "add-data": "ts-node db/seed/index.ts"
+    "create-db": "ts-node src/db/create-db.ts",
+    "add-tables": "ts-node src/db/add-tables.ts",
+    "add-data": "ts-node src/db/seed/index.ts"
   },
   "repository": {
     "type": "git",
