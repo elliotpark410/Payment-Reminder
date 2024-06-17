@@ -115,7 +115,7 @@ export const fetchStudentTexts = async (studentId) => {
   }
 };
 
-function GetStudentLesson({ studentId, studentName, onClose }) {
+function GetStudentHistory({ studentId, studentName, onClose }) {
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
   const [texts, setTexts] = useState([]);
@@ -431,4 +431,4 @@ function GetStudentLesson({ studentId, studentName, onClose }) {
   );
 }
 
-export default GetStudentLesson;
+export default GetStudentHistory;

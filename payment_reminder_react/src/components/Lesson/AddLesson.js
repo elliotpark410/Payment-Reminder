@@ -14,7 +14,7 @@ import {
   fetchStudentResets,
   fetchStudentPayments,
   fetchStudentTexts
-} from '../Lesson/GetStudentLesson';
+} from './GetStudentHistory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
@@ -67,7 +67,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
       if (response.status === 200 || 201) {
         // Show notifcation
         toast.success(`Added lesson ${notificationDate}`, {
-          position: "top-left",
+          position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
         fetchData();
@@ -96,7 +96,12 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
 
   return (
     <>
-      <Modal show onHide={onClose} size="lg" className={showPaymentModal ? 'calendar-disabled' : ''}>
+      <Modal
+        show
+        onHide={onClose}
+        size="lg"
+        className={showPaymentModal ? 'calendar-disabled' : ''}
+      >
         <Modal.Header closeButton>
           <Modal.Title>{studentName}</Modal.Title>
         </Modal.Header>

@@ -7,7 +7,7 @@ import EditStudent from './components/Student/EditStudent';
 import AddStudent from './components/Student/AddStudent';
 import DeleteStudent from './components/Student/DeleteStudent';
 import InactiveStudents from './components/Student/InactiveStudents';
-import GetStudentLesson from './components/Lesson/GetStudentLesson';
+import GetStudentHistory from './components/Lesson/GetStudentHistory';
 import GetAllLessons from './components/Lesson/GetAllLessons';
 import AddLesson from './components/Lesson/AddLesson';
 import Header from './components/Header';
@@ -38,12 +38,12 @@ function AppContent() {
     sendTextDate: null
   });
 
-  // fetch initial data
+  // Fetch initial data
   useEffect(() => {
     fetchData();
   }, []);
 
-  // fetch students and lessons data
+  // Fetch all data
   const fetchData = async () => {
     try {
       const [studentsResponse, lessonsResponse, resetsResponse, textResponse] = await Promise.all([
@@ -57,7 +57,7 @@ function AppContent() {
       const resetsData = await resetsResponse.json();
       const textData = await textResponse.json();
 
-      // order students by alphabetical order
+      // Order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
       setResets(resetsData);
@@ -65,6 +65,55 @@ function AppContent() {
     } catch (error) {
       console.error('Error fetching data:', error);
       setError(error.response?.data?.message || 'Error getting data');
+    }
+  };
+
+  // Fetch student data
+  const fetchStudentData = async () => {
+    try {
+      const studentsResponse = await fetch(`${host}/student/`);
+      const studentsData = await studentsResponse.json();
+      // order students by alphabetical order
+      setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
+    } catch (error) {
+      console.error('Error fetching student data:', error);
+      setError(error.response?.data?.message || 'Error getting student data');
+    }
+  };
+
+  // Fetch lesson data
+  const fetchLessonData = async () => {
+    try {
+      const lessonsResponse = await fetch(`${host}/lesson/`);
+      const lessonsData = await lessonsResponse.json();
+      setLessons(lessonsData);
+    } catch (error) {
+      console.error('Error fetching lesson data:', error);
+      setError(error.response?.data?.message || 'Error getting lesson data');
+    }
+  };
+
+  // Fetch reset data
+  const fetchResetData = async () => {
+    try {
+      const resetsResponse = await fetch(`${host}/reset/`);
+      const resetsData = await resetsResponse.json();
+      setResets(resetsData);
+    } catch (error) {
+      console.error('Error fetching reset data:', error);
+      setError(error.response?.data?.message || 'Error getting reset data');
+    }
+  };
+
+  // Fetch text data
+  const fetchTextData = async () => {
+    try {
+      const textsResponse = await fetch(`${host}/text/`);
+      const textsData = await textsResponse.json();
+      setTexts(textsData);
+    } catch (error) {
+      console.error('Error fetching text data:', error);
+      setError(error.response?.data?.message || 'Error getting text data');
     }
   };
 
@@ -235,7 +284,6 @@ function AppContent() {
         onDeleteStudentClick={handleDeleteStudentClick}
         onViewStudentLessonsClick={handleViewStudentLessonsClick}
         getLessonCountForStudent={getLessonCountForStudent}
-        resetLessonCountForStudentClick={fetchData}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}
         searchName={searchName}
@@ -246,7 +294,7 @@ function AppContent() {
         <AddStudent
           onClose={() => handleUpdateData({ showAddStudentForm: false })}
           onAdd={() => {
-            fetchData();
+            fetchStudentData();
             handleUpdateData({ showAddStudentForm: false });
           }}
         />
@@ -261,7 +309,7 @@ function AppContent() {
           student={studentSelected}
           onClose={() => handleUpdateData({ showEditStudentForm: false })}
           onEdit={() => {
-            fetchData();
+            fetchStudentData();
           }}
         />
       )}
@@ -272,12 +320,12 @@ function AppContent() {
           studentId={data.studentId}
           onViewLessons={handleViewStudentLessonsClick}
           onClose={handleCloseAddLessonModal}
-          onUpdate={fetchData}
+          onUpdate={fetchLessonData}
         />
       )}
       {/* Get Student Lesson Modal is conditionally rendered if showStudentLessonModal is truthy */}
       {data.showStudentLessonModal && (
-        <GetStudentLesson
+        <GetStudentHistory
           studentId={data.studentId}
           studentName={data.studentName}
           lessons={lessons}
@@ -309,7 +357,7 @@ function AppContent() {
             handleUpdateData({ showDeleteStudentModal: false });
           }}
           onDelete={() => {
-            fetchData();
+            fetchStudentData();
             handleUpdateData({ showDeleteStudentModal: false });
           }}
         />
@@ -321,7 +369,7 @@ function AppContent() {
             handleUpdateData({ showInactiveStudentModal: false });
           }}
           onActivate={() => {
-            fetchData();
+            fetchStudentData();
             handleUpdateData({ showInactiveStudentModal: false });
           }}
         />
