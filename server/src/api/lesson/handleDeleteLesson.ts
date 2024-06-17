@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import connection from '../../db/connection';
+import connection from "../../db/connection";
 
 export async function handleDeleteLesson(
   request: Request,
@@ -13,7 +13,7 @@ export async function handleDeleteLesson(
 
     // Query to delete lesson
     const query = "DELETE FROM lessons WHERE id = ?";
-    
+
     // Execute the delete query with lesson ID as parameter
     connection.query(query, [lesson_id], (error, deleteResults) => {
       if (error) {

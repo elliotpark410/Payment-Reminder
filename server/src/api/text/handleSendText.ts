@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import connection from '../../db/connection';
-import { RowDataPacket } from 'mysql2';
+import connection from "../../db/connection";
+import { RowDataPacket } from "mysql2";
 import { Twilio } from "twilio";
-import { format } from 'date-fns-tz';
-import dotenv from 'dotenv';
+import { format } from "date-fns-tz";
+import dotenv from "dotenv";
 dotenv.config();
 
 // Your AccountSID and Auth Token from console.twilio.com

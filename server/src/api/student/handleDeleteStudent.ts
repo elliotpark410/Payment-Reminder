@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import connection from '../../db/connection';
+import connection from "../../db/connection";
 
 export async function handleDeleteStudent(
   request: Request,

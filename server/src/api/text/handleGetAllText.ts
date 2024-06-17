@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import connection from "../../db/connection";
-import { RowDataPacket } from 'mysql2';
+import { RowDataPacket } from "mysql2";
 
 export async function handleGetAllText(
   request: Request,
