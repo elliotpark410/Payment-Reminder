@@ -61,7 +61,7 @@ export async function handleAddUser(
         // Return success with token
         response
           .status(201)
-          .json({ message: 'User created successfully', token });
+          .json({ message: 'User created successfully', token, password_hash });
       }
     );
   } catch (err) {
