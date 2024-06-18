@@ -25,7 +25,7 @@ export async function handleGetUser(
     const query = 'SELECT * FROM users WHERE username = ?';
 
     // Execute the query
-    connection.query(query, [username], (error, results: RowDataPacket[]) => {
+    connection.query(query, [username], async (error, results: RowDataPacket[]) => {
       if (error) {
         // If there's an error, pass it to the error handling middleware
         return next(error);
@@ -38,7 +38,7 @@ export async function handleGetUser(
       const user = results[0];
 
       // Verify the password with bcrypt
-      const isPasswordCorrect = bcrypt.compare(password, user.password_hash);
+      const isPasswordCorrect = await bcrypt.compare(password, user.password_hash);
 
       if (!isPasswordCorrect) {
         return response.status(401).json({ message: 'Invalid password' });
