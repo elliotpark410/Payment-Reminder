@@ -16,7 +16,8 @@
     "init-db": "npm run start-docker && npm run create-db && npm run add-tables",
     "create-db": "ts-node src/db/create-db.ts",
     "add-tables": "ts-node src/db/add-tables.ts",
-    "add-data": "ts-node src/db/seed/index.ts"
+    "add-data": "ts-node src/db/seed/index.ts",
+    "migrate": "ts-node src/db/migrate/update-table.ts"
   },
   "repository": {
     "type": "git",

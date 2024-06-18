@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
   host: getEnvVariable('DB_HOST'),
   user: getEnvVariable('DB_USER'),
   password: getEnvVariable('DB_PASSWORD'),
-  database: 'payment_reminder', // Connect to the correct database
+  database: getEnvVariable('DB_DATABASE'),
   multipleStatements: true,
 });
 

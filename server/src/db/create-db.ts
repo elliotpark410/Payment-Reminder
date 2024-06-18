@@ -3,6 +3,8 @@ import { getEnvVariable } from '../util/index';
 import mysql from 'mysql2';
 dotenv.config();
 
+const database_name = getEnvVariable('DB_DATABASE');
+
 // Create a connection to the MySQL server
 const connection = mysql.createConnection({
   host: getEnvVariable('DB_HOST'),
@@ -21,7 +23,7 @@ connection.connect((err) => {
 
   // Function to create a database if it doesn't exist
   connection.query(
-    `CREATE DATABASE IF NOT EXISTS payment_reminder`,
+    `CREATE DATABASE IF NOT EXISTS ${database_name}`,
     (createDbErr) => {
       if (createDbErr) {
         console.error('Error creating database:', createDbErr);
@@ -29,12 +31,12 @@ connection.connect((err) => {
       }
       console.log('Database created or already exists');
       // Optional: Ensure that you select the created database to avoid "unknown database" errors
-      connection.changeUser({ database: 'payment_reminder' }, (changeDbErr) => {
+      connection.changeUser({ database: `${database_name}` }, (changeDbErr) => {
         if (changeDbErr) {
           console.error('Error changing to created database:', changeDbErr);
           throw changeDbErr;
         }
-        console.log('Now using payment_reminder database');
+        console.log(`Now using ${database_name} database`);
         connection.end();
       });
     }

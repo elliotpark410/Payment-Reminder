@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import { getEnvVariable } from '../util/index';
 import mysql from 'mysql2';
-
 dotenv.config();
+
+const database_name = getEnvVariable('DB_DATABASE');
 
 // Create a connection to the MySQL server
 const connection = mysql.createConnection({
@@ -21,7 +22,7 @@ connection.connect((err) => {
   console.log('Connected to MySQL server');
 
   // Function to drop the database
-  connection.query(`DROP DATABASE IF EXISTS payment_reminder`, (dropDbErr) => {
+  connection.query(`DROP DATABASE IF EXISTS ${database_name}`, (dropDbErr) => {
     if (dropDbErr) {
       console.error('Error dropping database:', dropDbErr);
       throw dropDbErr;
