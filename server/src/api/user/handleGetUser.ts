@@ -1,12 +1,11 @@
-import { NextFunction, Request, Response } from "express";
-import connection from "../../db/connection";
-import { RowDataPacket } from "mysql2";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import { NextFunction, Request, Response } from 'express';
+import connection from '../../db/connection';
+import { getEnvVariable } from '../../util/index';
+import { RowDataPacket } from 'mysql2';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 dotenv.config();
-
-
 
 export async function handleGetUser(
   request: Request,
@@ -19,11 +18,11 @@ export async function handleGetUser(
     if (!username || !password) {
       return response
         .status(400)
-        .json({ message: "Username and password are required" });
+        .json({ message: 'Username and password are required' });
     }
 
     // Query to select a user based on the username
-    const query = "SELECT * FROM users WHERE username = ?";
+    const query = 'SELECT * FROM users WHERE username = ?';
 
     // Execute the query
     connection.query(query, [username], (error, results: RowDataPacket[]) => {
@@ -33,26 +32,31 @@ export async function handleGetUser(
       }
 
       if (results.length === 0) {
-        return response.status(404).json({ message: "User not found" });
+        return response.status(404).json({ message: 'User not found' });
       }
 
       const user = results[0];
 
-       // Verify the password with bcrypt
-       const isPasswordCorrect = bcrypt.compare(password, user.password_hash);
+      // Verify the password with bcrypt
+      const isPasswordCorrect = bcrypt.compare(password, user.password_hash);
 
-       if (!isPasswordCorrect) {
-         return response.status(401).json({ message: "Invalid password" });
-       }
+      if (!isPasswordCorrect) {
+        return response.status(401).json({ message: 'Invalid password' });
+      }
 
-       const token = jwt.sign({ username: user.username, userId: user.id }, process.env.JWT_SECRET!, { expiresIn: '168h' });
+      const jwtSecret = getEnvVariable('JWT_SECRET');
 
+      const token = jwt.sign(
+        { username: user.username, userId: user.id },
+        jwtSecret,
+        { expiresIn: '168h' }
+      );
 
-       // If the password is correct, return success
-       response.status(200).json({ message: "Successfully logged in", token });
+      // If the password is correct, return success
+      response.status(200).json({ message: 'Successfully logged in', token });
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     next(err);
   }
 }

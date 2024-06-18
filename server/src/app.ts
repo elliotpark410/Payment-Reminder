@@ -1,10 +1,12 @@
-import express from "express";
-import rootRouter from "./rootRouter"
-import helmet from "helmet";
-import rateLimit from "express-rate-limit";
-import cors from "cors";
+import express from 'express';
+import rootRouter from './rootRouter';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
+import { getEnvVariable } from './util/index';
 
-const PORT = process.env.PORT || 3000;
+const PORT = getEnvVariable('PORT');
+const environment = getEnvVariable('NODE_ENV');
 const app = express();
 
 // Set up middleware
@@ -22,7 +24,7 @@ app.use(limiter);
 // Configure CORS
 const corsOptions = {
   origin: ['http://localhost:3001', 'http://localhost:3000'], // allow requests from these origins
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 app.use(cors(corsOptions));
@@ -31,12 +33,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Mount root router
-app.use("/", rootRouter);
+app.use('/', rootRouter);
 
 app.listen(PORT, async () => {
-  console.log(`Express app listening on port ${PORT} in ${process.env.NODE_ENV} mode`);
+  console.log(`Express app listening on port ${PORT} in ${environment} mode`);
 });
 
 export default app;
-
-

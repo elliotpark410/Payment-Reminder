@@ -1,12 +1,13 @@
-import mysql from "mysql2";
-import dotenv from "dotenv";
+import mysql from 'mysql2';
+import { getEnvVariable } from '../util/index';
+import dotenv from 'dotenv';
 dotenv.config();
 
 // Ensure we're connected to the correct database
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
+  host: getEnvVariable('DB_HOST'),
+  user: getEnvVariable('DB_USER'),
+  password: getEnvVariable('DB_PASSWORD'),
   database: 'payment_reminder', // Connect to the correct database
   multipleStatements: true,
 });

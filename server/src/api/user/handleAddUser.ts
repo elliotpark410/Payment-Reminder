@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from "express";
-import connection from "../../db/connection";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import { NextFunction, Request, Response } from 'express';
+import connection from '../../db/connection';
+import { getEnvVariable } from '../../util/index';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 dotenv.config();
 
 export async function handleAddUser(
@@ -12,14 +13,18 @@ export async function handleAddUser(
 ) {
   try {
     // Extract user data from request body
-    const { username, password  } = request.body;
+    const { username, password } = request.body;
 
     if (!username || !password) {
-      return response.status(400).json({ message: "Username and password are required" });
+      return response
+        .status(400)
+        .json({ message: 'Username and password are required' });
     }
 
+    const bcryptSaltRounds = getEnvVariable('BCRYPT_SALT_ROUNDS');
+
     // Encrypt the password using bcrypt
-    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS!); // Number of rounds for hashing
+    const saltRounds = parseInt(bcryptSaltRounds); // Number of rounds for hashing
 
     const password_hash = await bcrypt.hash(password, saltRounds);
 
@@ -33,8 +38,10 @@ export async function handleAddUser(
       [username, password_hash],
       (insertError, insertResults) => {
         if (insertError) {
-          if (insertError.code === "ER_DUP_ENTRY") {
-            return response.status(409).json({ message: "Username already exists" });
+          if (insertError.code === 'ER_DUP_ENTRY') {
+            return response
+              .status(409)
+              .json({ message: 'Username already exists' });
           }
           // If there's an error, pass it to the error handling middleware
           return next(insertError);
@@ -44,15 +51,21 @@ export async function handleAddUser(
         const insertResultsJson: any = insertResults;
         const userId = insertResultsJson.insertId;
 
+        const jwtSecret = getEnvVariable('JWT_SECRET');
+
         // Generate JWT token for the newly registered user
-        const token = jwt.sign({ username, userId }, process.env.JWT_SECRET!, { expiresIn: '168h' });
+        const token = jwt.sign({ username, userId }, jwtSecret, {
+          expiresIn: '168h',
+        });
 
         // Return success with token
-        response.status(201).json({ message: "User created successfully", token });
+        response
+          .status(201)
+          .json({ message: 'User created successfully', token });
       }
     );
   } catch (err) {
-    console.log(err)
+    console.log(err);
     next(err);
   }
 }

@@ -1,13 +1,14 @@
-import dotenv from "dotenv";
-import mysql from "mysql2";
+import dotenv from 'dotenv';
+import { getEnvVariable } from '../util/index';
+import mysql from 'mysql2';
 
 dotenv.config();
 
 // Create a connection to the MySQL server
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
+  host: getEnvVariable('DB_HOST'),
+  user: getEnvVariable('DB_USER'),
+  password: getEnvVariable('DB_PASSWORD'),
   multipleStatements: true, // Allows running multiple SQL statements in a single query
 });
 
