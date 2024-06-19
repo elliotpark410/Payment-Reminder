@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 import { getEnvVariable } from './util/index';
 import morgan from 'morgan';
+import moment from 'moment-timezone';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 const PORT = getEnvVariable('PORT');
@@ -41,16 +42,21 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Custom morgan logging format
-const morganFormat = ':method :url :status';
+// Custom tokens for date and time period in Pacific Time
+morgan.token('date', (req, res, tz) => {
+  return moment().tz('America/Los_Angeles').format('MM-DD-YYYY h:mmA');
+});
 
-// Custom morgan skip function to exclude 304 responses
-function nonModified(req: express.Request, res: express.Response) {
-  return res.statusCode === 304;
-}
+// Custom morgan logging format
+const morganFormat = ':date :method :url :status';
+
+// Custom morgan skip function to exclude 200 (OK), 201 (created), and 304 (not modified) responses
+function responseStatus(req: express.Request, res: express.Response) {
+  return res.statusCode === 200 || res.statusCode === 201 || res.statusCode === 304;
+};
 
 // Logging middleware
-app.use(morgan(morganFormat, { skip: nonModified }));
+app.use(morgan(morganFormat, { skip: responseStatus }));
 
 // Mount root router
 app.use('/', rootRouter);
