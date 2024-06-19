@@ -13,11 +13,9 @@ export function seedUsers() {
   ];
 
   for (const user of userData) {
-    connection.query('INSERT IGNORE INTO users SET ?', user, (err, results) => {
+    connection.query('INSERT IGNORE INTO users SET ?', user, (err) => {
       if (err) {
         console.error('Error inserting user:', err);
-      } else {
-        console.log('Inserted user:', results);
       }
     });
   }

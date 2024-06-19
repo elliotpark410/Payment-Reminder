@@ -250,11 +250,9 @@ export function seedStudents() {
 
 
     // Insert the student data into the database
-    connection.query('INSERT IGNORE INTO students SET ?', studentToInsert, (err, results) => {
+    connection.query('INSERT IGNORE INTO students SET ?', studentToInsert, (err) => {
       if (err) {
         console.error('Error inserting student:', err);
-      } else {
-        console.log('Inserted student:', results);
       }
     });
   }

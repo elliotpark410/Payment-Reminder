@@ -11,11 +11,9 @@ export function seedTexts() {
   ];
 
   for (const text of textsData) {
-    connection.query('INSERT IGNORE INTO texts SET ?', text, (err, results) => {
+    connection.query('INSERT IGNORE INTO texts SET ?', text, (err) => {
       if (err) {
         console.error('Error inserting text:', err);
-      } else {
-        console.log('Inserted text:', results);
       }
     });
   }
