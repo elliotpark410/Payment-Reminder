@@ -36,8 +36,6 @@ export async function handleSendText(
     // Save the sent text message to the database
     await saveTextMessage(student_id, message);
 
-    console.log('MESSAGE: ', sendMessage);
-
     // Respond with success message
     response.json({
       message: `Text message sent successfully. SID: ${sendMessage.sid}`,
