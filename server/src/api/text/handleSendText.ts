@@ -24,6 +24,11 @@ export async function handleSendText(
     // Extract necessary data from request body
     const { student_id, message } = request.body;
 
+    // Validate input
+    if (!student_id || !message) {
+      throw new Error('Student ID and message are required.');
+    }
+
     const phoneNumber = await getPhoneNumber(student_id);
 
     // Send text message using Twilio
@@ -41,7 +46,6 @@ export async function handleSendText(
       message: `Text message sent successfully. SID: ${sendMessage.sid}`,
     });
   } catch (err: any) {
-    console.log(err);
     console.error(`Error sending message: ${err.message}`);
     next(err);
   }
