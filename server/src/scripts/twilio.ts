@@ -1,5 +1,5 @@
 import { Twilio } from 'twilio';
-import { getEnvVariable } from '../src/util/index';
+import { getEnvVariable } from '../util/index';
 import dotenv from 'dotenv';
 dotenv.config();
 

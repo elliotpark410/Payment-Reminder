@@ -89,6 +89,12 @@ export function seedLessons() {
   ];
 
   for (const lesson of lessonsData) {
-    connection.query('INSERT IGNORE INTO lessons SET ?', lesson);
+    connection.query('INSERT IGNORE INTO lessons SET ?', lesson, (err, results) => {
+      if (err) {
+        console.error('Error inserting lesson:', err);
+      } else {
+        console.log('Inserted lesson:', results);
+      }
+    });
   }
 }
