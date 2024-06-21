@@ -10,6 +10,21 @@ services:
       - MYSQL_ROOT_HOST=%
     volumes:
       - my-db:/var/lib/mysql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:6.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   my-db:

@@ -14,7 +14,7 @@
     "start-docker": "cd docker && docker-compose -f docker-compose-db-local.yaml up -d",
     "stop-docker": "cd docker && docker-compose -f docker-compose-db-local.yaml down",
     "drop-db": "ts-node src/db/drop-db.ts",
-    "init-db": "npm run start-docker && npm run create-db && npm run add-tables",
+    "init-db": "npm run start-docker && npm run create-db && npm run add-tables && npm run add-data",
     "create-db": "ts-node src/db/create-db.ts",
     "add-tables": "ts-node src/db/add-tables.ts",
     "add-data": "ts-node src/db/seed/index.ts",
@@ -50,6 +50,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.9.1",
     "pm2": "^5.4.0",
+    "redis": "^4.6.14",
     "twilio": "^4.23.0"
   },
   "devDependencies": {

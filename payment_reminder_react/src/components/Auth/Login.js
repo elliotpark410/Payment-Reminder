@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert, InputGroup, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { host } from '../../lib/constants';
@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../images/logo.png';
 import { website } from '../../lib/constants';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
 
 const Login = () => {
@@ -15,6 +17,16 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 7000); // Clear the error after 7 seconds
+
+      return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
+    }
+  }, [error]);
 
   const openWebsite = () => {
     window.open(`${website}`, '_blank'); // Open link in a new tab
@@ -30,10 +42,16 @@ const Login = () => {
       });
       // console.log('Logged in user:', response.data);
       localStorage.setItem('token', response.data.token); // Store token for persistent login
+      toast.success('Successfully logged in', {
+        position: 'top-left',
+        autoClose: 3000 // Close after 3 seconds
+      });
       setError(null);
       navigate('/'); // Redirect to home page after login
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
+      toast.error('Login failed');
+      return;
     }
   };
 
