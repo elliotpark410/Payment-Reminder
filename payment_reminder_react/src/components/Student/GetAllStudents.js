@@ -65,8 +65,19 @@ const StudentItem = ({
         </div>
       </Col>
       <Col className="text-center">
-        <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)}>
+        <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)} style={{ width: '120px' }} >
           <FontAwesomeIcon icon={faPlus} />
+        </Button>
+      </Col>
+      <Col className="text-center">
+        <Button
+          style={{ width: '120px' }}
+          variant="outline-secondary"
+          title="View history"
+          onClick={() => onViewHistory(student)}
+        >
+          <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
+          History
         </Button>
       </Col>
       <Col className="text-center">
@@ -85,23 +96,12 @@ const StudentItem = ({
       <Col className="text-center">
         <Button
           style={{ width: '120px' }}
-          variant="outline-success"
-          title="View lessons"
-          onClick={() => onViewHistory(student)}
-        >
-          <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
-          History
-        </Button>
-      </Col>
-      <Col className="text-center">
-        <Button
-          style={{ width: '120px' }}
           variant={
             getLessonCount(student.id) < student.subscription_number - 1
               ? 'outline-secondary'
               : 'outline-primary'
           }
-          title="Text"
+          title="Send text"
           onClick={() => onSendText(student)}
           disabled={getLessonCount(student.id) < student.subscription_number - 1}
         >
@@ -154,10 +154,10 @@ const GetAllStudents = ({
             <strong>Add</strong>
           </Col>
           <Col className="text-center">
-            <strong>Count</strong>
+            <strong>View</strong>
           </Col>
           <Col className="text-center">
-            <strong>View</strong>
+            <strong>Count</strong>
           </Col>
           <Col className="text-center">
             <strong>Send</strong>
