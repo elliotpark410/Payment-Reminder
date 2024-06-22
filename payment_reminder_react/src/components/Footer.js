@@ -10,7 +10,7 @@ const Footer = ({ onInactiveStudentsClick }) => {
       <Col xs="auto" className="text-center">
         <Button
           className="big-button"
-          variant="secondary"
+          variant="warning"
           onClick={onInactiveStudentsClick}
           title="Inactive Students"
         >
