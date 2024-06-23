@@ -81,42 +81,6 @@ function AppContent() {
     }
   };
 
-  // Fetch lesson data
-  const fetchLessonData = async () => {
-    try {
-      const lessonsResponse = await fetch(`${host}/lesson/`);
-      const lessonsData = await lessonsResponse.json();
-      setLessons(lessonsData);
-    } catch (error) {
-      console.error('Error fetching lesson data:', error);
-      setError(error.response?.data?.message || 'Error getting lesson data');
-    }
-  };
-
-  // Fetch reset data
-  const fetchResetData = async () => {
-    try {
-      const resetsResponse = await fetch(`${host}/reset/`);
-      const resetsData = await resetsResponse.json();
-      setResets(resetsData);
-    } catch (error) {
-      console.error('Error fetching reset data:', error);
-      setError(error.response?.data?.message || 'Error getting reset data');
-    }
-  };
-
-  // Fetch text data
-  const fetchTextData = async () => {
-    try {
-      const textsResponse = await fetch(`${host}/text/`);
-      const textsData = await textsResponse.json();
-      setTexts(textsData);
-    } catch (error) {
-      console.error('Error fetching text data:', error);
-      setError(error.response?.data?.message || 'Error getting text data');
-    }
-  };
-
   // Event handlers
   const handleAddStudentClick = () => {
     setData({ ...data, showAddStudentForm: true });

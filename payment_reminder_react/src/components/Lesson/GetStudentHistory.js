@@ -273,7 +273,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         <table className="table">
           <thead>
             <tr>
-              <th>Number</th>
+              <th>Count</th>
               <th>Date</th>
               <th>Delete</th>
             </tr>
