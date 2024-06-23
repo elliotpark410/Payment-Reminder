@@ -57,7 +57,7 @@ export const studentsData = [
     "subscription_number": 13
   },
   {
-    "student_name": "Lawrebce Abbott",
+    "student_name": "Lawrence Abbott",
     "phone_number": "b85ac0edc9eeb388d7a40f6edb44afb0",
     "subscription_price": 1800,
     "subscription_number": 13
