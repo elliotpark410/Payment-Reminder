@@ -72,7 +72,7 @@ const StudentItem = ({
       <Col className="text-center">
         <Button
           style={{ width: '120px' }}
-          variant="outline-secondary"
+          variant="outline-dark"
           title="View history"
           onClick={() => onViewHistory(student)}
         >
