@@ -19,14 +19,6 @@
   color: black; /* Set font color for weekends */
 }
 
-.react-calendar__tile--now {
-  background-color: #d1def0; /* Set background color for today's date */
-}
-
-/* .react-calendar__tile--now:active, */
-.react-calendar__tile--now:hover {
-  background-color: #e6e6e6 !important; /* Set background color for today's date when hovered */
-}
 
 .lessonRecord, .resetRecord .paymentRecord, .textRecord {
   cursor: pointer;
