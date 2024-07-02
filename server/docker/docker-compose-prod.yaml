@@ -3,7 +3,6 @@ version: '3.9'
 services:
   backend:
     image: elliotpark410/payment_reminder_server:latest
-    platform: linux/amd64
     container_name: backend
     env_file: ../.env
     ports:
@@ -17,7 +16,6 @@ services:
 
   frontend:
     image: elliotpark410/payment_reminder_react:latest
-    platform: linux/amd64
     container_name: frontend
     ports:
       - "80:80"
