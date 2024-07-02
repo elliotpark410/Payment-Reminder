@@ -15,16 +15,6 @@ services:
     restart: unless-stopped
     platform: linux/amd64
 
-  frontend:
-    image: elliotpark410/payment_reminder_react:latest
-    container_name: frontend
-    ports:
-      - "80:80"
-    networks:
-      - app-network
-    restart: unless-stopped
-    platform: linux/amd64 
-
   database:
     image: mysql/mysql-server:8.0
     container_name: mysql
