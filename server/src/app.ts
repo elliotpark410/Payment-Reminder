@@ -33,7 +33,7 @@ app.use(limiter);
 const corsOptions = {
   origin: environment === 'production'
     ? [domain]
-    : ['http://localhost:3001', 'http://localhost:3000'], // allow requests from these origins
+    : ['http://localhost:3000'], 
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
