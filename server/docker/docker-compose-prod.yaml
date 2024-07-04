@@ -1,58 +1,41 @@
 version: '3.9'
 
 services:
-  frontend:
-    image: elliotpark410/payment_reminder_react
-    container_name: frontend
+  backend:
+    image: elliotpark410/payment_reminder_server:latest
+    container_name: backend
+    env_file: ../.env
     ports:
-      - "80:80"
+      - "3000:3000"
+    depends_on:
+      - database
+      - redis
     networks:
       - app-network
+    restart: unless-stopped
+    platform: linux/amd64
 
-  # backend:
-  #   image: elliotpark410/payment_reminder_server
-  #   container_name: backend
-  #   environment:
-  #     - NODE_ENV=production
-  #     - DATABASE_HOST=database
-  #     - DATABASE_NAME=${MYSQL_DATABASE}
-  #     - DATABASE_USER=${MYSQL_USER}
-  #     - DATABASE_PASSWORD=${MYSQL_PASSWORD}
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - database
-  #   networks:
-  #     - app-network
-  #   ports:
-  #     - "3000:3000"
+  database:
+    image: mysql/mysql-server:8.0
+    container_name: mysql
+    env_file: ../.env
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - app-network
+    restart: unless-stopped
 
-  # database:
-  #   image: mysql:8.0
-  #   container_name: mysql
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
-  #     - MYSQL_USER=${MYSQL_USER}
-  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - db-data:/var/lib/mysql
-  #   networks:
-  #     - app-network
-  #   restart: unless-stopped
-
-  # redis:
-  #   image: redis:6.2
-  #   container_name: redis
-  #   networks:
-  #     - app-network
-  #   restart: unless-stopped
-
-volumes:
-  db-data:
+  redis:
+    image: redis:6.2
+    container_name: redis
+    env_file: ../.env
+    networks:
+      - app-network
+    restart: unless-stopped
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  my-db:
