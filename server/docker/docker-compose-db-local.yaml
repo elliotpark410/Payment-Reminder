@@ -11,7 +11,7 @@ services:
     volumes:
       - my-db:/var/lib/mysql
     networks:
-      - docker_app-network
+      - app-network
 
   redis:
     image: redis:6.2
@@ -19,11 +19,11 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - docker_app-network
+      - app-network
     restart: unless-stopped
 
 networks:
-  docker_app-network:
+  app-network:
     driver: bridge
 
 volumes:

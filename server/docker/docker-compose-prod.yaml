@@ -1,9 +1,5 @@
 version: '3.9'
 
-networks:
-  app-network:
-    driver: bridge
-
 services:
   database:
     image: mysql/mysql-server:8.0
@@ -43,6 +39,10 @@ services:
           cpus: '0.05'
           memory: 64M
     command: redis-server --maxmemory 100mb --maxmemory-policy allkeys-lru
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   my-db:
