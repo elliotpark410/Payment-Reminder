@@ -5,11 +5,6 @@ module.exports = {
       script: "./dist/app.js",
       cwd: "./",
       env: {
-        NODE_ENV: "development",
-        NODE_OPTIONS: "--enable-source-maps",
-        PORT: 3000
-      },
-      env_production: {
         NODE_ENV: "production",
         PORT: 8080
       },
