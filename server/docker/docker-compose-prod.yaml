@@ -4,6 +4,8 @@ services:
   database:
     image: mysql/mysql-server:8.0
     container_name: mysql
+    ports:
+      - "3306:3306"
     env_file: ../.env
     volumes:
       - my-db:/var/lib/mysql
@@ -26,6 +28,8 @@ services:
   redis:
     image: redis:6.2
     container_name: redis
+    ports:
+      - "6379:6379"
     env_file: ../.env
     networks:
       - app-network
