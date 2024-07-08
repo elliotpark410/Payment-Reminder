@@ -33,7 +33,7 @@ app.use(limiter);
 const corsOptions = {
   origin: environment === 'production'
     ? [domain]
-    : ['http://localhost:3000'], 
+    : ['http://localhost:3000'],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
@@ -59,7 +59,7 @@ function responseStatus(req: express.Request, res: express.Response) {
 app.use(morgan(morganFormat, { skip: responseStatus }));
 
 // Mount root router
-app.use('/', rootRouter);
+app.use('/api', rootRouter);
 
 // Error handling middleware
 app.use(notFoundHandler);
