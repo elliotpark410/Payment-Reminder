@@ -12,7 +12,11 @@ module.exports = {
       ignore_watch: ["node_modules"],
       watch_delay: 1000,
       instances: 1,
-      exec_mode: "cluster"
+      exec_mode: "cluster",
+      log_file: '',
+      out_file: '',
+      error_file: '',
+      time: true
     }
   ]
 };
