@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const host = getEnvVariable('DB_HOST');
-console.log("host")
-console.log(host)
 const user = getEnvVariable('DB_USER');
 const password = getEnvVariable('DB_PASSWORD');
 const database = getEnvVariable('DB_DATABASE');
