@@ -66,10 +66,13 @@ app.use((req, res, next) => {
 
   // Check if there's a method override header
   const methodOverride = req.headers['x-http-method-override'];
-  if (methodOverride) {
+  if (methodOverride && ['POST', 'PUT', 'DELETE', 'PATCH'].includes(methodOverride.toString().toUpperCase())) {
     console.log(`Method override detected: ${methodOverride}`);
     req.method = methodOverride.toString().toUpperCase();
+  } else {
+    console.log(`Using original method: ${req.method}`);
   }
+  
   next();
 });
 
