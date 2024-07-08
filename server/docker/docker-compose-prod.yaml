@@ -26,12 +26,6 @@ services:
       - --performance_schema=OFF
       - --table_definition_cache=200
       - --table_open_cache=128
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
 
   redis:
     image: redis:6.2
