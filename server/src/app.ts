@@ -63,6 +63,13 @@ app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   console.log('Headers:', req.headers);
   console.log('Body:', req.body);
+
+  // Check if there's a method override header
+  const methodOverride = req.headers['x-http-method-override'];
+  if (methodOverride) {
+    console.log(`Method override detected: ${methodOverride}`);
+    req.method = methodOverride.toString().toUpperCase();
+  }
   next();
 });
 
