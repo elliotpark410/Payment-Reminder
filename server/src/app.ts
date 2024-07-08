@@ -13,6 +13,9 @@ const environment = getEnvVariable('NODE_ENV');
 const domain = getEnvVariable('DOMAIN');
 const app = express();
 
+// Trust proxy settings
+app.set('trust proxy', true);
+
 // Set up middleware
 // Set security-related HTTP headers
 const cspOptions = environment === 'production' ? {} : { directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'", "'unsafe-inline'"] } };
