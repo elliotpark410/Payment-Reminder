@@ -58,14 +58,13 @@ function responseStatus(req: express.Request, res: express.Response) {
 // Logging middleware
 app.use(morgan(morganFormat, { skip: responseStatus }));
 
-// Log requests to debug
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
+// // Log requests to debug
+// app.use((req, res, next) => {
+//   console.log(`Incoming request: ${req.method} ${req.url}`);
+//   console.log('Body:', req.body);
 
-  next();
-});
+//   next();
+// });
 
 // Mount root router
 app.use('/api', rootRouter);
