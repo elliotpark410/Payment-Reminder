@@ -48,7 +48,7 @@ morgan.token('response-body', (req: express.Request, res: express.Response) => {
 });
 
 // Custom morgan logging format
-const morganFormat = ':date :method :url :status :response-time ms :body :response-body';
+const morganFormat = ':date :method :url :status :response-time ms :body';
 
 // Custom morgan skip function to exclude 200 (OK), 201 (created), and 304 (not modified) responses
 function responseStatus(req: express.Request, res: express.Response) {
@@ -57,14 +57,6 @@ function responseStatus(req: express.Request, res: express.Response) {
 
 // Logging middleware
 app.use(morgan(morganFormat, { skip: responseStatus }));
-
-// // Log requests to debug
-// app.use((req, res, next) => {
-//   console.log(`Incoming request: ${req.method} ${req.url}`);
-//   console.log('Body:', req.body);
-
-//   next();
-// });
 
 // Mount root router
 app.use('/api', rootRouter);
