@@ -2,7 +2,6 @@ import express from 'express';
 import rootRouter from './rootRouter';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import cors from 'cors';
 import { getEnvVariable } from './util/index';
 import morgan from 'morgan';
 import moment from 'moment-timezone';
@@ -28,16 +27,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later',
 });
 app.use(limiter);
-
-// Configure CORS
-const corsOptions = {
-  origin: environment === 'production'
-    ? [domain]
-    : ['http://localhost:3000'],
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
