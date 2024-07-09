@@ -47,8 +47,19 @@ morgan.token('date', (req, res, tz) => {
   return moment().tz('America/Los_Angeles').format('MM-DD-YYYY h:mmA');
 });
 
+morgan.token('body', (req: express.Request, res: express.Response) => {
+  return JSON.stringify(req.body || {});
+});
+
+morgan.token('response-body', (req: express.Request, res: express.Response) => {
+  if (res.statusCode >= 400) {
+    return res.locals?.errorMessage || '';
+  }
+  return '';
+});
+
 // Custom morgan logging format
-const morganFormat = ':date :method :url :status';
+const morganFormat = ':date :method :url :status :response-time ms :body :response-body';
 
 // Custom morgan skip function to exclude 200 (OK), 201 (created), and 304 (not modified) responses
 function responseStatus(req: express.Request, res: express.Response) {

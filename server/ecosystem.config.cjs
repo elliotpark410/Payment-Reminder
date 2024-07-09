@@ -13,9 +13,9 @@ module.exports = {
       watch_delay: 1000,
       instances: 1,
       exec_mode: "cluster",
-      log_file: '',
-      out_file: '',
-      error_file: '',
+      log_file: './logs/combined.log',
+      out_file: './logs/out.log',
+      error_file: './logs/error.log',
       time: true
     }
   ]

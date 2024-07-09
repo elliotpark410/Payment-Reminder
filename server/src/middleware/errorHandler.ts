@@ -20,6 +20,8 @@ const logger = winston.createLogger({
 });
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+  let errorMessage = err.message || 'Internal Server Error';
+
   logger.error({
     message: err.message,
     stack: err.stack,
@@ -29,10 +31,12 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
     timestamp: moment().tz('America/Los_Angeles').format('MM-DD-YYYY h:mmA')
   });
 
-  res.status(500).json({ error: 'Internal Server Error' });
+  res.status(500).json({ error: errorMessage });
 };
 
 export function notFoundHandler(req: Request, res: Response, next: NextFunction) {
   res.status(404).json({ message: 'Not found' });
-};
+}
+
+
 
