@@ -26,11 +26,6 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 200, // limit each IP to 200 requests per windowMs
   message: 'Too many requests from this IP, please try again later',
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req) => {
-    return req.ip || req.connection.remoteAddress || 'unknown';
-  },
 });
 app.use(limiter);
 
@@ -68,15 +63,6 @@ app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   console.log('Headers:', req.headers);
   console.log('Body:', req.body);
-
-  // Check if there's a method override header
-  const methodOverride = req.headers['x-http-method-override'];
-  if (methodOverride && ['POST', 'PUT', 'DELETE', 'PATCH'].includes(methodOverride.toString().toUpperCase())) {
-    console.log(`Method override detected: ${methodOverride}`);
-    req.method = methodOverride.toString().toUpperCase();
-  } else {
-    console.log(`Using original method: ${req.method}`);
-  }
 
   next();
 });
