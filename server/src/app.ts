@@ -9,7 +9,6 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 const PORT = getEnvVariable('PORT');
 const environment = getEnvVariable('NODE_ENV');
-const domain = getEnvVariable('DOMAIN');
 const app = express();
 
 // Set up middleware
