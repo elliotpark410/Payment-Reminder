@@ -4,8 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar';
-import axios from 'axios';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
 import AddReset from '../Reset/AddReset';
@@ -70,7 +69,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
       });
 
       // Make API call to add lesson using Axios
-      const response = await axios.post(`${host}/lesson/add`, {
+      const response = await api.post(`/lesson/add`, {
         student_id: studentId,
         date: formattedDate
       });

@@ -2,9 +2,8 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { todaysDate } from '../../lib/util';
 import '../../App.css';
 
@@ -67,7 +66,7 @@ const SendText = ({
 
   const handleSendText = async () => {
     try {
-      const response = await axios.post(`${host}/text/send`, {
+      const response = await api.post(`/text/send`, {
         student_id: studentId,
         message
       });

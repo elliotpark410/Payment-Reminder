@@ -1,8 +1,7 @@
 // AddReset.js
 import React from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,7 +18,7 @@ function AddReset({ studentId, selectedDate, fetchStudentResetData, onUpdate }) 
 
       const notificationDate = formatDate(selectedDate);
 
-      const response = await axios.post(`${host}/reset/add`, {
+      const response = await api.post(`reset/add`, {
         student_id: studentId,
         date: formattedDate
       });

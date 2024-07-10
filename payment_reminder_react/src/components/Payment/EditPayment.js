@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { toast } from 'react-toastify';
 import { formatDate } from '../../lib/util';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,7 +35,7 @@ const EditPayment = ({
         return;
       }
 
-      const response = await axios.put(`${host}/payment/${payment.id}`, {
+      const response = await api.put(`/payment/${payment.id}`, {
         date: paymentDate,
         amount: paymentAmount
       });

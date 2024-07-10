@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import '../../App.css';
 
 const fetchInactiveStudents = async (setInactiveStudents) => {
   try {
-    const response = await axios.get(`${host}/student/inactive`);
+    const response = await api.get(`/student/inactive`);
 
     // Sort students alphabetically by their names
     const sortedStudents = response.data.sort((a, b) =>
@@ -32,7 +31,7 @@ const fetchInactiveStudents = async (setInactiveStudents) => {
 const handleActivateStudent = async (studentId, studentName) => {
   try {
     // console.log(`Activating ${studentName}`);
-    const response = await axios.put(`${host}/student/inactive/${studentId}`);
+    const response = await api.put(`/student/inactive/${studentId}`);
 
     if (response.status === 200 || 201) {
       // Show notifcation

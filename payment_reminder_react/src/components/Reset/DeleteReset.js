@@ -1,14 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 
 const DeleteReset = ({ resetId, onDelete }) => {
   const handleDeleteReset = async () => {
     try {
-      await axios.delete(`${host}/reset/delete/${resetId}`);
+      await api.delete(`/reset/delete/${resetId}`);
       // console.log(`Reset with ID ${resetId} deleted successfully`);
 
       onDelete();

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import '../../App.css';
 
 function EditStudent({ student, onClose, onEdit }) {
@@ -81,7 +80,7 @@ function EditStudent({ student, onClose, onEdit }) {
 
       // console.log('Saving edit for student', student);
 
-      const response = await axios.put(`${host}/student/${student.id}`, formData);
+      const response = await api.put(`/student/${student.id}`, formData);
 
       // console.log('Updated student data:', response.data);
 
@@ -115,7 +114,7 @@ function EditStudent({ student, onClose, onEdit }) {
 
   const handleInactiveChange = async () => {
     try {
-      const response = await axios.put(`${host}/student/inactive/${student.id}`);
+      const response = await api.put(`/student/inactive/${student.id}`);
       console.log('Inactivated student:', response.data);
       setFormData({ ...formData, inactive: !formData.inactive });
       onEdit(response.data);

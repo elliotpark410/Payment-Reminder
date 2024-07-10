@@ -1,10 +1,9 @@
 // AddPayment.js
 import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
@@ -37,7 +36,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, fetchStudentPaymen
       });
 
       // Make API call to add payment using Axios
-      const response = await axios.post(`${host}/payment/add`, {
+      const response = await api.post(`/payment/add`, {
         student_id: studentId,
         date: formattedDate,
         amount: amount

@@ -1,9 +1,8 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
@@ -27,7 +26,7 @@ const EditLesson = ({
         return;
       }
 
-      const response = await axios.put(`${host}/lesson/${lesson.id}`, {
+      const response = await api.put(`/lesson/${lesson.id}`, {
         date: lessonDate
       });
       // console.log('Lesson updated successfully:', response.data);

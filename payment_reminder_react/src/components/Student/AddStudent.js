@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import '../../App.css';
 
 function AddStudent({ onClose, onAdd }) {
@@ -80,7 +79,7 @@ function AddStudent({ onClose, onAdd }) {
 
       // console.log('Adding new student:', formData);
 
-      const response = await axios.post(`${host}/student/add`, formData);
+      const response = await api.post(`/student/add`, formData);
 
       // console.log('Added student:', response.data);
 

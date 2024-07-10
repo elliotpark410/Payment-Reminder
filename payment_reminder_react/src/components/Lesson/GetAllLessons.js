@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { PaginationComponent } from './Pagination/Pagination';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { formatDate, getTotalPaymentAmount } from '../../lib/util';
 import '../../App.css';
 
 const fetchLessons = async (setLessons) => {
   try {
-    const response = await axios.get(`${host}/lesson/`);
+    const response = await api.get(`/lesson/`);
 
     // Filter out records with null or invalid date
     const validLessons = response.data.filter((lesson) => {
@@ -32,7 +31,7 @@ const fetchLessons = async (setLessons) => {
 
 const fetchPayments = async (setPayments) => {
   try {
-    const response = await axios.get(`${host}/payment/`);
+    const response = await api.get(`/payment/`);
 
     // Filter out invalid records
     const validPayments = response.data.filter((payment) => {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { PaginationComponent } from './Pagination/Pagination';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import DeleteLesson from './DeleteLesson';
 import DeleteReset from '../Reset/DeleteReset';
 import DeletePayment from '../Payment/DeletePayment';
@@ -15,7 +14,7 @@ import '../../App.css';
 
 export const fetchStudentLessons = async (studentId) => {
   try {
-    const response = await axios.get(`${host}/lesson/student/${studentId}`);
+    const response = await api.get(`/lesson/student/${studentId}`);
 
     // Filter out records with null or invalid date
     const validLessons = response.data.filter((lesson) => {
@@ -43,7 +42,7 @@ export const fetchStudentLessons = async (studentId) => {
 export const fetchStudentResets = async (studentId) => {
   try {
     // Fetch data from the API
-    const response = await axios.get(`${host}/reset/student/${studentId}`);
+    const response = await api.get(`/reset/student/${studentId}`);
 
     // Filter out records with null or undefined reset date
     const validResets = response.data.filter(
@@ -70,7 +69,7 @@ export const fetchStudentResets = async (studentId) => {
 export const fetchStudentPayments = async (studentId) => {
   try {
     // Fetch data from the API
-    const response = await axios.get(`${host}/payment/student/${studentId}`);
+    const response = await api.get(`/payment/student/${studentId}`);
 
     // Filter out records with null or undefined dates
     const validPayments = response.data.filter(
@@ -94,7 +93,7 @@ export const fetchStudentPayments = async (studentId) => {
 export const fetchStudentTexts = async (studentId) => {
   try {
     // Fetch data from the API
-    const response = await axios.get(`${host}/text/student/${studentId}`);
+    const response = await api.get(`/text/student/${studentId}`);
 
     // Filter out records with null or undefined dates
     const validTexts = response.data.filter(

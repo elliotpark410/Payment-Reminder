@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Alert } from 'react-bootstrap';
-import { host } from './lib/constants';
+import { api } from './lib/constants';
 import GetAllStudents from './components/Student/GetAllStudents';
 import EditStudent from './components/Student/EditStudent';
 import AddStudent from './components/Student/AddStudent';
@@ -47,10 +47,10 @@ function AppContent() {
   const fetchData = async () => {
     try {
       const [studentsResponse, lessonsResponse, resetsResponse, textResponse] = await Promise.all([
-        fetch(`${host}/student/`),
-        fetch(`${host}/lesson/`),
-        fetch(`${host}/reset/`),
-        fetch(`${host}/text/`)
+        api.get(`/student/`),
+        api.get(`/lesson/`),
+        api.get(`/reset/`),
+        api.get(`/text/`)
       ]);
       const studentsData = await studentsResponse.json();
       const lessonsData = await lessonsResponse.json();
@@ -71,7 +71,7 @@ function AppContent() {
   // Fetch student data
   const fetchStudentData = async () => {
     try {
-      const studentsResponse = await fetch(`${host}/student/`);
+      const studentsResponse = await api.get(`/student/`);
       const studentsData = await studentsResponse.json();
       // order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));

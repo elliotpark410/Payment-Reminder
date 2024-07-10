@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert, InputGroup, Col } from 'react-bootstrap';
-import axios from 'axios';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -36,7 +35,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${host}/user/login`, {
+      const response = await api.post(`/user/login`, {
         username,
         password
       });

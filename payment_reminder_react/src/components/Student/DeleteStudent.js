@@ -3,8 +3,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
-import axios from 'axios';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 import '../../App.css';
 
 const DeleteStudent = ({ student, onCancel, onDelete }) => {
@@ -16,7 +15,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
     try {
       // console.log('Deleting student:', student);
 
-      const response = await axios.put(`${host}/student/delete/${student.id}`);
+      const response = await api.put(`/student/delete/${student.id}`);
 
       // console.log(`Student deleted successfully`);
 

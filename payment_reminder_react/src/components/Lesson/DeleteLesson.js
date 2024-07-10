@@ -1,14 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { host } from '../../lib/constants';
+import { api } from '../../lib/constants';
 
 const DeleteLesson = ({ lessonId, onDelete }) => {
   const handleDeleteLesson = async () => {
     try {
-      await axios.delete(`${host}/lesson/delete/${lessonId}`);
+      await api.delete(`/lesson/delete/${lessonId}`);
       // console.log(`Lesson with ID ${lessonId} deleted successfully`);
 
       onDelete();
