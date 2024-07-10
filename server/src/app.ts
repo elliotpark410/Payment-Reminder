@@ -11,7 +11,9 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 const PORT = getEnvVariable('PORT');
 const environment = getEnvVariable('NODE_ENV');
 const domain = getEnvVariable('DOMAIN');
-const domain2 = getEnvVariable('AWS_AMPLIFY_DOMAIN');
+const domain_api= getEnvVariable('DOMAIN_API');
+const domain_aws = getEnvVariable('AWS_AMPLIFY_DOMAIN');
+
 const app = express();
 
 // Set up middleware
@@ -36,7 +38,7 @@ app.use(limiter);
 // Configure CORS
 const corsOptions = {
   origin: environment === 'production'
-    ? [domain, domain2]
+    ? [domain, domain_aws, domain_api]
     : ['http://localhost:3000', 'http://localhost:3001'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
