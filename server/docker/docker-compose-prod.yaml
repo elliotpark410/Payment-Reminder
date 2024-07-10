@@ -33,7 +33,7 @@ services:
     ports:
       - "6379:6379"
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=localhost
       - REDIS_PORT=6379
     networks:
       - app-network
