@@ -61,7 +61,7 @@ function responseStatus(req: express.Request, res: express.Response) {
 app.use(morgan(morganFormat, { skip: responseStatus }));
 
 // Mount root router
-app.use('/api', rootRouter);
+app.use('/', rootRouter);
 
 // Error handling middleware
 app.use(notFoundHandler);
