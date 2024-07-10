@@ -21,6 +21,7 @@ const logger = winston.createLogger({
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
   let errorMessage = err.message || 'Internal Server Error';
+  const responseBody = res.locals?.errorMessage || '';
 
   logger.error({
     message: err.message,
@@ -28,6 +29,8 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
     method: req.method,
     url: req.url,
     status: res.statusCode,
+    responseBody: JSON.stringify(responseBody),
+    responseMessage: res.statusMessage,
     timestamp: moment().tz('America/Los_Angeles').format('MM-DD-YYYY h:mmA')
   });
 

@@ -2,6 +2,7 @@ import express, { Request } from 'express';
 import rootRouter from './rootRouter';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 import { getEnvVariable } from './util/index';
 import morgan from 'morgan';
 import moment from 'moment-timezone';
@@ -9,6 +10,7 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 const PORT = getEnvVariable('PORT');
 const environment = getEnvVariable('NODE_ENV');
+const domain = getEnvVariable('DOMAIN');
 const app = express();
 
 // Set up middleware
@@ -30,6 +32,16 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// // Configure CORS
+// const corsOptions = {
+//   origin: environment === 'production'
+//     ? [domain]
+//     : ['http://localhost:3000'],
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+
+// app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,13 +52,6 @@ morgan.token('date', (req, res, tz) => {
 
 morgan.token('body', (req: express.Request, res: express.Response) => {
   return JSON.stringify(req.body || {});
-});
-
-morgan.token('response-body', (req: express.Request, res: express.Response) => {
-  if (res.statusCode >= 400) {
-    return res.locals?.errorMessage || '';
-  }
-  return '';
 });
 
 // Custom morgan logging format
