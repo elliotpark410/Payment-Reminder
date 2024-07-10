@@ -11,6 +11,7 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 const PORT = getEnvVariable('PORT');
 const environment = getEnvVariable('NODE_ENV');
 const domain = getEnvVariable('DOMAIN');
+const domain_www = getEnvVariable('DOMAIN_WWW');
 const domain_api= getEnvVariable('DOMAIN_API');
 const domain_aws = getEnvVariable('AWS_AMPLIFY_DOMAIN');
 
@@ -38,7 +39,7 @@ app.use(limiter);
 // Configure CORS
 const corsOptions = {
   origin: environment === 'production'
-    ? [domain, domain_aws, domain_api]
+    ? [domain, domain_www, domain_aws, domain_api]
     : ['http://localhost:3000', 'http://localhost:3001'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -46,7 +47,17 @@ const corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+app.use((req, res, next) => {
+  console.log('Incoming request before CORS:', req.method, req.path);
+  next();
+});
+
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  console.log('After CORS middleware');
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
