@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import rootRouter from './rootRouter';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -38,6 +38,8 @@ const corsOptions = {
   origin: environment === 'production'
     ? [domain, domain2]
     : ['http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
