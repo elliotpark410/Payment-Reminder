@@ -11,6 +11,7 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 const PORT = getEnvVariable('PORT');
 const environment = getEnvVariable('NODE_ENV');
 const domain = getEnvVariable('DOMAIN');
+const domain2 = getEnvVariable('AWS_AMPLIFY_DOMAIN');
 const app = express();
 
 // Set up middleware
@@ -32,15 +33,15 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// // Configure CORS
-// const corsOptions = {
-//   origin: environment === 'production'
-//     ? [domain]
-//     : ['http://localhost:3000'],
-//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
+// Configure CORS
+const corsOptions = {
+  origin: environment === 'production'
+    ? [domain, domain2]
+    : ['http://localhost:3000'],
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
