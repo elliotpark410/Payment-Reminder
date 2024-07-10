@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request } from 'express';
 import rootRouter from './rootRouter';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -24,6 +24,9 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 200, // limit each IP to 200 requests per windowMs
   message: 'Too many requests from this IP, please try again later',
+  keyGenerator: (req: Request) => req.socket.remoteAddress || 'unknown',
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 app.use(limiter);
 
