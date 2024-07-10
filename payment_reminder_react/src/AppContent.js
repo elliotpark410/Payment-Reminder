@@ -52,10 +52,10 @@ function AppContent() {
         api.get(`/reset/`),
         api.get(`/text/`)
       ]);
-      const studentsData = await studentsResponse.json();
-      const lessonsData = await lessonsResponse.json();
-      const resetsData = await resetsResponse.json();
-      const textData = await textResponse.json();
+      const studentsData = studentsResponse.data;
+      const lessonsData = lessonsResponse.data;
+      const resetsData = resetsResponse.data;
+      const textData = textResponse.data;
 
       // Order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
@@ -72,7 +72,7 @@ function AppContent() {
   const fetchStudentData = async () => {
     try {
       const studentsResponse = await api.get(`/student/`);
-      const studentsData = await studentsResponse.json();
+      const studentsData = studentsResponse.data;
       // order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
     } catch (error) {
