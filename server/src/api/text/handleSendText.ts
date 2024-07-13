@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import connection from '../../db/connection';
+import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 import { Twilio } from 'twilio';
 import { getEnvVariable } from '../../util/index';
@@ -53,50 +53,35 @@ export async function handleSendText(
 
 // Function to retrieve phone number associated with the student_id from the database
 async function getPhoneNumber(studentId: number): Promise<string> {
-  return new Promise<string>((resolve, reject) => {
-    const query = 'SELECT phone_number FROM students WHERE id = ?';
-    connection.execute(
-      query,
-      [studentId],
-      (error, results: RowDataPacket[]) => {
-        if (error) {
-          reject(error);
-        } else {
-          if (results.length > 0) {
-            let phoneNumber = results[0].phone_number;
-            // Remove any characters besides numbers and trim whitespace at the end
-            phoneNumber = phoneNumber.replace(/[^\d]/g, '').trim();
-            phoneNumber = '+1' + phoneNumber;
-            resolve(phoneNumber);
-          } else {
-            reject(new Error('Student phone number not found'));
-          }
-        }
-      }
-    );
-  });
+  const query = 'SELECT phone_number FROM students WHERE id = ?';
+
+  const [results] = await promisePool.execute<RowDataPacket[]>(query, [
+    studentId,
+  ]);
+
+  if (results.length > 0) {
+    let phoneNumber = results[0].phone_number;
+    // Remove any characters besides numbers and trim whitespace at the end
+    phoneNumber = phoneNumber.replace(/[^\d]/g, '').trim();
+    phoneNumber = '+1' + phoneNumber;
+    return phoneNumber;
+  } else {
+    throw new Error('Student phone number not found');
+  }
 }
 
 async function saveTextMessage(
   studentId: number,
   message: string
 ): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    // Get the current date and time in Pacific Time
-    const currentDate = new Date();
-    const pacificTime = format(currentDate, 'yyyy-MM-dd HH:mm:ss', {
-      timeZone: 'America/Los_Angeles',
-    });
-
-    const query =
-      'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
-
-    connection.execute(query, [studentId, pacificTime, message], (error) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
+  // Get the current date and time in Pacific Time
+  const currentDate = new Date();
+  const pacificTime = format(currentDate, 'yyyy-MM-dd HH:mm:ss', {
+    timeZone: 'America/Los_Angeles',
   });
+
+  const query =
+    'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
+
+  await promisePool.execute(query, [studentId, pacificTime, message]);
 }

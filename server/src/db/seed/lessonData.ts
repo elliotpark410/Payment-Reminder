@@ -1,6 +1,6 @@
-import connection from "../connection";
+import { promisePool } from "../connection";
 
-export function seedLessons() {
+export async function seedLessons() {
   const lessonsData = [
     {
       student_id: 1,
@@ -88,11 +88,16 @@ export function seedLessons() {
     },
   ];
 
-  for (const lesson of lessonsData) {
-    connection.query('INSERT IGNORE INTO lessons SET ?', lesson, (err) => {
-      if (err) {
-        console.error('Error inserting lesson:', err);
-      }
-    });
+  try {
+    for (const lesson of lessonsData) {
+      await promisePool.execute(
+        'INSERT IGNORE INTO lessons (student_id, date) VALUES (?, ?)',
+        [lesson. student_id, lesson.date]
+      );
+    }
+    console.log('Lessons seeded successfully');
+  } catch (error) {
+    console.error('Error seeding lessons:', error);
+    throw error;
   }
 }

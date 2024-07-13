@@ -1,6 +1,6 @@
-import connection from "../connection";
+import { promisePool } from "../connection";
 
-export function seedTexts() {
+export async function seedTexts() {
   const textsData = [
     // Insert text data here
     {
@@ -10,11 +10,11 @@ export function seedTexts() {
     },
   ];
 
-  for (const text of textsData) {
-    connection.query('INSERT IGNORE INTO texts SET ?', text, (err) => {
-      if (err) {
-        console.error('Error inserting text:', err);
-      }
-    });
+  try {
+    for (const text of textsData) {
+      await promisePool.execute('INSERT IGNORE INTO texts (student_id, date, message) VALUES (?, ?, ?)', [text.student_id, text.date, text.message]);
+    }
+  } catch (err) {
+    console.error('Error inserting text:', err);
   }
 }

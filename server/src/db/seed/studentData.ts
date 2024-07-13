@@ -1,4 +1,4 @@
-import connection from "../connection";
+import { promisePool } from "../connection";
 import { decrypt } from "../../util/index";
 
 export const studentsData = [
@@ -234,26 +234,40 @@ export const studentsData = [
   }
 ]
 
-export function seedStudents() {
-  for (const student of studentsData) {
+export async function seedStudents() {
+  try {
+    for (const student of studentsData) {
+      // Decrypt phone number and email
+      const decryptedPhoneNumber = student.phone_number ? decrypt(student.phone_number) : null;
+      const decryptedEmail = student.email ? decrypt(student.email) : null;
+      const parentName = student.parent_name || null;
 
-    // Decrypt phone number and email
-    const decryptedPhoneNumber = decrypt(student.phone_number);
-    const decryptedEmail = student.email ? decrypt(student.email) : undefined;
+      // Create a new student object with decrypted data
+      const studentToInsert = {
+        student_name: student.student_name,
+        parent_name: parentName,
+        phone_number: decryptedPhoneNumber,
+        email: decryptedEmail,
+        subscription_price: student.subscription_price,
+        subscription_number: student.subscription_number,
+      };
 
-    // Create a new student object with decrypted data
-    const studentToInsert = {
-      ...student,
-      phone_number: decryptedPhoneNumber,
-      email: decryptedEmail,
-    };
-
-
-    // Insert the student data into the database
-    connection.query('INSERT IGNORE INTO students SET ?', studentToInsert, (err) => {
-      if (err) {
-        console.error('Error inserting student:', err);
-      }
-    });
+      // Insert the student data into the database using promisePool.execute
+      await promisePool.execute(
+        'INSERT IGNORE INTO students (student_name, parent_name, phone_number, email, subscription_price, subscription_number) VALUES (?, ?, ?, ?, ?, ?)',
+        [
+          studentToInsert.student_name,
+          studentToInsert.parent_name,
+          studentToInsert.phone_number,
+          studentToInsert.email,
+          studentToInsert.subscription_price,
+          studentToInsert.subscription_number
+        ]
+      );
+    }
+    console.log('Students seeded successfully');
+  } catch (error) {
+    console.error('Error inserting student:', error);
+    throw error;
   }
 }

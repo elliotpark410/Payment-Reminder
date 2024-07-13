@@ -1,5 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import connection from "../../db/connection";
+import { NextFunction, Request, Response } from 'express';
+import { promisePool } from '../../db/connection';
+import { RowDataPacket } from 'mysql2';
 
 export async function handleGetStudentLessons(
   request: Request,
@@ -15,20 +16,17 @@ export async function handleGetStudentLessons(
     FROM lessons
     INNER JOIN students ON lessons.student_id = students.id
     WHERE lessons.student_id = ?
-  `;
+    `;
 
     // Execute the query
-    connection.query(selectQuery, [student_id], (error, results) => {
-      if (error) {
-        // If there's an error, pass it to the error handling middleware
-        return next(error);
-      }
+    const [results] = await promisePool.execute<RowDataPacket[]>(selectQuery, [
+      student_id,
+    ]);
 
-      // If successful, send the students data in the response
-      response.send(results);
-    });
+    // If successful, send the students data in the response
+    response.send(results);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     next(err);
   }
 }

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import connection from "../../db/connection";
+import { promisePool } from "../../db/connection";
 import { RowDataPacket } from "mysql2";
 
 export async function handleGetStudentText(
@@ -14,15 +14,10 @@ export async function handleGetStudentText(
     const query = "SELECT * FROM texts WHERE student_id = ?";
 
     // Execute the query with the student ID as a parameter
-    connection.query(query, [student_id], (error, results: RowDataPacket[]) => {
-      if (error) {
-        // If there's an error, pass it to the error handling middleware
-        return next(error);
-      }
+    const [results] = await promisePool.execute<RowDataPacket[]>(query, [student_id]);
 
-      // If successful, send the students data in the response
-      response.send(results);
-    });
+    // If successful, send the students data in the response
+    response.send(results);
   } catch (err) {
     console.log(err)
     next(err);

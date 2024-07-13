@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import connection from "../../db/connection";
-import { RowDataPacket } from "mysql2";
+import { NextFunction, Request, Response } from 'express';
+import { promisePool } from '../../db/connection';
+import { RowDataPacket } from 'mysql2';
 
 export async function handleGetAllText(
   request: Request,
@@ -9,20 +9,15 @@ export async function handleGetAllText(
 ) {
   try {
     // Query to select all texts associated with a student id
-    const query = "SELECT * FROM texts";
+    const query = 'SELECT * FROM texts';
 
     // Execute the query with the student ID as a parameter
-    connection.query(query, (error, results: RowDataPacket[]) => {
-      if (error) {
-        // If there's an error, pass it to the error handling middleware
-        return next(error);
-      }
+    const [results] = await promisePool.execute<RowDataPacket[]>(query);
 
-      // If successful, send the students data in the response
-      response.send(results);
-    });
+    // If successful, send the students data in the response
+    response.send(results);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     next(err);
   }
 }

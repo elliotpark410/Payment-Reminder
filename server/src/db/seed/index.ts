@@ -2,15 +2,20 @@ import { seedUsers } from "./userData";
 import { seedStudents } from "./studentData";
 import { seedLessons } from "./lessonData";
 import { seedTexts } from "./textData";
-import connection from "../connection";
+import { promisePool } from "../connection";
 
 async function seedDatabase() {
-  seedUsers();
-  seedStudents();
-  seedLessons();
-  seedTexts();
-  console.log('Seed data added successfully');
-  connection.end();
+  try {
+    await seedUsers();
+    await seedStudents();
+    await seedLessons();
+    await seedTexts();
+    console.log('Seed data added successfully');
+  } catch (error) {
+    console.error('Error seeding database:', error);
+  } finally {
+    await promisePool.end();
+  }
 }
 
 seedDatabase().catch(console.error);
