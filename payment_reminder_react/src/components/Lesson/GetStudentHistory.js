@@ -164,6 +164,8 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
 
   const fetchStudentLessonData = async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
+    console.log("fetchedLessons")
+    console.log(fetchedLessons)
     setLessons(fetchedLessons);
   };
 
@@ -224,9 +226,14 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
     setEditModalOpen(true);
   };
 
+  console.log("lessons")
+  console.log(lessons)
+
   const mergedRecords = [...lessons, ...resets, ...payments, ...texts].sort(
     (a, b) => new Date(a.formattedDate) - new Date(b.formattedDate)
   );
+  console.log("mergedRecords")
+  console.log(mergedRecords)
 
   // Function to reset lesson numbers after each text or reset record
   const assignLessonNumbers = (records) => {
@@ -248,11 +255,15 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
   };
 
   const recordsWithLessonNumbers = assignLessonNumbers(mergedRecords);
+  console.log("recordsWithLessonNumbers")
+  console.log(recordsWithLessonNumbers)
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentRecords = recordsWithLessonNumbers.slice(indexOfFirstItem, indexOfLastItem);
+  console.log("currentRecords")
+  console.log(currentRecords)
 
   const totalPages = Math.ceil(recordsWithLessonNumbers.length / itemsPerPage);
 
