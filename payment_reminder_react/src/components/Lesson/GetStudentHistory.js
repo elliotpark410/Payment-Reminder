@@ -32,6 +32,9 @@ export const fetchStudentLessons = async (studentId) => {
       formattedDate: formatDate(lesson.date)
     }));
 
+    console.log("formattedLessons");
+    console.log(formattedLessons);
+
     return formattedLessons;
   } catch (error) {
     console.error('Error fetching lessons:', error);
