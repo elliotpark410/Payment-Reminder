@@ -6,7 +6,7 @@ export const formatDate = (date) => {
       month: '2-digit',
       day: '2-digit',
       year: 'numeric',
-      timeZone: 'UTC'
+      timeZone: 'America/Los_Angeles'
     })
     .replace(/\//g, ' / ');
 };
