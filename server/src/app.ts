@@ -72,6 +72,29 @@ function responseStatus(req: express.Request, res: express.Response) {
 // Logging middleware
 app.use(morgan(morganFormat, { skip: responseStatus }));
 
+// Middleware to log request and response
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`Request received: ${req.method} ${req.url}`);
+  console.log(`Headers: ${JSON.stringify(req.headers)}`);
+  console.log(`Params: ${JSON.stringify(req.params)}`);
+  console.log(`Query: ${JSON.stringify(req.query)}`);
+
+  const originalSend = res.send.bind(res);
+  res.send = (body) => {
+    console.log(`Response: ${res.statusCode} ${body}`);
+    return originalSend(body);
+  };
+
+  next();
+});
+
+// Error handling middleware to log errors
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(`Error occurred: ${err.message}`);
+  console.error(`Stack trace: ${err.stack}`);
+  next(err);
+});
+
 // Mount root router
 app.use('/', rootRouter);
 
