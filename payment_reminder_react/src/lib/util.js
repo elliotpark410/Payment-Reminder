@@ -1,14 +1,9 @@
 import { formatInTimeZone } from 'date-fns-tz';
 
 export const formatDate = (date) => {
-  console.log('date received:', date);
   const dateProvided = new Date(date);
-  console.log('date provided:', dateProvided);
-
   const timeZone = 'UTC';
   const formattedDate = formatInTimeZone(dateProvided, timeZone,'MM-dd-yyyy');
-  console.log("formattedDate")
-  console.log(formattedDate)
   return formattedDate;
 };
 
