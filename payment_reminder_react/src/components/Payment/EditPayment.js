@@ -3,6 +3,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { api } from '../../lib/constants';
 import { toast } from 'react-toastify';
 import { formatDate } from '../../lib/util';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
 
@@ -15,7 +17,8 @@ const EditPayment = ({
   setPaymentDate,
   setPaymentAmount,
   setEditPayment,
-  fetchStudentPaymentData
+  fetchStudentPaymentData,
+  onUpdate
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -66,6 +69,19 @@ const EditPayment = ({
     }
   };
 
+  const handleDeletePayment = async () => {
+    try {
+      await api.delete(`/payment/delete/${payment.id}`);
+
+      onHide();
+      fetchStudentPaymentData();
+      onUpdate();
+    } catch (error) {
+      console.error('Error deleting lesson:', error);
+      throw error;
+    }
+  };
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -109,6 +125,11 @@ const EditPayment = ({
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
+        <div className="float-left">
+          <Button className="small-button" variant="danger" onClick={handleDeletePayment} title="Delete payment">
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        </div>
         <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>

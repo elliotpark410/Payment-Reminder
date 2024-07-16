@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 const EditLesson = ({
@@ -13,7 +15,8 @@ const EditLesson = ({
   lessonDate,
   setLessonDate,
   setEditLesson,
-  fetchStudentLessonData
+  fetchStudentLessonData,
+  onUpdate
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -53,6 +56,19 @@ const EditLesson = ({
     }
   };
 
+  const handleDeleteLesson = async () => {
+    try {
+      await api.delete(`/lesson/delete/${lesson.id}`);
+
+      onHide();
+      fetchStudentLessonData();
+      onUpdate();
+    } catch (error) {
+      console.error('Error deleting lesson:', error);
+      throw error;
+    }
+  };
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -69,6 +85,11 @@ const EditLesson = ({
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
+        <div className="float-left">
+          <Button className="small-button" variant="danger" onClick={handleDeleteLesson} title="Delete lesson">
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        </div>
         <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>

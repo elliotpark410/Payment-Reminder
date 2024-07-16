@@ -129,6 +129,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             fetchStudentLessonData={fetchStudentLessonData}
             fetchStudentResetData={fetchStudentResetData}
             fetchStudentPaymentData={fetchStudentPaymentData}
+            onUpdate={onUpdate}
           />
         </Modal.Body>
         <Modal.Footer>

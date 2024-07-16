@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 const EditReset = ({
@@ -13,7 +15,8 @@ const EditReset = ({
   resetDate,
   setResetDate,
   setEditReset,
-  fetchStudentResetData
+  fetchStudentResetData,
+  onUpdate
 }) => {
   const handleSaveEdit = async () => {
     try {
@@ -53,6 +56,20 @@ const EditReset = ({
     }
   };
 
+  const handleDeleteReset = async () => {
+    try {
+      await api.delete(`/reset/delete/${reset.id}`);
+
+      onHide();
+      fetchStudentResetData();
+      onUpdate();
+    } catch (error) {
+      console.error('Error deleting lesson:', error);
+      throw error;
+    }
+  };
+
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -69,6 +86,11 @@ const EditReset = ({
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
+        <div className="float-left">
+          <Button className="small-button" variant="danger" onClick={handleDeleteReset} title="Delete reset">
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        </div>
         <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>
