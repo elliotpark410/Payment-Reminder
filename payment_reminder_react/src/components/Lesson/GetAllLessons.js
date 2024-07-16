@@ -107,12 +107,15 @@ function GetAllLessons({ onClose }) {
         />
       </Modal.Body>
       <Modal.Footer>
-        <div style={{ flex: 1, textAlign: 'left', fontSize: '16px' }}>
-          Total Lessons:{' '}
-          <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
-          <br />
-          Total Payment:{' '}
-          <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
+        <div style={{ flex: 1, textAlign: 'left', fontSize: '18px' }}>
+          <div style={{ marginBottom: '0.5em' }}>
+            Total Lessons:{' '}
+            <span className="lesson-payment-text">{lessons.length.toLocaleString()}</span>
+          </div>
+          <div>
+            Total Payment:{' '}
+            <span className="lesson-payment-text">{getTotalPaymentAmount(payments)}</span>
+          </div>
         </div>
         <Button className="button" variant="secondary" onClick={onClose}>
           Close
