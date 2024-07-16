@@ -76,21 +76,26 @@ const EditReset = ({
         <Modal.Title>Edit Reset</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Group controlId="resetDate">
-          <Form.Label>Reset Date</Form.Label>
-          <Form.Control
-            type="date"
-            value={resetDate}
-            onChange={(e) => setResetDate(e.target.value)}
-          />
+        <Form.Group controlId="resetDate" style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ flexGrow: 1 }}>
+            <Form.Label>Reset Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={resetDate}
+              onChange={(e) => setResetDate(e.target.value)}
+            />
+          </div>
+          <Button
+            variant="outline-danger"
+            onClick={handleDeleteReset}
+            title="Delete reset"
+            style={{ marginLeft: '1em', height: 'fit-content', alignSelf: 'flex-end' }}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <div className="float-left">
-          <Button className="small-button" variant="danger" onClick={handleDeleteReset} title="Delete reset">
-            <FontAwesomeIcon icon={faTrash} />
-          </Button>
-        </div>
         <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>

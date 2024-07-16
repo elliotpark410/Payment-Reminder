@@ -88,13 +88,23 @@ const EditPayment = ({
         <Modal.Title>Edit Payment</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Group controlId="paymentDate">
-          <Form.Label>Payment Date</Form.Label>
-          <Form.Control
-            type="date"
-            value={paymentDate}
-            onChange={(e) => setPaymentDate(e.target.value)}
-          />
+        <Form.Group controlId="paymentDate" style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ flexGrow: 1 }}>
+            <Form.Label>Payment Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={paymentDate}
+              onChange={(e) => setPaymentDate(e.target.value)}
+            />
+          </div>
+          <Button
+            variant="outline-danger"
+            onClick={handleDeletePayment}
+            title="Delete payment"
+            style={{ marginLeft: '1em', height: 'fit-content', alignSelf: 'flex-end' }}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
         </Form.Group>
         <br />
         <Form.Group controlId="paymentAmount">
@@ -125,11 +135,6 @@ const EditPayment = ({
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <div className="float-left">
-          <Button className="small-button" variant="danger" onClick={handleDeletePayment} title="Delete payment">
-            <FontAwesomeIcon icon={faTrash} />
-          </Button>
-        </div>
         <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>

@@ -75,21 +75,26 @@ const EditLesson = ({
         <Modal.Title>Edit Lesson</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Group controlId="lessonDate">
-          <Form.Label>Lesson Date</Form.Label>
-          <Form.Control
-            type="date"
-            value={lessonDate}
-            onChange={(e) => setLessonDate(e.target.value)}
-          />
+        <Form.Group controlId="lessonDate" style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ flexGrow: 1 }}>
+            <Form.Label>Lesson Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={lessonDate}
+              onChange={(e) => setLessonDate(e.target.value)}
+            />
+          </div>
+          <Button
+            variant="outline-danger"
+            onClick={handleDeleteLesson}
+            title="Delete lesson"
+            style={{ marginLeft: '1em', height: 'fit-content', alignSelf: 'flex-end' }}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <div className="float-left">
-          <Button className="small-button" variant="danger" onClick={handleDeleteLesson} title="Delete lesson">
-            <FontAwesomeIcon icon={faTrash} />
-          </Button>
-        </div>
         <Button className="small-button" variant="primary" onClick={handleSaveEdit}>
           Save
         </Button>

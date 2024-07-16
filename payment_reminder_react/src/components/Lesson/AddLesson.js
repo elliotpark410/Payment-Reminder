@@ -133,25 +133,35 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
           />
         </Modal.Body>
         <Modal.Footer>
-          <div style={{ flex: 1, textAlign: 'left' }}>
-            <Button className="button" variant="success" onClick={handleAddPayment}>
-              <FontAwesomeIcon icon={faCreditCard} style={{ marginRight: '0.5em' }} />
-              Payment
-            </Button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+            <div style={{ display: 'flex', textAlign: 'left' }}>
+              <div style={{ marginRight: '1em' }}>
+                <Button className="button" variant="success" onClick={handleAddPayment}>
+                  <FontAwesomeIcon icon={faCreditCard} style={{ marginRight: '0.5em' }} />
+                  Payment
+                </Button>
+              </div>
+              <div style={{ marginRight: '1em' }}>
+                <AddReset
+                  studentId={studentId}
+                  selectedDate={selectedDate}
+                  fetchStudentResetData={fetchStudentResetData}
+                  onUpdate={onUpdate}
+                />
+              </div>
+              <div>
+                <Button className="button" variant="primary" onClick={handleAddLesson}>
+                  <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5em' }} />
+                  Lesson
+                </Button>
+              </div>
+            </div>
+            <div>
+              <Button className="button" variant="secondary" onClick={onClose}>
+                Close
+              </Button>
+            </div>
           </div>
-          <AddReset
-            studentId={studentId}
-            selectedDate={selectedDate}
-            fetchStudentResetData={fetchStudentResetData}
-            onUpdate={onUpdate}
-          />
-          <Button className="button" variant="primary" onClick={handleAddLesson}>
-            <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5em' }} />
-            Lesson
-          </Button>
-          <Button className="button" variant="secondary" onClick={onClose}>
-            Close
-          </Button>
         </Modal.Footer>
       </Modal>
 
