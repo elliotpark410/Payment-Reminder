@@ -2,9 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { PaginationComponent } from './Pagination/Pagination';
 import { api } from '../../lib/constants';
-import DeleteLesson from './DeleteLesson';
-import DeleteReset from '../Reset/DeleteReset';
-import DeletePayment from '../Payment/DeletePayment';
 import EditPayment from '../Payment/EditPayment';
 import EditLesson from './EditLesson';
 import EditReset from '../Reset/EditReset';
@@ -199,25 +196,6 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
     setEditModalOpen(true);
   };
 
-  const handleDelete = (itemId, setState) => {
-    setState((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id !== itemId);
-      return updatedItems;
-    });
-  };
-
-  const handleDeleteLesson = (lessonId) => {
-    handleDelete(lessonId, setLessons);
-  };
-
-  const handleDeleteResets = (resetLessonId) => {
-    handleDelete(resetLessonId, setResets);
-  };
-
-  const handleDeletePayment = (paymentId) => {
-    handleDelete(paymentId, setPayments);
-  };
-
   const handleTextClick = (message) => {
     setTextMessage(message);
     setShowTextModal(true);
@@ -274,7 +252,6 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
             <tr>
               <th>Count</th>
               <th>Date</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -287,12 +264,6 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
                     <td>{record.lessonNumber}</td>
                     <td className="lesson-data" onClick={() => handleEditLesson(record)}>
                       {record.formattedDate}
-                    </td>
-                    <td>
-                      <DeleteLesson
-                        lessonId={record.id}
-                        onDelete={() => handleDeleteLesson(record.id)}
-                      />
                     </td>
                   </tr>
                 );
@@ -333,12 +304,6 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
                     >
                       ${record.amount.toLocaleString()} received on {record.formattedDate}
                     </td>
-                    <td>
-                      <DeletePayment
-                        paymentId={record.id}
-                        onDelete={() => handleDeletePayment(record.id)}
-                      />
-                    </td>
                   </tr>
                 );
               } else {
@@ -356,12 +321,6 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
                       onClick={() => handleEditReset(record)}
                     >
                       Lesson reset on {record.formattedDate}
-                    </td>
-                    <td>
-                      <DeleteReset
-                        resetId={record.id}
-                        onDelete={() => handleDeleteResets(record.id)}
-                      />
                     </td>
                   </tr>
                 );
