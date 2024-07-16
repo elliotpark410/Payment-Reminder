@@ -5,6 +5,5 @@ export const host = 'https://api.parkvocalstudiomanagement.com';
 export const website = 'https://parkvocalstudio.com/';
 export const api = axios.create({
   baseURL: host,
-  withCredentials: true,
+  withCredentials: true
 });
-

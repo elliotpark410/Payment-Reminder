@@ -65,7 +65,12 @@ const StudentItem = ({
         </div>
       </Col>
       <Col className="text-center">
-        <Button variant="outline-success" title="Add lesson" onClick={() => onAddLesson(student)} style={{ width: '120px' }} >
+        <Button
+          variant="outline-success"
+          title="Add lesson"
+          onClick={() => onAddLesson(student)}
+          style={{ width: '120px' }}
+        >
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </Col>

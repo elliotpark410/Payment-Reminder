@@ -30,9 +30,7 @@ export const fetchStudentLessons = async (studentId) => {
       lesson: true,
       lessonNumber: index + 1,
       formattedDate: formatDate(lesson.date)
-    }),
-  );
-
+    }));
 
     return formattedLessons;
   } catch (error) {

@@ -7,7 +7,16 @@ import EditReset from '../../Reset/EditReset';
 import EditPayment from '../../Payment/EditPayment';
 import SentText from '../../Text/SentText';
 
-function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchStudentLessonData, fetchStudentResetData, fetchStudentPaymentData }) {
+function LessonCalendar({
+  onSelectDate,
+  lessons,
+  resets,
+  payments,
+  texts,
+  fetchStudentLessonData,
+  fetchStudentResetData,
+  fetchStudentPaymentData
+}) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editType, setEditType] = useState('');
 
@@ -24,12 +33,12 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
   const [editText, setEditText] = useState(null);
 
   const handleEditClick = (type, id) => {
-    switch(type) {
+    switch (type) {
       case 'lesson':
         const lesson = lessons.find((lesson) => lesson.id === id);
         if (lesson) {
           setEditModalOpen(true);
-          setEditType("lesson");
+          setEditType('lesson');
           setEditLesson(lesson);
           setLessonDate(new Date(lesson.date).toISOString().slice(0, 10));
         }
@@ -38,7 +47,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
         const reset = resets.find((reset) => reset.id === id);
         if (reset) {
           setEditModalOpen(true);
-          setEditType("reset");
+          setEditType('reset');
           setEditReset(reset);
           setResetDate(new Date(reset.date).toISOString().slice(0, 10));
         }
@@ -47,7 +56,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
         const payment = payments.find((payment) => payment.id === id);
         if (payment) {
           setEditModalOpen(true);
-          setEditType("payment");
+          setEditType('payment');
           setEditPayment(payment);
           setPaymentDate(new Date(payment.date).toISOString().slice(0, 10));
           setPaymentAmount(payment.amount);
@@ -57,7 +66,7 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
         const text = texts.find((text) => text.id === id);
         if (text) {
           setEditModalOpen(true);
-          setEditType("text");
+          setEditType('text');
           setEditText(text);
         }
         break;
@@ -75,14 +84,16 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
     setEditType('');
   };
 
-
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
       const toDateString = (date) => new Date(date).toISOString().slice(0, 10);
 
-      const utcDateString = toDateString(new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())));
+      const utcDateString = toDateString(
+        new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+      );
 
-      const filterByDate = (records, dateString) => records.filter(record => toDateString(record.date) === dateString);
+      const filterByDate = (records, dateString) =>
+        records.filter((record) => toDateString(record.date) === dateString);
 
       const lessonRecords = filterByDate(lessons, utcDateString);
       const textRecords = filterByDate(texts, utcDateString);
@@ -203,14 +214,10 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
           setPaymentAmount={setPaymentAmount}
           setEditPayment={setEditPayment}
           fetchStudentPaymentData={fetchStudentPaymentData}
-          />
+        />
       )}
       {editType === 'text' && (
-        <SentText
-          show={editModalOpen}
-          textMessage={editText.message}
-          onHide={closeModal}
-        />
+        <SentText show={editModalOpen} textMessage={editText.message} onHide={closeModal} />
       )}
     </div>
   );

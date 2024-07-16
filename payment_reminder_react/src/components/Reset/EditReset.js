@@ -6,7 +6,15 @@ import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import '../../App.css';
 
-const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset, fetchStudentResetData }) => {
+const EditReset = ({
+  show,
+  onHide,
+  reset,
+  resetDate,
+  setResetDate,
+  setEditReset,
+  fetchStudentResetData
+}) => {
   const handleSaveEdit = async () => {
     try {
       // Validate date
@@ -29,7 +37,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset,
       if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.warning(`Edited reset ${notificationDate}`, {
-          position: "top-left",
+          position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
       } else {

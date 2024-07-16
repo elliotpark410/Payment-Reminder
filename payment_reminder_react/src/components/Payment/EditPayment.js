@@ -49,7 +49,7 @@ const EditPayment = ({
       if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.success(`Edited payment ${notificationDate} `, {
-          position: "top-left",
+          position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
       } else {

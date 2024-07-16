@@ -3,7 +3,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 export const formatDate = (date) => {
   const dateProvided = new Date(date);
   const timeZone = 'UTC';
-  const formattedDate = formatInTimeZone(dateProvided, timeZone,'MM-dd-yyyy');
+  const formattedDate = formatInTimeZone(dateProvided, timeZone, 'MM-dd-yyyy');
   return formattedDate;
 };
 

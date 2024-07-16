@@ -88,7 +88,7 @@ function AddStudent({ onClose, onAdd }) {
       if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.success(`Added ${formData.student_name}`, {
-          position: "top-left",
+          position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
       } else {
