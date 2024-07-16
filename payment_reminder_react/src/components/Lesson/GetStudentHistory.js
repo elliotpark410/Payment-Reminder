@@ -26,7 +26,7 @@ export const fetchStudentLessons = async (studentId) => {
     console.log("sortedLessons")
     console.log(sortedLessons)
     console.log("formatDate")
-    console.log(formatDate(sortedLessons[0]))
+    console.log(formatDate(sortedLessons[0].date))
 
     // Format the sorted lessons
     const formattedLessons = sortedLessons.map((lesson, index) => ({

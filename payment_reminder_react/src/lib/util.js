@@ -1,9 +1,20 @@
 import { formatInTimeZone } from 'date-fns-tz';
 
 export const formatDate = (date) => {
+  console.log('date received:', date);
   const dateProvided = new Date(date);
+  console.log('date provided:', dateProvided);
+
+  // Check if the date is valid
+  if (isNaN(dateProvided)) {
+    console.error('Invalid date provided:', date);
+    return 'Invalid Date';
+  }
+
   const timeZone = 'America/Los_Angeles';
   const formattedDate = formatInTimeZone(dateProvided, timeZone,'MM-dd-yyyy');
+  console.log("formattedDate")
+  console.log(formattedDate)
   return formattedDate;
 };
 
