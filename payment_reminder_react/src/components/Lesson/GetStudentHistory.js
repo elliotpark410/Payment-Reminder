@@ -23,6 +23,10 @@ export const fetchStudentLessons = async (studentId) => {
 
     // Sort the valid records by date
     const sortedLessons = validLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
+    console.log("sortedLessons")
+    console.log(sortedLessons)
+    console.log("formatDate")
+    console.log(formatDate(sortedLessons[0]))
 
     // Format the sorted lessons
     const formattedLessons = sortedLessons.map((lesson, index) => ({
@@ -30,7 +34,9 @@ export const fetchStudentLessons = async (studentId) => {
       lesson: true,
       lessonNumber: index + 1,
       formattedDate: formatDate(lesson.date)
-    }));
+    }),
+  );
+
 
     return formattedLessons;
   } catch (error) {
