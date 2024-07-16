@@ -78,10 +78,16 @@ function LessonCalendar({ onSelectDate, lessons, resets, payments, texts, fetchS
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
-      const lessonRecords = lessons.filter((lesson) => new Date(lesson.date).toDateString() === date.toDateString());
-      const textRecords = texts.filter((text) => new Date(text.date).toDateString() === date.toDateString());
-      const resetRecords = resets.filter((reset) => new Date(reset.date).toDateString() === date.toDateString());
-      const paymentRecords = payments.filter((payment) => new Date(payment.date).toDateString() === date.toDateString());
+      const toDateString = (date) => new Date(date).toISOString().slice(0, 10);
+
+      const utcDateString = toDateString(new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())));
+
+      const filterByDate = (records, dateString) => records.filter(record => toDateString(record.date) === dateString);
+
+      const lessonRecords = filterByDate(lessons, utcDateString);
+      const textRecords = filterByDate(texts, utcDateString);
+      const resetRecords = filterByDate(resets, utcDateString);
+      const paymentRecords = filterByDate(payments, utcDateString);
 
       return (
         <div
