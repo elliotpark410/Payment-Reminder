@@ -17,11 +17,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.4'
-          memory: 256M
+          cpus: '0.5'
+          memory: 2G
         reservations:
-          cpus: '0.1'
-          memory: 128M
+          cpus: '0.2'
+          memory: 512M
     command:
       - --performance_schema=OFF
       - --table_definition_cache=200
@@ -31,30 +31,9 @@ services:
       - --net_read_timeout=30
       - --net_write_timeout=60
 
-  redis:
-    image: redis:6.2
-    container_name: redis
-    ports:
-      - "6379:6379"
-    volumes:
-    - redis-data:/data
-    networks:
-      - app-network
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.2'
-          memory: 128M
-        reservations:
-          cpus: '0.05'
-          memory: 64M
-    command: redis-server --dir /data --maxmemory 100mb --maxmemory-policy allkeys-lru
-
 networks:
   app-network:
     driver: bridge
 
 volumes:
   my-db:
-  redis-data:
