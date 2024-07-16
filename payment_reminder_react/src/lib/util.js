@@ -1,13 +1,10 @@
 import { formatInTimeZone } from 'date-fns-tz';
 
 export const formatDate = (date) => {
-  return new Date(date)
-    .toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric',
-    })
-    .replace(/\//g, ' / ');
+  const dateProvided = new Date(date);
+  const timeZone = 'America/Los_Angeles';
+  const formattedDate = formatInTimeZone(dateProvided, timeZone,'MM-dd-yyyy');
+  return formattedDate;
 };
 
 export const todaysDate = () => {
