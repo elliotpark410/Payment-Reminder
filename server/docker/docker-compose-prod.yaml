@@ -36,9 +36,6 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
-    environment:
-      - REDIS_HOST=localhost
-      - REDIS_PORT=6379
     volumes:
     - redis-data:/data
     networks:
@@ -52,7 +49,7 @@ services:
         reservations:
           cpus: '0.05'
           memory: 64M
-    command: redis-server --maxmemory 100mb --maxmemory-policy allkeys-lru
+    command: redis-server --dir /data --maxmemory 100mb --maxmemory-policy allkeys-lru
 
 networks:
   app-network:
