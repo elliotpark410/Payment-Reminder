@@ -111,7 +111,7 @@ export const fetchStudentTexts = async (studentId) => {
   }
 };
 
-function GetStudentHistory({ studentId, studentName, onClose }) {
+function GetStudentHistory({ studentId, studentName, onClose, onUpdate }) {
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
   const [texts, setTexts] = useState([]);
@@ -362,6 +362,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         setLessonDate={setLessonDate}
         setEditLesson={setEditLesson}
         fetchStudentLessonData={fetchStudentLessonData}
+        onUpdate={onUpdate}
       />
 
       {/* Edit Reset Modal */}
@@ -376,6 +377,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         setResetDate={setResetDate}
         setEditReset={setEditReset}
         fetchStudentResetData={fetchStudentResetData}
+        onUpdate={onUpdate}
       />
 
       {/* Edit Payment Modal */}
@@ -392,6 +394,7 @@ function GetStudentHistory({ studentId, studentName, onClose }) {
         setPaymentAmount={setPaymentAmount}
         setEditPayment={setEditPayment}
         fetchStudentPaymentData={fetchStudentPaymentData}
+        onUpdate={onUpdate}
       />
 
       {/* Display Sent Text Modal */}

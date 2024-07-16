@@ -297,6 +297,7 @@ function AppContent() {
             fetchData();
             handleCloseStudentHistoryModal();
           }}
+          onUpdate={fetchData}
         />
       )}
       {/* Send Text Modal is conditionally rendered if showSendTextModal is truthy */}
