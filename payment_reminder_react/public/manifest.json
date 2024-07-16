@@ -1,11 +1,22 @@
 {
-  "short_name": "Payment Reminder",
-  "name": "Payment Reminder App",
+  "short_name": "Park Vocal Studio",
+  "name": "Park Vocal Studio Payment Reminder",
+  "description": "Manage and track vocal lessons at Park Vocal Studio",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "logo16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "logo32.png",
+      "type": "image/png",
+      "sizes": "32x32"
     },
     {
       "src": "logo192.png",
@@ -18,8 +29,12 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://www.parkvocalstudiomanagement.com/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "orientation": "any",
+  "categories": ["art", "education", "music"],
+  "lang": "en-US",
+  "prefer_related_applications": false
 }
