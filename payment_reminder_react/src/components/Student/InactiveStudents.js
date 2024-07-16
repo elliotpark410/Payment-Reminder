@@ -33,7 +33,7 @@ const handleActivateStudent = async (studentId, studentName) => {
     // console.log(`Activating ${studentName}`);
     const response = await api.put(`/student/inactive/${studentId}`);
 
-    if (response.status === 200 || 201) {
+    if (response.status === 200 || response.status === 201) {
       // Show notifcation
       toast.success(`Activated ${studentName}`, {
         position: "top-left",

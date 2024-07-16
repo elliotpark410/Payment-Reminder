@@ -26,7 +26,7 @@ const EditReset = ({ show, onHide, reset, resetDate, setResetDate, setEditReset,
 
       const notificationDate = formatDate(response.data.date);
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.warning(`Edited reset ${notificationDate}`, {
           position: "top-left",

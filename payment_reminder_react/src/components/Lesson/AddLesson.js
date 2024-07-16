@@ -78,7 +78,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
 
       const notificationDate = formatDate(selectedDate);
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.success(`Added lesson ${notificationDate}`, {
           position: 'top-left',

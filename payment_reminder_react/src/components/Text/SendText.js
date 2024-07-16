@@ -73,7 +73,7 @@ const SendText = ({
       // console.log('Text message sent successfully');
       onClose(); // Close the modal after sending the text message
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         const today = todaysDate();
 
         // Show notifcation

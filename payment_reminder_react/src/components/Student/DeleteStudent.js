@@ -19,7 +19,7 @@ const DeleteStudent = ({ student, onCancel, onDelete }) => {
 
       // console.log(`Student deleted successfully`);
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.error(`Deleted ${student.student_name}`, {
           position: "top-left",

@@ -46,7 +46,7 @@ function AddPayment({ show, onClose, studentId, selectedDate, fetchStudentPaymen
 
       const notificationDate = formatDate(selectedDate);
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.success(`Added payment ${notificationDate}`, {
           position: "top-left",

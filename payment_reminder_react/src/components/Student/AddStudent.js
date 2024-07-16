@@ -85,7 +85,7 @@ function AddStudent({ onClose, onAdd }) {
 
       onAdd(response.data); // Pass the added student data to the parent component
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.success(`Added ${formData.student_name}`, {
           position: "top-left",

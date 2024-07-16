@@ -46,7 +46,7 @@ const EditPayment = ({
 
       const notificationDate = formatDate(response.data.date);
 
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status === 201) {
         // Show notifcation
         toast.success(`Edited payment ${notificationDate} `, {
           position: "top-left",
