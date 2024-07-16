@@ -8,7 +8,7 @@ import '../../App.css';
 const getLessonCountColor = (lessonCount, subscriptionLimit) => {
   if (lessonCount > subscriptionLimit) {
     return 'red'; // If lesson count is greater than subscription limit
-  } else if (lessonCount === subscriptionLimit - 1 || lessonCount === subscriptionLimit) {
+  } else if (lessonCount === subscriptionLimit) {
     return '#007bff'; // Blue for nearly full or full subscription
   } else {
     return 'black'; // Default color for all other cases
