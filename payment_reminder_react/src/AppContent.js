@@ -96,15 +96,6 @@ function AppContent() {
     setData({ ...data, showDeleteStudentModal: true });
   };
 
-  const handleViewStudentHistoryClick = (student) => {
-    setData({
-      ...data,
-      studentId: student.id,
-      studentName: student.student_name,
-      showStudentHistoryModal: true
-    });
-  };
-
   const handleAllLessons = () => {
     setData({ ...data, showAllLessons: true });
   };
@@ -246,7 +237,6 @@ function AppContent() {
         students={students}
         onEditStudentClick={handleEditStudentClick}
         onDeleteStudentClick={handleDeleteStudentClick}
-        onViewStudentHistoryClick={handleViewStudentHistoryClick}
         getLessonCountForStudent={getLessonCountForStudent}
         onAddLessonClick={handleAddLessonClick}
         onSendTextClick={handleSendTextClick}

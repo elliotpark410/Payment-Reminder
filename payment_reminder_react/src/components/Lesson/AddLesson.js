@@ -8,6 +8,7 @@ import { api } from '../../lib/constants';
 import { formatDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
 import AddReset from '../Reset/AddReset';
+import GetStudentHistory from './GetStudentHistory';
 import {
   fetchStudentLessons,
   fetchStudentResets,
@@ -15,7 +16,7 @@ import {
   fetchStudentTexts
 } from './GetStudentHistory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faCreditCard, faList } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 import './Calendar/calendarStyles.css';
 
@@ -26,6 +27,7 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   const [payments, setPayments] = useState([]);
   const [texts, setTexts] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
 
   const fetchStudentData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
@@ -103,6 +105,18 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   // Function to close AddPayment modal
   const handleClosePaymentModal = () => {
     setShowPaymentModal(false);
+    fetchStudentData();
+  };
+
+  // Function to open GetStudentHistory modal
+  const handleViewHistory = () => {
+    setShowHistoryModal(true);
+  };
+
+  // Function to close GetStudentHistory modal
+  const handleCloseHistoryModal = () => {
+    setShowHistoryModal(false);
+    fetchStudentData();
   };
 
   const student = students.find((s) => s.id === studentId);
@@ -114,10 +128,20 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
         show
         onHide={onClose}
         size="lg"
-        className={showPaymentModal ? 'calendar-disabled' : ''}
+        className={showPaymentModal || showHistoryModal ? 'calendar-disabled' : ''}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>{studentName}</Modal.Title>
+        <Modal.Header style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Modal.Title >
+              {studentName}
+          </Modal.Title>
+          <Button
+            className="button"
+            variant="dark"
+            onClick={handleViewHistory}
+          >
+            <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
+            View
+          </Button>
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
           <LessonCalendar
@@ -172,6 +196,18 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
           studentId={studentId}
           selectedDate={selectedDate}
           fetchStudentPaymentData={fetchStudentPaymentData}
+        />
+      )}
+
+      {showHistoryModal && (
+        <GetStudentHistory
+          studentId={studentId}
+          studentName={studentName}
+          onClose={handleCloseHistoryModal}
+          onUpdate={() => {
+            fetchStudentData();
+            onUpdate();
+          }}
         />
       )}
     </>

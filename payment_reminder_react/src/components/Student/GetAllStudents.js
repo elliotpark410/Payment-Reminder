@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPlus, faList, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
 
 // Function to determine color based on lesson count and subscription limit
@@ -20,7 +20,6 @@ const StudentItem = ({
   student,
   onEdit,
   onDelete,
-  onViewHistory,
   onAddLesson,
   onSendText,
   getLessonCount
@@ -72,17 +71,6 @@ const StudentItem = ({
           style={{ width: '120px' }}
         >
           <FontAwesomeIcon icon={faPlus} />
-        </Button>
-      </Col>
-      <Col className="text-center">
-        <Button
-          style={{ width: '120px' }}
-          variant="outline-dark"
-          title="View history"
-          onClick={() => onViewHistory(student)}
-        >
-          <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
-          History
         </Button>
       </Col>
       <Col className="text-center">
@@ -159,9 +147,6 @@ const GetAllStudents = ({
             <strong>Add</strong>
           </Col>
           <Col className="text-center">
-            <strong>View</strong>
-          </Col>
-          <Col className="text-center">
             <strong>Count</strong>
           </Col>
           <Col className="text-center">
@@ -179,7 +164,6 @@ const GetAllStudents = ({
             student={student}
             onEdit={onEditStudentClick}
             onDelete={onDeleteStudentClick}
-            onViewHistory={onViewStudentHistoryClick}
             onAddLesson={onAddLessonClick}
             onSendText={onSendTextClick}
             getLessonCount={getLessonCountForStudent}
