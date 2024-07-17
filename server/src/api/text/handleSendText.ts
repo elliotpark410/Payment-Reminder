@@ -81,6 +81,11 @@ async function saveTextMessage(
     timeZone: 'America/Los_Angeles',
   });
 
+  console.log("currentDate")
+  console.log(currentDate)
+  console.log("formattedDate")
+  console.log(formattedDate)
+
   const query =
     'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
 
