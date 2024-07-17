@@ -320,7 +320,7 @@ function GetStudentHistory({ studentId, studentName, onClose, onUpdate }) {
                       }}
                       onClick={() => handleEditReset(record)}
                     >
-                      Lesson reset on {record.formattedDate}
+                      Reset on {record.formattedDate}
                     </td>
                   </tr>
                 );
