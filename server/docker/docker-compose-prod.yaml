@@ -7,6 +7,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=payment_reminder
+      - TZ=America/Los_Angeles
     volumes:
       - my-db:/var/lib/mysql
     networks:

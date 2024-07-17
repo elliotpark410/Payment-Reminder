@@ -6,7 +6,8 @@ module.exports = {
       cwd: "./",
       env: {
         NODE_ENV: "production",
-        PORT: 8080
+        PORT: 8080,
+        TZ: "America/Los_Angeles"
       },
       watch: ["./dist"],
       ignore_watch: ["node_modules"],
