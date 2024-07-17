@@ -7,11 +7,11 @@ The Payment Reminder App is a monorepo designed to help vocal coaches (e.g. Park
 
 <br>
 
-<img src="payment_reminder_react/src/images/Screenshot-Dashboard.png" title="Payment Reminder Dashboard" width = 420px>
+<img src="payment_reminder_react/src/images/Screenshot-Dashboard.png" title="Payment Reminder Dashboard" width = 720px>
 
 <br>
 
-<img src="payment_reminder_react/src/images/Screenshot-Calendar.png" title="Payment Reminder Calendar" width = 420px>
+<img src="payment_reminder_react/src/images/Screenshot-Calendar.png" title="Payment Reminder Calendar" width = 720px>
 
 <br>
 
