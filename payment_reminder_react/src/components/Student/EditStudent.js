@@ -84,18 +84,19 @@ function EditStudent({ student, onClose, onEdit }) {
 
       // console.log('Updated student data:', response.data);
 
-      if ((response.status === 200 || response.status === 201) && !formData.inactive) {
-        onEdit(response.data);
+      onEdit(response.data);
 
+      if ((response.status === 200 || response.status === 201) && !formData.inactive) {
         // Show notifcation
         toast.success(`Edited ${formData.student_name}`, {
           position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
-        onClose();
       } else {
         console.error('Error editing student. Unexpected response:', response);
       }
+
+      onClose();
     } catch (error) {
       console.error('Error editing student data:', error);
 
@@ -120,8 +121,8 @@ function EditStudent({ student, onClose, onEdit }) {
         setFormData({ ...formData, inactive: !formData.inactive });
         onEdit(response.data);
       } else {
-        console.error('Unexpected response:', response);
-        toast.error('Error editing student. Unexpected response.');
+        console.error('Unexpected response when inactivating student:', response);
+        toast.error('Error inactivating student. Unexpected response.');
       }
     } catch (error) {
       console.error('Error inactivating student:', error);
