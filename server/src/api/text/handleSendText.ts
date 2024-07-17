@@ -76,14 +76,10 @@ async function saveTextMessage(
 ): Promise<void> {
   // Get the current date and time in Pacific Time
   const currentDate = new Date();
-  console.log("currentDate")
-  console.log(currentDate)
 
   const formattedDate = format(currentDate, 'yyyy-MM-dd', {
     timeZone: 'America/Los_Angeles',
   });
-  console.log("formattedDate")
-  console.log(formattedDate)
 
   const query =
     'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
