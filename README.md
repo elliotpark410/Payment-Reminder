@@ -1,4 +1,5 @@
 # Payment Reminder
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [Payment Reminder](https://parkvocalstudiomanagement.com/)
@@ -12,49 +13,70 @@ The Payment Reminder App is a monorepo designed to help vocal coaches (e.g. Park
 <br>
 
 <img src="payment_reminder_react/src/images/Screenshot-Calendar.png" title="Payment Reminder Calendar" width = 720px>
-
 <br>
 
 ## Prerequisites
 
 1. Node.js & npm
-
+* Node.js is a JavaScript runtime used for the backend server.
+* npm (Node Package Manager) is used for managing dependencies.
+* [Download and install Node.js and npm.](https://nodejs.org/en)
 <br>
 
 2. Docker & docker-compose
-
+* Docker is used for containerizing MySQL.
+* [Download and install Docker.](https://www.docker.com/products/docker-desktop/)
+* [Download and install Docker Compose.](https://docs.docker.com/compose/install/)
 <br>
 
 ## Getting Started
 
-Server
-<br>
-`
-cd server && npm install && npm run init-db && npm run start-dev
-`
+Follow these instructions to set up and run the Payment Reminder App locally.
+
+1. Clone the Repository
 <br>
 
-Frontend
+`git clone https://github.com/elliotpark410/payment_reminder.git`
 <br>
-`
-cd payment_reminder_react && npm install && npm run start
-`
+
+2. Setting up the Server
+<br>
+
+`cd server`
+
+`npm install`
+
+`npm run init-db`
+
+`npm run start-dev`
+<br>
+
+3. Setting up the Frontend
+<br>
+
+`cd payment_reminder_react`
+
+`npm install`
+
+`npm run start`
 <br>
 
 ## Technologies Used
 
-* React
-* Javascript
-* TypeScript
-* Node.js
-* Express
-* Docker
-* MySQL
-* Postman
-* dBeaver
-* AWS EC2 Linux
-* AWS Amplify
-
+* React: For building the user interface.
+* JavaScript: The main programming language for the frontend.
+* TypeScript: For type safety and better developer experience.
+* CSS: For custom styling
+* Node.js: For the backend server.
+* Express: A web framework for Node.js.
+* Docker: To containerize the application and its dependencies.
+* MySQL: The database used for storing application data.
+* Postman: For API testing.
+* dBeaver: Database management tool.
+* AWS EC2 Linux: For hosting the backend server.
+* AWS Amplify: For hosting the frontend application.
+* Namecheap: For domain registration and DNS management.
+* Let's Encrypt: For SSL Certification.
 <br>
 
 ## Author
@@ -67,3 +89,7 @@ LinkedIn: [https://www.linkedin.com/in/elliot-park/](https://www.linkedin.com/in
 
 Email: [elliotpark410@gmail.com](mailto:elliotpark410@gmail.com)
 <br>
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
