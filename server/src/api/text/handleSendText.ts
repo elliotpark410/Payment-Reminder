@@ -76,12 +76,13 @@ async function saveTextMessage(
 ): Promise<void> {
   // Get the current date and time in Pacific Time
   const currentDate = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
-  // const pacificTime = format(currentDate, 'yyyy-MM-dd HH:mm:ss', {
-  //   timeZone: 'America/Los_Angeles',
-  // });
+
+  // Split the date string and format it as 'YYYY-MM-DD'
+  const [month, day, year] = currentDate.split('/');
+  const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
   const query =
     'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
 
-  await promisePool.execute(query, [studentId, currentDate, message]);
+  await promisePool.execute(query, [studentId, formattedDate, message]);
 }
