@@ -34,10 +34,12 @@ The Payment Reminder App is a monorepo designed to help vocal coaches (e.g. Park
 Follow these instructions to set up and run the Payment Reminder App locally.
 
 1. Clone the Repository
+
 `git clone https://github.com/elliotpark410/payment_reminder.git`
 <br>
 
 2. Setting up the Server
+
 `cd server`
 
 `npm install`
@@ -48,6 +50,7 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 <br>
 
 3. Setting up the Frontend
+
 `cd payment_reminder_react`
 
 `npm install`
@@ -69,8 +72,10 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 * dBeaver: Database management tool.
 * AWS EC2 Linux: For hosting the backend server.
 * AWS Amplify: For hosting the frontend application.
+* Twilio: For SMS delivery.
 * Namecheap: For domain registration and DNS management.
 * Let's Encrypt: For SSL Certification.
+
 <br>
 
 ## Author
