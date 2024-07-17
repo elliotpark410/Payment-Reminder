@@ -84,18 +84,21 @@ function EditStudent({ student, onClose, onEdit }) {
 
       // console.log('Updated student data:', response.data);
 
-      onEdit(response.data);
+      if (response.status === 200 || response.status === 201) {
+        onEdit(response.data);
 
-      if ((response.status === 200 || response.status === 201) && !formData.inactive) {
-        // Show notifcation
-        toast.success(`Edited ${formData.student_name}`, {
-          position: 'top-left',
-          autoClose: 3000 // Close after 3 seconds
-        });
-      } else {
-        console.error('Error editing student. Unexpected response:', response);
+        if (!formData.inactive) {
+          toast.success(`Edited ${formData.student_name}`, {
+            position: 'top-left',
+            autoClose: 3000 // Close after 3 seconds
+          });
+        } else {
+          toast.success(`${formData.student_name} inactived`, {
+            position: 'top-left',
+            autoClose: 3000 // Close after 3 seconds
+          });
+        }
       }
-
       onClose();
     } catch (error) {
       console.error('Error editing student data:', error);
