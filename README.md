@@ -34,14 +34,10 @@ The Payment Reminder App is a monorepo designed to help vocal coaches (e.g. Park
 Follow these instructions to set up and run the Payment Reminder App locally.
 
 1. Clone the Repository
-<br>
-
 `git clone https://github.com/elliotpark410/payment_reminder.git`
 <br>
 
 2. Setting up the Server
-<br>
-
 `cd server`
 
 `npm install`
@@ -52,8 +48,6 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 <br>
 
 3. Setting up the Frontend
-<br>
-
 `cd payment_reminder_react`
 
 `npm install`
