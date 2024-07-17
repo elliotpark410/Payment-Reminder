@@ -97,6 +97,11 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 // Mount root router
 app.use('/', rootRouter);
 
+// Serve favicon.ico (respond with a 204 No Content status)
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
+
 // Error handling middleware
 app.use(notFoundHandler);
 app.use(errorHandler);

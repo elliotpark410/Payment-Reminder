@@ -300,7 +300,10 @@ function AppContent() {
           studentSusbscriptionCount={getStudentSubscriptionCount(data.studentId)}
           studentFilteredLessonDates={getFilteredLessonDates(data.studentId)}
           studentSubscriptionAmount={getStudentSubscriptionAmount(data.studentId)}
-          onClose={handleCloseSendTextModal}
+          onClose={() => {
+            fetchData();
+            handleCloseSendTextModal();
+          }}
         />
       )}
       {/* Delete Student Modal is conditionally rendered if showDeleteStudentModal is truthy */}
