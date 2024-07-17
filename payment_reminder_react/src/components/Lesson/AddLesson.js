@@ -130,15 +130,16 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
         size="lg"
         className={showPaymentModal || showHistoryModal ? 'calendar-disabled' : ''}
       >
-        <Modal.Header style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Modal.Title >
-              {studentName}
-          </Modal.Title>
-          <Button
-            className="button"
-            variant="dark"
-            onClick={handleViewHistory}
-          >
+        <Modal.Header
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <Modal.Title>{studentName}</Modal.Title>
+          <Button className="button" variant="dark" onClick={handleViewHistory}>
             <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
             View
           </Button>

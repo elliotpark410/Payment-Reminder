@@ -131,7 +131,14 @@ function GetStudentHistory({ studentId, studentName, onClose, onUpdate }) {
   const [textMessage, setTextMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
+
+  // Height for each page
+  const rowHeight = 50;
+  const tableHeaderHeight = 40;
+  const paginationHeight = 50;
+  const tableContainerHeight = itemsPerPage * rowHeight + tableHeaderHeight;
+  const totalContentHeight = tableContainerHeight + paginationHeight;
 
   const fetchStudentData = useCallback(async () => {
     const fetchedLessons = await fetchStudentLessons(studentId);
@@ -247,92 +254,107 @@ function GetStudentHistory({ studentId, studentName, onClose, onUpdate }) {
         <Modal.Title id="contained-modal-title-vcenter">{studentName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Count</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentRecords.map((record, index) => {
-              const uniqueKey = `${record.id}-${index}`;
-              // lesson records
-              if (record.lesson) {
-                return (
-                  <tr key={uniqueKey}>
-                    <td>{record.lessonNumber}</td>
-                    <td className="lesson-data" onClick={() => handleEditLesson(record)}>
-                      {record.formattedDate}
-                    </td>
-                  </tr>
-                );
-                // text message records
-              } else if (record.text) {
-                return (
-                  <tr key={uniqueKey}>
-                    <td
-                      colSpan="2"
-                      onClick={() => handleTextClick(record.message)}
-                      className="text-data text-center"
-                      style={{
-                        backgroundColor: '#007bff', // blue
-                        color: 'white',
-                        padding: '8px 15px',
-                        borderRadius: '4px',
-                        height: '55px'
-                      }}
-                    >
-                      Message sent on {record.formattedDate}
-                    </td>
-                    <td colSpan="1"></td>
-                  </tr>
-                );
-              } else if (record.payment) {
-                // payment records
-                return (
-                  <tr key={uniqueKey}>
-                    <td
-                      colSpan="2"
-                      className="payment-data text-center"
-                      style={{
-                        backgroundColor: '#74db79', // green
-                        padding: '8px 15px',
-                        borderRadius: '4px'
-                      }}
-                      onClick={() => handleEditPayment(record)}
-                    >
-                      ${record.amount.toLocaleString()} received on {record.formattedDate}
-                    </td>
-                  </tr>
-                );
-              } else {
-                // lesson reset records
-                return (
-                  <tr key={uniqueKey}>
-                    <td
-                      colSpan="2"
-                      className="reset-data text-center"
-                      style={{
-                        backgroundColor: '#FFC107', // yellow
-                        padding: '8px 15px',
-                        borderRadius: '4px'
-                      }}
-                      onClick={() => handleEditReset(record)}
-                    >
-                      Lesson reset on {record.formattedDate}
-                    </td>
-                  </tr>
-                );
-              }
-            })}
-          </tbody>
-        </table>
-        <PaginationComponent
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
+        <div
+          style={{ height: `${totalContentHeight}px`, display: 'flex', flexDirection: 'column' }}
+        >
+          <div style={{ height: `${tableContainerHeight}px`, overflowY: 'auto' }}>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Count</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentRecords.map((record, index) => {
+                  const uniqueKey = `${record.id}-${index}`;
+                  // lesson records
+                  if (record.lesson) {
+                    return (
+                      <tr key={uniqueKey} style={{ height: `${rowHeight}px` }}>
+                        <td>{record.lessonNumber}</td>
+                        <td className="lesson-data" onClick={() => handleEditLesson(record)}>
+                          {record.formattedDate}
+                        </td>
+                      </tr>
+                    );
+                    // text message records
+                  } else if (record.text) {
+                    return (
+                      <tr key={uniqueKey} style={{ height: `${rowHeight}px` }}>
+                        <td
+                          colSpan="2"
+                          onClick={() => handleTextClick(record.message)}
+                          className="text-data text-center"
+                          style={{
+                            backgroundColor: '#007bff', // blue
+                            color: 'white',
+                            padding: '8px 15px',
+                            borderRadius: '4px',
+                            height: '55px'
+                          }}
+                        >
+                          Message sent on {record.formattedDate}
+                        </td>
+                        <td colSpan="1"></td>
+                      </tr>
+                    );
+                  } else if (record.payment) {
+                    // payment records
+                    return (
+                      <tr key={uniqueKey} style={{ height: `${rowHeight}px` }}>
+                        <td
+                          colSpan="2"
+                          className="payment-data text-center"
+                          style={{
+                            backgroundColor: '#74db79', // green
+                            padding: '8px 15px',
+                            borderRadius: '4px'
+                          }}
+                          onClick={() => handleEditPayment(record)}
+                        >
+                          ${record.amount.toLocaleString()} received on {record.formattedDate}
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    // lesson reset records
+                    return (
+                      <tr key={uniqueKey} style={{ height: `${rowHeight}px` }}>
+                        <td
+                          colSpan="2"
+                          className="reset-data text-center"
+                          style={{
+                            backgroundColor: '#FFC107', // yellow
+                            padding: '8px 15px',
+                            borderRadius: '4px'
+                          }}
+                          onClick={() => handleEditReset(record)}
+                        >
+                          Lesson reset on {record.formattedDate}
+                        </td>
+                      </tr>
+                    );
+                  }
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div
+            style={{
+              height: `${paginationHeight}px`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '18px' }}>

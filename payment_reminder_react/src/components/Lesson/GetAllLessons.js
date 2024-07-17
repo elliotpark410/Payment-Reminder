@@ -57,6 +57,12 @@ function GetAllLessons({ onClose }) {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  // Height for each page
+  const rowHeight = 45;
+  const tableHeaderHeight = 40;
+  const paginationHeight = 50;
+  const tableContainerHeight = itemsPerPage * rowHeight + tableHeaderHeight;
+  const totalContentHeight = tableContainerHeight + paginationHeight;
 
   useEffect(() => {
     fetchLessons(setLessons);
@@ -82,29 +88,44 @@ function GetAllLessons({ onClose }) {
         <Modal.Title id="contained-modal-title-vcenter">All Lessons</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Number</th>
-              <th>Name</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentRecords.map((lesson) => (
-              <tr key={lesson.id}>
-                <td>{lesson.lessonNumber}</td>
-                <td>{lesson.student_name}</td>
-                <td>{lesson.formattedDate}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <PaginationComponent
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
+        <div
+          style={{ height: `${totalContentHeight}px`, display: 'flex', flexDirection: 'column' }}
+        >
+          <div style={{ height: `${tableContainerHeight}px`, overflowY: 'auto' }}>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentRecords.map((lesson) => (
+                  <tr key={lesson.id} style={{ height: `${rowHeight}px` }}>
+                    <td>{lesson.lessonNumber}</td>
+                    <td>{lesson.student_name}</td>
+                    <td>{lesson.formattedDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div
+            style={{
+              height: `${paginationHeight}px`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <div style={{ flex: 1, textAlign: 'left', fontSize: '18px' }}>
