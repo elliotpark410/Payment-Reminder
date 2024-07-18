@@ -63,25 +63,19 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
     try {
-      const formattedDate = selectedDate.toLocaleDateString('en-CA', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      });
-
       // Make API call to add lesson using Axios
       const response = await api.post(`/lesson/add`, {
         student_id: studentId,
-        date: formattedDate
+        date: selectedDate
       });
 
       // console.log('Added lesson:', response.data);
 
-      const notificationDate = formatDate(selectedDate);
+      // const notificationDate = formatDate(selectedDate);
 
       if (response.status === 200 || response.status === 201) {
         // Show notifcation
-        toast.success(`Added lesson ${notificationDate}`, {
+        toast.success(`Added lesson ${selectedDate}`, {
           position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
