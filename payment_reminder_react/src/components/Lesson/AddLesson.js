@@ -141,18 +141,24 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             width: '100%',
+            position: 'relative'
           }}
           closeButton
         >
-          <Modal.Title>{studentName}</Modal.Title>
-          <div style={{ flex: 1 }}></div>
-          <div style={{ flex: 0, display: 'flex', justifyContent: 'center' }}>
-            <Button className="button" variant="dark" onClick={handleViewHistory}>
-              <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
-              View
-            </Button>
-          </div>
-          <div style={{ flex: 1.4 }}></div>
+          <Modal.Title style={{ marginRight: 'auto' }}>{studentName}</Modal.Title>
+          <Button
+            className="button"
+            variant="dark"
+            onClick={handleViewHistory}
+            style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)'
+            }}
+          >
+            <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
+            View
+          </Button>
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
           <LessonCalendar
