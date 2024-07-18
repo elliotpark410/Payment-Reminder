@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar';
 import { api } from '../../lib/constants';
-import { formatDate, todaysDate } from '../../lib/util';
+import { formatDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
 import AddReset from '../Reset/AddReset';
 import GetStudentHistory from './GetStudentHistory';
@@ -21,7 +21,7 @@ import '../../App.css';
 import './Calendar/calendarStyles.css';
 
 function AddLesson({ onClose, studentId, students, onUpdate }) {
-  const [selectedDate, setSelectedDate] = useState(todaysDate);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -63,19 +63,25 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
     try {
+      const formattedDate = selectedDate.toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+
       // Make API call to add lesson using Axios
       const response = await api.post(`/lesson/add`, {
         student_id: studentId,
-        date: selectedDate
+        date: formattedDate
       });
 
       // console.log('Added lesson:', response.data);
 
-      // const notificationDate = formatDate(selectedDate);
+      const notificationDate = formatDate(selectedDate);
 
       if (response.status === 200 || response.status === 201) {
         // Show notifcation
-        toast.success(`Added lesson ${selectedDate}`, {
+        toast.success(`Added lesson ${notificationDate}`, {
           position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
