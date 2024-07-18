@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleAddPayment(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleAddPayment(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract payment data from request body
     const { student_id, date, amount } = request.body;
@@ -15,11 +11,7 @@ export async function handleAddPayment(
     const insertQuery = `INSERT INTO payments (student_id, date, amount) VALUES (?, ?, ?)`;
 
     // Execute the insert query
-    const [insertResults] = await promisePool.execute(insertQuery, [
-      student_id,
-      date,
-      amount,
-    ]);
+    const [insertResults] = await promisePool.execute(insertQuery, [student_id, date, amount]);
 
     // Fetch the inserted payment record from the database
     const insertResultsJson: any = insertResults;
@@ -27,10 +19,7 @@ export async function handleAddPayment(
 
     const selectQuery = 'SELECT * FROM payments WHERE id = ?';
 
-    const [selectResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [paymentId]
-    );
+    const [selectResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [paymentId]);
 
     // If the record is found, send it in the response
     if (selectResults.length > 0) {

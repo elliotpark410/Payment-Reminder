@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleGetAllText(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleGetAllText(request: Request, response: Response, next: NextFunction) {
   try {
     // Query to select all texts associated with a student id
     const query = 'SELECT * FROM texts';

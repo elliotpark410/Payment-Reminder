@@ -1,4 +1,4 @@
-import { promisePool } from "../connection";
+import { promisePool } from '../connection';
 
 export async function seedUsers() {
   const userData = [
@@ -16,7 +16,7 @@ export async function seedUsers() {
     for (const user of userData) {
       await promisePool.execute(
         'INSERT IGNORE INTO users (username, password_hash) VALUES (?, ?)',
-        [user.username, user.password_hash]
+        [user.username, user.password_hash],
       );
     }
     console.log('Users seeded successfully');

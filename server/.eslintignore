@@ -1,0 +1,21 @@
+# Directories
+node_modules
+dist
+docker
+logs
+
+# Config files
+.env
+.env.production
+ecosystem.config.cjs
+tsconfig.json
+
+# Package manager files
+package-lock.json
+package.json
+
+# Build files
+Dockerfile
+
+# Generated files
+*.log

@@ -5,7 +5,7 @@ import { RowDataPacket } from 'mysql2';
 export async function handleGetStudentPayments(
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     // Extract student ID from request parameters
@@ -19,9 +19,7 @@ export async function handleGetStudentPayments(
     `;
 
     // Execute the query
-    const [results] = await promisePool.execute<RowDataPacket[]>(selectQuery, [
-      student_id,
-    ]);
+    const [results] = await promisePool.execute<RowDataPacket[]>(selectQuery, [student_id]);
 
     // If successful, send the payment data in the response
     response.send(results);

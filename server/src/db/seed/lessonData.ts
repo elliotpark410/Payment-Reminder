@@ -1,4 +1,4 @@
-import { promisePool } from "../connection";
+import { promisePool } from '../connection';
 
 export async function seedLessons() {
   const lessonsData = [
@@ -29,56 +29,64 @@ export async function seedLessons() {
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
     {
       student_id: 17,
       date: '2024-03-29',
-    },    {
+    },
+    {
       student_id: 17,
       date: '2024-03-28',
     },
@@ -90,10 +98,10 @@ export async function seedLessons() {
 
   try {
     for (const lesson of lessonsData) {
-      await promisePool.execute(
-        'INSERT IGNORE INTO lessons (student_id, date) VALUES (?, ?)',
-        [lesson. student_id, lesson.date]
-      );
+      await promisePool.execute('INSERT IGNORE INTO lessons (student_id, date) VALUES (?, ?)', [
+        lesson.student_id,
+        lesson.date,
+      ]);
     }
     console.log('Lessons seeded successfully');
   } catch (error) {

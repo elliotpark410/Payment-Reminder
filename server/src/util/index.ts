@@ -13,7 +13,7 @@ export const getEnvVariable = (name: string): string => {
     throw new Error(`Environment variable ${name} is not defined`);
   }
   return value;
-}
+};
 
 // Crypto configuration
 const algorithm = 'aes-256-cbc';
@@ -37,7 +37,7 @@ if (iv.length !== 16) {
  * @returns The encrypted text.
  */
 export function encrypt(text: string): string {
-  let cipher = crypto.createCipheriv(algorithm, key, iv);
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
   let encrypted = cipher.update(text, 'utf8', 'hex');
   encrypted += cipher.final('hex');
   return encrypted;
@@ -49,10 +49,8 @@ export function encrypt(text: string): string {
  * @returns The decrypted text.
  */
 export function decrypt(text: string): string {
-  let decipher = crypto.createDecipheriv(algorithm, key, iv);
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
   let decrypted = decipher.update(text, 'hex', 'utf8');
   decrypted += decipher.final('utf8');
   return decrypted;
 }
-
-

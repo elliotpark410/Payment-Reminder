@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditReset(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleEditReset(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract reset ID from request parameters
     const reset_id: string = request.params.reset_id;
@@ -18,10 +14,7 @@ export async function handleEditReset(
     const updateQuery = 'UPDATE resets SET date = ? WHERE id = ?';
 
     // Execute the query with reset data and reset ID as parameters
-    const [updateResults] = await promisePool.execute(updateQuery, [
-      date,
-      reset_id,
-    ]);
+    const [updateResults] = await promisePool.execute(updateQuery, [date, reset_id]);
 
     // Check if the update query affected any rows
     const updateResultsJson: any = updateResults;
@@ -32,10 +25,7 @@ export async function handleEditReset(
     // Fetch the updated reset record from the database
     const selectQuery = 'SELECT * FROM resets WHERE id = ?';
 
-    const [selectResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [reset_id]
-    );
+    const [selectResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [reset_id]);
 
     // If the record is found, send it in the response
     if (selectResults.length > 0) {

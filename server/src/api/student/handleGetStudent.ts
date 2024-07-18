@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleGetStudent(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleGetStudent(request: Request, response: Response, next: NextFunction) {
   try {
     const student_id: string = request.params.student_id;
 
@@ -14,9 +10,7 @@ export async function handleGetStudent(
     const query = 'SELECT * FROM students WHERE deleted_at IS NULL AND id = ?';
 
     // Execute the query with the student ID as a parameter
-    const [results] = await promisePool.execute<RowDataPacket[]>(query, [
-      student_id,
-    ]);
+    const [results] = await promisePool.execute<RowDataPacket[]>(query, [student_id]);
 
     // If a student is found, send it in the response
     if (results.length > 0) {

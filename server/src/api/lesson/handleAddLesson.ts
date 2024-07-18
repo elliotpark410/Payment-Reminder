@@ -1,18 +1,11 @@
-import { NextFunction, Request, Response } from "express";
-import { promisePool } from "../../db/connection";
-import { RowDataPacket } from "mysql2";
+import { NextFunction, Request, Response } from 'express';
+import { promisePool } from '../../db/connection';
+import { RowDataPacket } from 'mysql2';
 
-export async function handleAddLesson(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleAddLesson(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract lesson data from request body
-    const {
-      student_id,
-      date,
-    } = request.body;
+    const { student_id, date } = request.body;
 
     // Query to insert a new lesson into the lessons table
     const insertQuery = `INSERT INTO lessons (student_id, date) VALUES (?, ?)`;

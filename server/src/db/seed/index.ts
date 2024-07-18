@@ -1,8 +1,8 @@
-import { seedUsers } from "./userData";
-import { seedStudents } from "./studentData";
-import { seedLessons } from "./lessonData";
-import { seedTexts } from "./textData";
-import { promisePool } from "../connection";
+import { seedUsers } from './userData';
+import { seedStudents } from './studentData';
+import { seedLessons } from './lessonData';
+import { seedTexts } from './textData';
+import { promisePool } from '../connection';
 
 async function seedDatabase() {
   try {

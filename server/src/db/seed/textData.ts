@@ -1,4 +1,4 @@
-import { promisePool } from "../connection";
+import { promisePool } from '../connection';
 
 export async function seedTexts() {
   const textsData = [
@@ -12,7 +12,10 @@ export async function seedTexts() {
 
   try {
     for (const text of textsData) {
-      await promisePool.execute('INSERT IGNORE INTO texts (student_id, date, message) VALUES (?, ?, ?)', [text.student_id, text.date, text.message]);
+      await promisePool.execute(
+        'INSERT IGNORE INTO texts (student_id, date, message) VALUES (?, ?, ?)',
+        [text.student_id, text.date, text.message],
+      );
     }
   } catch (err) {
     console.error('Error inserting text:', err);

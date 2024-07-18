@@ -22,23 +22,20 @@ connection.connect((err) => {
   console.log('Connected to MySQL server');
 
   // Function to create a database if it doesn't exist
-  connection.query(
-    `CREATE DATABASE IF NOT EXISTS ${database_name}`,
-    (createDbErr) => {
-      if (createDbErr) {
-        console.error('Error creating database:', createDbErr);
-        throw createDbErr;
-      }
-      console.log('Database created or already exists');
-      // Optional: Ensure that you select the created database to avoid "unknown database" errors
-      connection.changeUser({ database: `${database_name}` }, (changeDbErr) => {
-        if (changeDbErr) {
-          console.error('Error changing to created database:', changeDbErr);
-          throw changeDbErr;
-        }
-        console.log(`Now using ${database_name} database`);
-        connection.end();
-      });
+  connection.query(`CREATE DATABASE IF NOT EXISTS ${database_name}`, (createDbErr) => {
+    if (createDbErr) {
+      console.error('Error creating database:', createDbErr);
+      throw createDbErr;
     }
-  );
+    console.log('Database created or already exists');
+    // Optional: Ensure that you select the created database to avoid "unknown database" errors
+    connection.changeUser({ database: `${database_name}` }, (changeDbErr) => {
+      if (changeDbErr) {
+        console.error('Error changing to created database:', changeDbErr);
+        throw changeDbErr;
+      }
+      console.log(`Now using ${database_name} database`);
+      connection.end();
+    });
+  });
 });

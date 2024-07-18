@@ -5,21 +5,17 @@ import { RowDataPacket } from 'mysql2';
 export async function handleInactiveStudent(
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     // Extract student ID from request parameters
     const student_id: string = request.params.student_id;
 
     // Query to inactivate student
-    const selectQuery =
-      'SELECT inactive FROM students WHERE deleted_at IS NULL AND id = ?';
+    const selectQuery = 'SELECT inactive FROM students WHERE deleted_at IS NULL AND id = ?';
 
     // Execute the inactive query with student ID as parameter
-    const [inactiveResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [student_id]
-    );
+    const [inactiveResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [student_id]);
 
     // Check if the inactive query affected any rows
     const inactiveResultsJson: any = inactiveResults;

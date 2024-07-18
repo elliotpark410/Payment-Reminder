@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleGetPayments(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleGetPayments(request: Request, response: Response, next: NextFunction) {
   try {
     const query = `
     SELECT payments.*, students.student_name

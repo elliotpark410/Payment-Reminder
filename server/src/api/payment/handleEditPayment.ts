@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditPayment(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleEditPayment(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract payment ID from request parameters
     const payment_id: string = request.params.payment_id;
@@ -18,11 +14,7 @@ export async function handleEditPayment(
     const updateQuery = 'UPDATE payments SET date = ?, amount = ? WHERE id = ?';
 
     // Execute the query with payment data and payment ID as parameters
-    const [updateResults] = await promisePool.execute(updateQuery, [
-      date,
-      amount,
-      payment_id,
-    ]);
+    const [updateResults] = await promisePool.execute(updateQuery, [date, amount, payment_id]);
 
     // Check if the update query affected any rows
     const updateResultsJson: any = updateResults;
@@ -33,10 +25,7 @@ export async function handleEditPayment(
     // Fetch the updated payment record from the database
     const selectQuery = 'SELECT * FROM payments WHERE id = ?';
 
-    const [selectResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [payment_id]
-    );
+    const [selectResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [payment_id]);
 
     // If the record is found, send it in the response
     if (selectResults.length > 0) {

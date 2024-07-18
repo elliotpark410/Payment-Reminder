@@ -15,11 +15,7 @@ const twilio_phone_number = getEnvVariable('TWILIO_PHONE_NUMBER');
 // Create a Twilio client instance
 const twilioClient = new Twilio(accountSid, authToken);
 
-export async function handleSendText(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleSendText(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract necessary data from request body
     const { student_id, message } = request.body;
@@ -55,9 +51,7 @@ export async function handleSendText(
 async function getPhoneNumber(studentId: number): Promise<string> {
   const query = 'SELECT phone_number FROM students WHERE id = ?';
 
-  const [results] = await promisePool.execute<RowDataPacket[]>(query, [
-    studentId,
-  ]);
+  const [results] = await promisePool.execute<RowDataPacket[]>(query, [studentId]);
 
   if (results.length > 0) {
     let phoneNumber = results[0].phone_number;
@@ -70,10 +64,7 @@ async function getPhoneNumber(studentId: number): Promise<string> {
   }
 }
 
-async function saveTextMessage(
-  studentId: number,
-  message: string
-): Promise<void> {
+async function saveTextMessage(studentId: number, message: string): Promise<void> {
   // Get the current date and time in Pacific Time
   const currentDate = new Date();
 
@@ -81,8 +72,7 @@ async function saveTextMessage(
     timeZone: 'America/Los_Angeles',
   });
 
-  const query =
-    'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
+  const query = 'INSERT INTO texts (student_id, date, message) VALUES (?, ?, ?)';
 
   await promisePool.execute(query, [studentId, formattedDate, message]);
 }

@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditLesson(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleEditLesson(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract lesson ID from request parameters
     const lesson_id: string = request.params.lesson_id;
@@ -18,10 +14,7 @@ export async function handleEditLesson(
     const updateQuery = 'UPDATE lessons SET date = ? WHERE id = ?';
 
     // Execute the query with lesson data and lesson ID as parameters
-    const [updateResults] = await promisePool.execute(updateQuery, [
-      date,
-      lesson_id,
-    ]);
+    const [updateResults] = await promisePool.execute(updateQuery, [date, lesson_id]);
 
     // Check if the update query affected any rows
     const updateResultsJson: any = updateResults;
@@ -32,10 +25,7 @@ export async function handleEditLesson(
     // Fetch the updated lesson record from the database
     const selectQuery = 'SELECT * FROM lessons WHERE id = ?';
 
-    const [selectResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [lesson_id]
-    );
+    const [selectResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [lesson_id]);
 
     // If the record is found, send it in the response
     if (selectResults.length > 0) {

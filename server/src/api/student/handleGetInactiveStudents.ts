@@ -5,7 +5,7 @@ import { RowDataPacket } from 'mysql2';
 export async function handleGetInactiveStudents(
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const query = `

@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleGetLessons(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleGetLessons(request: Request, response: Response, next: NextFunction) {
   try {
     const query = `
     SELECT lessons.*, students.student_name

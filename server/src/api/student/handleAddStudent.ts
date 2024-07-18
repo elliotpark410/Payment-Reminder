@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { RowDataPacket } from 'mysql2';
 import { promisePool } from '../../db/connection';
 
-export async function handleAddStudent(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleAddStudent(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract student data from request body
     const {
@@ -38,10 +34,7 @@ export async function handleAddStudent(
 
     const selectQuery = 'SELECT * FROM students WHERE id = ?';
 
-    const [selectResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [studentId]
-    );
+    const [selectResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [studentId]);
 
     // If the record is found, send it in the response
     if (selectResults.length > 0) {

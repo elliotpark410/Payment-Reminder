@@ -1,5 +1,5 @@
 {
-  "name": "payment_reminder",
+  "name": "payment_reminder_server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,7 +19,11 @@
     "create-db": "ts-node src/db/create-db.ts",
     "add-tables": "ts-node src/db/add-tables.ts",
     "add-data": "ts-node src/db/seed/index.ts",
-    "migrate": "ts-node src/db/migrate/update-table.ts"
+    "migrate": "ts-node src/db/migrate/update-table.ts",
+    "format": "prettier --write \"src/**/*.{js,ts}\"",
+    "format:check": "prettier --check \"src/**/*.{js,ts}\"",
+    "lint": "eslint \"src/**/*.{js,ts}\"",
+    "lint:fix": "eslint \"src/**/*.{js,ts}\" --fix"
   },
   "repository": {
     "type": "git",

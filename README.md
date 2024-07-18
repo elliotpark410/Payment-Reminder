@@ -29,6 +29,20 @@ The Payment Reminder App is a monorepo designed to help vocal coaches (e.g. Park
 * [Download and install Docker Compose.](https://docs.docker.com/compose/install/)
 <br>
 
+3. Environment variables for server
+* MySQL DB Config (host, user, password, database, port).
+* Twilio Account SID.
+* Twilio Auth Token.
+* Twilio Phone Number.
+* Bcrypt Salt Rounds.
+* JWT Secret.
+* Encryption Key.
+* Encryption IV.
+* Max Login Attempts.
+* Domain names for CORS.
+
+<br>
+
 ## Getting Started
 
 Follow these instructions to set up and run the Payment Reminder App locally.
@@ -38,24 +52,16 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 `git clone https://github.com/elliotpark410/payment_reminder.git`
 <br>
 
+`npm run install-all`
+
 2. Setting up the Server
 
-`cd server`
-
-`npm install`
-
-`npm run init-db`
-
-`npm run start-dev`
+`npm run start-server`
 <br>
 
 3. Setting up the Frontend
 
-`cd payment_reminder_react`
-
-`npm install`
-
-`npm run start`
+`npm run start-client`
 <br>
 
 ## Technologies Used
@@ -75,6 +81,7 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 * Twilio: For SMS delivery.
 * Namecheap: For domain registration and DNS management.
 * Let's Encrypt: For SSL Certification.
+* dotenv: For environment variables.
 
 <br>
 

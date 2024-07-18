@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleGetLesson(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleGetLesson(request: Request, response: Response, next: NextFunction) {
   try {
     const lesson_id: string = request.params.lesson_id;
 
@@ -14,9 +10,7 @@ export async function handleGetLesson(
     const query = 'SELECT * FROM lessons WHERE id = ?';
 
     // Execute the query with the lesson ID as a parameter
-    const [results] = await promisePool.execute<RowDataPacket[]>(query, [
-      lesson_id,
-    ]);
+    const [results] = await promisePool.execute<RowDataPacket[]>(query, [lesson_id]);
 
     // If a lesson is found, send it in the response
     if (results.length > 0) {

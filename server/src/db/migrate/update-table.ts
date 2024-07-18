@@ -28,7 +28,6 @@ connection.connect((err) => {
     console.log('Updated table successfully');
   });
 
-  // Close connection 
+  // Close connection
   connection.end();
 });
-

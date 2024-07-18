@@ -4,7 +4,7 @@ import { promisePool } from '../../db/connection';
 export async function handleDeletePayment(
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     // Extract payment ID from request parameters
@@ -20,9 +20,7 @@ export async function handleDeletePayment(
     const deleteResultsJson: any = deleteResults;
     if (deleteResultsJson.affectedRows === 0) {
       // If no rows were affected, it means the payment with the provided ID was not found
-      return response
-        .status(404)
-        .json({ message: 'Payment not found or already deleted' });
+      return response.status(404).json({ message: 'Payment not found or already deleted' });
     }
 
     // If the delete was successful, send a success response

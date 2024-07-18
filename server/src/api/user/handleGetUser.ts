@@ -12,18 +12,12 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export async function handleGetUser(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleGetUser(request: Request, response: Response, next: NextFunction) {
   try {
     const { username, password } = request.body;
 
     if (!username || !password) {
-      return response
-        .status(400)
-        .json({ message: 'Username and password are required' });
+      return response.status(400).json({ message: 'Username and password are required' });
     }
 
     const { allowed, retryAfter } = await checkRateLimit(username);
@@ -38,9 +32,7 @@ export async function handleGetUser(
     const query = 'SELECT * FROM users WHERE username = ?';
 
     // Execute the query
-    const [results] = await promisePool.execute<RowDataPacket[]>(query, [
-      username,
-    ]);
+    const [results] = await promisePool.execute<RowDataPacket[]>(query, [username]);
 
     if (results.length === 0) {
       await incrementLoginAttempts(username);
@@ -50,10 +42,7 @@ export async function handleGetUser(
     const user = results[0];
 
     // Verify the password with bcrypt
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user.password_hash
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, user.password_hash);
 
     if (!isPasswordCorrect) {
       await incrementLoginAttempts(username);
@@ -62,11 +51,9 @@ export async function handleGetUser(
 
     const jwtSecret = getEnvVariable('JWT_SECRET');
 
-    const token = jwt.sign(
-      { username: user.username, userId: user.id },
-      jwtSecret,
-      { expiresIn: '168h' }
-    );
+    const token = jwt.sign({ username: user.username, userId: user.id }, jwtSecret, {
+      expiresIn: '168h',
+    });
 
     // If the password is correct, reset login attempts
     await resetLoginAttempts(username);

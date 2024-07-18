@@ -10,7 +10,7 @@ const database = getEnvVariable('DB_DATABASE');
 const port = Number(getEnvVariable('DB_PORT'));
 
 // Create a connection pool
-let poolConfig = {
+const poolConfig = {
   host: host,
   user: user,
   password: password,
@@ -20,7 +20,7 @@ let poolConfig = {
   waitForConnections: true,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0
+  keepAliveInitialDelay: 0,
 };
 
 // Create a connection pool
@@ -53,4 +53,3 @@ const handleDisconnect = () => {
 
 // Check connection every 1 hour
 setInterval(checkConnection, 60 * 60 * 1000);
-

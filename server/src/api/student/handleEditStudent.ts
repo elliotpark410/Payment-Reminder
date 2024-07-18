@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditStudent(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+export async function handleEditStudent(request: Request, response: Response, next: NextFunction) {
   try {
     // Extract student ID from request parameters
     const student_id: string = request.params.student_id;
@@ -45,10 +41,7 @@ export async function handleEditStudent(
     // Fetch the updated student record from the database
     const selectQuery = 'SELECT * FROM students WHERE id = ?';
 
-    const [selectResults] = await promisePool.execute<RowDataPacket[]>(
-      selectQuery,
-      [student_id]
-    );
+    const [selectResults] = await promisePool.execute<RowDataPacket[]>(selectQuery, [student_id]);
 
     // If the record is found, send it in the response
     if (selectResults.length > 0) {
