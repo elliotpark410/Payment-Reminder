@@ -1,8 +1,8 @@
 {
   "name": "payment_reminder_server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+  "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
     "start-dev": "nodemon --exec ts-node src/app.ts",

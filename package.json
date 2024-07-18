@@ -2,7 +2,7 @@
   "name": "payment_reminder_app",
   "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server/src/app.ts",
   "scripts": {
     "install-all": "npm install && cd server && npm install && cd ../payment_reminder_react && npm install",
     "start-server": "cd server && npm run init-db && npm run start-dev",
