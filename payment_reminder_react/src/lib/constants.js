@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-let host = 'http://localhost:3000';
+let apiBaseUrl = 'http://localhost:3000';
 
 if (process.env.NODE_ENV === 'production') {
-  host = process.env.REACT_APP_API_HOST
+  apiBaseUrl = process.env.REACT_APP_API_HOST
 }
 
 export const api = axios.create({
-  baseURL: host,
+  baseURL: apiBaseUrl,
   withCredentials: true
 });
 
