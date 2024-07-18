@@ -10,6 +10,12 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 function AddReset({ studentId, selectedDate, fetchStudentResetData, onUpdate }) {
   const resetLessonCount = async () => {
     try {
+
+      if (!selectedDate) {
+        toast.error('Please select a date before adding reset.');
+        return;
+      };
+
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',

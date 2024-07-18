@@ -63,6 +63,11 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   // Function to handle add lesson on the selected date
   const handleAddLesson = async () => {
     try {
+      if (!selectedDate) {
+        toast.error('Please select a date before adding lesson.');
+        return;
+      };
+
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',

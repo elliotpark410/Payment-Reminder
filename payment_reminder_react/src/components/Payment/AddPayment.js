@@ -27,7 +27,12 @@ function AddPayment({ show, onClose, studentId, selectedDate, fetchStudentPaymen
       if (!isValidAmount) {
         toast.error('Please enter a valid amount.');
         return;
-      }
+      };
+
+      if (!selectedDate) {
+        toast.error('Please select a date before adding payment.');
+        return;
+      };
 
       const formattedDate = selectedDate.toLocaleDateString('en-CA', {
         year: 'numeric',
