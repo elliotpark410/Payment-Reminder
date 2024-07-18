@@ -6,6 +6,7 @@
   "scripts": {
     "install-all": "npm install && cd server && npm install && cd ../payment_reminder_react && npm install",
     "start-server": "cd server && npm run init-db && npm run start-dev",
+    "stop-docker": "cd server && npm run stop-docker",
     "start-client": "cd payment_reminder_react && npm start",
     "build-client": "cd payment_reminder_react && npm run build",
     "build-server": "cd server && npm run build",
