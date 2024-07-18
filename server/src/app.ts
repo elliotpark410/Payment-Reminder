@@ -100,6 +100,11 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
+app.use('/.env*', (req, res) => {
+  console.warn(`Attempt to access .env file from IP: ${req.ip}`);
+  res.status(403).send('Access Forbidden');
+});
+
 // Mount root router
 app.use('/', rootRouter);
 
