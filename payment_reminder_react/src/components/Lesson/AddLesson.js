@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Modal, Button } from 'react-bootstrap';
 import LessonCalendar from './Calendar/Calendar';
 import { api } from '../../lib/constants';
-import { formatDate } from '../../lib/util';
+import { formatDate, todaysDate } from '../../lib/util';
 import AddPayment from '../Payment/AddPayment';
 import AddReset from '../Reset/AddReset';
 import GetStudentHistory from './GetStudentHistory';
@@ -20,12 +20,8 @@ import { faBook, faCreditCard, faList } from '@fortawesome/free-solid-svg-icons'
 import '../../App.css';
 import './Calendar/calendarStyles.css';
 
-const today = new Date().toLocaleDateString('en-US', {
-  timeZone: 'America/Los_Angeles'
-});
-
 function AddLesson({ onClose, studentId, students, onUpdate }) {
-  const [selectedDate, setSelectedDate] = useState(today);
+  const [selectedDate, setSelectedDate] = useState(todaysDate);
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
   const [payments, setPayments] = useState([]);
