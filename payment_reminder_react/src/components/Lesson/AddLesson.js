@@ -20,8 +20,12 @@ import { faBook, faCreditCard, faList } from '@fortawesome/free-solid-svg-icons'
 import '../../App.css';
 import './Calendar/calendarStyles.css';
 
+const today = new Date().toLocaleDateString('en-US', {
+  timeZone: 'America/Los_Angeles'
+});
+
 function AddLesson({ onClose, studentId, students, onUpdate }) {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(today);
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -42,7 +46,6 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
   }, [studentId]);
 
   useEffect(() => {
-    setSelectedDate(new Date());
     fetchStudentData();
   }, [fetchStudentData, studentId]);
 
