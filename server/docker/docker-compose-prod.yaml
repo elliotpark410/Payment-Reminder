@@ -22,6 +22,7 @@ services:
           cpus: '0.2'
           memory: 512M
     command:
+      - --bind-address=0.0.0.0
       - --performance_schema=OFF
       - --table_definition_cache=200
       - --table_open_cache=128
