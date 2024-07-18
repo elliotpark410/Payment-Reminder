@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import studentRouter from './api/student/studentRouter';
 import lessonRouter from './api/lesson/lessonRouter';
 import resetRouter from './api/reset/resetRouter';
@@ -7,6 +7,10 @@ import textRouter from './api/text/textRouter';
 import userRouter from './api/user/userRouter';
 
 const router = Router();
+
+router.get('/', (req: Request, res: Response) => {
+  res.status(200).json({ message: 'Welcome to Park Vocal Studio Management API' });
+});
 
 // Set up routers
 router.use('/student', studentRouter);

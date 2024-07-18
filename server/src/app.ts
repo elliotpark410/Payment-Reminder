@@ -108,6 +108,11 @@ app.get('/favicon.ico', (req, res) => {
   res.status(204).end();
 });
 
+// Add the catch-all route here
+app.use('*', (req: Request, res: Response) => {
+  res.status(404).json({ message: 'Route not found' });
+});
+
 // Error handling middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
