@@ -139,14 +139,20 @@ function AddLesson({ onClose, studentId, students, onUpdate }) {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            width: '100%',
           }}
+          closeButton
         >
           <Modal.Title>{studentName}</Modal.Title>
-          <Button className="button" variant="dark" onClick={handleViewHistory}>
-            <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
-            View
-          </Button>
+          <div style={{ flex: 1 }}></div>
+          <div style={{ flex: 0, display: 'flex', justifyContent: 'center' }}>
+            <Button className="button" variant="dark" onClick={handleViewHistory}>
+              <FontAwesomeIcon icon={faList} style={{ marginRight: '0.5em' }} />
+              View
+            </Button>
+          </div>
+          <div style={{ flex: 1.4 }}></div>
         </Modal.Header>
         <Modal.Body style={{ padding: 0, height: '100%' }}>
           <LessonCalendar
