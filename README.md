@@ -25,8 +25,8 @@ The Payment Reminder App is a monorepo designed to help vocal coaches (e.g. Park
 
 2. Docker & docker-compose
 * Docker is used for containerizing MySQL.
-* [Download and install Docker.](https://www.docker.com/products/docker-desktop/)
-* [Download and install Docker Compose.](https://docs.docker.com/compose/install/)
+* [Download Docker.](https://www.docker.com/products/docker-desktop/)
+* [Install Docker Compose.](https://docs.docker.com/compose/install/)
 <br>
 
 3. Environment variables for server
@@ -80,10 +80,10 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 * CSS: For custom styling
 * Node.js: For the backend server.
 * Express: A web framework for Node.js.
-* Docker: To containerize the application and its dependencies.
+* Docker: To containerize MySQL.
 * MySQL: The database used for storing application data.
 * Postman: For API testing.
-* dBeaver: Database management tool.
+* dBeaver: For database visualization and management.
 * AWS EC2 Linux: For hosting the backend server.
 * AWS Amplify: For hosting the frontend application.
 * Twilio: For SMS delivery.
