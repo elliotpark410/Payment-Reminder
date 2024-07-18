@@ -52,16 +52,24 @@ Follow these instructions to set up and run the Payment Reminder App locally.
 `git clone https://github.com/elliotpark410/payment_reminder.git`
 <br>
 
-`npm run install-all`
-
 2. Setting up the Server
 
-`npm run start-server`
+`cd server`
+
+`npm install`
+
+`npm run init-db` (Initializes Dockerized MySQL)
+
+`npm run start-dev`
 <br>
 
 3. Setting up the Frontend
 
-`npm run start-client`
+`cd payment_reminder_react`
+
+`npm install`
+
+`npm run start`
 <br>
 
 ## Technologies Used
