@@ -39,6 +39,8 @@ const Login = () => {
         username,
         password
       });
+      console.log("response.data")
+      console.log(response.data)
       // console.log('Logged in user:', response.data);
       localStorage.setItem('token', response.data.token); // Store token for persistent login
       toast.success('Successfully logged in', {
