@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import bodyParser from 'body-parser';
 
 // Handler imports
@@ -16,24 +17,32 @@ const jsonParser = bodyParser.json();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+router.use((req, res, next) => {
+  (req as AuthenticatedRequest).user = (req as any).user;
+  next();
+});
+
 // Route to add a new student
 router.post(
   '/add',
   jsonParser,
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleAddStudent(request, response, next);
   },
 );
 
 // Route to edit a student
-router.put('/:student_id', async (request: Request, response: Response, next: NextFunction) => {
-  await handleEditStudent(request, response, next);
-});
+router.put(
+  '/:student_id',
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
+    await handleEditStudent(request, response, next);
+  },
+);
 
 // Route to make a student inactive
 router.put(
   '/inactive/:student_id',
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleInactiveStudent(request, response, next);
   },
 );
@@ -41,23 +50,29 @@ router.put(
 // Route to delete a student
 router.put(
   '/delete/:student_id',
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleDeleteStudent(request, response, next);
   },
 );
 
 // Route to get inactive students
-router.get('/inactive', async (request: Request, response: Response, next: NextFunction) => {
-  await handleGetInactiveStudents(request, response, next);
-});
+router.get(
+  '/inactive',
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
+    await handleGetInactiveStudents(request, response, next);
+  },
+);
 
 // Route to get a student
-router.get('/:student_id', async (request: Request, response: Response, next: NextFunction) => {
-  await handleGetStudent(request, response, next);
-});
+router.get(
+  '/:student_id',
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
+    await handleGetStudent(request, response, next);
+  },
+);
 
 // Route to get all students
-router.get('/', async (request: Request, response: Response, next: NextFunction) => {
+router.get('/', async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
   await handleGetStudents(request, response, next);
 });
 

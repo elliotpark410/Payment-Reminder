@@ -7,6 +7,7 @@ import { getEnvVariable } from './util/index';
 import morgan from 'morgan';
 import moment from 'moment-timezone';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { authenticateToken } from './middleware/apiAuth';
 
 const PORT = getEnvVariable('PORT');
 const environment = getEnvVariable('NODE_ENV');
@@ -103,6 +104,14 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 app.use('/.env*', (req, res) => {
   console.warn(`Attempt to access .env file from IP: ${req.ip}`);
   res.status(403).send('Access Forbidden');
+});
+
+// Apply authentication middleware to all routes except /user
+app.use((req, res, next) => {
+  if (req.path.startsWith('/user')) {
+    return next();
+  }
+  authenticateToken(req, res, next);
 });
 
 // Mount root router

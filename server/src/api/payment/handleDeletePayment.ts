@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import { promisePool } from '../../db/connection';
 
 export async function handleDeletePayment(
-  request: Request,
+  request: AuthenticatedRequest,
   response: Response,
   next: NextFunction,
 ) {

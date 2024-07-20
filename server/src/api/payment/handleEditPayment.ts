@@ -1,8 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditPayment(request: Request, response: Response, next: NextFunction) {
+export async function handleEditPayment(
+  request: AuthenticatedRequest,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     // Extract payment ID from request parameters
     const payment_id: string = request.params.payment_id;

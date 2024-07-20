@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 import { Twilio } from 'twilio';
@@ -15,7 +16,11 @@ const twilio_phone_number = getEnvVariable('TWILIO_PHONE_NUMBER');
 // Create a Twilio client instance
 const twilioClient = new Twilio(accountSid, authToken);
 
-export async function handleSendText(request: Request, response: Response, next: NextFunction) {
+export async function handleSendText(
+  request: AuthenticatedRequest,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     // Extract necessary data from request body
     const { student_id, message } = request.body;

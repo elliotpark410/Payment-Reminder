@@ -1,8 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleEditReset(request: Request, response: Response, next: NextFunction) {
+export async function handleEditReset(
+  request: AuthenticatedRequest,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     // Extract reset ID from request parameters
     const reset_id: string = request.params.reset_id;

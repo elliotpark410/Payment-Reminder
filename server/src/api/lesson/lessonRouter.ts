@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import bodyParser from 'body-parser';
 
 // Handler imports
@@ -15,11 +16,16 @@ const jsonParser = bodyParser.json();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+router.use((req, res, next) => {
+  (req as AuthenticatedRequest).user = (req as any).user;
+  next();
+});
+
 // Route to add a new lesson
 router.post(
   '/add',
   jsonParser,
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleAddLesson(request, response, next);
   },
 );
@@ -27,7 +33,7 @@ router.post(
 // Route to delete a lesson by ID
 router.delete(
   '/delete/:lesson_id',
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleDeleteLesson(request, response, next);
   },
 );
@@ -36,25 +42,28 @@ router.delete(
 router.put(
   '/:lesson_id',
   jsonParser,
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleEditLesson(request, response, next);
   },
 );
 
 // Route to get a lesson by ID
-router.get('/:lesson_id', async (request: Request, response: Response, next: NextFunction) => {
-  await handleGetLesson(request, response, next);
-});
+router.get(
+  '/:lesson_id',
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
+    await handleGetLesson(request, response, next);
+  },
+);
 
 // Route to get all lessons
-router.get('/', async (request: Request, response: Response, next: NextFunction) => {
+router.get('/', async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
   await handleGetLessons(request, response, next);
 });
 
 // Route to get lessons for a student
 router.get(
   '/student/:student_id',
-  async (request: Request, response: Response, next: NextFunction) => {
+  async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     await handleGetStudentLessons(request, response, next);
   },
 );

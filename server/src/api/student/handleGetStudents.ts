@@ -1,8 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import { promisePool } from '../../db/connection';
 import { RowDataPacket } from 'mysql2';
 
-export async function handleGetStudents(request: Request, response: Response, next: NextFunction) {
+export async function handleGetStudents(
+  request: AuthenticatedRequest,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const query = `
     SELECT id, student_name, parent_name, phone_number, email,

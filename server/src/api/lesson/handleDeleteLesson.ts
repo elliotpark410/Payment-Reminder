@@ -1,7 +1,12 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { AuthenticatedRequest } from '../../middleware/apiAuth';
 import { promisePool } from '../../db/connection';
 
-export async function handleDeleteLesson(request: Request, response: Response, next: NextFunction) {
+export async function handleDeleteLesson(
+  request: AuthenticatedRequest,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     // Extract lesson ID from request parameters
     const lesson_id: string = request.params.lesson_id;
