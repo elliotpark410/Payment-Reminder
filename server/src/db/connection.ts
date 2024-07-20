@@ -16,11 +16,12 @@ const poolConfig = {
   password: password,
   database: database,
   port: port,
-  connectionLimit: 10, // Adjust this value based on your needs
+  connectionLimit: 10, 
   waitForConnections: true,
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
+  connectTimeout: 20000,
 };
 
 // Create a connection pool
@@ -51,5 +52,25 @@ const handleDisconnect = () => {
   });
 };
 
-// Check connection every 1 hour
-setInterval(checkConnection, 60 * 60 * 1000);
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    handleDisconnect();
+  } else {
+    throw err;
+  }
+});
+
+// Check connection every 30 minutes
+setInterval(checkConnection, 30 * 60 * 1000);
+
+process.on('SIGINT', async () => {
+  try {
+    pool.end();
+    console.log('Pool has ended');
+    process.exit(0);
+  } catch (err) {
+    console.error('Error closing pool:', err);
+    process.exit(1);
+  }
+});

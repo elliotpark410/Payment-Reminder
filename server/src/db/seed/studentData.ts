@@ -1,7 +1,17 @@
 import { promisePool } from '../connection';
 import { decrypt } from '../../util/index';
+import { RowDataPacket, ResultSetHeader } from 'mysql2';
 
-export const studentsData = [
+interface StudentData {
+  student_name: string;
+  parent_name?: string;
+  phone_number: string;
+  email?: string;
+  subscription_price: number;
+  subscription_number: number;
+}
+
+export const studentsData: StudentData[] = [
   {
     student_name: 'Soo Borson',
     phone_number: '71ab3c6fd0256aad8a88bf6666772100',
@@ -235,12 +245,28 @@ export const studentsData = [
 ];
 
 export async function seedStudents() {
-  try {
-    for (const student of studentsData) {
+  let insertedCount = 0;
+  let skippedCount = 0;
+  let errorCount = 0;
+
+  for (const student of studentsData) {
+    try {
       // Decrypt phone number and email
       const decryptedPhoneNumber = student.phone_number ? decrypt(student.phone_number) : null;
       const decryptedEmail = student.email ? decrypt(student.email) : null;
       const parentName = student.parent_name || null;
+
+      // Check if student already exists
+      const [existingStudents] = await promisePool.execute<RowDataPacket[]>(
+        'SELECT id FROM students WHERE student_name = ?',
+        [student.student_name],
+      );
+
+      if (existingStudents.length > 0) {
+        console.log(`Student ${student.student_name} already exists. Skipping.`);
+        skippedCount++;
+        continue;
+      }
 
       // Create a new student object with decrypted data
       const studentToInsert = {
@@ -253,8 +279,8 @@ export async function seedStudents() {
       };
 
       // Insert the student data into the database using promisePool.execute
-      await promisePool.execute(
-        'INSERT IGNORE INTO students (student_name, parent_name, phone_number, email, subscription_price, subscription_number) VALUES (?, ?, ?, ?, ?, ?)',
+      const [result] = await promisePool.execute<ResultSetHeader>(
+        'INSERT INTO students (student_name, parent_name, phone_number, email, subscription_price, subscription_number) VALUES (?, ?, ?, ?, ?, ?)',
         [
           studentToInsert.student_name,
           studentToInsert.parent_name,
@@ -264,10 +290,35 @@ export async function seedStudents() {
           studentToInsert.subscription_number,
         ],
       );
+
+      if (result.affectedRows > 0) {
+        insertedCount++;
+        console.log(`Inserted student: ${student.student_name}`);
+      } else {
+        console.log(`Failed to insert student: ${student.student_name}`);
+        errorCount++;
+      }
+    } catch (err) {
+      errorCount++;
+      console.error(`Error inserting student ${student.student_name}:`, err);
     }
-    console.log('Students seeded successfully');
-  } catch (error) {
-    console.error('Error inserting student:', error);
-    throw error;
+  }
+
+  console.log(
+    `Seeding students completed. Inserted: ${insertedCount}, Skipped: ${skippedCount}, Errors: ${errorCount}`,
+  );
+
+  if (errorCount > 0) {
+    throw new Error(`${errorCount} errors occurred while seeding students`);
+  }
+}
+
+export async function seedStudentsWrapper() {
+  try {
+    await seedStudents();
+    console.log('Students seeding completed successfully');
+  } catch (err) {
+    console.error('Error in seedStudents:', err);
+    throw err; // Re-throw the error for the calling function to handle
   }
 }

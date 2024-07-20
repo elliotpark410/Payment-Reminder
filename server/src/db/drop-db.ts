@@ -1,33 +1,51 @@
 import dotenv from 'dotenv';
 import { getEnvVariable } from '../util/index';
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
+
 dotenv.config();
 
 const database_name = getEnvVariable('DB_DATABASE');
 
-// Create a connection to the MySQL server
-const connection = mysql.createConnection({
-  host: getEnvVariable('DB_HOST'),
-  user: getEnvVariable('DB_USER'),
-  password: getEnvVariable('DB_PASSWORD'),
-  multipleStatements: true, // Allows running multiple SQL statements in a single query
-});
+async function dropDatabase() {
+  let connection;
 
-// Connect to the MySQL server
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL server:', err);
-    throw err;
-  }
-  console.log('Connected to MySQL server');
+  try {
+    // Create a connection to the MySQL server
+    connection = await mysql.createConnection({
+      host: getEnvVariable('DB_HOST'),
+      user: getEnvVariable('DB_USER'),
+      password: getEnvVariable('DB_PASSWORD'),
+      multipleStatements: true, // Allows running multiple SQL statements in a single query
+    });
 
-  // Function to drop the database
-  connection.query(`DROP DATABASE IF EXISTS ${database_name}`, (dropDbErr) => {
-    if (dropDbErr) {
-      console.error('Error dropping database:', dropDbErr);
-      throw dropDbErr;
-    }
+    console.log('Connected to MySQL server');
+
+    // Drop the database if it exists
+    await connection.query(`DROP DATABASE IF EXISTS ${database_name}`);
     console.log('Database dropped successfully or did not exist');
-    connection.end();
-  });
-});
+  } catch (error) {
+    console.error('Error occurred:', error);
+    throw error;
+  } finally {
+    if (connection) {
+      try {
+        await connection.end();
+        console.log('MySQL connection closed');
+      } catch (err) {
+        console.error('Error closing MySQL connection:', err);
+      }
+    }
+  }
+}
+
+async function main() {
+  try {
+    await dropDatabase();
+    console.log('Database drop operation completed successfully');
+  } catch (error) {
+    console.error('Failed to drop database:', error);
+    process.exit(1);
+  }
+}
+
+main();

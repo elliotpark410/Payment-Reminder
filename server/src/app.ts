@@ -34,7 +34,7 @@ app.use(
 // Rate limiting to prevent brute-force attacks
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 400, // limit each IP to 400 requests per windowMs
+  max: 300,
   message: 'Too many requests from this IP, please try again later',
   keyGenerator: (req: Request) => req.socket.remoteAddress || 'unknown',
   standardHeaders: true,

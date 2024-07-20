@@ -1,33 +1,40 @@
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import { getEnvVariable } from '../../util/index';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Ensure we're connected to the correct database
-const connection = mysql.createConnection({
-  host: getEnvVariable('DB_HOST'),
-  user: getEnvVariable('DB_USER'),
-  password: getEnvVariable('DB_PASSWORD'),
-  database: getEnvVariable('DB_DATABASE'),
-  multipleStatements: true,
-});
+async function updateTable() {
+  let connection;
+  try {
+    connection = await mysql.createConnection({
+      host: getEnvVariable('DB_HOST'),
+      user: getEnvVariable('DB_USER'),
+      password: getEnvVariable('DB_PASSWORD'),
+      database: getEnvVariable('DB_DATABASE'),
+      multipleStatements: true,
+    });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-    throw err;
-  }
+    console.log('Connected to database');
 
-  const sqlQuery = `ALTER TABLE students DROP COLUMN parent_email`;
-
-  connection.query(sqlQuery, (err) => {
-    if (err) {
-      console.error('Error updating table:', err);
-      throw err;
-    }
+    // ENTER SQL QUERY HERE
+    const sqlQuery = `ALTER TABLE students DROP COLUMN parent_email`;
+    await connection.query(sqlQuery);
     console.log('Updated table successfully');
-  });
+  } catch (error) {
+    console.error('Error in table update:', error);
+    throw error;
+  } finally {
+    if (connection) {
+      try {
+        await connection.end();
+      } catch (err) {
+        console.error('Error closing database connection:', err);
+      }
+    }
+  }
+}
 
-  // Close connection
-  connection.end();
+updateTable().catch((error) => {
+  console.error('Failed to update table:', error);
+  process.exit(1);
 });
