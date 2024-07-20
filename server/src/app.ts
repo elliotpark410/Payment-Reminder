@@ -109,8 +109,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
-app.use('/*.(env|config|pl|php|bak|backup|json)', (req, res) => {
-  console.warn(`Attempt to access sensitive file from IP: ${req.ip}`);
+app.use(/.*\.(env|config|pl|php|bak|backup|json|pem)$/, (req, res) => {
+  console.warn(`Attempt to access sensitive file from IP: ${req.ip}, Path: ${req.path}`);
   res.status(403).send('Access Forbidden');
 });
 
