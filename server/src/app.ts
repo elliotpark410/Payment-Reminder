@@ -28,6 +28,14 @@ app.use(
   helmet({
     contentSecurityPolicy: cspOptions,
     crossOriginEmbedderPolicy: false,
+    frameguard: { action: 'deny' },
+    xssFilter: true,
+    noSniff: true,
+    hidePoweredBy: true,
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+    },
   }),
 );
 
@@ -101,8 +109,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
-app.use('/.env*', (req, res) => {
-  console.warn(`Attempt to access .env file from IP: ${req.ip}`);
+app.use('/*.(env|config|pl|php|bak|backup|json)', (req, res) => {
+  console.warn(`Attempt to access sensitive file from IP: ${req.ip}`);
   res.status(403).send('Access Forbidden');
 });
 

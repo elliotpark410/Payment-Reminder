@@ -35,13 +35,11 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await api.get(`/user/login`, {
+      const response = await api.post(`/user/login`, {
         username,
         password
       });
-      console.log("response.data")
-      console.log(response.data)
-      console.log(response.data.token)
+
       // console.log('Logged in user:', response.data);
       localStorage.setItem('token', response.data.token); // Store token for persistent login
       toast.success('Successfully logged in', {
