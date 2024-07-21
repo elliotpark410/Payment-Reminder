@@ -18,7 +18,20 @@ const domain_aws = getEnvVariable('AWS_AMPLIFY_DOMAIN');
 
 const app = express();
 
-// Set up middleware
+// Configure CORS
+const corsOptions = {
+  origin:
+    environment === 'production'
+      ? [domain, domain_www, domain_aws, domain_api]
+      : ['http://localhost:3000', 'http://localhost:3001'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+
 // Set security-related HTTP headers
 const cspOptions =
   environment === 'production'
@@ -49,20 +62,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 app.use(limiter);
-
-// Configure CORS
-const corsOptions = {
-  origin:
-    environment === 'production'
-      ? [domain, domain_www, domain_aws, domain_api]
-      : ['http://localhost:3000', 'http://localhost:3001'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
