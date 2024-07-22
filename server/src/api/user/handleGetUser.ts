@@ -51,9 +51,7 @@ export async function handleGetUser(request: Request, response: Response, next: 
 
     const jwtSecret = getEnvVariable('JWT_SECRET');
 
-    const token = jwt.sign({ username: user.username, userId: user.id }, jwtSecret, {
-      expiresIn: '168h',
-    });
+    const token = jwt.sign({ username: user.username, userId: user.id }, jwtSecret);
 
     // If the password is correct, reset login attempts
     await resetLoginAttempts(username);

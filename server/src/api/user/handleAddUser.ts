@@ -37,9 +37,7 @@ export async function handleAddUser(request: Request, response: Response, next: 
       const jwtSecret = getEnvVariable('JWT_SECRET');
 
       // Generate JWT token for the newly registered user
-      const token = jwt.sign({ username, userId }, jwtSecret, {
-        expiresIn: '168h',
-      });
+      const token = jwt.sign({ username, userId }, jwtSecret);
 
       // Return success with token
       response.status(201).json({ message: 'User created successfully', token, password_hash });
