@@ -50,8 +50,8 @@ function AddStudent({ onClose, onAdd }) {
       parent_name: formData.parent_name.trim(),
       phone_number: formData.phone_number.trim(),
       email: formData.email.trim(),
-      subscription_price: formData.subscription_price.trim(),
-      subscription_number: formData.subscription_number.trim()
+      subscription_price: parseInt(formData.subscription_price, 10),
+      subscription_number: parseInt(formData.subscription_number, 10)
     };
 
     try {
