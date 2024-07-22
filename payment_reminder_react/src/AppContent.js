@@ -19,7 +19,6 @@ function AppContent() {
   const [students, setStudents] = useState([]);
   const [lessons, setLessons] = useState([]);
   const [resets, setResets] = useState([]);
-  const [texts, setTexts] = useState([]);
   const [studentSelected, setStudentSelected] = useState(null);
   const [searchName, setSearchName] = useState('');
   const [error, setError] = useState(null);
@@ -46,22 +45,19 @@ function AppContent() {
   // Fetch all data
   const fetchData = async () => {
     try {
-      const [studentsResponse, lessonsResponse, resetsResponse, textResponse] = await Promise.all([
+      const [studentsResponse, lessonsResponse, resetsResponse] = await Promise.all([
         api.get(`/student/`),
         api.get(`/lesson/`),
-        api.get(`/reset/`),
-        api.get(`/text/`)
+        api.get(`/reset/`)
       ]);
       const studentsData = studentsResponse.data;
       const lessonsData = lessonsResponse.data;
       const resetsData = resetsResponse.data;
-      const textData = textResponse.data;
 
       // Order students by alphabetical order
       setStudents(studentsData.sort((a, b) => a.student_name.localeCompare(b.student_name)));
       setLessons(lessonsData);
       setResets(resetsData);
-      setTexts(textData);
     } catch (error) {
       console.error('Error fetching data:', error);
       setError(error.response?.data?.message || 'Error getting data');
@@ -107,14 +103,6 @@ function AppContent() {
     const resetDates = studentResets.map((reset) => reset.date).filter((date) => date !== null);
 
     return resetDates.length > 0 ? Math.max(...resetDates.map((date) => new Date(date))) : null;
-  };
-
-  // Helper function to get the most recent send text date for a student
-  const getLatestTextDate = (studentId) => {
-    const studentTexts = texts.filter((textDate) => textDate.student_id === studentId);
-    const textDates = studentTexts.map((text) => text.date).filter((date) => date !== null);
-
-    return textDates.length > 0 ? Math.max(...textDates.map((date) => new Date(date))) : null;
   };
 
   const getFilteredLessonDates = (studentId) => {
