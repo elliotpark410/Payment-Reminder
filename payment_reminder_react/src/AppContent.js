@@ -119,10 +119,9 @@ function AppContent() {
 
   const getFilteredLessonDates = (studentId) => {
     const latestResetDate = getLatestResetDate(studentId);
-    const latestTextDate = getLatestTextDate(studentId);
 
-    // Calculate the cutoff date based on the latest reset date and text date
-    const cutoffDate = new Date(Math.max(latestResetDate ?? 0, latestTextDate ?? 0));
+    // Calculate the cutoff date based on the latest reset date
+    const cutoffDate = new Date(Math.max(latestResetDate ?? 0));
 
     // Get today's date in the Pacific Time Zone (Los Angeles Time)
     const today = new Date().toLocaleDateString('en-US', {
