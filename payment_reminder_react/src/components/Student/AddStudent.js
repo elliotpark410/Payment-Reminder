@@ -44,42 +44,52 @@ function AddStudent({ onClose, onAdd }) {
   };
 
   const handleAddStudent = async () => {
+    // Trim whitespace from form data before validation
+    const trimmedFormData = {
+      student_name: formData.student_name.trim(),
+      parent_name: formData.parent_name.trim(),
+      phone_number: formData.phone_number.trim(),
+      email: formData.email.trim(),
+      subscription_price: formData.subscription_price.trim(),
+      subscription_number: formData.subscription_number.trim()
+    };
+
     try {
       // Data validation
-      if (!formData.student_name) {
+      if (!trimmedFormData.student_name) {
         toast.error('Student name is required.');
         return;
       }
 
-      if (!formData.phone_number) {
+      if (!trimmedFormData.phone_number) {
         toast.error('Phone number is required.');
         return;
       }
 
-      if (!validatePhoneNumber(formData.phone_number)) {
+      if (!validatePhoneNumber(trimmedFormData.phone_number)) {
         toast.error('Invalid phone number.');
         return;
       }
 
       if (
-        formData.subscription_price &&
-        !validatePositiveWholeNumber(formData.subscription_price)
+        trimmedFormData.subscription_price &&
+        !validatePositiveWholeNumber(trimmedFormData.subscription_price)
       ) {
         toast.error('Subscription price must be a positive whole number.');
         return;
       }
 
       if (
-        formData.subscription_number &&
-        !validatePositiveWholeNumber(formData.subscription_number)
+        trimmedFormData.subscription_number &&
+        !validatePositiveWholeNumber(trimmedFormData.subscription_number)
       ) {
         toast.error('Subscription number must be a positive whole number.');
         return;
       }
 
-      // console.log('Adding new student:', formData);
+      // console.log('Adding new student:', trimmedFormData);
 
-      const response = await api.post(`/student/add`, formData);
+      const response = await api.post('/student/add', trimmedFormData);
 
       // console.log('Added student:', response.data);
 
@@ -87,7 +97,7 @@ function AddStudent({ onClose, onAdd }) {
 
       if (response.status === 200 || response.status === 201) {
         // Show notifcation
-        toast.success(`Added ${formData.student_name}`, {
+        toast.success(`Added ${trimmedFormData.student_name}`, {
           position: 'top-left',
           autoClose: 3000 // Close after 3 seconds
         });
@@ -102,7 +112,7 @@ function AddStudent({ onClose, onAdd }) {
       // Disallow duplicate name
       if (error.response && error.response.status === 500) {
         if (error.response.data.includes('Duplicate entry')) {
-          setDuplicateNameError(`${formData.student_name} already exists!`);
+          setDuplicateNameError(`${trimmedFormData.student_name} already exists!`);
           return; // Prevent closing the modal
         }
       }

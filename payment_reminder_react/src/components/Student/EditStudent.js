@@ -45,34 +45,44 @@ function EditStudent({ student, onClose, onEdit }) {
   };
 
   const handleSave = async () => {
+    // Trim whitespace from form data before validation
+    const trimmedFormData = {
+      student_name: formData.student_name.trim(),
+      parent_name: formData.parent_name.trim(),
+      phone_number: formData.phone_number.trim(),
+      email: formData.email.trim(),
+      subscription_price: formData.subscription_price.trim(),
+      subscription_number: formData.subscription_number.trim()
+    };
+
     try {
       // Data validation
-      if (!formData.student_name) {
+      if (!trimmedFormData.student_name) {
         toast.error('Student name is required.');
         return;
       }
 
-      if (!formData.phone_number) {
+      if (!trimmedFormData.phone_number) {
         toast.error('Phone number is required.');
         return;
       }
 
-      if (!validatePhoneNumber(formData.phone_number)) {
+      if (!validatePhoneNumber(trimmedFormData.phone_number)) {
         toast.error('Invalid phone number.');
         return;
       }
 
       if (
-        formData.subscription_price &&
-        !validatePositiveWholeNumber(formData.subscription_price)
+        trimmedFormData.subscription_price &&
+        !validatePositiveWholeNumber(trimmedFormData.subscription_price)
       ) {
         toast.error('Subscription price must be a positive whole number.');
         return;
       }
 
       if (
-        formData.subscription_number &&
-        !validatePositiveWholeNumber(formData.subscription_number)
+        trimmedFormData.subscription_number &&
+        !validatePositiveWholeNumber(trimmedFormData.subscription_number)
       ) {
         toast.error('Subscription number must be a positive whole number.');
         return;
@@ -80,7 +90,7 @@ function EditStudent({ student, onClose, onEdit }) {
 
       // console.log('Saving edit for student', student);
 
-      const response = await api.put(`/student/${student.id}`, formData);
+      const response = await api.put(`/student/${student.id}`, trimmedFormData);
 
       // console.log('Updated student data:', response.data);
 
@@ -88,12 +98,12 @@ function EditStudent({ student, onClose, onEdit }) {
         onEdit(response.data);
 
         if (!formData.inactive) {
-          toast.success(`Edited ${formData.student_name}`, {
+          toast.success(`Edited ${trimmedFormData.student_name}`, {
             position: 'top-left',
             autoClose: 3000 // Close after 3 seconds
           });
         } else {
-          toast.success(`${formData.student_name} inactived`, {
+          toast.success(`${trimmedFormData.student_name} inactived`, {
             position: 'top-left',
             autoClose: 3000 // Close after 3 seconds
           });
@@ -106,7 +116,7 @@ function EditStudent({ student, onClose, onEdit }) {
       // Disallow duplicate name
       if (error.response && error.response.status === 500) {
         if (error.response.data.includes('Duplicate entry')) {
-          setDuplicateNameError(`${formData.student_name} already exists!`);
+          setDuplicateNameError(`${trimmedFormData.student_name} already exists!`);
           return; // Prevent closing the modal
         }
       }
