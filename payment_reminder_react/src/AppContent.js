@@ -145,17 +145,12 @@ function AppContent() {
 
   const getLessonCountForStudent = (studentId) => {
     const latestResetDate = getLatestResetDate(studentId);
-    const latestTextDate = getLatestTextDate(studentId);
 
     let filterDate = null;
 
-    if (latestResetDate && latestTextDate) {
-      filterDate = new Date(Math.max(latestResetDate, latestTextDate));
-    } else if (latestResetDate) {
+    if (latestResetDate) {
       filterDate = new Date(latestResetDate);
-    } else if (latestTextDate) {
-      filterDate = new Date(latestTextDate);
-    }
+    };
 
     const filteredLessons = lessons.filter(
       (lesson) =>

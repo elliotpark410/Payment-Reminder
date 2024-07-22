@@ -221,8 +221,8 @@ function GetStudentHistory({ studentId, studentName, onClose, onUpdate }) {
       if (record.lesson) {
         currentLessonNumber += 1; // Increment for each lesson
         return { ...record, lessonNumber: currentLessonNumber }; // Assign the updated lesson number
-      } else if (record.text || record.resetLesson) {
-        // Reset counter if a "text" or "reset lesson" is encountered
+      } else if (record.resetLesson) {
+        // Reset counter if a "reset lesson" is encountered
         currentLessonNumber = 0;
         return record; // Just return the record
       } else {

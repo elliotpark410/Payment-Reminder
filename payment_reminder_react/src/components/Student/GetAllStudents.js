@@ -123,7 +123,6 @@ const GetAllStudents = ({
   students,
   onEditStudentClick,
   onDeleteStudentClick,
-  onViewStudentHistoryClick,
   getLessonCountForStudent,
   onAddLessonClick,
   onSendTextClick,
