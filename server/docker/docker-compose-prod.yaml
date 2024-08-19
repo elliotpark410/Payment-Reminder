@@ -13,19 +13,8 @@ services:
     networks:
       - app-network
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 2G
-        reservations:
-          cpus: '0.2'
-          memory: 512M
     command:
       - --bind-address=0.0.0.0
-      - --performance_schema=OFF
-      - --table_definition_cache=200
-      - --table_open_cache=128
       - --wait_timeout=28800
       - --interactive_timeout=28800
       - --net_read_timeout=30
